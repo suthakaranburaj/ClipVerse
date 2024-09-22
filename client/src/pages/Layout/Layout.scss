@@ -1,17 +1,30 @@
 @import '../../index.scss';
 
+.SearchBar{
+    position: fixed;
+    margin-left: 15%;
+    height: 10%;
+    width: 80%;
+    background-color: $background-color;
+    z-index: 2;
+}
 .container {
     display: flex;
-    background-color: $background-color;
+    background-color: black;
     .left-side {
-        width: 20%;
+        position: fixed;
+        width: 15%;
         height: 100vh;
         color: white;
-        background-color: darken($background-color, 5%);
+        background-color: black;
+        z-index: 10;
     }
     .right-side {
+        margin-top:8%;
+        margin-left: 15%;
         width: 80%;
         display: flex;
         flex-direction: column;
+        background-color: black;
     }
 }

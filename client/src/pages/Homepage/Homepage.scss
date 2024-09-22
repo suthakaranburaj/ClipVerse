@@ -1,7 +1,23 @@
-// .description{
-
-// }
-// .userChannel{
-//     color: gray;
-//     font-size: 1rem;
-// }
+.description{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.userChannel{
+    color: gray;
+    font-size: 0.9rem;
+}
+.views{
+    color: gray;
+    font-size: 0.9rem;
+}
+.time{
+    color: gray;
+    font-size: 0.9rem;
+}
+.dot{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    color: gray;
+    margin: 0 2px 5px 2px;
+}

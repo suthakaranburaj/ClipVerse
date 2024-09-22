@@ -27,7 +27,7 @@ function Navbar() {
       </div>
       <div className='line'></div>
       <div className='parts'>
-        You >
+        You
         <div className='section flex gap-4'>
           <FaHistory />
           History
