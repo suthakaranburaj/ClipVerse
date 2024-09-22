@@ -1,10 +1,13 @@
+@import '../../index.scss';
+
 .container {
     display: flex;
+    background-color: $background-color;
     .left-side {
         width: 20%;
         height: 100vh;
         color: white;
-        background-color: #212121;
+        background-color: darken($background-color, 5%);
     }
     .right-side {
         width: 80%;
