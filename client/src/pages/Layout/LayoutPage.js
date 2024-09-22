@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import HomePage from '../Homepage/HomePage';
 
 import './Layout.scss';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 function LayoutPage() {
     return (
@@ -14,6 +15,9 @@ function LayoutPage() {
                     <Navbar />
                 </div>
                 <div className='right-side'>
+                    <div className='SearchBar'>
+                        <SearchBar/>
+                    </div>
                     <Routes>
                         <Route path='/' element={<HomePage />} />
                     </Routes>

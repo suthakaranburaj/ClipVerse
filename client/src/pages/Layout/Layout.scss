@@ -6,4 +6,14 @@
         color: white;
         background-color: #000;
     }
+    .right-side {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    
+        .SearchBar {
+        width: 100%;
+        }
+    }
 }
+
