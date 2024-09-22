@@ -1,0 +1,112 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 240px; /* Fixed width for larger screens */
+    height: 100vh;
+    background-color: #181818; /* Dark background */
+    color: #fff; /* White text color */
+    padding: 10px 0;
+    position: fixed; /* Fixed to the left */
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease; /* Smooth sliding transition for responsiveness */
+    z-index: 999;
+  
+    /* Sidebar hidden in mobile view by default */
+    @media (max-width: 768px) {
+      transform: translateX(-100%); /* Offscreen */
+    }
+  
+    /* Open the sidebar when an 'open' class is applied (mobile) */
+    &.open {
+      transform: translateX(0); /* Slide in on mobile */
+    }
+  
+    .menu-section {
+      margin-bottom: 1.5rem;
+    }
+  
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffffcc; /* Light text color */
+      transition: background 0.3s ease;
+  
+      &:hover {
+        background-color: #303030; /* Darker hover effect */
+      }
+  
+      i {
+        font-size: 22px;
+        margin-right: 16px;
+      }
+    }
+  
+    .menu-item.active {
+      background-color: #383838; /* Active state */
+    }
+  
+    /* Subscriptions Section */
+    .subscription-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 24px;
+      font-size: 14px;
+      color: #ffffffcc;
+  
+      img {
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+      }
+  
+      &:hover {
+        background-color: #303030;
+      }
+    }
+  
+    .show-more {
+      cursor: pointer;
+      padding: 12px 24px;
+      color: #3ea6ff; /* Blue "show more" text */
+    }
+  
+    hr {
+      border: 1px solid #303030;
+      margin: 1rem 0;
+    }
+  }
+  
+  /* Main content area next to the sidebar */
+  .main-content {
+    margin-left: 240px; /* Adjust for sidebar width */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+  
+    /* Full-width on smaller screens (sidebar hidden) */
+    @media (max-width: 768px) {
+      margin-left: 0;
+      padding: 10px;
+    }
+  }
+  
+  /* Mobile-specific menu toggle button */
+  .menu-toggle {
+    display: none; /* Hidden by default */
+  
+    @media (max-width: 768px) {
+      display: block; /* Show on smaller screens */
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      font-size: 30px;
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+  
