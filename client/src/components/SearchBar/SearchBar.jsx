@@ -1,9 +1,13 @@
 import React from 'react'
 
+import { IoIosMenu } from "react-icons/io";
+
 function SearchBar() {
   return (
-    <div className='h-24 w-full text-white bg-gray-900'>
-        <p>SearchBar</p>
+    <div className='searchbar-container'>
+      <div className='logo'></div>
+      <div className='search'></div>
+      <div className=''></div>
     </div>
   )
 }
