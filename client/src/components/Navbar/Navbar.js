@@ -5,17 +5,20 @@ import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { CgPlayList, CgProfile } from "react-icons/cg";
 import { IoLogoYoutube } from "react-icons/io";
-
 import './Navbar.scss';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
+  
   return (
     <div className="navbar-container">
       <div className='parts'>
-        <div className='section flex gap-4'>
-          <FaHome />
-          Home
-        </div>
+        <Link to='/'>
+          <div className='section flex gap-4'>
+            <FaHome />
+            Home
+          </div>
+        </Link>
         <div className='section flex gap-4'>
           <SiYoutubeshorts />
           Shorts

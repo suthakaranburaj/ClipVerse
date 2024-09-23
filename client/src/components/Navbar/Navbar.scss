@@ -6,6 +6,9 @@
         background-color: white;
         margin: 1rem 0;
     }
+    &.hidden {
+        width: 0;
+    }
     .parts {
         margin: 1rem 0;
         padding: 1rem 0;
