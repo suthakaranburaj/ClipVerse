@@ -1,10 +1,8 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 import Navbar from '../../components/Navbar/Navbar';
-import HomePage from '../Homepage/HomePage';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import UserPage from '../UserChannel/UserChannel.jsx';
 import './Layout.scss';
 
 function LayoutPage() {
@@ -18,14 +16,11 @@ function LayoutPage() {
                     <Navbar />
                 </div>
                 <div className='right-side'>
-                    <Routes>
-                        <Route path='/' element={<HomePage />} />
-                        <Route path='/UserChannelName' element={<UserPage/>} />
-                    </Routes>
+                    <Outlet />
                 </div>
             </div>
         </>
     )
 }
 
-export default LayoutPage
+export default LayoutPage;
