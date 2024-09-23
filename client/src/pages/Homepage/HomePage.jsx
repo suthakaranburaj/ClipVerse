@@ -3,9 +3,7 @@ import image1 from '../../assets/video1_thumbnail.jpg'
 import image2 from '../../assets/profile_pic.webp'
 import './Homepage.scss';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 function HomePage() {
-    const isOpen = useSelector((state) => state.navbar.isOpen);
     const videoData = [
         {
             image1: image1,

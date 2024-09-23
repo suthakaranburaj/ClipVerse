@@ -1,11 +1,16 @@
-import React from 'react'
-import './WatchVideo.scss'
-import video1 from '../../../assets/video1.mp4'
-import { useSelector } from 'react-redux'
+import React from 'react';
+
+import video1 from '../../../assets/video1.mp4';
+
+import './WatchVideo.scss';
+import devStore from '../../../store/devStore';
+
 function WatchVideo() {
-    const isOpen = useSelector((state)=> state.navbar.isopen);
+
+    const { isNavOpen } = devStore();
+
     return (
-        <div className={isOpen ? 'WatchVideo-Container-WithNav' : 'WatchVideo-Container-WithoutNav'}>
+        <div className={isNavOpen ? 'WatchVideo-Container-WithNav' : 'WatchVideo-Container-WithoutNav'}>
             <div className='left-side'>
                 <video src={video1}></video>
             </div>

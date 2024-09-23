@@ -3,18 +3,19 @@ import { Link } from 'react-router-dom';
 import { IoIosMenu } from "react-icons/io";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
-import { toggleNavbar } from '../../store/Features/NavbarSlice';
+import devStore from '../../store/devStore';
 
 function SearchBar() {
-    const dispatch = useDispatch();
+    
+    const { toggleNav } = devStore();
+
     return (
         <div className=" text-white p-4 flex justify-between">
             <div mx-10>
-                <FontAwesomeIcon 
-                className='text-white  ' 
-                icon={faBars} 
-                onClick={() => dispatch(toggleNavbar())}
+                <FontAwesomeIcon
+                    className='text-white  '
+                    icon={faBars}
+                    onClick={() => toggleNav()}
                 />
             </div>
             <div className='mx-10 w-[80%]'>
@@ -26,13 +27,13 @@ function SearchBar() {
                     />
                     <Link to='/userchannel'>
                         <button className="rounded-full bg-green-600 w-10 h-10 flex items-center justify-center text-white font-bold">
-                        F
+                            F
                         </button>
                     </Link>
                 </div>
 
                 {/* Tabs */}
-                
+
             </div>
         </div>
     )
