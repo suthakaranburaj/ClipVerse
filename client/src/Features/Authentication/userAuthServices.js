@@ -19,7 +19,7 @@ const registerUser = async(formData) => {
             },
         });        
         return response;
-    }catch(error){
+    } catch (error) {
         return error;
     }
 };
