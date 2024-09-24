@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { loginUser } from "../Features/Authentication/userAuthServices";
+import { registerUser } from "../Features/Authentication/userAuthServices";
 
 const useStore = create((set) => ({
 
@@ -26,6 +27,20 @@ const useStore = create((set) => ({
     },
 
     register: async ({ userName, fullName, email, password, avatar, coverImage }) => {
+
+        set(()=>({isLoading: true, error: null}));
+
+        try {
+            const response = registerUser({userName, fullName, email, password, avatar, coverImage });
+            
+            set({user: response.data.user});
+
+            localStorage.setItem("user",JSON.stringify(response.data.user));
+            set(()=>({isLoading:false}));
+
+        } catch (error) {
+            set(()=>({error:error}));
+        }
 
     },
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import useStore from '../../../store/userStore';
 import "./LoginPage.scss";
 
 function LoginPage() {
@@ -8,11 +8,11 @@ function LoginPage() {
     const [userName, setUserName] = useState();
     const [password, setPassword] = useState();
 
-    // const { login } = useStore();
+    const { login } = useStore();
 
     const submitHandler = async () => {
         try {
-            // await login(userName, email, password);
+            await login({userName, email, password});
             console.log("Done!!");
         } catch (error) {
             console.log(error);
