@@ -1,7 +1,9 @@
-import React from 'react'
-import image2 from '../../assets/profile_pic.webp'
-import './UserChannel.scss'
-import { Outlet ,NavLink } from 'react-router-dom'
+import React from 'react';
+import { Outlet ,NavLink } from 'react-router-dom';
+
+import image2 from '../../../assets/profile_pic.webp';
+
+import './UserChannel.scss';
 
 
 function UserChannel() {

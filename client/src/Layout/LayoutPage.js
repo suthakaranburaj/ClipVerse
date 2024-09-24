@@ -1,10 +1,10 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Navbar from '../../components/Navbar/Navbar';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import Navbar from '../components/Navbar/Navbar';
+import SearchBar from '../components/SearchBar/SearchBar';
 
-import devStore from '../../store/devStore';
+import devStore from '../store/devStore';
 
 import './Layout.scss';
 

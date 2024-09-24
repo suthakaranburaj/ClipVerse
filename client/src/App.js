@@ -1,13 +1,13 @@
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom";
 
-import LayoutPage from "./pages/Layout/LayoutPage";
-import HomePage from './pages/Homepage/HomePage';
-import UserChannel from "./pages/UserChannel/UserChannel";
-import UserPlaylist from "./pages/UserChannel/userPlaylist/userPlaylist";
-import UserCommunity from "./pages/UserChannel/UserCommunity/UserCommunity";
-import WatchVideo from './pages/WatchVideo/WatchVideo'
-import LoginPage from "./pages/LoginPage/LoginPage";
-import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
+import LayoutPage from "./Layout/LayoutPage";
+import HomePage from './Features/Homepage/HomePage';
+import UserChannel from "./Features/UserChannel/UserChannelTemplate/UserChannel";
+import UserPlaylist from "./Features/UserChannel/UserPlaylist/userPlaylist";
+import UserCommunity from "./Features/UserChannel/UserCommunity/UserCommunity";
+import WatchVideo from './Features/WatchVideo/WatchVideo'
+import LoginPage from "./Features/Authentication/LoginPage/LoginPage";
+import RegistrationPage from "./Features/Authentication/RegistrationPage/RegistrationPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(

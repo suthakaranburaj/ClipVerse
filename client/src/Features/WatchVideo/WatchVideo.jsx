@@ -4,8 +4,8 @@ import { useRef , useState } from 'react';
 import video1 from '../../assets/video1.mp4';
 import image1 from '../../assets/video1_thumbnail.jpg'
 
-import './WatchVideo.scss';
 import devStore from '../../store/devStore';
+import './WatchVideo.scss';
 
 function WatchVideo() {
     const videoData = [

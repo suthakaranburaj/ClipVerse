@@ -1,6 +1,5 @@
 import React from 'react';
 import './RegistrationPage.scss';
-import useStore from '../../store/userStore';
 
 import { useState } from 'react';
 
