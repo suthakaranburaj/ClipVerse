@@ -11,7 +11,7 @@ function SearchBar() {
 
     return (
         <div className=" text-white p-4 flex justify-between">
-            <div mx-10>
+            <div className='mx-10'>
                 <FontAwesomeIcon
                     className='text-white  '
                     icon={faBars}

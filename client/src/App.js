@@ -5,13 +5,15 @@ import HomePage from './pages/Homepage/HomePage';
 import UserChannel from "./pages/UserChannel/UserChannel";
 import UserPlaylist from "./pages/UserChannel/userPlaylist/userPlaylist";
 import UserCommunity from "./pages/UserChannel/UserCommunity/UserCommunity";
-import WatchVideo from './pages/Homepage/WatchVideo/WatchVideo'
+import WatchVideo from './pages/WatchVideo/WatchVideo'
 import LoginPage from "./pages/LoginPage/LoginPage";
+import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path='/login' element={<LoginPage />} />
+            <Route path='/registration' element={<RegistrationPage />} />
             <Route path='/' element={<LayoutPage />}>
                 <Route path='' element={<HomePage />} />
                 <Route path='userchannel' element={<UserChannel />}>
