@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = '/api/v1/';
+const BACKEND_URL = 'http://localhost:8000/api/v1/users';
 
 const loginUser = async ({ name, email, password }) => {
     try {
