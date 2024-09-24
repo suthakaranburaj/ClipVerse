@@ -16,6 +16,9 @@ const useStore = create((set) => ({
         try {
             const response = loginUser(name, email, password);
 
+            console.log(response);
+            
+
             set({ user: response.data.user });
 
             localStorage.setItem("user", JSON.stringify(response.data.user));
