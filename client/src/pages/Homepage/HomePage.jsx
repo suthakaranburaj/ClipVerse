@@ -8,7 +8,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -16,7 +16,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -24,7 +24,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -32,7 +32,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -40,7 +40,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -48,7 +48,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -56,7 +56,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -64,7 +64,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
@@ -72,7 +72,7 @@ function HomePage() {
         {
             image1: image1,
             image2: image2,
-            description: 'How to Fuck with full energy -By Tushar Hasule',
+            description: 'How to Work with full energy -By Tushar Hasule',
             userChannel: 'Tushar Hasule Talks',
             views: '1.1M views',
             time: '1 day ago',
