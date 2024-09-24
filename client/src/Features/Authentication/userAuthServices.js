@@ -11,9 +11,13 @@ const loginUser = async ({ name, email, password }) => {
     }
 };
 
-const registerUser = async({userName, fullName, email, password, avatar, coverImage }) => { 
+const registerUser = async(formData) => { 
     try{
-        const response = await axios.post(`${BACKEND_URL}/registration`,{userName, fullName, email, password, avatar, coverImage});
+        const response = await axios.post(`${BACKEND_URL}/registration`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });        
         return response;
     }catch(error){
         return error;
