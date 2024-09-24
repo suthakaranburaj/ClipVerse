@@ -29,12 +29,12 @@ const useStore = create((set) => ({
 
     },
 
-    register: async ({ userName, fullName, email, password, avatar, coverImage }) => {
+    register: async (formData) => {
 
         set(()=>({isLoading: true, error: null}));
 
         try {
-            const response = registerUser({userName, fullName, email, password, avatar, coverImage });
+            const response = await registerUser(formData); 
             
             set({user: response.data.user});
 
