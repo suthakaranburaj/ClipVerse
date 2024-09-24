@@ -5,26 +5,35 @@ import { registerUser } from "../Features/Authentication/userAuthServices";
 
 const useStore = create((set) => ({
 
-    user: null,
+    user:null,
     error: null,
     isLoading: false,
+    isAuthenticated: !!localStorage,
 
-    login: async ({ name, email, password }) => {
+    login: async ({ username, email, password }) => {
 
         set(() => ({ isLoading: true, error: null }));
 
         try {
-            const response = loginUser(name, email, password);
+            const response = await loginUser({username, email, password});
 
-            console.log(response);
-            
-
-            set({ user: response.data.user });
+            set({ 
+                user: response.data.data,
+                isAuthenticated:true,
+                error:null,
+            });
 
             localStorage.setItem("user", JSON.stringify(response.data.user));
             set(() => ({ isLoading: false }));
+
         } catch (error) {
-            set(() => ({ error: error }));
+            set({
+                error: error.response?.data?.message || 'Login failed',
+                isAuthenticated: false,
+                isLoading:false,
+            })
+
+            return error;
         }
 
     },
@@ -35,23 +44,46 @@ const useStore = create((set) => ({
 
         try {
             const response = await registerUser(formData); 
-            
-            set({user: response.data.user});
+            // console.log("Registration response:", response);
+            set({
+                user: response.data.data,
+                isAuthenticated:true,
+                error:null,
+            });
 
             localStorage.setItem("user",JSON.stringify(response.data.user));
-            set(()=>({isLoading:false}));
+            // console.log("User registered:", JSON.stringify(response.data.user));
+            // console.log("LocalStorage User:", localStorage.getItem("user"));
+
+            set(()=>({ isLoading:false }));
+            
 
         } catch (error) {
-            set(()=>({error:error}));
+            set({
+                error: error.response?.data?.message || 'Login failed',
+                isAuthenticated: false,
+                isLoading:false,
+            });
+
+            return error;
         }
 
     },
 
     logout: () => {
+        try {
 
-        set({ user: null });
+            set({ 
+                user: null,
+                isAuthenticated: false,
+                error: null,
+            });
+    
 
-        localStorage.removeItem("user");
+            localStorage.removeItem("user");
+        } catch (error) {
+            console.error("Logout error: ", error);
+        }
     },
 
 }));
