@@ -1,71 +1,65 @@
 import { create } from "zustand";
 
-import { loginUser } from "../Features/Authentication/userAuthServices";
-import { registerUser } from "../Features/Authentication/userAuthServices";
+import { loginUser, registerUser } from "../Features/Authentication/userAuthServices";
 
 const useStore = create((set) => ({
 
-    user:null,
+    user: null,
     error: null,
     isLoading: false,
     isAuthenticated: !!localStorage.getItem("user"),
 
     login: async ({ username, email, password }) => {
-
         set(() => ({ isLoading: true, error: null }));
 
         try {
-            const response = await loginUser({username, email, password});
+            const response = await loginUser({ username, email, password });
+            console.log("response:::::::::",response);
 
-            console.log("Login response:",response);
-            console.log("Login response data:",response.data);
-
-            set({ 
+            set({
                 user: response.data.data.user,
-                isAuthenticated:true,
-                error:null,
+                isAuthenticated: true,
+                isLoading: false,
+                error: null
             });
 
             localStorage.setItem("user", JSON.stringify(response.data.data.user));
-            set(() => ({ isLoading: false }));
-
         } catch (error) {
-            set({
-                error: error.response?.data?.message || 'Login failed',
+            console.log("errorr::::::",error);
+            
+            set(() => ({
+                error: error.message || 'Login failed',
                 isAuthenticated: false,
-                isLoading:false,
-            })
-
-            return error;
+                isLoading: false
+            }));
         }
-
     },
 
     register: async (formData) => {
 
-        set(()=>({isLoading: true, error: null}));
+        set(() => ({ isLoading: true, error: null }));
 
         try {
-            const response = await registerUser(formData); 
+            const response = await registerUser(formData);
             // console.log("Registration response:", response);
             set({
                 user: response.data.data,
-                isAuthenticated:true,
-                error:null,
+                isAuthenticated: true,
+                error: null,
             });
 
-            localStorage.setItem("user",JSON.stringify(response.data.user));
+            localStorage.setItem("user", JSON.stringify(response.data.user));
             // console.log("User registered:", JSON.stringify(response.data.user));
             // console.log("LocalStorage User:", localStorage.getItem("user"));
 
-            set(()=>({ isLoading:false }));
-            
+            set(() => ({ isLoading: false }));
+
 
         } catch (error) {
             set({
                 error: error.response?.data?.message || 'Login failed',
                 isAuthenticated: false,
-                isLoading:false,
+                isLoading: false,
             });
 
             return error;
@@ -76,12 +70,12 @@ const useStore = create((set) => ({
     logout: () => {
         try {
 
-            set({ 
+            set({
                 user: null,
                 isAuthenticated: false,
                 error: null,
             });
-    
+
 
             localStorage.removeItem("user");
         } catch (error) {

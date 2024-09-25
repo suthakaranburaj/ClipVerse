@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import useStore from '../../../store/userStore';
 import "./LoginPage.scss";
-import { useNavigate ,Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
 function LoginPage() {
-
     const [email, setEmail] = useState('');
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const { login } = useStore();
-    const navigate= useNavigate();
+    const { login, isLoading, error, isAuthenticated } = useStore();
+    const navigate = useNavigate();
 
     const submitHandler = async () => {
         try {
-            await login({username, email, password});
-            
-            navigate('/')
-        } catch (error) {
-            console.log(error);
+            await login({ username, email, password });
+            if (isAuthenticated) {
+                navigate('/');
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -44,12 +45,12 @@ function LoginPage() {
                         />
                         <input
                             type="password"
-                            placeholder='Enter your passwrod'
+                            placeholder='Enter your password'
                             value={password}
                             onChange={(e) => { setPassword(e.target.value) }}
                             className="p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        <button 
+                        <button
                             onClick={submitHandler}
                             className="bg-blue-500 text-white py-3 px-6 rounded-md mt-6 hover:bg-blue-600 transition-colors"
                         >
@@ -57,16 +58,23 @@ function LoginPage() {
                         </button>
                         <Link to='/register'>
                             <p className='text-white text-center custom-underline cursor-pointer'>
-                                Don't have an Account ?
+                                Don't have an Account?
                             </p>
                         </Link>
                     </div>
 
-                    
+                    {isLoading && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <ClipLoader size={50} color="#ffffff" />
+                            <p>Logging in...</p>
+                        </div>
+                    )}
+
+                    {error && <p className="text-red-500">{error}</p>}
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default LoginPage
+export default LoginPage;
