@@ -44,21 +44,18 @@ const useStore = create((set) => ({
 
     register: async (formData) => {
 
-        set(()=>({ isLoading: true, error: null }));
+        set(()=>({isLoading: true, error: null}));
 
         try {
             const response = await registerUser(formData); 
-            const registeredUser = response.data.data.user; 
             // console.log("Registration response:", response);
-
-            localStorage.setItem("user",JSON.stringify(registerUser));
-
             set({
-                user: registeredUser,
+                user: response.data.data,
                 isAuthenticated:true,
                 error:null,
             });
 
+            localStorage.setItem("user",JSON.stringify(response.data.user));
             // console.log("User registered:", JSON.stringify(response.data.user));
             // console.log("LocalStorage User:", localStorage.getItem("user"));
 
@@ -71,18 +68,26 @@ const useStore = create((set) => ({
                 isAuthenticated: false,
                 isLoading:false,
             });
+
+            return error;
         }
 
     },
 
     logout: () => {
-        localStorage.removeItem("user");
+        try {
 
-        set({
-            user: null,
-            isAuthenticated: false,
-            error: null,
-        });
+            set({ 
+                user: null,
+                isAuthenticated: false,
+                error: null,
+            });
+    
+
+            localStorage.removeItem("user");
+        } catch (error) {
+            console.error("Logout error: ", error);
+        }
     },
 
 }));

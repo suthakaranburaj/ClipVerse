@@ -15,7 +15,7 @@ function LoginPage() {
     const submitHandler = async () => {
         try {
             await login({username, email, password});
-            console.log("Done!!");
+            // console.log("Done!!");
             navigate('/')
         } catch (error) {
             console.log(error);

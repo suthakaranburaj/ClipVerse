@@ -15,9 +15,9 @@ function SearchBar() {
     const submitHandler = () => {
         logout();
     };
-    useEffect(() => {
-        // If you want to perform some action when user changes
-    }, [user]);
+    // useEffect(() => {
+    //     // If you want to perform some action when user changes
+    // }, [user]);
 
     return (
         <div className=" text-white p-4 flex justify-between">
