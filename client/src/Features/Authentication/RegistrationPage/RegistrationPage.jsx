@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './RegistrationPage.scss';
 import useStore from '../../../store/userStore';
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from 'react-spinners'; // Example spinner library
 
 function RegistrationPage() {
 
@@ -12,7 +13,7 @@ function RegistrationPage() {
     const [avatar, setAvatar] = useState(null); // Store file
     const [coverImage, setCoverImage] = useState(null); // Store file
 
-    const { register } = useStore();
+    const { register ,isLoading , error} = useStore();
     const navigate = useNavigate();
 
     const submitHandler = async () => {
@@ -81,6 +82,14 @@ function RegistrationPage() {
                         Submit
                     </button>
                 </div>
+                {isLoading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <ClipLoader size={50} color="#ffffff" />
+                        <p>Registering your account...</p>
+                    </div>
+                )}
+
+                {error && <p className="text-red-500">{error}</p>}
             </div>
         </div>
     );

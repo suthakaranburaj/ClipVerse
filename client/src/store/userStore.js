@@ -3,14 +3,12 @@ import { create } from "zustand";
 import { loginUser } from "../Features/Authentication/userAuthServices";
 import { registerUser } from "../Features/Authentication/userAuthServices";
 
-const savedUser = JSON.parse(localStorage.getItem("user")) || null;
-
 const useStore = create((set) => ({
 
-    user:savedUser,
+    user:null,
     error: null,
     isLoading: false,
-    isAuthenticated: !!savedUser,
+    isAuthenticated: !!localStorage.getItem("user"),
 
     login: async ({ username, email, password }) => {
 
@@ -19,17 +17,16 @@ const useStore = create((set) => ({
         try {
             const response = await loginUser({username, email, password});
 
-            // console.log("Login response:",response);
-            // console.log("Login response data:",response.data);
-            const loggedInUser = response.data.data.user;  // Adjust based on your backend
-            localStorage.setItem("user", JSON.stringify(loggedInUser));
+            console.log("Login response:",response);
+            console.log("Login response data:",response.data);
 
             set({ 
-                user: loggedInUser,
-                isAuthenticated: true,
-                error: null,
+                user: response.data.data.user,
+                isAuthenticated:true,
+                error:null,
             });
 
+            localStorage.setItem("user", JSON.stringify(response.data.data.user));
             set(() => ({ isLoading: false }));
 
         } catch (error) {
@@ -37,7 +34,9 @@ const useStore = create((set) => ({
                 error: error.response?.data?.message || 'Login failed',
                 isAuthenticated: false,
                 isLoading:false,
-            });
+            })
+
+            return error;
         }
 
     },
