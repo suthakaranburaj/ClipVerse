@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import devStore from '../../store/devStore';
 import useStore from '../../store/userStore';
+import { useEffect } from 'react';
 
 import image1 from '../../assets/profile_pic.webp'
 
@@ -14,9 +15,9 @@ function SearchBar() {
     const submitHandler = () => {
         logout();
     };
-    // useEffect(() => {
-    //     // If you want to perform some action when user changes
-    // }, [user]);
+    useEffect(() => {
+        // If you want to perform some action when user changes
+    }, [user]);
 
     return (
         <div className=" text-white p-4 flex justify-between">
