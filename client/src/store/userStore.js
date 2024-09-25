@@ -2,9 +2,15 @@ import { create } from "zustand";
 
 import { loginUser, registerUser } from "../Features/Authentication/userAuthServices";
 
+// Get user data from localStorage if available
+const getStoredUser = () => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+};
+
 const useStore = create((set) => ({
 
-    user: null,
+    user: getStoredUser(),
     error: null,
     isLoading: false,
     isAuthenticated: !!localStorage.getItem("user"),
@@ -14,16 +20,17 @@ const useStore = create((set) => ({
 
         try {
             const response = await loginUser({ username, email, password });
+            const userData = response.data.data.user;
             console.log("response:::::::::",response);
 
             set({
-                user: response.data.data.user,
+                user: userData,
                 isAuthenticated: true,
                 isLoading: false,
                 error: null
             });
 
-            localStorage.setItem("user", JSON.stringify(response.data.data.user));
+            localStorage.setItem("user", JSON.stringify(userData));
         } catch (error) {
             console.log("errorr::::::",error);
             
@@ -67,15 +74,14 @@ const useStore = create((set) => ({
 
     },
 
+    // Logout function
     logout: () => {
         try {
-
             set({
                 user: null,
                 isAuthenticated: false,
                 error: null,
             });
-
 
             localStorage.removeItem("user");
         } catch (error) {
