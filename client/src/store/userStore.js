@@ -5,7 +5,14 @@ import { loginUser, registerUser } from "../Features/Authentication/userAuthServ
 // Get user data from localStorage if available
 const getStoredUser = () => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    try {
+        return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+        console.error("Error parsing stored user data:", error);
+        // If data is invalid, remove it from localStorage
+        localStorage.removeItem("user");
+        return null;
+    }
 };
 
 const useStore = create((set) => ({

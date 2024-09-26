@@ -5,37 +5,37 @@
     text-underline-offset: 4px; /* Adjust this value for the gap */
 }
 
-// body {
-//     background-color: black;
-// }
+body {
+    background-color: black;
+}
 
-// .card {
+.card {
 
-//     margin: 10% auto;
-//     padding: 2rem 0;
-//     font-size: 1.5rem;
+    margin: 10% auto;
+    padding: 2rem 0;
+    font-size: 1.5rem;
 
-//     color: white;
-//     border-radius: 2rem;
+    color: white;
+    border-radius: 2rem;
 
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-//     .input-container {
-//         color: black;
+    .input-container {
+        color: black;
 
-//         display: flex;
-//         flex-direction: column;
+        display: flex;
+        flex-direction: column;
 
-//         input {
-//             padding: 0.5rem;
-//         }
+        input {
+            padding: 0.5rem;
+        }
 
-//         ::placeholder{
-//             color:rgb(101, 101, 101);
-//             font-weight: 600;
-//         }
-//     }
-// }
+        ::placeholder{
+            color:rgb(101, 101, 101);
+            font-weight: 600;
+        }
+    }
+}
