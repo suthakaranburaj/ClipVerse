@@ -35,7 +35,7 @@ const videoSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User"
         },
-        categorizes: {
+        categories: {
             type: [String],
             enum: ['Education', 'Entertainment', 'Sports', 'Music', 'News', 'Lifestyle'], 
             validate: {

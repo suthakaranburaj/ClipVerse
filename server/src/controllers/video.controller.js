@@ -4,7 +4,7 @@ import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.js"
+import { uploadOnCloudinary,deleteOnCloudinary } from "../utils/cloudinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
@@ -78,38 +78,78 @@ const getVideoById = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Video id required !!");
     }
 
-    const video = await Video.findById({ videoId });
+    const video = await Video.findById(videoId); //yaha error hua tha which was Video.findById({videoId})
 
     if (!video) {
         throw new ApiError(400, "Video not found !!");
     }
 
-    return res
-        .status(200)
-        .json(new ApiResponse(200, { video }, "Video send succesfully !!"));
-
-
+    res
+    .status(200)
+    .json({
+        status:true,
+        video,
+        message: "Video sent successfully"
+    });
 })
 
 const updateVideo = asyncHandler(async (req, res) => {
-    const { videoId } = req.params
     //TODO: update video details like title, description, thumbnail
+
+    const {title, description, categorizes}=req.body;
+    const thumbnail = req.files?.thumbnail[0].path;
+    
+    const { videoId } = req.params
     if(!videoId){
-        throw new ApiError(400, "Avatar file is missing");
+        throw new ApiError(400 , "Video ID is missing");
     }
 
-    const videoOwner = await User.findById(req.video?.);
-    if(!owner){
-        throw new ApiError(404 , "User not Found")
+    const video = await Video.findById(videoId)
+    if(!video){
+        throw new ApiError(400, "Video not found")
     }
 
-    const oldVideo = videoOwner.videoFile;
-
-    if(!oldVideo){
-
+    const videoOwnerId = await User.findById(video.owner);
+    if(!videoOwnerId){
+        throw new ApiError(404, "User not found")
     }
 
-})
+    // if(req.user._id.toString() !== videoOwnerId){
+    //     throw new ApiError(403,"Unauthorized to update this video");
+    // }
+
+    if(thumbnail){
+        if(video.thumbnail){
+            await deleteOnCloudinary(video.thumbnail);
+        }
+
+        const uploadedThumbnail = await uploadOnCloudinary(thumbnail ,{
+            folder:"Thumbnails",
+        });
+
+        video.thumbnail = uploadedThumbnail.secure_url;
+    }
+
+    if(title) video.title=title;
+    if(description) video.description = description;
+
+    // if (categories) {
+    //     if (Array.isArray(categories) && categories.length <= 5) {
+    //         video.categories = categories;
+    //     } else {
+    //         throw new ApiError(400, "A video can have a maximum of 5 categories.");
+    //     }
+    // }
+    video.categorizes = categorizes;
+
+    await video.save();
+
+    res.status(200).json({
+    success:true,
+    message:"Video updated successfully",
+    video,
+    });
+});
 
 const deleteVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params
@@ -123,13 +163,13 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Video id not found !!");
     }
 
-    const video = await Video.findById({ videoId });
+    const video = await Video.findById( videoId );  //yaha pe error hua
 
     if (!video) {
         throw new ApiError(400, "Video not found !!");
     }
 
-    const status = isPublished ? false : true;
+    const status = video.isPublished ? false : true;
 
     video.isPublished = status;
 
