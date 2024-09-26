@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const videoSchema = new Schema(
@@ -12,15 +12,15 @@ const videoSchema = new Schema(
             required: true
         },
         title: {
-            type: String, 
+            type: String,
             required: true
         },
         description: {
-            type: String, 
+            type: String,
             required: true
         },
         duration: {
-            type: Number, 
+            type: Number,
             required: true
         },
         views: {
@@ -34,9 +34,20 @@ const videoSchema = new Schema(
         owner: {
             type: Schema.Types.ObjectId,
             ref: "User"
+        },
+        categorizes: {
+            type: [String],
+            enum: ['Education', 'Entertainment', 'Sports', 'Music', 'News', 'Lifestyle'], 
+            validate: {
+                validator: function (value) {
+                    return value.length <= 5; 
+                },
+                message: 'A video can have a maximum of 5 categories.'
+            },
+            required: false 
         }
 
-    }, 
+    },
     {
         timestamps: true
     }
