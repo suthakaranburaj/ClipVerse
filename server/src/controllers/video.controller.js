@@ -1,11 +1,10 @@
-import mongoose, {isValidObjectId} from "mongoose"
-import {Video} from "../models/video.model.js"
-import {User} from "../models/user.model.js"
-import {ApiError} from "../utils/ApiError.js"
-import {ApiResponse} from "../utils/ApiResponse.js"
-import {asyncHandler} from "../utils/asyncHandler.js"
-import {uploadOnCloudinary} from "../utils/cloudinary.js"
-import { error } from "console"
+import mongoose, { isValidObjectId } from "mongoose"
+import { Video, Video } from "../models/video.model.js"
+import { User } from "../models/user.model.js"
+import { ApiError } from "../utils/ApiError.js"
+import { ApiResponse } from "../utils/ApiResponse.js"
+import { asyncHandler } from "../utils/asyncHandler.js"
+import { uploadOnCloudinary } from "../utils/cloudinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
@@ -30,7 +29,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
     // 7. Duration figure out   
     // 8. Url console.log and save
 
-    const { title, description, categorizes, isPublished ,duration} = req.body;
+    const { title, description, categorizes, isPublished } = req.body;
     // TODO: get video, upload to cloudinary, create video
 
     if (!title || !description || !categorizes || !isPublished) {
@@ -57,7 +56,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Failed to upload thumbnail !!");
     }
 
-    console.log(video);
+    const duration = video.duration;
+
     const newVideo = await Video.create({
         videoFile: video.url,
         thumbnail: thumbnail.url,
@@ -73,7 +73,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     return res
         .status(200)
-        .json(new ApiResponse(200, {}, "Video uploaded successfully !!"));
+        .json(new ApiResponse(200, {}, "Password changed successfully"));
 })
 
 const getVideoById = asyncHandler(async (req, res) => {
