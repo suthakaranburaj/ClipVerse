@@ -94,60 +94,63 @@ const getVideoById = asyncHandler(async (req, res) => {
 })
 
 const updateVideo = asyncHandler(async (req, res) => {
-    //TODO: update video details like title, description, thumbnail
+    const { title, description, categories } = req.body;  // Change 'categorizes' to 'categories'
+    const thumbnail = req.files?.thumbnail?.[0]?.path;
 
-    const {title, description, categorizes}=req.body;
-    const thumbnail = req.files?.thumbnail[0].path;
-    
-    const { videoId } = req.params
-    if(!videoId){
-        throw new ApiError(400 , "Video ID is missing");
+    const { videoId } = req.params;
+    if (!videoId) {
+        throw new ApiError(400, "Video ID is missing");
     }
 
-    const video = await Video.findById(videoId)
-    if(!video){
-        throw new ApiError(400, "Video not found")
+    const video = await Video.findById(videoId);
+    if (!video) {
+        throw new ApiError(400, "Video not found");
     }
 
     const videoOwnerId = await User.findById(video.owner);
-    if(!videoOwnerId){
-        throw new ApiError(404, "User not found")
+    if (!videoOwnerId) {
+        throw new ApiError(404, "User not found");
     }
 
-    // if(req.user._id.toString() !== videoOwnerId){
-    //     throw new ApiError(403,"Unauthorized to update this video");
-    // }
+    // Check if the current user is the video owner
+    if (req.user._id.toString() !== video.owner.toString()) {
+        throw new ApiError(403, "Unauthorized to update this video");
+    }
 
-    if(thumbnail){
-        if(video.thumbnail){
+    // Handle thumbnail update
+    if (thumbnail) {
+        if (video.thumbnail) {
             await deleteOnCloudinary(video.thumbnail);
         }
 
-        const uploadedThumbnail = await uploadOnCloudinary(thumbnail ,{
-            folder:"Thumbnails",
+        const uploadedThumbnail = await uploadOnCloudinary(thumbnail, {
+            folder: "Thumbnails",
         });
 
         video.thumbnail = uploadedThumbnail.secure_url;
     }
 
-    if(title) video.title=title;
-    if(description) video.description = description;
+    // Update title if provided
+    if (title) video.title = title;
 
-    // if (categories) {
-    //     if (Array.isArray(categories) && categories.length <= 5) {
-    //         video.categories = categories;
-    //     } else {
-    //         throw new ApiError(400, "A video can have a maximum of 5 categories.");
-    //     }
-    // }
-    video.categorizes = categorizes;
+    // Update description if provided
+    if (description) video.description = description;
+
+    // Update categories if provided and validate
+    if (categories) {
+        if (Array.isArray(categories) && categories.length <= 5) {
+            video.categories = categories;
+        } else {
+            throw new ApiError(400, "A video can have a maximum of 5 categories.");
+        }
+    }
 
     await video.save();
 
     res.status(200).json({
-    success:true,
-    message:"Video updated successfully",
-    video,
+        success: true,
+        message: "Video updated successfully",
+        video,
     });
 });
 
