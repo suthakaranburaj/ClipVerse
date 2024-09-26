@@ -78,6 +78,20 @@ const getVideoById = asyncHandler(async (req, res) => {
 const updateVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params
     //TODO: update video details like title, description, thumbnail
+    if(!videoId){
+        throw new ApiError(400, "Avatar file is missing");
+    }
+
+    const videoOwner = await User.findById(req.video?.);
+    if(!owner){
+        throw new ApiError(404 , "User not Found")
+    }
+
+    const oldVideo = videoOwner.videoFile;
+
+    if(!oldVideo){
+
+    }
 
 })
 
