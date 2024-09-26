@@ -10,65 +10,117 @@ import { uploadOnCloudinary,deleteOnCloudinary } from "../utils/cloudinary.js"
 const getAllVideos = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query
     //TODO: get all videos based on query, sort, pagination
-})
+    // 1. Initialize a filter object
+    let filter = {};
+
+    // 2. Add search query filter (for title or description search)
+    if (query) {
+        filter = {
+            $or: [
+                { title: { $regex: query, $options: 'i' } }, // Search in title (case-insensitive)
+                { description: { $regex: query, $options: 'i' } } // Search in description (case-insensitive)
+            ]
+        };
+    }
+
+    // 3. Add filter for userId if provided (for videos uploaded by a specific user)
+    if (userId) {
+        filter.owner = userId;
+    }
+
+    // 4. Calculate the pagination values
+    const skip = (page - 1) * limit; // Skip videos to get to the correct page
+    const videoLimit = parseInt(limit); // Parse the limit to a number
+
+    // 5. Sorting logic (convert sortType to either 1 for ascending or -1 for descending)
+    const sortOptions = {};
+    sortOptions[sortBy] = sortType === 'asc' ? 1 : -1;
+
+    // 6. Fetch the videos with pagination, filtering, and sorting
+    const videos = await Video.find(filter)
+        .sort(sortOptions)   // Sort the videos
+        .skip(skip)          // Skip the previous videos for pagination
+        .limit(videoLimit);   // Limit the number of videos returned
+
+    // 7. Get the total count of videos that match the filter for pagination metadata
+    const totalVideos = await Video.countDocuments(filter);
+
+    // 8. Return the results as a JSON response
+    return res.status(200).json({
+        success: true,
+        page: parseInt(page),
+        limit: videoLimit,
+        totalPages: Math.ceil(totalVideos / limit), // Total number of pages
+        totalVideos,
+        videos
+    });
+});
 
 const publishAVideo = asyncHandler(async (req, res) => {
 
-    // 1. Title and description - validate 
-    // 2. Video validate   
-    // 3. Vidoe upload 
-    // 4. Thumbnail validate
-    // 5. Thumbnail upload
-    // 6. Catories - body - [] 
-    // 7. Duration figure out   
-    // 8. Url console.log and save
+    const { title, description, isPublished } = req.body;
 
-    const { title, description, categorizes, isPublished } = req.body;
-    // TODO: get video, upload to cloudinary, create video
-
-    if (!title || !description || !categorizes || !isPublished) {
-        throw new ApiError(400, "All field are required !!");
+    let categories = req.body.categories;
+    if (typeof categories === 'string') {
+        try {
+            categories = JSON.parse(categories);
+        } catch (error) {
+            throw new ApiError(400, "Invalid format for categories");
+        }
     }
 
-    const videoPath = req.files?.videoFile[0]?.path;
-    const thumbnailPath = req.files?.thumbnail[0]?.path;
+
+    if (!title || !description || !categories.length === 0 || !isPublished) {
+        throw new ApiError(400, "All fields are required!");
+    }
+
+    const videoPath = req.files?.videoFile?.[0]?.path; 
+    const thumbnailPath = req.files?.thumbnail?.[0]?.path;
 
     if (!videoPath) {
-        throw new ApiError(400, "Video not found !!");
+        throw new ApiError(400, "Video file not found!");
     }
     if (!thumbnailPath) {
-        throw new ApiError(400, "Thumbnail not found !!");
+        throw new ApiError(400, "Thumbnail file not found!");
     }
+
 
     const video = await uploadOnCloudinary(videoPath);
     const thumbnail = await uploadOnCloudinary(thumbnailPath);
 
+
     if (!video) {
-        throw new ApiError(400, "Failed to upload video !!");
+        throw new ApiError(400, "Failed to upload video!");
     }
     if (!thumbnail) {
-        throw new ApiError(400, "Failed to upload thumbnail !!");
+        throw new ApiError(400, "Failed to upload thumbnail!");
     }
 
-    const duration = video.duration;
 
+    const duration = video.duration || 0; 
+
+    
     const newVideo = await Video.create({
-        videoFile: video.url,
-        thumbnail: thumbnail.url,
+        videoFile: video.url, 
+        thumbnail: thumbnail.url, 
         title,
         description,
-        categorizes,
+        categories,
         isPublished,
         duration,
-        owner: req.user?._id
+        owner: req.user?._id 
     });
+
 
     await newVideo.save();
 
+ 
     return res
         .status(200)
-        .json(new ApiResponse(200, {}, "Password changed successfully"));
-})
+        .json(new ApiResponse(200, { video: newVideo }, "Video published successfully!")); // Return the new video object
+});
+
+
 
 const getVideoById = asyncHandler(async (req, res) => {
     const { videoId } = req.params
@@ -123,9 +175,7 @@ const updateVideo = asyncHandler(async (req, res) => {
             await deleteOnCloudinary(video.thumbnail);
         }
 
-        const uploadedThumbnail = await uploadOnCloudinary(thumbnail, {
-            folder: "Thumbnails",
-        });
+        const uploadedThumbnail = await uploadOnCloudinary(thumbnail);
 
         video.thumbnail = uploadedThumbnail.secure_url;
     }
@@ -135,15 +185,12 @@ const updateVideo = asyncHandler(async (req, res) => {
 
     // Update description if provided
     if (description) video.description = description;
-
+    console.log(req.body.categories)
     // Update categories if provided and validate
-    if (categories) {
-        if (Array.isArray(categories) && categories.length <= 5) {
-            video.categories = categories;
-        } else {
-            throw new ApiError(400, "A video can have a maximum of 5 categories.");
-        }
-    }
+    // if (categories) {
+    //     if (Array.isArray(categories) && categories.length <= 5) {
+    video.categories = categories;
+    console.log(video.categories)
 
     await video.save();
 
@@ -156,7 +203,39 @@ const updateVideo = asyncHandler(async (req, res) => {
 
 const deleteVideo = asyncHandler(async (req, res) => {
     const { videoId } = req.params
-    //TODO: delete video
+    
+    if(!videoId){
+        throw new ApiError(400,"Video Id is missing")
+    }
+
+    const video = await Video.findById(videoId);
+
+    if(!video){
+        throw new ApiError(400,"Video not found");
+    }
+
+    if (req.user._id.toString() !== video.owner.toString()) {
+        throw new ApiError(403, "Unauthorized to delete this video");
+    }
+
+    if (video.videoFile) {
+        const publicIdOfVideo = video.videoFile.split('/').pop().split('.')[0];
+        await deleteOnCloudinary(publicIdOfVideo, 'video');
+    }
+
+    if (video.thumbnail) {
+        const publicIdOfThumbnail = video.thumbnail.split('/').pop().split('.')[0];
+        await deleteOnCloudinary(publicIdOfThumbnail, 'image');
+    }
+
+    await Video.findByIdAndDelete(videoId);
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200, "Video deleted successfully")
+    );
+
 })
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
