@@ -1,36 +1,48 @@
-@import '../index.scss';
+*{
+    background-color:#0f0f0f;
+}
 
 body{
-    background-color: black;
+    background-color:#0f0f0f;
 }
 
 .SearchBar{
     position: fixed;
-    height: 10%;
+    height: 56px;
     width: 100vw;
-    background-color: black;
-    z-index: 10;
+    background-color:#0f0f0f;
+    z-index: 100;
 }
 .container  {
+    
     display: flex;
-    background-color: black;
+    background-color:#0f0f0f;
+    .left-side2{
+        position: fixed;
+        margin-top: 4%;
+        width: 5%;
+        height: 100vh;
+        color: white;
+        background-color:#0f0f0f;
+        z-index: 2;
+    }
     .left-side {
         position: fixed;
         margin-top: 4%;
         width: 15%;
         height: 100vh;
         color: white;
-        background-color: black;
+        background-color:#0f0f0f;
         z-index: 2;
     }
     .right-side-WithNav {
         margin-top:4%;
-        margin-left: 15%;
+        margin-left: 17%;
         width: 85%;
         height: 90vh;
         display: flex;
         flex-direction: column;
-        background-color: black;
+        background-color:#0f0f0f;
     }
     .right-side-WithoutNav{
         margin-top:4%;
@@ -39,6 +51,6 @@ body{
         height: 90vh;
         display: flex;
         flex-direction: column;
-        background-color: black;
+        background-color:#0f0f0f;
     }
 }
