@@ -14,7 +14,7 @@ const router = createBrowserRouter(
         <>
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegistrationPage />} />
-            
+            <Route path='/manageVideos' element={<RegistrationPage />} />
             <Route path='/' element={<LayoutPage />}>
                 <Route path='' element={<HomePage />} />
                 <Route path='userchannel' element={<UserChannel />}>

@@ -37,7 +37,8 @@ function Navbar() {
         <div className="sidebar-header">You</div>
         <div className="sidebar-item">
           <CgProfile className="sidebar-icon" size={24} />
-          <span className="sidebar-label">Your channel</span>
+          <Link to="/userchannel" className="sidebar-label">Your channel</ Link>
+          
         </div>
         <div className="sidebar-item">
           <FaHistory className="sidebar-icon" size={24} />
