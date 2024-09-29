@@ -23,6 +23,7 @@ function SearchBar() {
 
     // Dropdown state
     const [isDropdownVisible, setDropdownVisible] = useState(false); // Initially set to false
+    const [isCreateDropdownVisible, setCreateDropdownVisible] = useState(false); // Initially set to false
 
     const submitHandler = () => {
         logout();
@@ -30,6 +31,9 @@ function SearchBar() {
 
     const toggleDropdown = () => {
         setDropdownVisible(prev => !prev); // Toggle dropdown visibility
+    };
+    const toggleCreateDropdown = () => {
+        setCreateDropdownVisible(prev => !prev); // Toggle dropdown visibility
     };
 
     return (
@@ -69,8 +73,50 @@ function SearchBar() {
                                 <button className='bg-gray-800 rounded-2xl px-8 mr-5 h-10'>
                                     Login
                                 </button>
+                        
                             </Link>
                         )}
+                        <div onClick={toggleCreateDropdown}>
+                            <button className='bg-gray-800 rounded-2xl px-8 mr-5 h-10'  >
+                            create
+                        </button>
+                        {isCreateDropdownVisible && (
+                                <div
+                                    className="dropdown-menu absolute right-0 w-48 text-white rounded-lg shadow-lg"
+                                    onMouseLeave={() => setCreateDropdownVisible(false)} // Hide on mouse leave
+                                >
+                                    <div className='dropdown '>
+
+                                        <div className="dropdown-section">
+
+                                            
+                                            <div className="dropdown-divider"></div>
+
+                                            <Link to="/account" className="dropdown-item">
+                                                <FaGoogle className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">Google Account</span>
+                                            </ Link>
+                                            <div className="dropdown-item">
+                                                <MdOutlineSwitchAccount className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">Switch Account</span>
+                                            </div>
+                                            <div className="dropdown-item">
+                                                <PiSignOut className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">Sign out</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="dropdown-divider"></div>
+
+                                        
+
+                                        
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        
+
                         {/* Profile Image with dropdown */}
                         <div className="relative">
                             <img
