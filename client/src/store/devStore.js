@@ -1,13 +1,17 @@
-import { create } from "zustand";
+// devStore.js
+import { create } from 'zustand';
 
 const devStore = create((set) => ({
-
     isNavOpen: true,
-
-    toggleNav: () => set(state => ({
-        isNavOpen: !state.isNavOpen
+    displayer: 'dashboard', // initial value can be 'dashboard' or any default section
+  
+    toggleNav: () => set((state) => ({
+      isNavOpen: !state.isNavOpen
     })),
-
-}));
-
-export default devStore;
+  
+    // New action to set the current section to display
+    setDisplayer: (section) => set({ displayer: section }),
+  }));
+  
+  export default devStore;
+  

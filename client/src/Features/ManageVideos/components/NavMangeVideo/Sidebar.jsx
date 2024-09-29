@@ -1,19 +1,76 @@
 import React from 'react';
-import { FaHome, FaHistory, FaRegThumbsUp } from "react-icons/fa";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
-import { CgPlayList, CgProfile } from "react-icons/cg";
-import { IoLogoYoutube } from "react-icons/io";
-import { RiVideoLine, RiPlayListLine } from "react-icons/ri";
 import './Sidebar.scss';
 import devStore from '../../../../store/devStore';
-import { Link } from 'react-router-dom';
-
-function Navbar() {
+import useStore from '../../../../store/userStore';
+import image1 from '../../../../assets/profile_pic.webp';
+function Sidebar() {
+  const { displayer, setDisplayer } = devStore(); // Access state and action
   const { isNavOpen } = devStore();
+  const { user, isAuthenticated, logout } = useStore();
+     
   return (
     <div className='Man-sidebar'>
+      <div className="Profile-sidebar-section">
+        <img
+          src={isAuthenticated && user?.avatar ? user.avatar : image1}
+          className="image rounded-full bg-green-600 mr-5 mb-5 flex items-center justify-center text-white font-bold cursor-pointer"
 
+        />
+        <div className="label">{isAuthenticated && user?.fullName ? user.fullName : "Name"}</div>
+        <div className="label">{isAuthenticated && user?.username ? user.username : "Username"}</div>
+      </div>
+      <div className="Option-sidebar-section">
+        <div className="Man-sidebar-item" onClick={() => setDisplayer('dashboard')}>
+          <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Dashboard</span>
+        </div>
+        <div className="Man-sidebar-item" onClick={() => setDisplayer('content')}>
+          <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Content</span>
+        </div>
+        <div className="Man-sidebar-item" onClick={() => setDisplayer('analytics')}>
+          <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Analytics</span>
+        </div>
+        <div className="Man-sidebar-item">
+          <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Comments</span>
+        </div>
+        <div className="Man-sidebar-item">
+          <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Subtitle</span>
+        </div>
+        <div className="Man-sidebar-item">
+          <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Copyright</span>
+        </div>
+        <div className="Man-sidebar-item">
+          <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Earn</span>
+        </div>
+        <div className="Man-sidebar-item">
+          <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Customisation</span>
+        </div>
+        <div className="Man-sidebar-item">
+          <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Audio Library</span>
+        </div>
+        
+      </div>
+      <div className="sidebar-divider"></div>
+      <div className="help-sidebar-section">
+        <div className="Man-sidebar-item">
+          <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Shorts</span>
+        </div>
+        <div className="Man-sidebar-item">
+          <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
+          <span className="Man-sidebar-label">Subscriptions</span>
+        </div>
+      </div>
       {/* <div className="sidebar-section">
         <Link to="/">
           <div className="sidebar-item active">
@@ -80,4 +137,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Sidebar;
