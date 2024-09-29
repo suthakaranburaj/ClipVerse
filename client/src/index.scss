@@ -1,0 +1,22 @@
+// Color Variables
+$primary-color: #ff0000;
+$secondary-color: #00ff00;
+$background-color:  #0f0f0f;;
+$text-color: #ffffffcc;
+$hover-bg-color: #303030;
+
+// Font Variables
+$font-family-primary: 'Arial', sans-serif;
+$font-family-secondary: 'Roboto', sans-serif;
+$base-font-size: 16px;
+
+// Breakpoints (for responsive design)
+$breakpoint-small: 576px;   // Small devices (mobile)
+$breakpoint-medium: 768px;  // Medium devices (tablets)
+$breakpoint-large: 992px;   // Large devices (desktops)
+$breakpoint-xlarge: 1200px; // Extra large devices
+
+// Spacing (optional)
+$padding-small: 8px;
+$padding-medium: 16px;
+$padding-large: 24px;

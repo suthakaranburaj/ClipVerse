@@ -1,6 +1,7 @@
 import mongoose, {Schema} from "mongoose";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import { type } from "os";
 
 const userSchema = new Schema(
     {
@@ -36,6 +37,12 @@ const userSchema = new Schema(
             {
                 type: Schema.Types.ObjectId,
                 ref: "Video"
+            }
+        ],
+        subscriptions:[
+            {
+                type:Schema.Types.ObjectId,
+                ref:"Subscriptions"
             }
         ],
         password: {

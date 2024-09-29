@@ -1,0 +1,41 @@
+@import '../../../index.scss';
+
+.custom-underline {
+    text-decoration: underline;
+    text-underline-offset: 4px; /* Adjust this value for the gap */
+}
+
+body {
+    background-color: black;
+}
+
+.card {
+
+    margin: 10% auto;
+    padding: 2rem 0;
+    font-size: 1.5rem;
+
+    color: white;
+    border-radius: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .input-container {
+        color: black;
+
+        display: flex;
+        flex-direction: column;
+
+        input {
+            padding: 0.5rem;
+        }
+
+        ::placeholder{
+            color:rgb(101, 101, 101);
+            font-weight: 600;
+        }
+    }
+}
