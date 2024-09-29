@@ -1,0 +1,69 @@
+.sidebar2 {
+    width: 100px;
+    padding: 1rem;
+    background-color: #0f0f0f;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  
+  
+    .sidebar2-section {
+      display: flex;
+      flex-direction: column;
+      
+      
+  
+      .sidebar2-header {
+        font-size: 14px;
+        font-weight: bold;
+        color: #aaaaaa;
+        margin: 1rem 0;
+      }
+  
+      .sidebar2-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        padding-top: 25px;
+        flex-direction: column;
+        padding-bottom: 25px;
+        border-radius: 10px;
+        
+        justify-content: center;
+        
+        text-align: center;
+        
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+  
+        &:hover {
+          background-color: #333;
+        }
+  
+        .sidebar2-icon {
+          color: #ffffff;
+          margin-right: 10px;
+          background-color: transparent;
+        }
+  
+        .sidebar2-label {
+          background-color: transparent;
+          font-size: 10px;
+          font-weight: 200;
+          color: #ffffff;
+        }
+  
+        &.active {
+          background-color: #333;
+          border-radius: 10px;
+        }
+  
+        .profile-img {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  

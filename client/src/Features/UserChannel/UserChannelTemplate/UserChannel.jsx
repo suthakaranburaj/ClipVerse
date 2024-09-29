@@ -46,11 +46,11 @@ function UserChannel() {
                             <button>
                                 Customise channel
                             </button>
-                            <Link to='/managevideos'>
-                                <button>
+                            
+                                <button button onClick={() => window.open('/managevideos', '_blank')}>
                                     Manage videos
                                 </button>
-                            </Link>
+                            
                             <button>
                                 Update profile
                             </button>

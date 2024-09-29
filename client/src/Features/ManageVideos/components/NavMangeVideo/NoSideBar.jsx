@@ -3,9 +3,9 @@ import { FaHome, FaHistory, FaRegThumbsUp } from "react-icons/fa";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 
-import './NoNavbar.scss';
-import devStore from '../../store/devStore';
-import useStore from '../../store/devStore';
+import './NoSideBar.scss';
+import devStore from '../../../../store/devStore';
+import useStore from '../../../../store/userStore';
 import { Link } from 'react-router-dom';
 
 function Navbar() {

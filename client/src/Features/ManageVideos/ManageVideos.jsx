@@ -1,22 +1,34 @@
 import React from 'react';
-// import { Outlet ,NavLink } from 'react-router-dom';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { Outlet } from 'react-router-dom';
 
-
+import Navbar from './components/NavMangeVideo/Sidebar';
+import SearchBar from './components/ManageSearchBar/SearchBar';
+import NoNavbar from './components/NavMangeVideo/NoSideBar'
+import devStore from '../../store/devStore';
 
 import './ManageVideos.scss';
-import useStore from '../../store/userStore';
 
 
 function ManageVideos() {
 
-    const {isAuthenticated , user} = useStore();
+    const { isNavOpen } = devStore();
     return (
         <>
-        <div>
-            hello
-        </div>
+            <div className='SearchBar'>
+                <SearchBar />
+            </div>
+            <div className='container'>
+                <div  className='left-side2'>
+                    {isNavOpen ? " " : <NoNavbar />}
+                </div>
+                
+                <div className={`left-side ${isNavOpen ? '' : 'hidden'}`}>
+                {isNavOpen ? <Navbar /> : <NoNavbar />}
+                </div>
+                <div className={isNavOpen ? 'right-side-WithNav' : 'right-side-WithoutNav'}>
+                    <Outlet />
+                </div>
+            </div>
         </>
     )
 }
