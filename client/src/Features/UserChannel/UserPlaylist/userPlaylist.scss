@@ -1,6 +1,17 @@
 .userPlaylistContainer{
+    font-size: 1.125rem;
     
     p{
-        padding: 1%;
+        padding: 0.5% 0 2% 0;
+        font-size: 1rem;
+    }
+
+    .playlistContainer{
+        width: 20%;
+        height: 30%;
+        display: flex;
+        img{
+            width: 100%;
+        }
     }
 }
