@@ -8,13 +8,14 @@ import UserCommunity from "./Features/UserChannel/UserCommunity/UserCommunity";
 import WatchVideo from './Features/WatchVideo/WatchVideo'
 import LoginPage from "./Features/Authentication/LoginPage/LoginPage";
 import RegistrationPage from "./Features/Authentication/RegistrationPage/RegistrationPage";
+import ManageVideos from './Features/ManageVideos/ManageVideos'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegistrationPage />} />
-            <Route path='/manageVideos' element={<RegistrationPage />} />
+            <Route path='/managevideos' element={<ManageVideos />} />
             <Route path='/' element={<LayoutPage />}>
                 <Route path='' element={<HomePage />} />
                 <Route path='userchannel' element={<UserChannel />}>

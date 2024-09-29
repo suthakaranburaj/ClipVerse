@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet ,NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
 
 import image2 from '../../../assets/profile_pic.webp';
 import userCoverImage from '../../../assets/user_coverImage.jpg'
@@ -45,9 +46,11 @@ function UserChannel() {
                             <button>
                                 Customise channel
                             </button>
-                            <button>
-                                Manage videos
-                            </button>
+                            <Link to='/managevideos'>
+                                <button>
+                                    Manage videos
+                                </button>
+                            </Link>
                             <button>
                                 Update profile
                             </button>
