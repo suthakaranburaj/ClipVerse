@@ -30,13 +30,14 @@ const getChannelStats = asyncHandler(async (req, res) => {
     }
 
     const totalVideos = userVideos.length;
-    const totalVideoViews = userVideos.reduce((sum, video) => sum + video.views);
+    const totalVideoViews = userVideos.reduce((sum, video) => sum + video.views,0);
 
     const totalSubs = await Subscription.find({ channel: userId });
     const totalSubCount = totalSubs.length;
 
-    const totalLikes = await Like.find({ video: userVideos[0]._id });
-    const totalComments = await Comment.find({ video: userVideos[0]._id });
+    const totalLikes = await Like.find({ video: userVideos._id });
+    const totalLikesCount = totalLikes.length;
+    // const totalComments = await Comment.find({ video: userVideos[0]._id });
 
     return res
         .status(200)
@@ -46,10 +47,10 @@ const getChannelStats = asyncHandler(async (req, res) => {
                 totalVideos,
                 totalVideoViews,
                 totalSubCount,
-                totalLikes,
-                totalComments
+                totalLikesCount,
+                // totalComments
             },
-            "Password changed successfully"
+            "User Stats fetched successfully"
         ));
 })
 
