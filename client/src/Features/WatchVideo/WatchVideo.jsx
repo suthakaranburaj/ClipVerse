@@ -29,8 +29,8 @@ function WatchVideo() {
     };
 
     return (
-        <div className='mx-20 mt-5 flex h-auto'>
-            <div className='watchVideo-left-side flex-col'>
+        <div className='watchVideo-container'>
+            <div className='watchVideo-left-side'>
                 <div>
                     {videoSrc && (
                         <video 
@@ -46,15 +46,15 @@ function WatchVideo() {
                     </button>
                 </div>
                 <div>
-                    <p className='w-[100%] text-white font-bold text-2xl'>Video Title Here</p>
+                    <p className='video-title'>Video Title Here</p>
                 </div>
             </div>
 
-            <div className='watchVideo-right-side flex flex-col gap-3'>
+            <div className='watchVideo-right-side'>
                 {/* Add your video data logic here if needed */}
             </div>
         </div>
-    )
+    );
 }
 
 export default WatchVideo;

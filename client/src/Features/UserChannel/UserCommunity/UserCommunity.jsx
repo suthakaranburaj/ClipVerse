@@ -2,7 +2,7 @@ import React from 'react'
 
 function UserCommunity() {
   return (
-    <div className='bg-black h-[100vh]'>
+    <div className=''>
         <p>Hellow</p>
     </div>
   )
