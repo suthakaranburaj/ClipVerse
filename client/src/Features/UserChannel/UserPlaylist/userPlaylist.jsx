@@ -8,7 +8,9 @@ function userPlaylist() {
             <div className='playlistContainer'>
                 <img src={image1} alt="" />
                 <div>
-
+                    <p>DSA important videos</p>
+                    <p>Description</p>
+                    <button>View full playlist</button>
                 </div>
             </div>
         </div>
