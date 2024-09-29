@@ -3,14 +3,12 @@ import { FaHome, FaHistory, FaRegThumbsUp } from "react-icons/fa";
 import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { CgPlayList, CgProfile } from "react-icons/cg";
-import { IoLogoYoutube } from "react-icons/io";
 import { RiVideoLine, RiPlayListLine } from "react-icons/ri";
-import "./Navbar.scss";
-import devStore from "../../store/devStore";
 import { Link } from "react-router-dom";
 
+import './Navbar.scss';
+
 function Navbar() {
-    const { isNavOpen } = devStore();
     return (
         <div className="sidebar">
             <div className="sidebar-section">
