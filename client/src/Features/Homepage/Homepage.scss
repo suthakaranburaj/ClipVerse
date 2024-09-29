@@ -1,24 +1,22 @@
-.big-boy{
-    margin-left: 80px;
+.HomePageContainer{
+    margin-left: 20px;
     width: 100%;
     background-color: #0f0f0f;
 }
-.big-boy1{
+.HomePageContainer1{
     background-color: #0f0f0f;
 }
 .Navopen{
-   
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-   width: 110%;
-   align-items: flex-start;
-   justify-content:space-evenly;
-   
-   .box{
-       min-width: 250px;
-       width: 370px;
-    }
+    width: 100%;
+    align-items: flex-start;
+    justify-content:space-evenly;
+    .box{
+            min-width: 250px;
+            width: 370px;
+        }
     .vid{
         object-fit: cover;
         width: 100%;
@@ -30,14 +28,14 @@
 }
 .main-box{
 
-     display: flex;
-     flex-direction: row;
-     flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
     
     align-items: flex-start;
     justify-content:space-evenly;
-   
+
     .box{
         min-width: 250px;
         width: 290px;
@@ -45,16 +43,17 @@
      .vid{
         object-fit: cover;
         width: 100%;
-     
+
     }
-    .thumbnail{
-      
-    }
+    // .thumbnail{
+    
+    // }
 }
 
 .headball{
     z-index: 50;
     background-color:#0f0f0f;
+    width: 100%;
     .live-recommend-btn{
         background-color: #f1f1f1;
         color: #272727;
