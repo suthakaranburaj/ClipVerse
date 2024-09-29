@@ -10,7 +10,7 @@
       justify-content: flex-end;
       width: 65%;
       height: 40px;
-      background-color: #121212;
+      background-color: #0f0f0f;
       border-radius: 40px;
       padding-top: 5px;
       padding-bottom: 5px;
@@ -28,7 +28,7 @@
       }
 
       .search-button {
-        background-color: #323232;
+        background-color: #0f0f0f;
         
         padding: 10px;
         height: 40px;
@@ -57,7 +57,7 @@
     height: 56px;
     display: flex;
     align-items: center;
-   
+   background-color: #0f0f0f;
     .icon-large {
         font-size: 1.3rem; // Adjust size as needed
     }
