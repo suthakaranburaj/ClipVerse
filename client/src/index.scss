@@ -29,6 +29,8 @@ body {
     background: $background-color;
     color: $text-color;
 
+    overflow-x: hidden;
+
     img{
         width: 100%;
     }
