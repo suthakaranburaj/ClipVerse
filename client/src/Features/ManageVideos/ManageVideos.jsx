@@ -33,7 +33,7 @@ function ManageVideos() {
             <div className='SearchBar'>
                 <SearchBar />
             </div>
-            <div className='container'>
+            <div className='layoutContainer'>
                 <div className='left-side2'>
                     {isNavOpen ? " " : <NoNavbar />}
                 </div>
