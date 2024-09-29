@@ -2,8 +2,8 @@ import React from 'react'
 
 function userPlaylist() {
     return (
-        <div className='bg-black h-[100vh]'>
-            <p>Hellow</p>
+        <div className='userPlaylistContainer'>
+            <p>Created Playlists</p>
         </div>
     )
 }

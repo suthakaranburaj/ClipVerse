@@ -1,11 +1,132 @@
-.UserChannel-Container{
+.UserChannel-Container {
     color: white;
-    background-color: black;
+    background-color: #0f0f0f;
     height: 100vh;
-    button{
-        background-color: gray;
-        color: white;
-        padding: 0.25rem 0.5rem;
-        border-radius: 15px;
+    padding: 0%;
+
+    .UserProfileContainer{
+        padding :0 10%
+    }
+    .cover-container {
+        width: 100%;
+        height: 25vh;
+        margin-bottom: 1.25rem;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
+
+        .edit-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #9b9b9b;
+            border-radius: 50%;
+            cursor: pointer;
+
+            svg {
+                color: #4a4a4a;
+                width: 1.5rem;
+                height: 1rem;
+            }
+        }
+    }
+
+    .profile-container {
+        display: flex;
+
+        .avatar-container {
+            width: 15%;
+            height: 25%;
+            margin: 0 1.25rem;
+            position: relative;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .edit-icon {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                background-color: #9b9b9b;
+                border-radius: 50%;
+                cursor: pointer;
+
+                svg {
+                    color: #4a4a4a;
+                    width: 1.5rem;
+                    height: 1rem;
+                }
+            }
+        }
+
+        .profile-info {
+            color: #808080;
+            display: flex;
+            flex-direction: column;
+            margin-top: 1.25rem;
+            gap: 0.5rem;
+
+            .name {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: white;
+            }
+
+            .more-info {
+                color: white;
+                font-weight: 600;
+            }
+
+            .buttons {
+                display: flex;
+                gap: 0.5rem;
+                margin: 0.5rem 0;
+
+                button {
+                    background-color: gray;
+                    color: white;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 15px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 1rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #808080;
+        padding:1% 10% 0.5% 10%;
+
+        a {
+            text-decoration: none;
+            &.active {
+                color: white;
+            }
+        }
+    }
+
+    .separator {
+        background-color: #808080;
+        height: 1px;
+        width: 100%;
+        margin-top: 0.75rem;
+    }
+
+    .content {
+        padding: 1% 10%;
+        height: auto;
     }
 }
