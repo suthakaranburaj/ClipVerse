@@ -8,8 +8,10 @@ function Dashboard() {
 
     return (
         <>
-            <div className='bigboy'>
-                Dashyh y 
+            <div className='dashboardContainer'>
+                <div>
+                    <p>Channel Dashboard</p>
+                </div>
             </div>
         </>
     )

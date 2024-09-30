@@ -28,6 +28,8 @@ const useStore = create((set) => ({
         try {
             const response = await loginUser({ username, email, password });
             const userData = response.data.data.user;
+            const accessToken = response.data.data.accessToken;
+            console.log(accessToken);
             console.log("response:::::::::",response);
 
             set({
@@ -38,6 +40,7 @@ const useStore = create((set) => ({
             });
 
             localStorage.setItem("user", JSON.stringify(userData));
+            localStorage.setItem("accessToken",accessToken)
         } catch (error) {
             console.log("errorr::::::",error);
             
@@ -55,6 +58,7 @@ const useStore = create((set) => ({
 
         try {
             const response = await registerUser(formData);
+            const accessToken = response.data.data.accessToken;
             // console.log("Registration response:", response);
             set({
                 user: response.data.data,
@@ -63,6 +67,7 @@ const useStore = create((set) => ({
             });
 
             localStorage.setItem("user", JSON.stringify(response.data.user));
+            localStorage.setItem("accessToken",accessToken);
             // console.log("User registered:", JSON.stringify(response.data.user));
             // console.log("LocalStorage User:", localStorage.getItem("user"));
 
@@ -91,6 +96,7 @@ const useStore = create((set) => ({
             });
 
             localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
         } catch (error) {
             console.error("Logout error: ", error);
         }

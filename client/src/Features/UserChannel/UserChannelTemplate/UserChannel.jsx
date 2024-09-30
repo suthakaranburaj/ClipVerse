@@ -43,7 +43,7 @@ function UserChannel() {
                         <p>More about this channel <span className='more-info'>...more</span></p>
                         <div className='buttons'>
                             <button>Customise channel</button>
-                            <button onClick={() => window.open('/managevideos', '_blank')}>Manage videos</button>
+                            <button onClick={() => window.open('/channel', '_blank')}>Manage videos</button>
                             <button>Update profile</button>
                         </div>
                     </div>
