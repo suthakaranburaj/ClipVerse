@@ -120,11 +120,6 @@ const useVideosStore = create((set,get)=>({
     },
 }));
 
-useStore.subscribe(
-    (state)=>state.isAuthenticated,
-    (isAuthenticated) => {
-        useVideosStore.setState({ isAuthenticated: isAuthenticated });
-    }
-);
+
 
 export default useVideosStore;

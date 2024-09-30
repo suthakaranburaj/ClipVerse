@@ -1,13 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import './Homepage.scss';
+
 import devStore from '../../store/devStore';
 import useVideosStore from '../../store/useVideosStore';
 import { Link } from 'react-router-dom';
+import useStore from '../../store/userStore';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 function HomePage() {
     const videoRefs = useRef([]);
     const { isNavOpen } = devStore();
     const { videos, getAllVideos, loading, error } = useVideosStore();
+    const {user}=useStore();
+
+    dayjs.extend(relativeTime);
 
     useEffect(() => {
         // Fetch all videos when the component is mounted
@@ -72,16 +79,15 @@ function HomePage() {
                             <div className='flex my-3'>
                                 <img
                                     className='w-[36px] h-[36px] rounded-full mx-2'
-                                    src={video.uploaderAvatarUrl || '/path/to/default/avatar.png'}
-                                    alt={video.uploaderName}
+                                    src={user.avatar || ''}
                                 />
                                 <div className='flex-col'>
                                     <p className='description'>{video.title}</p>
-                                    <p className='userChannel'>{video.uploaderName}</p>
+                                    <p className='userChannel'>{user.username}</p>
                                     <div className='flex'>
                                         <p className='views'>{video.views} views</p>
                                         <p className='dot'>•</p>
-                                        <p className='time'>{video.timeSinceUpload}</p>
+                                        <p className='time'>{dayjs(video.createdAt).fromNow()}</p>
                                     </div>
                                 </div>
                             </div>
