@@ -9,9 +9,11 @@ const getToken = () => {
 
 const publishAVideoService = async (videoData) => {
     try {
+        console.log(getToken)
         const response = await axios.post(`${BACKEND_URL}`, videoData, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'multipart/form-data',
             },
             withCredentials: true,
         });
