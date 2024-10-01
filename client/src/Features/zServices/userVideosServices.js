@@ -93,6 +93,21 @@ const togglePublishStatusService = async({videoId}) => {
         throw error;
     }
 }
+
+// const incrementVideoViewsService = async (videoId) => {
+//     try {
+//         const response = await axios.put(`/api/videos/${videoId}`,
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${getToken()}`
+//                 },
+//                 withCredentials: true,
+//             });
+//             return response;
+//     } catch (error) {
+//         throw(error)
+//     }
+// };
 export {
     publishAVideoService,
     getAllVideosService,
@@ -100,4 +115,5 @@ export {
     updateVideoService,
     deleteVideoService,
     togglePublishStatusService,
+    // incrementVideoViewsService,
 }

@@ -263,11 +263,37 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
 
 })
 
+// const increamentViews = asyncHandler(async (req, res) => {
+//     const { videoId } = req.params; // Extract the videoId from params
+//     if (!videoId) {
+//         throw new ApiError(400, "Video Id is missing !!");
+//     }
+
+//     const video = await Video.findByIdAndUpdate(
+//         videoId,
+//         { $inc: { views: 1 } }, // Increment views by 1
+//         { new: true } // Return the updated document
+//     );
+//     console.log("Hellow")
+
+//     if (!video) {
+//         return res
+//             .status(404)
+//             .json(new ApiError(404, "Video not found !!"));
+//     }
+
+//     return res
+//         .status(200)
+//         .json(new ApiResponse(200, "Views of the video incremented successfully !!"));
+// });
+
+
 export {
     getAllVideos,
     publishAVideo,
     getVideoById,
     updateVideo,
     deleteVideo,
-    togglePublishStatus
+    togglePublishStatus,
+    // increamentViews,
 }

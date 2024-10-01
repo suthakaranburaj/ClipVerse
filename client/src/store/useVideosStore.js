@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import useStore from "./userStore";
-import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService } from "../Features/zServices/userVideosServices";
+import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService } from "../Features/zServices/userVideosServices";//incrementVideoViewsService
 
 const useVideosStore = create((set,get)=>({
     video:null,
@@ -118,6 +118,22 @@ const useVideosStore = create((set,get)=>({
             });
         }
     },
+
+    // incrementVideoViews: async (videoId) => {
+    //     set({ isLoading: true, error: null });
+    //     try {
+    //         const response = await incrementVideoViewsService(videoId); // Call the service
+    //         set({
+    //             isLoading: false,
+    //             error: null,
+    //         });
+    //     } catch (error) {
+    //         set({
+    //             isLoading: false,
+    //             error: error.response?.data?.message || "Failed to increment views",
+    //         });
+    //     }
+    // },
 }));
 
 
