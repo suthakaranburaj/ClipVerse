@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { loginUser, registerUser } from "../Features/Authentication/userAuthServices";
+import { loginUser, registerUser} from "../Features/Authentication/userAuthServices";
 
 // Get user data from localStorage if available
 const getStoredUser = () => {
@@ -21,6 +21,7 @@ const useStore = create((set) => ({
     error: null,
     isLoading: false,
     isAuthenticated: !!localStorage.getItem("user"),
+    watchHistory: [],
 
     login: async ({ username, email, password }) => {
         set(() => ({ isLoading: true, error: null }));

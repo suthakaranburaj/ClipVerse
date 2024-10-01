@@ -1,13 +1,15 @@
 import { create } from "zustand";
 import useStore from "./userStore";
-import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService } from "../Features/zServices/userVideosServices";//incrementVideoViewsService
+import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService, incrementVideoViewsService, userWatchHistoryService} from "../Features/zServices/userVideosServices";
 
 const useVideosStore = create((set,get)=>({
+    user:null,
     video:null,
     videos:[],
     isLoading:false,
     error:null,
     isAuthenticated:useStore.getState().isAuthenticated,
+    watchHistorys:[],
 
     getAllVideos: async(params={}) => {
         set({isLoading: true, error:null});
@@ -118,22 +120,43 @@ const useVideosStore = create((set,get)=>({
             });
         }
     },
+    
+    userWatchHistory: async (videoId) =>{
+        set({isLoading:true,error:null});
+        try {
+            const response = await userWatchHistoryService(videoId);
+            const watchHistory = response.data.user.watchHistory;
+            console.log(watchHistory);
+            set((state) =>({
+                watchHistorys: [watchHistory,...state.watchHistorys],
+                isLoading:false,
+                error:null,
+            }));
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.data?.message || "Failed to add the video in watch history !!",
+            })
+        }
+    },
 
-    // incrementVideoViews: async (videoId) => {
-    //     set({ isLoading: true, error: null });
-    //     try {
-    //         const response = await incrementVideoViewsService(videoId); // Call the service
-    //         set({
-    //             isLoading: false,
-    //             error: null,
-    //         });
-    //     } catch (error) {
-    //         set({
-    //             isLoading: false,
-    //             error: error.response?.data?.message || "Failed to increment views",
-    //         });
-    //     }
-    // },
+    incrementVideoViews: async (videoId) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await incrementVideoViewsService(videoId); // Call the service
+            console.log(response)
+            set({
+                isLoading: false,
+                error: null,
+            });
+            return response;
+        } catch (error) {
+            set({
+                isLoading: false,
+                error: error.response?.data?.message || "Failed to increment views",
+            });
+        }
+    },
 }));
 
 

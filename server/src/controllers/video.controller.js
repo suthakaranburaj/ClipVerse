@@ -253,29 +253,60 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
 
 })
 
-// const increamentViews = asyncHandler(async (req, res) => {
-//     const { videoId } = req.params; // Extract the videoId from params
-//     if (!videoId) {
-//         throw new ApiError(400, "Video Id is missing !!");
-//     }
+const addUserWatchHistoryand = asyncHandler(async ( req,res)=>{
+    const {videoId} = req.params;
+    const userId = req.user?._id;
 
-//     const video = await Video.findByIdAndUpdate(
-//         videoId,
-//         { $inc: { views: 1 } }, // Increment views by 1
-//         { new: true } // Return the updated document
-//     );
-//     console.log("Hellow")
+    if(!videoId){
+        throw ApiError(400,"Video Id is missing !!")
+    }
+    if(!userId){
+        throw ApiError(400,"User Id is missing !!")
+    }
 
-//     if (!video) {
-//         return res
-//             .status(404)
-//             .json(new ApiError(404, "Video not found !!"));
-//     }
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+            $addToSet: { watchHistory: videoId },  // Ensure the video is not added multiple times
+        },
+        { new: true }
+    ).populate({
+        path: 'watchHistory',
+        populate: {
+            path: 'owner',
+            select: 'fullName username avatar',
+        },
+    });
 
-//     return res
-//         .status(200)
-//         .json(new ApiResponse(200, "Views of the video incremented successfully !!"));
-// });
+    return res
+    .status(200)
+    .json(200,updatedUser.watchHistory,"Video added to Watch History successfully !!")
+
+})
+
+const increamentViews = asyncHandler(async (req, res) => {
+    const { videoId } = req.params; // Extract the videoId from params
+    if (!videoId) {
+        throw new ApiError(400, "Video Id is missing !!");
+    }
+
+    const video = await Video.findByIdAndUpdate(
+        videoId,
+        { $inc: { views: 0.5 } }, // Increment views by 1
+        { new: true } // Return the updated document
+    );
+    // console.log("Hellow")
+
+    if (!video) {
+        return res
+            .status(404)
+            .json(new ApiError(404, "Video not found !!"));
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, "Views of the video incremented successfully !!"));
+});
 
 
 export {
@@ -285,5 +316,6 @@ export {
     updateVideo,
     deleteVideo,
     togglePublishStatus,
-    // increamentViews,
+    addUserWatchHistoryand,
+    increamentViews,
 }

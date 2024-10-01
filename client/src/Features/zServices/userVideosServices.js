@@ -9,7 +9,7 @@ const getToken = () => {
 
 const publishAVideoService = async (videoData) => {
     try {
-        console.log(getToken)
+        // console.log(getToken)
         const response = await axios.post(`${BACKEND_URL}`, videoData, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
@@ -63,7 +63,7 @@ const updateVideoService = async(videoId, videoData) =>{
     try {
         const response = await axios.patch(`${BACKEND_URL}/${videoId}`, videoData, {
             headers: {
-                Authorization: `Bearer ${getToken()}`
+                Authorization: `Bearer ${getToken()}`,
             },
             withCredentials: true,
         });        
@@ -75,7 +75,7 @@ const updateVideoService = async(videoId, videoData) =>{
 
 const deleteVideoService = async({videoId}) => {
     try {
-        const response = await axios.delete(`${BACKEND_URL}/${videoId}`,);        
+        const response = await axios.delete(`${BACKEND_URL}/${videoId}`);        
         return response;
     } catch (error) {
         throw error;
@@ -86,7 +86,7 @@ const togglePublishStatusService = async({videoId}) => {
     try {
         const response = await axios.patch(`${BACKEND_URL}/toggle/publish/${videoId}`, null, {
             headers: {
-                Authorization: `Bearer ${getToken()}`
+                Authorization: `Bearer ${getToken()}`,
             },
             withCredentials: true,
         });        
@@ -96,20 +96,34 @@ const togglePublishStatusService = async({videoId}) => {
     }
 }
 
-// const incrementVideoViewsService = async (videoId) => {
-//     try {
-//         const response = await axios.put(`/api/videos/${videoId}`,
-//             {
-//                 headers: {
-//                     Authorization: `Bearer ${getToken()}`
-//                 },
-//                 withCredentials: true,
-//             });
-//             return response;
-//     } catch (error) {
-//         throw(error)
-//     }
-// };
+const userWatchHistoryService = async(videoId) =>{
+    try {
+        const response = await axios.post(`${BACKEND_URL}/${videoId}`,null,{
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+            withCredentials: true,
+        });
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const incrementVideoViewsService = async (videoId) => {
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/${videoId}`,null,
+            {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                },
+                withCredentials: true,
+            });
+            return response;
+    } catch (error) {
+        throw(error)
+    }
+};
 export {
     publishAVideoService,
     getAllVideosService,
@@ -117,5 +131,6 @@ export {
     updateVideoService,
     deleteVideoService,
     togglePublishStatusService,
-    // incrementVideoViewsService,
+    userWatchHistoryService,
+    incrementVideoViewsService,
 }

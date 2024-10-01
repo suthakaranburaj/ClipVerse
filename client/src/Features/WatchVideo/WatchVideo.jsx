@@ -9,17 +9,18 @@ function WatchVideo() {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    const { video, getVideoById, isLoading, error,  } = useVideosStore(); // Fetch the video from the store
+    const { video, getVideoById, isLoading, error, userWatchHistory ,incrementVideoViews } = useVideosStore(); // Fetch the video from the store
     const location = useLocation();
-    // incrementVideoViews
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const videoId = queryParams.get('videoId');
+        console.log(videoId);
         if (videoId) {
             getVideoById(videoId); // Fetch the video based on videoId
-            // incrementVideoViews(videoId);
+            incrementVideoViews(videoId);
+            userWatchHistory(videoId);
         }
-    }, [location, getVideoById, ]);
+    }, [location, getVideoById, userWatchHistory, incrementVideoViews]);
     // incrementVideoViews
     const togglePlayPause = () => {
         if (isPlaying) {
@@ -40,7 +41,7 @@ function WatchVideo() {
                     {video ? (
                         <video
                             ref={videoRef}
-                            src={video.videoFile} // Assuming the video URL comes from the store
+                            src={video?.videoFile} // Assuming the video URL comes from the store
                             controls // Adds default video controls
                             width="100%" // Make it responsive
                             style={{ borderRadius: '10px' }} // Optional: style to make it look better
@@ -53,7 +54,7 @@ function WatchVideo() {
                     </button>
                 </div>
                 <div>
-                    <p className='video-title'>{video ? video.title : 'Video Title Here'}</p>
+                    <p className='video-title'>{video ? video?.title : 'Video Title Here'}</p>
                 </div>
             </div>
 
