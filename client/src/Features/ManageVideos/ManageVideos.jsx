@@ -24,7 +24,7 @@ function ManageVideos() {
             case 'content':
                 return <Content/>;
             case 'comments':
-                return <Comments />
+                return <Comments />;
             default:
                 return <Dashboard />; // Fallback to Dashboard
         }

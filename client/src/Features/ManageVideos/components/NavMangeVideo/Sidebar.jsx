@@ -34,7 +34,7 @@ function Sidebar() {
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Analytics</span>
         </div>
-        <div className="Man-sidebar-item">
+        <div className="Man-sidebar-item" onClick={() => setDisplayer('comments')}>
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Comments</span>
         </div>
