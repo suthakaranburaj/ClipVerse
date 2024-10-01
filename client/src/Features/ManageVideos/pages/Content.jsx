@@ -68,7 +68,7 @@ function Content() {
                 <div className="divider"></div>
 
                 <div className='level-4'>
-                    {videos.length > 0 ? (
+                    {videos?.length > 0 ? (
                         videos.map((video) => (
                             <React.Fragment key={video?._id}>
                                 <div className='videoContainer'>

@@ -32,8 +32,8 @@ const getChannelStats = asyncHandler(async (req, res) => {
     const totalVideos = userVideos.length;
     const totalVideoViews = userVideos.reduce((sum, video) => sum + video.views,0);
 
-    const totalSubs = await Subscription.find({ channel: userId });
-    const totalSubCount = totalSubs.length;
+    const totalSubscribers = await Subscription.find({ channel: userId });
+    const totalSubscribersCount = totalSubscribers.length;
 
     const totalLikes = await Like.find({ video: userVideos._id });
     const totalLikesCount = totalLikes.length;
@@ -52,7 +52,9 @@ const getChannelStats = asyncHandler(async (req, res) => {
             {
                 totalVideos,
                 totalVideoViews,
-                totalSubCount,
+                userVideos,
+                totalSubscribersCount,
+                totalSubscribers,
                 totalLikesCount,
                 totalComments,
                 comments,

@@ -1,16 +1,32 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 
 import './Dashboard.scss';
+import userStatsStore from '../../../store/userStatsStore';
+import useStore from '../../../store/userStore'
+
 
 
 function Dashboard() {
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState(null);
-
+    const {getChannelStats, views, likes, commentsCount,totalSubscribers,}=userStatsStore();
     // Dropdown state
 
+    useEffect(() => {
+        const fetchVideos = async () => {
 
+            try {
+                await getChannelStats();
+                // Process the fetched videos here
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+            }
+            };
+            fetchVideos();
+        
+    }, [getChannelStats]);
     const handleUploadClick = () => {
         setModalVisible(true);  // Open the modal
     };
@@ -36,25 +52,25 @@ function Dashboard() {
                     <div className='col-2'>
                         <div className='container-subs'>
                             <div className='subs-label'>Current subscribers</div>
-                            <div className='subs-count'>12k</div>
+                            <div className='subs-count'>{totalSubscribers}</div>
                             
                         </div>
                         <div className="dropdown-divider"></div>
                         <div className='container-details'>
                             <div className='label'>Total Views</div>
-                            <div className='count'>265k</div>
+                            <div className='count'>{views}</div>
                             
                         </div>
                         <div className="dropdown-divider"></div>
                         <div className='container-details'>
                             <div className='label'>Total Likes</div>
-                            <div className='count'>34k</div>
+                            <div className='count'>{likes}</div>
                             
                         </div>
                         <div className="dropdown-divider"></div>
                         <div className='container-details'>
                             <div className='label'>Total Comments</div>
-                            <div className='count'>61k</div>
+                            <div className='count'>{commentsCount}</div>
                           
                         </div>
                         

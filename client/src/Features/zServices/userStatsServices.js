@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL='http://localhost:8000/api/v1/users/';
+const BACKEND_URL='http://localhost:8000/api/v1/dashboard';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -8,9 +8,9 @@ const getToken = () => {
     return accessToken; // Adjust based on how you store the token
 };
 
-const getAllCommentsService= async(userId) =>{
+const getChannelStatsService= async() =>{
     try {
-        const response = await axios.get(`${BACKEND_URL}/${userId}/comments`,null,{
+        const response = await axios.get(`${BACKEND_URL}/stats`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -22,33 +22,6 @@ const getAllCommentsService= async(userId) =>{
     }
 };
 
-const getAllLikesService= async(userId)=>{
-    try {
-        const response = await axios.get(`${BACKEND_URL}/${userId}/likes`,null,{
-            headers: {
-                Authorization: `Bearer ${getToken()}`,
-            },
-            withCredentials: true,
-        });
-        return response;
-    } catch (error) {
-        throw error;
-    }
-};
-
-const getAllViewsService = async(userId)=>{
-    try {
-        const response = await axios.get(`${BACKEND_URL}/${userId}/views`,null,{
-            headers: {
-                Authorization: `Bearer ${getToken()}`,
-            },
-            withCredentials: true,
-        });
-        return response;
-    } catch (error) {
-        throw error;
-    }
-};
 
 const getChannelVideosService = async()=>{
     try {
@@ -64,8 +37,6 @@ const getChannelVideosService = async()=>{
     }
 }
 export{
-    getAllCommentsService,
-    getAllLikesService,
-    getAllViewsService,
+    getChannelStatsService,
     getChannelVideosService,
 }

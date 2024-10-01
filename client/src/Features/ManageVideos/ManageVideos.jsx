@@ -7,6 +7,7 @@ import NoNavbar from './components/NavMangeVideo/NoSideBar'
 import devStore from '../../store/devStore';
 import Dashboard from './pages/Dashboard';
 import Content from './pages/Content';
+import Comments from './pages/Comments'
 
 import './ManageVideos.scss';
 
@@ -22,7 +23,8 @@ function ManageVideos() {
                 return <Dashboard/>;
             case 'content':
                 return <Content/>;
-
+            case 'comments':
+                return <Comments />
             default:
                 return <Dashboard />; // Fallback to Dashboard
         }
