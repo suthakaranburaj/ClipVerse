@@ -75,6 +75,7 @@ function RegistrationPage() {
                     <input
                         type="file"
                         className="file-input text-white border border-gray-700 rounded-md p-2 focus:outline-none"
+                        accept="image/*"
                         {...register('avatar', { required: 'Avatar is required' })}
                     />
                     {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>} {/* Avatar error */}
@@ -83,6 +84,7 @@ function RegistrationPage() {
                     <input
                         type="file"
                         className="file-input text-white border border-gray-700 rounded-md p-2 focus:outline-none"
+                        accept="image/*"
                         {...register('coverImage', { required: 'Cover image is required' })}
                     />
                     {errors.coverImage && <p className="text-red-500">{errors.coverImage.message}</p>} {/* Cover Image error */}

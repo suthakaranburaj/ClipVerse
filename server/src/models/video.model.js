@@ -35,17 +35,10 @@ const videoSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User"
         },
-        categories: {
-            type: [String],
-            enum: ['Education', 'Entertainment', 'Sports', 'Music', 'News', 'Lifestyle'], 
-            validate: {
-                validator: function (value) {
-                    return value.length <= 5; 
-                },
-                message: 'A video can have a maximum of 5 categories.'
-            },
-            required: false 
-        }
+        // categories: {
+        //     type: String,
+        //     required: false 
+        // }
     },
     {
         timestamps: true

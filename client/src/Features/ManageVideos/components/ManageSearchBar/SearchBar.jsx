@@ -1,8 +1,7 @@
-// SearchBar.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faSearch, faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faSearch, faMicrophone } from '@fortawesome/free-solid-svg-icons'; // Import the cross icon
 import devStore from '../../../../store/devStore';
 import { HiCurrencyDollar } from "react-icons/hi";
 import { GrLanguage } from "react-icons/gr";
@@ -11,76 +10,82 @@ import { CgPlayListAdd } from "react-icons/cg";
 import { FaGoogle, FaUnlockAlt } from "react-icons/fa";
 import { PiSignOut } from "react-icons/pi";
 import { SiYoutubestudio } from "react-icons/si";
-import { FiDatabase, FiUpload, FiEdit } from "react-icons/fi";
+import { FiDatabase,FiUpload,FiEdit } from "react-icons/fi";
 import { IoLanguage, IoMoonSharp } from "react-icons/io5";
-import { MdOutlineFeedback, MdOutlineSwitchAccount, MdOutlinePodcasts, MdOutlineHelpOutline, MdVideoCall } from "react-icons/md";
-import { IoMdSettings, IoMdWifi } from "react-icons/io";
+import { MdOutlineFeedback, MdOutlineSwitchAccount,MdOutlinePodcasts, MdOutlineHelpOutline,MdVideoCall } from "react-icons/md";
+import { IoMdSettings,IoMdWifi } from "react-icons/io";
 import useStore from '../../../../store/userStore';
-import './SearchBar.scss';
+import './SearchBar.scss'; // Ensure this file contains the necessary styling
 import image1 from '../../../../assets/profile_pic.webp';
 import { useForm } from 'react-hook-form';
-import useVideosStore from '../../../../store/useVideosStore'
+import { ClipLoader } from 'react-spinners';
+import useVideoStore from '../../../../store/useVideosStore'
 
 function SearchBar() {
-    const { isNavOpen, toggleNav } = devStore();
+    const { isNavOpen, toggleNav } = devStore(); // Get isNavOpen state from the store
     const { user, isAuthenticated, logout } = useStore();
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const [isDropdownVisible1, setDropdownVisible1] = useState(false);
+    const [selectedVideo, setSelectedVideo] = useState(null);
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    // Dropdown state
+    const [isDropdownVisible, setDropdownVisible] = useState(false); // Initially set to false
+    const [isDropdownVisible1, setDropdownVisible1] = useState(false);
+    const [isCreateDropdownVisible, setCreateDropdownVisible] = useState(false); // Initially set to false
 
     const submitHandler = () => {
         logout();
     };
 
     const toggleDropdown = () => {
-        setDropdownVisible(prev => !prev);
+        setDropdownVisible(prev => !prev); // Toggle dropdown visibility
     };
-
     const toggleDropdown1 = () => {
-        setDropdownVisible1(prev => !prev);
+        setDropdownVisible1(prev => !prev); // Toggle dropdown visibility
     };
 
     const handleUploadClick = () => {
-        setModalVisible(true);
+        setModalVisible(true);  // Open the modal
     };
 
     const handleCloseModal = () => {
-        setModalVisible(false);
-        reset(); // Reset the form fields
+        setModalVisible(false);  // Close the modal
     };
 
-    const { register:publishAVideo, isLoading, error } = useVideosStore();
-    const onSubmit = async (data) => {
-        // FormData is required if you're uploading files
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('description', data.description);
-        formData.append('videoFile', data.videoFile[0]); // File input from useForm
-        formData.append('thumbnail',data.thumbnail[0]);
-        formData.append("categories", JSON.stringify(data.categories));
-        console.log(data)
-        // Call the publishAVideo function from the zustand store
-        const success = await publishAVideo(formData);
-        
-        if (success) {
-          reset(); // Reset the form if video upload is successful
-        }
-      };
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedVideo(file);
+        // Further processing can be done with the file, like uploading it to a server
+    };
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const {publishAVideo , isLoading , error} = useVideoStore();
 
+    const onSubmit = async(data) =>{
+        const formData = new FormData();
+        formData.append('title',data.title);
+        formData.append('description',data.description);
+        formData.append('thumbnail',data.thumbnail[0]);
+        formData.append('videoFile',data.videoFile[0]);
+        formData.append('isPublished', data.isPublished);
+
+        try {
+            await publishAVideo(formData);
+            handleCloseModal();  
+        } catch (error) {
+            console.error("Error during uploading video !!",error);
+        }
+    }
     return (
-        <div className="searchbar-container">
-            <div className='nav-icon'>
+        <div className="cont text-white p-4 flex justify-between">
+            <div className='mx-4'>
                 <FontAwesomeIcon
-                    className='icon-large'
-                    icon={isNavOpen ? faTimes : faBars}
-                    onClick={toggleNav}
+                    className='text-white icon-large'
+                    icon={isNavOpen ? faTimes : faBars} // Conditional rendering of icons
+                    onClick={() => toggleNav()}
                 />
             </div>
-            <div className='searchbar-content'>
-                <div className="searchbar-inner">
+            <div className='mx-10 w-[80%]'>
+                <div className="flex justify-between">
                     <div className="nav-center">
                         <div className="search-bar">
                             <input
@@ -94,35 +99,41 @@ function SearchBar() {
                         </div>
                         <FontAwesomeIcon icon={faMicrophone} className="mic-icon" />
                     </div>
-                    <div className='actions'>
+                    <div className='flex items-center relative'>
                         {isAuthenticated ? (
                             <button
-                                className='auth-button logout-button'
+                                className='bg-gray-800 rounded-2xl px-8 mr-5 h-10'
                                 onClick={submitHandler}
                             >
                                 Logout
                             </button>
                         ) : (
                             <Link to='/login'>
-                                <button className='auth-button login-button'>
+                                <button className='bg-gray-800 rounded-2xl px-8 mr-5 h-10'>
                                     Login
                                 </button>
+
                             </Link>
                         )}
-                        <div className="create-button-container">
-                            <button className='create-button' onClick={toggleDropdown1}>
-                                <MdVideoCall className="dropdown-icon" size={22} />
+                        <div className="relative">
+                            <button className='bttn bg-gray-800 rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
+                            <MdVideoCall className="dropdown-icon" size={22} />
                                 Create
                             </button>
 
-                            {/* Create Dropdown Menu */}
+                            {/* Dropdown Menu */}
                             {isDropdownVisible1 && (
                                 <div
-                                    className="dropdown-menu create-dropdown"
-                                    onMouseLeave={() => setDropdownVisible1(false)}
+                                    className="dropdown-menu2 absolute right-0 w-48 text-white rounded-lg shadow-lg"
+                                    onMouseLeave={() => setDropdownVisible1(false)} // Hide on mouse leave
                                 >
-                                    <div className='dropdown'>
+                                    <div className='dropdown '>
+
                                         <div className="dropdown-section">
+
+
+
+
                                             <div className="dropdown-item" onClick={handleUploadClick}>
                                                 <FiUpload className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">Upload videos</span>
@@ -144,50 +155,62 @@ function SearchBar() {
                                                 <span className="dropdown-label">New podcast</span>
                                             </div>
                                         </div>
+
+
+
+
+
+
+
+
                                     </div>
                                 </div>
                             )}
                         </div>
 
-                        {/* Profile Image with Dropdown */}
-                        <div className="profile-container">
+
+                        {/* Profile Image with dropdown */}
+                        <div className="relative">
                             <img
                                 src={isAuthenticated && user?.avatar ? user.avatar : image1}
-                                className="profile-image"
-                                onClick={toggleDropdown}
-                                alt="Profile"
+                                className="rounded-full bg-green-600 w-10 h-10 flex items-center justify-center text-white font-bold cursor-pointer"
+                                onClick={toggleDropdown} // Click to toggle dropdown
                             />
-                            {/* Profile Dropdown Menu */}
+                            {/* Dropdown Menu */}
                             {isDropdownVisible && (
                                 <div
-                                    className="dropdown-menu profile-dropdown"
-                                    onMouseLeave={() => setDropdownVisible(false)}
+                                    className="dropdown-menu absolute right-0 w-48 text-white rounded-lg shadow-lg"
+                                    onMouseLeave={() => setDropdownVisible(false)} // Hide on mouse leave
                                 >
-                                    <div className='dropdown'>
+                                    <div className='dropdown '>
+
                                         <div className="dropdown-section">
-                                            <div className="dropdown-item profile-info">
+
+                                            <div className="dropdown-item">
+
                                                 <img
                                                     src={isAuthenticated && user?.avatar ? user.avatar : image1}
-                                                    className="profile-img"
-                                                    alt="Profile"
+                                                    className="rounded-full bg-green-600 w-10 h-10 mr-5 mb-5 flex items-center justify-center text-white font-bold cursor-pointer"
+
                                                 />
                                                 <div className='profile-details'>
                                                     <div className="dropdown-label">{isAuthenticated && user?.fullName ? user.fullName : "Name"}</div>
                                                     <div className="dropdown-label">{isAuthenticated && user?.username ? user.username : "Username"}</div>
-                                                    <Link to="/userchannel" className="dropdown-label-link">View Channel</Link>
+                                                    <Link to="/userchannel" className="dropdown-label-link">View Channel</ Link>
                                                 </div>
+
                                             </div>
                                             <div className="dropdown-divider"></div>
 
                                             <Link to="/account" className="dropdown-item">
                                                 <FaGoogle className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">Google Account</span>
-                                            </Link>
+                                            </ Link>
                                             <div className="dropdown-item">
                                                 <MdOutlineSwitchAccount className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">Switch Account</span>
                                             </div>
-                                            <div className="dropdown-item" onClick={submitHandler}>
+                                            <div className="dropdown-item">
                                                 <PiSignOut className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">Sign out</span>
                                             </div>
@@ -196,13 +219,14 @@ function SearchBar() {
                                         <div className="dropdown-divider"></div>
 
                                         <div className="dropdown-section">
+
                                             <div className="dropdown-item">
                                                 <SiYoutubestudio className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">YouTube Studio</span>
                                             </div>
                                             <div className="dropdown-item">
                                                 <HiCurrencyDollar className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Purchase and memberships</span>
+                                                <span className="dropdown-label">Purchase ans memberships</span>
                                             </div>
                                             <div className="dropdown-divider"></div>
                                             <div className="dropdown-item">
@@ -215,15 +239,15 @@ function SearchBar() {
                                             </div>
                                             <div className="dropdown-item">
                                                 <IoLanguage className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Language: British English</span>
+                                                <span className="dropdown-label">Language:Britsh English</span>
                                             </div>
                                             <div className="dropdown-item">
                                                 <FaUnlockAlt className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Restricted Mode: Off</span>
+                                                <span className="dropdown-label">Restricted Mode:Off</span>
                                             </div>
                                             <div className="dropdown-item">
                                                 <GrLanguage className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Location: India</span>
+                                                <span className="dropdown-label">Location:India</span>
                                             </div>
                                             <div className="dropdown-item">
                                                 <FaRegKeyboard className="dropdown-icon" size={22} />
@@ -234,6 +258,7 @@ function SearchBar() {
                                         <div className="dropdown-divider"></div>
 
                                         <div className="dropdown-section">
+
                                             <div className="dropdown-item">
                                                 <IoMdSettings className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">Settings</span>
@@ -244,9 +269,10 @@ function SearchBar() {
                                                 <span className="dropdown-label">Help</span>
                                             </div>
                                             <div className="dropdown-item">
-                                                <MdOutlineFeedback className="dropdown-icon" size={22} />
+                                                < MdOutlineFeedback className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">Send feedback</span>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -254,86 +280,76 @@ function SearchBar() {
                         </div>
                     </div>
                 </div>
-                {/* Upload Modal */}
-                {isModalVisible && (
-                    <div className="modal-overlay" onClick={handleCloseModal}>
-                        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                            <h2 className='modal-label'>Upload a New Video</h2>
-                            <div className="dropdown-divider"></div>
-                            <form className='upload-section' onSubmit={handleSubmit(onSubmit)}>
-                                <div className="form-group">
-                                    <label htmlFor="title">Title</label>
-                                    <input
-                                        id="title"
-                                        type="text"
-                                        placeholder="Enter video title"
-                                        {...register('title', { required: 'Title is required' })}
-                                    />
-                                    {errors.title && <span className="error">{errors.title.message}</span>}
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="thumbnail">Thumbnail</label>
-                                    <input
-                                        id="thumbnail"
-                                        type="file"
-                                        accept="image/*"
-                                        {...register('thumbnail', { required: 'Thumbnail is required' })}
-                                    />
-                                    {errors.thumbnail && <span className="error">{errors.thumbnail.message}</span>}
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="description">Description</label>
-                                    <textarea
-                                        id="description"
-                                        placeholder="Enter video description"
-                                        {...register('description', { required: 'Description is required' })}
-                                    ></textarea>
-                                    {errors.description && <span className="error">{errors.description.message}</span>}
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="videoFile">Video File</label>
-                                    <input
-                                        id="videoFile"
-                                        type="file"
-                                        accept="video/*"
-                                        {...register('videoFile', { required: 'Video file is required' })}
-                                    />
-                                    {errors.videoFile && <span className="error">{errors.videoFile.message}</span>}
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="categories">Categories (Select up to 5)</label>
-                                    <select
-                                        id="categories"
-                                        multiple
-                                        {...register('categories', {
-                                            validate: value => value.length <= 5 || 'You can select up to 5 categories',
-                                        })}
-                                    >
-                                        <option value="Education">Education</option>
-                                        <option value="Entertainment">Entertainment</option>
-                                        <option value="Sports">Sports</option>
-                                        <option value="Music">Music</option>
-                                        <option value="News">News</option>
-                                        <option value="Lifestyle">Lifestyle</option>
-                                    </select>
-                                    {errors.categories && <span className="error">{errors.categories.message}</span>}
-                                </div>
-
-
-                                <div className="form-actions">
-                                    <button type="submit" className="btn-upload">Upload</button>
-                                    <button type="button" className="btn-close" onClick={handleCloseModal}>Close</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                )}
+                {/* Tabs */}
             </div>
-        </div>
-        );
-    }
+            {isModalVisible && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2 className='label'>Select a Video to Upload</h2>
+                        <div className="dropdown-divider"></div>
+                        <form className='formContainer' onSubmit={handleSubmit(onSubmit)}>
 
-    export default SearchBar;
+                            <input 
+                            type="text" 
+                            placeholder='Enter the title of the video'
+                            className={`${errors.title ? 'border-red-500':''} `}
+                            {...register('title',{required:'Title is required'})}
+                            />
+
+                            <input 
+                            type="text"
+                            placeholder='Enter the description of the video'
+                            className={`${errors.description ? 'border-red-500' : ''}`}
+                            {...register('description',{required:'Description is required'})} 
+                            />
+
+                            <label className=''>Upload the thumbnail</label>
+                            <input 
+                            type="file"
+                            className=''
+                            accept="image/*"
+                            {...register('thumbnail',{required:'Thumbnail is required'})}
+                            />
+
+                            <label className=''>Upload the video file</label>
+                            <input 
+                            type="file"
+                            accept="video/*"
+                            className=''
+                            // onChange={handleFileChange} 
+                            {...register('videoFile',{required:'Video File is required'})}
+                            />
+                            
+                            <input 
+                            type="checkbox" 
+                            {...register('isPublished')}
+                            />
+                            <button 
+                            className="btn-upload" 
+                            type='submit'
+                            >
+                                submit
+                            </button>
+
+                            <button 
+                            className="btn-upload" 
+                            onClick={handleCloseModal}
+                            >
+                                Close
+                            </button>
+                        </form>
+                        {isLoading && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                <ClipLoader size={50} color="#ffffff" />
+                                <p>Uploading your Video...</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+        </div>
+
+    );
+}
+
+export default SearchBar;

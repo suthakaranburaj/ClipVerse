@@ -60,17 +60,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     const { title, description, isPublished } = req.body;
 
-    let categories = req.body.categories;
-    if (typeof categories === 'string') {
-        try {
-            categories = JSON.parse(categories);
-        } catch (error) {
-            throw new ApiError(400, "Invalid format for categories");
-        }
-    }
 
-
-    if (!title || !description || !categories.length === 0 || !isPublished) {
+    if (!title || !description || !isPublished) {
         throw new ApiError(400, "All fields are required!");
     }
 
@@ -105,7 +96,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
         thumbnail: thumbnail.url, 
         title,
         description,
-        categories,
+        // categories,
         isPublished,
         duration,
         owner: req.user?._id 
@@ -114,7 +105,6 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     await newVideo.save();
 
- 
     return res
         .status(200)
         .json(new ApiResponse(200, { video: newVideo }, "Video published successfully!")); // Return the new video object
@@ -146,7 +136,7 @@ const getVideoById = asyncHandler(async (req, res) => {
 })
 
 const updateVideo = asyncHandler(async (req, res) => {
-    const { title, description, categories } = req.body;  // Change 'categorizes' to 'categories'
+    const { title, description } = req.body;  // Change 'categorizes' to 'categories'
     const thumbnail = req.files?.thumbnail?.[0]?.path;
 
     const { videoId } = req.params;
@@ -185,12 +175,12 @@ const updateVideo = asyncHandler(async (req, res) => {
 
     // Update description if provided
     if (description) video.description = description;
-    console.log(req.body.categories)
+    // console.log(req.body.categories)
     // Update categories if provided and validate
     // if (categories) {
     //     if (Array.isArray(categories) && categories.length <= 5) {
-    video.categories = categories;
-    console.log(video.categories)
+    // video.categories = categories;
+    // console.log(video.categories)
 
     await video.save();
 
