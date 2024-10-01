@@ -6,13 +6,14 @@ import devStore from '../../../../store/devStore';
 import { HiCurrencyDollar } from "react-icons/hi";
 import { GrLanguage } from "react-icons/gr";
 import { FaRegKeyboard } from "react-icons/fa6";
+import { CgPlayListAdd } from "react-icons/cg";
 import { FaGoogle, FaUnlockAlt } from "react-icons/fa";
 import { PiSignOut } from "react-icons/pi";
 import { SiYoutubestudio } from "react-icons/si";
-import { FiDatabase } from "react-icons/fi";
+import { FiDatabase,FiUpload,FiEdit } from "react-icons/fi";
 import { IoLanguage, IoMoonSharp } from "react-icons/io5";
-import { MdOutlineFeedback, MdOutlineSwitchAccount, MdOutlineHelpOutline } from "react-icons/md";
-import { IoMdSettings } from "react-icons/io";
+import { MdOutlineFeedback, MdOutlineSwitchAccount,MdOutlinePodcasts, MdOutlineHelpOutline,MdVideoCall } from "react-icons/md";
+import { IoMdSettings,IoMdWifi } from "react-icons/io";
 import useStore from '../../../../store/userStore';
 import './SearchBar.scss'; // Ensure this file contains the necessary styling
 import image1 from '../../../../assets/profile_pic.webp';
@@ -21,8 +22,12 @@ function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); // Get isNavOpen state from the store
     const { user, isAuthenticated, logout } = useStore();
 
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [selectedVideo, setSelectedVideo] = useState(null);
+
     // Dropdown state
     const [isDropdownVisible, setDropdownVisible] = useState(false); // Initially set to false
+    const [isDropdownVisible1, setDropdownVisible1] = useState(false);
     const [isCreateDropdownVisible, setCreateDropdownVisible] = useState(false); // Initially set to false
 
     const submitHandler = () => {
@@ -32,8 +37,22 @@ function SearchBar() {
     const toggleDropdown = () => {
         setDropdownVisible(prev => !prev); // Toggle dropdown visibility
     };
-    const toggleCreateDropdown = () => {
-        setCreateDropdownVisible(prev => !prev); // Toggle dropdown visibility
+    const toggleDropdown1 = () => {
+        setDropdownVisible1(prev => !prev); // Toggle dropdown visibility
+    };
+
+    const handleUploadClick = () => {
+        setModalVisible(true);  // Open the modal
+    };
+
+    const handleCloseModal = () => {
+        setModalVisible(false);  // Close the modal
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedVideo(file);
+        // Further processing can be done with the file, like uploading it to a server
     };
 
     return (
@@ -73,49 +92,62 @@ function SearchBar() {
                                 <button className='bg-gray-800 rounded-2xl px-8 mr-5 h-10'>
                                     Login
                                 </button>
-                        
+
                             </Link>
                         )}
-                        <div onClick={toggleCreateDropdown}>
-                            <button className='bg-gray-800 rounded-2xl px-8 mr-5 h-10'  >
-                            create
-                        </button>
-                        {isCreateDropdownVisible && (
+                        <div className="relative">
+                            <button className='bttn bg-gray-800 rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
+                            <MdVideoCall className="dropdown-icon" size={22} />
+                                Create
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            {isDropdownVisible1 && (
                                 <div
-                                    className="dropdown-menu absolute right-0 w-48 text-white rounded-lg shadow-lg"
-                                    onMouseLeave={() => setCreateDropdownVisible(false)} // Hide on mouse leave
+                                    className="dropdown-menu2 absolute right-0 w-48 text-white rounded-lg shadow-lg"
+                                    onMouseLeave={() => setDropdownVisible1(false)} // Hide on mouse leave
                                 >
                                     <div className='dropdown '>
 
                                         <div className="dropdown-section">
 
-                                            
-                                            <div className="dropdown-divider"></div>
 
-                                            <Link to="/account" className="dropdown-item">
-                                                <FaGoogle className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Google Account</span>
-                                            </ Link>
-                                            <div className="dropdown-item">
-                                                <MdOutlineSwitchAccount className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Switch Account</span>
+
+
+                                            <div className="dropdown-item" onClick={handleUploadClick}>
+                                                <FiUpload className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">Upload videos</span>
                                             </div>
                                             <div className="dropdown-item">
-                                                <PiSignOut className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Sign out</span>
+                                                <IoMdWifi className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">Go live</span>
+                                            </div>
+                                            <div className="dropdown-item">
+                                                <FiEdit className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">Create post</span>
+                                            </div>
+                                            <div className="dropdown-item">
+                                                <CgPlayListAdd className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">New playlist</span>
+                                            </div>
+                                            <div className="dropdown-item">
+                                                <MdOutlinePodcasts className="dropdown-icon" size={22} />
+                                                <span className="dropdown-label">New podcast</span>
                                             </div>
                                         </div>
 
-                                        <div className="dropdown-divider"></div>
 
-                                        
 
-                                        
+
+
+
+
+
                                     </div>
                                 </div>
                             )}
                         </div>
-                        
+
 
                         {/* Profile Image with dropdown */}
                         <div className="relative">
@@ -230,7 +262,21 @@ function SearchBar() {
                 </div>
                 {/* Tabs */}
             </div>
+            {isModalVisible && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2 className='label'>Select a Video to Upload</h2>
+                        <div className="dropdown-divider"></div>
+                        <div className='upload'>
+                            <input type="file" accept="video/*" onChange={handleFileChange} />
+                            <button className="btn-upload" onClick={handleCloseModal}>Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            )}
         </div>
+
     );
 }
 
