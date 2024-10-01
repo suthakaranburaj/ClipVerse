@@ -80,7 +80,7 @@ body{
             display: flex;
            
             flex-direction: column;
-            padding-right: 30px;
+            padding-right: 20px;
     
             video {
                 width: 100%;
@@ -115,11 +115,14 @@ body{
             width: 30%;
             display: flex;
             flex-direction: column;
-            
+            margin-right: 5px;
             color: white;
             font-size: 0.9rem;
             background-color: yellow;
             height: 100vh;
+            .vids{
+                padding: 10px;
+            }
         }
     }
 }
