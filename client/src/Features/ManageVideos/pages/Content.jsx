@@ -10,6 +10,7 @@ function Content() {
     const {user}=useStore();
     // Fetch videos when the component mounts
     useEffect(() => {
+        const fetchVideos = async () => {
         const params = {
             page: 1,
             limit: 20,
@@ -18,8 +19,18 @@ function Content() {
             // sortType: 'asc',
             userId: user.userId, // Replace with actual userId if needed
         };
-        getAllVideos(params);
-    }, [getAllVideos]);
+    
+        try {
+            const videos = await getAllVideos(params);
+            // Process the fetched videos here
+        } catch (error) {
+            console.error("Error fetching videos:", error);
+        }
+        };
+    
+        fetchVideos();
+    }, [getAllVideos, user.userId]);
+    
 
     return (
         <>
@@ -68,26 +79,26 @@ function Content() {
                 <div className='level-4'>
                     {videos.length > 0 ? (
                         videos.map((video) => (
-                            <React.Fragment key={video._id}>
+                            <React.Fragment key={video?._id}>
                                 <div className='videoContainer'>
-                                    <img src={video.thumbnail || image1} alt="Thumbnail" />
+                                    <img src={video?.thumbnail ? video.thumbnail : image1} alt="Thumbnail" />
                                     <div className='videoTitleDescriptionContainer'>
-                                        <p>{video.title}</p>
-                                        <p>{video.description}</p>
+                                        <p>{video?.title ? video.title : 'Title here'}</p>
+                                        <p>{video?.description ? video.description : 'Description here'}</p>
                                     </div>
                                     <div className='videoStatsContainer'>
                                         <div className='statsPart1'>
-                                            <p>{video.visibility}</p>
-                                            <p>{video.duration}</p>
+                                            <p>{video?.visibility}</p>
+                                            <p>{video?.duration}</p>
                                             <div>
-                                                <p>{new Date(video.createdAt).toLocaleDateString()}</p>
-                                                <p>{video.isPublished ? "Published" : "Unpublished"}</p>
+                                                <p>{new Date(video?.createdAt).toLocaleDateString()}</p>
+                                                <p>{video?.isPublished ? "Published" : "Unpublished"}</p>
                                             </div>
                                         </div>
                                         <div className='statsPart2'>
-                                            <p>{video.views}</p>
-                                            <p>{video.commentsCount}</p>
-                                            <p>{video.likes}</p>
+                                            <p>{video?.views}</p>
+                                            <p>{video?.commentsCount}</p>
+                                            <p>{video?.likes}</p>
                                         </div>
                                     </div>
                                 </div>
