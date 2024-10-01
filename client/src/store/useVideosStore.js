@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import useStore from "./userStore";
-import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService, incrementVideoViewsService, userWatchHistoryService} from "../Features/zServices/userVideosServices";
+import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService, incrementVideoViewsService, userWatchHistoryService } from "../Features/zServices/userVideosServices";
 
 const useVideosStore = create((set,get)=>({
     user:null,
@@ -157,6 +157,8 @@ const useVideosStore = create((set,get)=>({
             });
         }
     },
+
+
 }));
 
 

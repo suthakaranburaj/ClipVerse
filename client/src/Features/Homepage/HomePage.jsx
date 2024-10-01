@@ -58,7 +58,7 @@ function HomePage() {
             </div>
             <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-3 mt-16' : 'main-box flex text-white flex-wrap gap-6 mt-16'}`}>
                 {videos.map((video, index) => (
-                    <Link to={`/watchvideo?videoId=${encodeURIComponent(video._id)}`} key={video._id} className='box relative pb-10'>
+                    <Link to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} key={video?._id} className='box relative pb-10'>
                         <div 
                             onMouseEnter={() => handleMouseEnter(index)} 
                             onMouseLeave={() => handleMouseLeave(index)}
@@ -66,15 +66,15 @@ function HomePage() {
                             <video
                                 ref={(el) => videoRefs.current[index] = el} // Assign video ref
                                 className='vid m-1 rounded-xl absolute top-0 left-0'
-                                src={video.videoFile}
+                                src={video?.videoFile}
                                 loop
                                 preload="auto"
                                 style={{ display: 'none' }} // Hide video initially
                             />
                             <img
                                 className='thumbnail m-1 rounded-xl'
-                                src={video.thumbnail}
-                                alt={video.title}
+                                src={video?.thumbnail}
+                                alt={video?.title}
                             />
                             <div className='flex my-3'>
                                 <img
@@ -82,12 +82,12 @@ function HomePage() {
                                     src={user.avatar || ''}
                                 />
                                 <div className='flex-col'>
-                                    <p className='description'>{video.title}</p>
-                                    <p className='userChannel'>{user.username}</p>
+                                    <p className='description'>{video?.title}</p>
+                                    <p className='userChannel'>{user?.username}</p>
                                     <div className='flex'>
-                                        <p className='views'>{video.views} views</p>
+                                        <p className='views'>{video?.views} views</p>
                                         <p className='dot'>•</p>
-                                        <p className='time'>{dayjs(video.createdAt).fromNow()}</p>
+                                        <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
                                     </div>
                                 </div>
                             </div>

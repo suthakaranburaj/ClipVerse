@@ -5,6 +5,7 @@ import { Like } from "../models/like.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
+import { Comment } from "../models/comment.model.js"
 
 const getChannelStats = asyncHandler(async (req, res) => {
 
@@ -36,7 +37,13 @@ const getChannelStats = asyncHandler(async (req, res) => {
 
     const totalLikes = await Like.find({ video: userVideos._id });
     const totalLikesCount = totalLikes.length;
-    // const totalComments = await Comment.find({ video: userVideos[0]._id });
+
+    const videoIds = userVideos.map(video => video._id);
+    const totalComments = await Comment.countDocuments({ video: { $in: videoIds } });
+    const comments = await Comment.find({ video: { $in: videoIds } })
+        .populate("owner", "name") // Populate owner details (e.g., user's name)
+        .populate("video", "title") // Populate video details (e.g., video's title)
+        .sort({ createdAt: -1 }); // Sort comments by latest first
 
     return res
         .status(200)
@@ -47,7 +54,8 @@ const getChannelStats = asyncHandler(async (req, res) => {
                 totalVideoViews,
                 totalSubCount,
                 totalLikesCount,
-                // totalComments
+                totalComments,
+                comments,
             },
             "User Stats fetched successfully"
         ));

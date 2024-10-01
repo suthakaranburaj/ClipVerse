@@ -124,6 +124,8 @@ const incrementVideoViewsService = async (videoId) => {
         throw(error)
     }
 };
+
+
 export {
     publishAVideoService,
     getAllVideosService,

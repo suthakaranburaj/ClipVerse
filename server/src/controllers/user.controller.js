@@ -5,7 +5,8 @@ import { uploadOnCloudinary, deleteOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
-
+import { Video } from "../models/video.model.js";
+import { Comment } from "../models/comment.model.js";
 
 const generateAccessAndRefereshTokens = async (userId) => {
     try {
@@ -498,7 +499,30 @@ const getWatchHistory = asyncHandler(async (req, res) => {
             )
         )
 })
+const getAllComments= asyncHandler(async (req, res)=>{
+    const {userId} = req.params;
+    if (!userId) {
+        return res.status(401).json({ message: "User not authenticated" });
+    }
+    console.log("userid",userId);
+    const userVideos = await Video.find({ owner: userId }).select('_id');
+    if (userVideos.length === 0) {
+        return res.status(200).json({ totalComments: 0, message: "No videos found for this user" });
+    }
+    const videoIds = userVideos.map(video => video._id);    
+    const totalComments = await Comment.countDocuments({ video: { $in: videoIds } });
+    const comments = await Comment.find({ video: { $in: videoIds } })
+        .populate("owner", "name") // Populate owner details (e.g., user's name)
+        .populate("video", "title") // Populate video details (e.g., video's title)
+        .sort({ createdAt: -1 }); // Sort comments by latest first
 
+    console.log("Total Comments Found:", totalComments); // Debugging: See if any comments were found
+    console.log("Comments:", comments);
+    return res
+    .status(200)
+    .json(new ApiResponse(200,totalComments,comments,"Total Comments found for user's channel"))
+
+})
 
 export {
     registerUser,
@@ -511,5 +535,6 @@ export {
     updateUserAvatar,
     updateUserCoverImage,
     getUserChannelProfile,
-    getWatchHistory
+    getWatchHistory,
+    getAllComments,
 }

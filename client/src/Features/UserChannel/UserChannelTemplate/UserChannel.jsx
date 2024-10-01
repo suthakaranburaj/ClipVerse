@@ -17,7 +17,7 @@ function UserChannel() {
             <div className='UserProfileContainer'>
                 <div className='cover-container'>
                     <img 
-                        src={isAuthenticated && user?.coverImage ? user.coverImage : userCoverImage} 
+                        src={isAuthenticated && user?.coverImage ? user?.coverImage : userCoverImage} 
                         alt="Cover" 
                     />
                     {/* <span className="edit-icon">
@@ -28,7 +28,7 @@ function UserChannel() {
                 <div className='profile-container'>
                     <div className='avatar-container'>
                         <img 
-                            src={isAuthenticated && user?.avatar ? user.avatar : image2} 
+                            src={isAuthenticated && user?.avatar ? user?.avatar : image2} 
                             alt="Avatar" 
                         />
                         {/* <span className="edit-icon">
@@ -37,9 +37,9 @@ function UserChannel() {
                     </div>
                     <div className='profile-info'>
                         <p className='name'>
-                            {isAuthenticated && user?.fullName ? user.fullName : "Name"}
+                            {isAuthenticated && user?.fullName ? user?.fullName : "Name"}
                         </p>
-                        <p>{isAuthenticated && user?.username ? user.username : "Username"}</p>
+                        <p>{isAuthenticated && user?.username ? user?.username : "Username"}</p>
                         <p>More about this channel <span className='more-info'>...more</span></p>
                         <div className='buttons'>
                             <button>Customise channel</button>

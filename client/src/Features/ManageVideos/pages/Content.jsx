@@ -1,35 +1,26 @@
 import React, { useEffect } from 'react';
 
 import './Content.scss';
-import useVideosStore from '../../../store/useVideosStore';
 import useStore from '../../../store/userStore';
 
 import image1 from '../../../assets/user_coverImage.jpg'
+import userStatsStore from '../../../store/userStatsStore';
 function Content() {
-    const { videos, getAllVideos, isLoading, error } = useVideosStore(); // Fetch videos and state from the store
+    const {getChannelVideos ,isLoading,error,videos} = userStatsStore();
     const {user}=useStore();
     // Fetch videos when the component mounts
     useEffect(() => {
         const fetchVideos = async () => {
-        const params = {
-            page: 1,
-            limit: 20,
-            // query: 'example search',
-            // sortBy: 'date',
-            // sortType: 'asc',
-            userId: user.userId, // Replace with actual userId if needed
-        };
-    
+
         try {
-            const videos = await getAllVideos(params);
+            await getChannelVideos();
             // Process the fetched videos here
         } catch (error) {
             console.error("Error fetching videos:", error);
         }
         };
-    
         fetchVideos();
-    }, [getAllVideos, user.userId]);
+    }, [getChannelVideos, user.userId]);
     
 
     return (
@@ -81,10 +72,10 @@ function Content() {
                         videos.map((video) => (
                             <React.Fragment key={video?._id}>
                                 <div className='videoContainer'>
-                                    <img src={video?.thumbnail ? video.thumbnail : image1} alt="Thumbnail" />
+                                    <img src={video?.thumbnail ? video?.thumbnail : image1} alt="Thumbnail" />
                                     <div className='videoTitleDescriptionContainer'>
-                                        <p>{video?.title ? video.title : 'Title here'}</p>
-                                        <p>{video?.description ? video.description : 'Description here'}</p>
+                                        <p>{video?.title ? video?.title : 'Title here'}</p>
+                                        <p>{video?.description ? video?.description : 'Description here'}</p>
                                     </div>
                                     <div className='videoStatsContainer'>
                                         <div className='statsPart1'>
