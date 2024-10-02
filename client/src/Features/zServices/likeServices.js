@@ -3,7 +3,7 @@ const BACKEND_URL = 'http://localhost:8000/api/v1/likes';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log(accessToken)
+    // console.log(accessToken)
     return accessToken; // Adjust based on how you store the token
 };
 

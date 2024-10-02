@@ -126,7 +126,7 @@ const useVideosStore = create((set,get)=>({
         try {
             const response = await userWatchHistoryService(videoId);
             const watchHistory = response.data.user.watchHistory;
-            console.log(watchHistory);
+            // console.log(watchHistory);
             set((state) =>({
                 watchHistorys: [watchHistory,...state.watchHistorys],
                 isLoading:false,
@@ -144,7 +144,7 @@ const useVideosStore = create((set,get)=>({
         set({ isLoading: true, error: null });
         try {
             const response = await incrementVideoViewsService(videoId); // Call the service
-            console.log(response)
+            // console.log(response)
             set({
                 isLoading: false,
                 error: null,

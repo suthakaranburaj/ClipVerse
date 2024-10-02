@@ -5,23 +5,30 @@ import useStore from '../../../store/userStore';
 
 import image1 from '../../../assets/user_coverImage.jpg'
 import userStatsStore from '../../../store/userStatsStore';
+import useCommentsStore from '../../../store/useCommentsStore'
 function Content() {
     const {getChannelVideos ,isLoading,error,videos} = userStatsStore();
+    const {getAllVideosComments,commentOfVideoCount} = useCommentsStore();
     const {user}=useStore();
     // Fetch videos when the component mounts
     useEffect(() => {
-        const fetchVideos = async () => {
-
-        try {
-            await getChannelVideos();
-            // Process the fetched videos here
-        } catch (error) {
-            console.error("Error fetching videos:", error);
-        }
+        const fetchVideosAndComments = async () => {
+            try {
+                await getChannelVideos();
+                // console.log("helo")
+                await getAllVideosComments();
+            } catch (error) {
+                console.error("Error fetching videos or comments:", error);
+            }
         };
-        fetchVideos();
-    }, [getChannelVideos, user.userId]);
-    
+
+        fetchVideosAndComments();
+    }, [getChannelVideos, user.userId,getAllVideosComments]);
+
+    const getCommentsCountForVideo = (videoId) => {
+        const matchedVideo = commentOfVideoCount?.find(item => item.video === videoId);
+        return matchedVideo ? matchedVideo.commentsCount : 0;
+    };
 
     return (
         <>
@@ -88,7 +95,8 @@ function Content() {
                                         </div>
                                         <div className='statsPart2'>
                                             <p>{video?.views}</p>
-                                            <p>{video?.commentsCount}</p>
+                                            {/* Display the comments count for the matching video */}
+                                            <p>{getCommentsCountForVideo(video?._id)}</p>
                                             <p>{video?.likes}</p>
                                         </div>
                                     </div>

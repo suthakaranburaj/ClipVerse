@@ -8,7 +8,7 @@ import {Video} from "../models/video.model.js"
 const getVideoComments = asyncHandler(async (req, res) => {
     //TODO: get all comments for a video
     const {videoId} = req.params
-    const {page = 1, limit = 10} = req.query
+    const {page = 1, limit = 40} = req.query
 
     const skip = (page - 1) * limit; 
     const commentLimit = parseInt(limit);
@@ -20,19 +20,18 @@ const getVideoComments = asyncHandler(async (req, res) => {
                     .find({video:videoId})
                     // .sort(sortOptions)   // Sort the videos
                     .skip(skip)          // Skip the previous videos for pagination
-                    .limit(commentLimit); ;
-    const totalComments = await Comment.find({video:videoId});
-    const totalCommentsCount=totalComments.length;
+                    .limit(commentLimit)
+                    .sort({createdAt:-1});
+    const totalCommentsCount = await Comment.countDocuments({ video: videoId });
 
-    const videoComment=[
-        comments,
-        totalComments,
-        totalCommentsCount
-    ]
+    const responseData = {
+        results: comments,
+        totalCount: totalCommentsCount,
+    };
 
     return res
     .status(200)
-    .json(new ApiResponse(200,videoComment,"Comments of Video fetch successfully !!"))
+    .json(new ApiResponse(200,responseData,"Comments of Video fetch successfully !!"))
 
 })
 
@@ -122,12 +121,46 @@ const deleteComment = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200,"Comment Deleted successfully !!"));
 })
 
-
+const getAllVideosComments = asyncHandler(async(req,res)=>{
+        //TODO: get all comments for a video
+        const userId = req.user?._id;
+    
+        const userVideosIds = await Video.find({owner:userId}).select(Video._id);
+        if(!userVideosIds){
+            throw new ApiError(400,"No Videos Found");
+        }
+        // console.log(userVideosIds);
+        const allVideosCommentsCount = await Promise.all(
+            userVideosIds.map(async (videoId) => {
+            const comments = await Comment
+                            .find({ video: videoId })
+                            .sort({ createdAt: -1 }); // Sort by the creation date, newest first
+            // console.log(Comment.video);
+            // console.log("hello",comments[0])
+            const video = comments.length > 0 ? comments[0].video : null;
+            return {
+                video,
+                commentsCount: comments.length,
+                comments,
+            };
+            })
+        );
+        
+        // const totalCommentsCount = await Comment.countDocuments({ video: videoId });
+    
+        const responseData = {
+            results: allVideosCommentsCount,
+        };
+    
+        return res
+        .status(200)
+        .json(new ApiResponse(200,responseData,"Comments of Videos fetch successfully !!"))
+});
 
 export {
     getVideoComments, 
     addComment, 
     updateComment,
     deleteComment,
-    
+    getAllVideosComments,
     }

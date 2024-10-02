@@ -3,25 +3,40 @@ const BACKEND_URL = 'http://localhost:8000/api/v1/comments';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log(accessToken)
+    // console.log(accessToken)
     return accessToken; // Adjust based on how you store the token
 };
 
-const getVideosCommentsServices = async({ page = 1, limit = 10, videoId = null })=>{
+const getVideosCommentsServices = async ({ page = 1, limit = 40 }, videoId) => {
     try {
+        console.log(`${BACKEND_URL}/${videoId}`)
         const response = await axios.get(`${BACKEND_URL}/${videoId}`,{
-            params:{
-                page,
-                limit,
+            params: {
+                page,  // Pass page from params
+                limit, // Pass limit from params
             },
             headers: {
-                Authorization: `Bearer ${getToken()}`,
+                Authorization: `Bearer ${getToken()}`, // Pass the token
             },
-            withCredentials: true,
+            withCredentials: true,  // Ensure credentials are sent
         });
         return response;
     } catch (error) {
-        throw(error)
+        throw error;  // Throw the error to handle it outside
+    }
+};
+
+const getAllVideosCommentsServices = async() => {
+    try {
+        const response = await axios.get(`${BACKEND_URL}`,{
+            headers: {
+                Authorization: `Bearer ${getToken()}`, // Pass the token
+            },
+            withCredentials: true,  // Ensure credentials are sent
+        });
+        return response;
+    } catch (error) {
+        throw(error);
     }
 };
 
@@ -71,4 +86,5 @@ export{
     addCommentOnVideoServices,
     updateCommentOnVideoServices,
     deleteCommentOnVideoServices,
+    getAllVideosCommentsServices,
 }

@@ -40,7 +40,7 @@ const userStatsStore = create((set)=>({
         set({isLoading:true, error: null});
         try {
             const response= await getChannelVideosService();
-            console.log(response.data.data);
+            // console.log(response.data.data);
             set({
                 videos:response.data.data,
                 isLoading:false,

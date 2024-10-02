@@ -30,8 +30,8 @@ const useStore = create((set) => ({
             const response = await loginUser({ username, email, password });
             const userData = response.data.data.user;
             const accessToken = response.data.data.accessToken;
-            console.log(accessToken);
-            console.log("response:::::::::",response);
+            // console.log(accessToken);
+            // console.log("response:::::::::",response);
 
             set({
                 user: userData,
