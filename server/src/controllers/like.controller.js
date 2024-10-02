@@ -152,9 +152,41 @@ const getLikedVideos = asyncHandler(async (req, res) => {
 
 })
 
+const getLikesOfVideos = asyncHandler( async(req,res) =>{
+    const userId = req.user?._id;
+
+    const userVideosIds = await Video.find({owner:userId}).select(Video._id);
+    if(!userVideosIds){
+        throw new ApiError(400,"No Videos Found");
+    }
+
+    const allVideosLikesCount = await Promise.all(
+        userVideosIds.map(async(videoId)=>{
+        const likes = await Like.find({video:videoId})
+                                .sort({createdAt:-1});
+
+        const video = likes.length>0 ? likes[0].video : null;
+        return{
+            video,
+            likesCount:likes.length,
+            likes
+        };
+        })
+    );
+
+    const responseData={
+        results:allVideosLikesCount,
+    }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,responseData,"Likes of Videos Fetch successfully"))
+})
+
 export {
     toggleCommentLike,
     toggleTweetLike,
     toggleVideoLike,
-    getLikedVideos
+    getLikedVideos,
+    getLikesOfVideos,
 }

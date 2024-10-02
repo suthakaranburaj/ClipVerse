@@ -6,9 +6,11 @@ import useStore from '../../../store/userStore';
 import image1 from '../../../assets/user_coverImage.jpg'
 import userStatsStore from '../../../store/userStatsStore';
 import useCommentsStore from '../../../store/useCommentsStore'
+import useLikesStore from '../../../store/useLikesStore';
 function Content() {
     const {getChannelVideos ,isLoading,error,videos} = userStatsStore();
     const {getAllVideosComments,commentOfVideoCount} = useCommentsStore();
+    const {getLikesVideos,likesOfVideoCount}=useLikesStore();
     const {user}=useStore();
     // Fetch videos when the component mounts
     useEffect(() => {
@@ -17,19 +19,23 @@ function Content() {
                 await getChannelVideos();
                 // console.log("helo")
                 await getAllVideosComments();
+                await getLikesVideos();
             } catch (error) {
                 console.error("Error fetching videos or comments:", error);
             }
         };
 
         fetchVideosAndComments();
-    }, [getChannelVideos, user.userId,getAllVideosComments]);
+    }, [getChannelVideos, user.userId,getAllVideosComments,getLikesVideos]);
 
     const getCommentsCountForVideo = (videoId) => {
         const matchedVideo = commentOfVideoCount?.find(item => item.video === videoId);
         return matchedVideo ? matchedVideo.commentsCount : 0;
     };
-
+    const getLikesCountForVideo = (videoId) => {
+        const matchedVideo = likesOfVideoCount?.find(item => item.video === videoId);
+        return matchedVideo ? matchedVideo.likesCount : 0;
+    };
     return (
         <>
             <div className='contentContainer'>
@@ -97,7 +103,7 @@ function Content() {
                                             <p>{video?.views}</p>
                                             {/* Display the comments count for the matching video */}
                                             <p>{getCommentsCountForVideo(video?._id)}</p>
-                                            <p>{video?.likes}</p>
+                                            <p>{getLikesCountForVideo(video?._id)}</p>
                                         </div>
                                     </div>
                                 </div>

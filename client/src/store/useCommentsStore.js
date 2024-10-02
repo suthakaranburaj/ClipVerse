@@ -1,9 +1,10 @@
 import {create} from "zustand";
-import {getVideosCommentsServices,getAllVideosCommentsServices} from '../Features/zServices/commentsServices'
+import {getVideosCommentsServices,getAllVideosCommentsServices, getAllCommentsServices} from '../Features/zServices/commentsServices'
 
 const useCommentsStore = create((set)=>({
     commentsOfVideo:[],
     commentOfVideoCount:[],
+    allComments:[],
     isLoading:false,
     error:null,
 
@@ -51,7 +52,33 @@ const useCommentsStore = create((set)=>({
             })
             return false;
         }
+    },
+
+    getAllComments: async () => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await getAllCommentsServices();
+            
+            // Extract and combine all comments from different videos
+            const allComments = response.data.results.reduce((acc, videoData) => {
+                return [...acc, ...videoData.comments];
+            }, []);
+    
+            set({
+                allComments,
+                error: null,
+                isLoading: false,
+            });
+        } catch (error) {
+            set({
+                isLoading: false,
+                error: error.response?.data?.message || "Failed fetching All Comments",
+            });
+            return false;
+        }
     }
+    
+
 }));
 
 export default useCommentsStore;

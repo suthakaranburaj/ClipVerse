@@ -65,6 +65,21 @@ const getLikedVideosServices = async(videoIds)=>{
     } catch (error) {
         throw(error)
     }
+};
+
+const getLikesOfVideosServices = async() =>{
+    try {
+        const response = await axios.get(`${BACKEND_URL}`,{
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'multipart/form-data',
+            },
+            withCredentials: true,
+        });
+        return response;
+    } catch (error) {
+        throw(error);
+    }
 }
 
 export{
@@ -72,4 +87,5 @@ export{
     toggleCommentLikeServices,
     toggleTweetLikeServices,
     getLikedVideosServices,
+    getLikesOfVideosServices,
 }

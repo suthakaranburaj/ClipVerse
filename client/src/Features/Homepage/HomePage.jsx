@@ -79,11 +79,11 @@ function HomePage() {
                             <div className='flex my-3'>
                                 <img
                                     className='w-[36px] h-[36px] rounded-full mx-2'
-                                    src={user.avatar || ''}
+                                    src={video?.owner?.avatar || ''}
                                 />
                                 <div className='flex-col'>
                                     <p className='description'>{video?.title}</p>
-                                    <p className='userChannel'>{user?.username}</p>
+                                    <p className='userChannel'>{video?.owner?.username}</p>
                                     <div className='flex'>
                                         <p className='views'>{video?.views} views</p>
                                         <p className='dot'>•</p>

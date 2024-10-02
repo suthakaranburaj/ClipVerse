@@ -40,7 +40,8 @@ const getAllVideos = asyncHandler(async (req, res) => {
     const videos = await Video.find(filter)
         .sort(sortOptions)   // Sort the videos
         .skip(skip)          // Skip the previous videos for pagination
-        .limit(videoLimit);   // Limit the number of videos returned
+        .limit(videoLimit)   // Limit the number of videos returned
+        .populate('owner', 'avatar username');
 
     // 7. Get the total count of videos that match the filter for pagination metadata
     const totalVideos = await Video.countDocuments(filter);
