@@ -137,7 +137,7 @@ const getVideoById = asyncHandler(async (req, res) => {
 })
 
 const updateVideo = asyncHandler(async (req, res) => {
-    const { title, description } = req.body;  // Change 'categorizes' to 'categories'
+    const { title, description,isPublished } = req.body;  // Change 'categorizes' to 'categories'
     const thumbnail = req.files?.thumbnail?.[0]?.path;
 
     const { videoId } = req.params;
@@ -171,6 +171,7 @@ const updateVideo = asyncHandler(async (req, res) => {
         video.thumbnail = uploadedThumbnail.secure_url;
     }
 
+    if(isPublished) video.isPublished = isPublished;
     // Update title if provided
     if (title) video.title = title;
 
@@ -193,7 +194,7 @@ const updateVideo = asyncHandler(async (req, res) => {
 });
 
 const deleteVideo = asyncHandler(async (req, res) => {
-    const { videoId } = req.params
+    const {videoId}  = req.params
     
     if(!videoId){
         throw new ApiError(400,"Video Id is missing")

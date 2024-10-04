@@ -56,6 +56,8 @@ const useVideosStore = create((set,get)=>({
                 isLoading:false,
                 error:null
             }));
+            window.location.reload();
+
         } catch (error) {
             set({
                 isLoading:false,
@@ -69,6 +71,7 @@ const useVideosStore = create((set,get)=>({
         try {
             const response = await updateVideoService(videoId,videoData);
             const updateVideo = response.data.video;
+            // console.log(response.data);
             set((state) =>({
                 videos:state.videos.map((video) =>
                 video._id === videoId ? updateVideo : video
@@ -93,6 +96,7 @@ const useVideosStore = create((set,get)=>({
                 isLoading:false,
                 error: null
             }));
+            // window.location.reload();
         } catch (error) {
             set({
                 isLoading:false,

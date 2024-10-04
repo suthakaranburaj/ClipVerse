@@ -11,8 +11,7 @@ const useSubscriptionStore = create((set)=>({
         set({isLoading:true , error:null});
         try {
             const response = await getUserChannelSubscribersServices(channelId);
-            console.log("hello")
-            console.log(response.data);
+            console.log(response.data.data);
             set({
                 channelSubscribers:response.data.data,
                 isLoading:false,

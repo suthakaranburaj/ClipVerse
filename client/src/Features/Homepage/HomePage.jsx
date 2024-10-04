@@ -57,7 +57,9 @@ function HomePage() {
                 {/* Other buttons */}
             </div>
             <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-3 mt-16' : 'main-box flex text-white flex-wrap gap-6 mt-16'}`}>
-                {videos.map((video, index) => (
+                {videos
+                .filter(video => video?.isPublished)
+                .map((video, index) => (
                     <Link to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} key={video?._id} className='box relative pb-10'>
                         <div 
                             onMouseEnter={() => handleMouseEnter(index)} 

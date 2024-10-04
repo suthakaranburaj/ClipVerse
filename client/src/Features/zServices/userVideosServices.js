@@ -61,7 +61,7 @@ const getVideoByIdService = async(videoId) =>{
 
 const updateVideoService = async(videoId, videoData) =>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/${videoId}`, videoData, {
+        const response = await axios.patch(`${BACKEND_URL}/${videoId}/updatevideo`, videoData, {
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -73,9 +73,14 @@ const updateVideoService = async(videoId, videoData) =>{
     }
 }
 
-const deleteVideoService = async({videoId}) => {
+const deleteVideoService = async(videoId) => {
     try {
-        const response = await axios.delete(`${BACKEND_URL}/${videoId}`);        
+        const response = await axios.delete(`${BACKEND_URL}/${videoId}`,{
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+            },
+            withCredentials: true,
+        });        
         return response;
     } catch (error) {
         throw error;

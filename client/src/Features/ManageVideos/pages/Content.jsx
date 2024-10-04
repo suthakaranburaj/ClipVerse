@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Content.scss';
 import useStore from '../../../store/userStore';
@@ -10,18 +10,27 @@ import useLikesStore from '../../../store/useLikesStore';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { useForm } from 'react-hook-form';
+
+import useVideosStore from '../../../store/useVideosStore';
 
 function Content() {
     const {getChannelVideos ,isLoading,error,videos} = userStatsStore();
     const {getAllVideosComments,commentsOfVideoCount} = useCommentsStore();
     const {getLikesVideos,likesOfVideoCount}=useLikesStore();
     const {user}=useStore();
-    // Fetch videos when the component mounts
+    const {deleteVideo, updateVideo, getAllVideos}=useVideosStore();
+
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [currentVideo, setCurrentVideo] = useState(null);
+
+    const { register, handleSubmit, reset } = useForm();
+
     useEffect(() => {
         const fetchVideosAndComments = async () => {
             try {
                 await getChannelVideos();
-                // console.log("helo")
                 await getAllVideosComments();
                 await getLikesVideos();
             } catch (error) {
@@ -30,7 +39,8 @@ function Content() {
         };
 
         fetchVideosAndComments();
-    }, [getChannelVideos, user.userId,getAllVideosComments,getLikesVideos]);
+    }, [getChannelVideos, user?.userId,getAllVideosComments,getLikesVideos]);
+
 
     const getCommentsCountForVideo = (videoId) => {
         const matchedVideo = commentsOfVideoCount?.find(item => item.videoId=== videoId);
@@ -40,6 +50,43 @@ function Content() {
         const matchedVideo = likesOfVideoCount?.find(item => item.video === videoId);
         return matchedVideo ? matchedVideo.likesCount : 0;
     };
+    const handleDelete = async (videoId) => {
+        try {
+            await deleteVideo(videoId);
+            await getChannelVideos();
+            await getAllVideos();
+        } catch (error) {
+            console.error("Error deleting video:", error);
+        }
+    };
+    
+
+    const handleEdit = (video) => {
+        setCurrentVideo(video);
+        setIsFormOpen(true);
+    };
+
+    const onSubmit = async (data) => {
+        const formData = new FormData();
+        formData.append('title',data.title);
+        formData.append('description',data.description);
+        formData.append('thumbnail',data.thumbnail[0]);
+        formData.append('isPublished', data.isPublished);
+        try {
+            await updateVideo(currentVideo._id,formData);
+            await getChannelVideos();
+            setIsFormOpen(false);
+            reset();
+        } catch (error) {
+            console.error("Error updating videos:",error);
+        }
+    };
+
+    const handleCloseForm = () => {
+        setIsFormOpen(false);
+        reset(); // Reset the form fields
+    };
+
     return (
         <>
             <div className='contentContainer'>
@@ -105,7 +152,7 @@ function Content() {
                                             <p>{video?.duration}</p>
                                             <div>
                                                 <p>{new Date(video?.createdAt).toLocaleDateString()}</p>
-                                                <p>{video?.isPublished ? "Published" : "Unpublished"}</p>
+                                                {/* <p>{video?.isPublished ? "Published" : "Unpublished"}</p> */}
                                             </div>
                                         </div>
                                         <div className='statsPart2'>
@@ -116,7 +163,15 @@ function Content() {
                                             
                                         </div>
                                     </div>
-                                    <FontAwesomeIcon icon={faTrash} className='text-red-600 mr-5'/>
+                                    <FontAwesomeIcon
+                                        icon={faPen}
+                                        className='text-green-600 mr-3'
+                                        onClick={() => handleEdit(video)}
+                                    />
+                                    <FontAwesomeIcon 
+                                        icon={faTrash} className='text-red-600 mr-5'
+                                        onClick={()=>handleDelete(video._id)}
+                                    />
 
                                 </div>
                                 <div className="divider"></div>
@@ -127,6 +182,47 @@ function Content() {
                     )}
                 </div>
             </div>
+
+             {/* Edit Form */}
+            {isFormOpen && (
+                <div className="editFormOverlay">
+                    <div className="editForm">
+                        <h3>Edit Video</h3>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <label>Title</label>
+                            <input
+                                type="text"
+                                {...register('title')}
+                                defaultValue={currentVideo?.title}
+                            />
+                            
+                            <label>Description</label>
+                            <textarea
+                                {...register('description')}
+                                defaultValue={currentVideo?.description}
+                            />
+
+                            <label>upload your Thumbnail</label>
+                            <input
+                                type="file"
+                                {...register('thumbnail')}
+                            />
+
+                            <label>Is Published</label>
+                            <input
+                                type="checkbox"
+                                {...register('isPublished')}
+                                defaultChecked={currentVideo?.isPublished}
+                            />
+
+                            <div className="formButtons">
+                                <button type="submit">Submit</button>
+                                <button type="button" onClick={handleCloseForm}>Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

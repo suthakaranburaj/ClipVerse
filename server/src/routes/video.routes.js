@@ -38,9 +38,8 @@ router
     .patch(increamentViews)
     .post(addUserWatchHistoryand)
     .get(getVideoById)
-    .delete(deleteVideo)
-    .patch(upload.single("thumbnail"), updateVideo);
-    
+    .delete(deleteVideo);
 
+router.route("/:videoId/updatevideo").patch(upload.single("thumbnail"), updateVideo);
 router.route("/toggle/publish/:videoId").patch(togglePublishStatus);
 export default router

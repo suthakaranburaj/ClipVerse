@@ -23,6 +23,7 @@ const toggleSubscriptionServices = async(channelId,SubscriptionData)=>{
 
 const getUserChannelSubscribersServices = async(channelId)=>{
     try {
+        console.log(channelId)
         const response = await axios.get(`${BACKEND_URL}/c/${channelId}`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,

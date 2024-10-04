@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import  useSubscriptionStore  from '../../../store/useSubscriptionStore';
 import useStore from '../../../store/userStore.js';
+import './Subscription.scss'
 
 export default function Subscription() {
     const {
@@ -12,11 +13,10 @@ export default function Subscription() {
 
     const {user} = useStore();
     useEffect(() => {
-        // console.log(user._id)
         if (user._id) {
-            getUserChannelSubscribers(user._id);
+            getUserChannelSubscribers(user?._id);
         }
-    }, [user._id, getUserChannelSubscribers]);
+    }, [user?._id, getUserChannelSubscribers]);
 
     return (
         <div className="subscription-container">
@@ -25,14 +25,15 @@ export default function Subscription() {
             {!isLoading && !error && channelSubscribers.length > 0 ? (
                 <ul className="subscriber-list">
                     {channelSubscribers.map((subscriber) => (
-                        <li key={subscriber.id} className="subscriber-item">
+                        <li key={subscriber._id} className="subscriber-item">
                             <div className="subscriber-details">
                                 <img
                                     src={subscriber.avatar}
-                                    alt={subscriber.name}
+                                    alt={subscriber.username}
                                     className="subscriber-avatar"
                                 />
-                                <p className="subscriber-name">{subscriber.name}</p>
+                                <p className="subscriber-name mr-10">{subscriber.username}</p>
+                                <p className='subscriber-name mr-10'>{subscriber.fullName}</p>
                             </div>
                         </li>
                     ))}
