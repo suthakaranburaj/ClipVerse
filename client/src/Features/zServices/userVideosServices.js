@@ -130,7 +130,19 @@ const incrementVideoViewsService = async (videoId) => {
     }
 };
 
-
+const getuserWatchHistoryService = async () =>{
+    try {
+        const response = await axios.get(`http://localhost:8000/api/v1/users/history`,{
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            },
+            withCredentials: true,
+        });
+        return response;
+    } catch (error) {
+        throw(error);
+    }
+};
 
 export {
     publishAVideoService,
@@ -141,4 +153,5 @@ export {
     togglePublishStatusService,
     userWatchHistoryService,
     incrementVideoViewsService,
+    getuserWatchHistoryService,
 }

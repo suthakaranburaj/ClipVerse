@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import useStore from "./userStore";
-import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService, incrementVideoViewsService, userWatchHistoryService } from "../Features/zServices/userVideosServices";
+import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService, incrementVideoViewsService, userWatchHistoryService, getuserWatchHistoryService} from "../Features/zServices/userVideosServices";
 
 const useVideosStore = create((set,get)=>({
     user:null,
@@ -162,6 +162,23 @@ const useVideosStore = create((set,get)=>({
         }
     },
 
+    getuserWatchHistory: async() =>{
+        set({isLoading:true,error:null});
+        try {
+            const response = await getuserWatchHistoryService();
+            console.log(response.data.data);
+            set({
+                watchHistorys:response.data.data,
+                isLoading:false,
+                error:null,
+            });
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.data?.message || "Failed to fetch the watch history !!"
+            })
+        }
+    }
 
 }));
 

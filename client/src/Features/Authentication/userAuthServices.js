@@ -65,11 +65,11 @@ const updateUserAvatar = async(formData) => {
 
 
 
+
 export {
     loginUser,
     registerUser,
     updateCoverImage,
     updateUserAvatar,
     updateAccountDetails,
-    
 };
