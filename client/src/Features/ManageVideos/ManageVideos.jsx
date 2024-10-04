@@ -8,6 +8,7 @@ import devStore from '../../store/devStore';
 import Dashboard from './pages/Dashboard';
 import Content from './pages/Content';
 import Comments from './pages/Comments'
+import Subscription from './pages/Subscription';
 
 import './ManageVideos.scss';
 
@@ -25,6 +26,8 @@ function ManageVideos() {
                 return <Content/>;
             case 'comments':
                 return <Comments />;
+            case 'subscription':
+                return <Subscription/>
             default:
                 return <Dashboard />; // Fallback to Dashboard
         }

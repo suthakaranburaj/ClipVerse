@@ -134,7 +134,9 @@ const getAllVideosComments = asyncHandler(async(req,res)=>{
             userVideosIds.map(async (videoId) => {
             const comments = await Comment
                             .find({ video: videoId })
-                            .sort({ createdAt: -1 }); // Sort by the creation date, newest first
+                            .sort({ createdAt: -1 }) // Sort by the creation date, newest first
+                            .populate('owner', 'avatar username')
+                            .populate('video', 'title');
             // console.log(Comment.video);
             // console.log("hello",comments[0])
             const video = comments.length > 0 ? comments[0].video : null;
@@ -157,10 +159,30 @@ const getAllVideosComments = asyncHandler(async(req,res)=>{
         .json(new ApiResponse(200,responseData,"Comments of Videos fetch successfully !!"))
 });
 
+// const getAllComments = asyncHandler(async(req,res)=>{
+//     const userId = req.user?._id;
+//     if(!userId){
+//         throw new ApiError(400,"UserId is missing !!");
+//     }
+    
+//     const userVideosId = await Video.findById({owner:userId});
+//     if(userVideosId.length === 0){
+//         return res
+//         .status(200)
+//         .json(new ApiResponse(200,"No videos found"));
+//     }
+
+//     return res
+//     .status(200)
+//     .json(new ApiResponse(200,userVideosId,""));
+
+
+// })
 export {
     getVideoComments, 
     addComment, 
     updateComment,
     deleteComment,
     getAllVideosComments,
+    
     }

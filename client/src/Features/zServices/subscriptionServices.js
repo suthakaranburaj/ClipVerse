@@ -21,9 +21,9 @@ const toggleSubscriptionServices = async(channelId,SubscriptionData)=>{
     }
 };
 
-const getUserChannelSubscribersServices = async(subscriberId)=>{
+const getUserChannelSubscribersServices = async(channelId)=>{
     try {
-        const response = await axios.get(`${BACKEND_URL}/u/${subscriberId}`,{
+        const response = await axios.get(`${BACKEND_URL}/c/${channelId}`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -35,9 +35,9 @@ const getUserChannelSubscribersServices = async(subscriberId)=>{
     }
 };
 
-const getSubscribedChannelsServices = async(channelId) =>{
+const getSubscribedChannelsServices = async(subscriberId) =>{
     try {
-        const response = await axios.get(`${BACKEND_URL}/c/${channelId}`,{
+        const response = await axios.get(`${BACKEND_URL}/u/${subscriberId}`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },

@@ -82,24 +82,24 @@ const deleteCommentOnVideoServices = async(commentId) =>{
     }
 };
 
-const getAllCommentsServices = async() =>{
-    try {
-        const response = await axios.get(`${BACKEND_URL}`,{
-            headers: {
-                Authorization: `Bearer ${getToken()}`,
-            },
-            withCredentials: true,
-        });
-        return response;
-    } catch (error) {
-        throw(error)
-    }
-};
+// const getAllCommentsServices = async() =>{
+//     try {
+//         const response = await axios.get(`${BACKEND_URL}`,{
+//             headers: {
+//                 Authorization: `Bearer ${getToken()}`,
+//             },
+//             withCredentials: true,
+//         });
+//         return response;
+//     } catch (error) {
+//         throw(error)
+//     }
+// };
 export{
     getVideosCommentsServices,
     addCommentOnVideoServices,
     updateCommentOnVideoServices,
     deleteCommentOnVideoServices,
     getAllVideosCommentsServices,
-    getAllCommentsServices,
+    // getAllCommentsServices,
 }

@@ -7,9 +7,13 @@ import image1 from '../../../assets/user_coverImage.jpg'
 import userStatsStore from '../../../store/userStatsStore';
 import useCommentsStore from '../../../store/useCommentsStore'
 import useLikesStore from '../../../store/useLikesStore';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 function Content() {
     const {getChannelVideos ,isLoading,error,videos} = userStatsStore();
-    const {getAllVideosComments,commentOfVideoCount} = useCommentsStore();
+    const {getAllVideosComments,commentsOfVideoCount} = useCommentsStore();
     const {getLikesVideos,likesOfVideoCount}=useLikesStore();
     const {user}=useStore();
     // Fetch videos when the component mounts
@@ -29,7 +33,7 @@ function Content() {
     }, [getChannelVideos, user.userId,getAllVideosComments,getLikesVideos]);
 
     const getCommentsCountForVideo = (videoId) => {
-        const matchedVideo = commentOfVideoCount?.find(item => item.video === videoId);
+        const matchedVideo = commentsOfVideoCount?.find(item => item.videoId=== videoId);
         return matchedVideo ? matchedVideo.commentsCount : 0;
     };
     const getLikesCountForVideo = (videoId) => {
@@ -76,6 +80,7 @@ function Content() {
                         <div>Views</div>
                         <div>Comments</div>
                         <div>Likes</div>
+                        
                     </div>
                 </div>
                 <div className="divider"></div>
@@ -92,7 +97,11 @@ function Content() {
                                     </div>
                                     <div className='videoStatsContainer'>
                                         <div className='statsPart1'>
-                                            <p>{video?.visibility}</p>
+                                        <div>
+                                            {video?.isPublished ? (
+                                                <p>Published</p>
+                                            ) : (<p>Not Published</p>)}
+                                        </div>
                                             <p>{video?.duration}</p>
                                             <div>
                                                 <p>{new Date(video?.createdAt).toLocaleDateString()}</p>
@@ -104,8 +113,11 @@ function Content() {
                                             {/* Display the comments count for the matching video */}
                                             <p>{getCommentsCountForVideo(video?._id)}</p>
                                             <p>{getLikesCountForVideo(video?._id)}</p>
+                                            
                                         </div>
                                     </div>
+                                    <FontAwesomeIcon icon={faTrash} className='text-red-600 mr-5'/>
+
                                 </div>
                                 <div className="divider"></div>
                             </React.Fragment>

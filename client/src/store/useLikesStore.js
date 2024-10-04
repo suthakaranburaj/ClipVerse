@@ -11,7 +11,7 @@ const useLikesStore = create((set)=>({
         set({isLoading:true,error:null});
         try {
             const response = await getLikesOfVideosServices();
-            console.log(response.data)
+            // console.log(response.data)
             set({
                 likesOfVideo:response.data.results,
                 likesOfVideoCount:response.data.data.results,

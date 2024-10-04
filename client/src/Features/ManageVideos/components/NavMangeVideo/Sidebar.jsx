@@ -38,7 +38,7 @@ function Sidebar() {
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Comments</span>
         </div>
-        <div className="Man-sidebar-item">
+        <div className="Man-sidebar-item" onClick={()=> setDisplayer('subscription')}>
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Subtitle</span>
         </div>
