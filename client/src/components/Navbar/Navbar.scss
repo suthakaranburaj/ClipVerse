@@ -4,7 +4,7 @@
 
     width: 15rem;
     padding: $padding-medium;
-  
+    background-color: $background-color;
     .sidebar-divider {
       width: 100%;
       height: 1px;
@@ -15,12 +15,13 @@
     .sidebar-section {
       display: flex;
       flex-direction: column;
-  
+      background-color: $background-color;
       .sidebar-header {
-        font-size: 14px;
+        font-size: $base-font-size;
         font-weight: bold;
-        color: #aaaaaa;
+        color: $text-color;
         margin: 1rem 0;
+        background-color: $background-color;
       }
   
       .sidebar-item {
@@ -31,26 +32,25 @@
         cursor: pointer;
         transition:  0.2s ease;
         background-color: transparent;
-  
         &:hover {
-          background-color: #333;
+          background-color: $hover-bg-color;
         }
-  
         .sidebar-icon {
-          color: #ffffff;
+          color: $text-color;
           margin-right: 10px;
           background-color: transparent;
         }
   
         .sidebar-label {
-          font-size: 14px;
+          font-size: $base-font-size;
           font-weight: 500;
-          color: #ffffff;
+          color: $text-color;
           background-color: transparent;
+          
         }
   
         &.active {
-          background-color: #333;
+          background-color: $hover-bg-color;
           border-radius: 10px;
         }
   

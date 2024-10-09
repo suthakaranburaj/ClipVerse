@@ -49,7 +49,7 @@ function HomePage() {
     if (error) return <div>Error loading videos</div>;
 
     return (
-        <div className={`${isNavOpen ? 'big-boy1 pl-5' : 'big-boy'}`}>
+        <div className={`${isNavOpen ? 'HomePageContainer pl-2' : 'HomePageContainer1'}`}>
             <div className="headball flex space-x-4 py-2 overflow-x-auto text-xs font-bold fixed b w-full">
                 <button className="live-recommend-btn text-white py-2 px-3 rounded-lg">All</button>
                 <button className="recommend-btn text-white py-2 px-3 rounded-lg">Web Development</button>
@@ -64,20 +64,23 @@ function HomePage() {
                         <div 
                             onMouseEnter={() => handleMouseEnter(index)} 
                             onMouseLeave={() => handleMouseLeave(index)}
+                            className='ThumbailAndTitleCard'
                         >
-                            <video
-                                ref={(el) => videoRefs.current[index] = el} // Assign video ref
-                                className='vid m-1 rounded-xl absolute top-0 left-0'
-                                src={video?.videoFile}
-                                loop
-                                preload="auto"
-                                style={{ display: 'none' }} // Hide video initially
-                            />
-                            <img
-                                className='thumbnail m-1 rounded-xl'
-                                src={video?.thumbnail}
-                                alt={video?.title}
-                            />
+                            <div className='thumbnailContainer'>
+                                <video
+                                    ref={(el) => videoRefs.current[index] = el} // Assign video ref
+                                    className='vid absolute top-0 left-0'
+                                    src={video?.videoFile}
+                                    loop
+                                    preload="auto"
+                                    style={{ display: 'none' }} // Hide video initially
+                                />
+                                <img
+                                    className='thumbnail'
+                                    src={video?.thumbnail}
+                                    alt={video?.title}
+                                />
+                            </div>
                             <div className='flex my-3'>
                                 <img
                                     className='w-[36px] h-[36px] rounded-full mx-2'

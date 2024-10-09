@@ -1,102 +1,193 @@
-.HomePageContainer{
-    margin-left: 20px;
+@import '../../index.scss';
+.HomePageContainer {
     width: 100%;
-    background-color: #0f0f0f;
+    background-color: $background-color;
 }
-.HomePageContainer1{
-    background-color: #0f0f0f;
+
+.HomePageContainer1 {
+    background-color: $background-color;
+    margin-left: 5%;
 }
-.Navopen{
+
+.Navopen, .main-box {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
     align-items: flex-start;
-    justify-content:space-evenly;
-    .box{
-            min-width: 250px;
-            width: 370px;
-        }
-    .vid{
-        object-fit: cover;
-        width: 100%;
-       
-    }
-    .thumbnail{
-        height: 100%;
-    }
-}
-.main-box{
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    
-    align-items: flex-start;
-    justify-content:space-evenly;
-
-    .box{
+    justify-content: space-evenly;
+    margin-top: 5%;
+    .box {
         min-width: 250px;
-        width: 290px;
-     }
-     .vid{
+        width: 350px;
+        position: relative;
+        padding-bottom: 10px;
+        height: 350px;
+        margin: 5px;
+        transition-duration: 0.5s;
+        border-radius: 10px;
+        &:hover{
+            transform: scale(1.03);
+            box-shadow: 0 0px 10px rgba(151, 73, 73, 0.8);
+        }
+    }
+
+    .vid {
         object-fit: cover;
         width: 100%;
-
+        display: none; // initially hidden
     }
-    // .thumbnail{
-    
-    // }
+
+    .thumbnailContainer {
+        width: 100%;
+        height: 200px;
+        position: relative;
+
+        // Thumbnail styles
+        .thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            // border-radius: 12px;
+            transition: opacity 0.3s ease-in-out; // Smooth transition
+            border-radius: 10px 10px 0 0;
+        }
+
+        // Video styles
+        .vid {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none; // Initially hidden
+            border-radius: 10px 10px 0 0;
+
+        }
+
+        // On hover, hide thumbnail and show video
+        // &:hover {
+        //     .thumbnail {
+        //         opacity: 0; // Hide the thumbnail smoothly
+        //     }
+        //     .vid {
+        //         display: block; // Show the video
+        //     }
+        // }
+    }
+
+    .video-details {
+        display: flex;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .video-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .description {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .userChannel {
+        color: gray;
+        font-size: 0.9rem;
+
+        &:hover {
+            color: white;
+            transition: color 0.3s ease-in-out;
+        }
+    }
+
+    .views-time {
+        display: flex;
+        align-items: center;
+    }
+
+    .views, .time {
+        font-size: 0.9rem;
+        color: gray;
+    }
+
+    .dot {
+        margin: 0 4px;
+        font-size: 0.9rem;
+        color: gray;
+    }
 }
 
-.headball{
-    z-index: 50;
-    background-color:#0f0f0f;
+.headball {
+    display: flex;
+    padding: 10px;
+    gap: 15px;
+    overflow-x: auto;
+    background-color: $background-color;
+    position: fixed;
     width: 100%;
-    .live-recommend-btn{
+    z-index: 50;
+
+    .live-recommend-btn, .recommend-btn {
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .live-recommend-btn {
         background-color: #f1f1f1;
         color: #272727;
     }
-    .recommend-btn{
+
+    .recommend-btn {
         background-color: #272727;
+        color: white;
     }
 }
-
-.top{
-    &:hover {
-        background-color: #373737; 
-       
-        
+@media (max-width:1788px){  
+    .Navopen, .main-box {
+        .box {
+            width: 330px;
+            position: relative;
+            height: 350px;
+        }
+        .thumbnailContainer{
+            height: 190px;
+        }
     }
 }
-.description{
-    font-size: 1rem;
-    font-weight: 600;
-}
-.userChannel{
-    color: gray;
-    font-size: 0.9rem;
-    &:hover {
-        color: white; 
-         animation: ease-in;
-        
+@media (max-width:1692px){  
+    .Navopen, .main-box {
+        .box {
+            min-width: 250px;
+            width: 310px;
+            height: 340px;
+        }
+        .thumbnailContainer{
+            height: 180px;
+        }
     }
 }
-.views{
-    color: gray;
-    font-size: 0.9rem;
+@media (max-width:1595px){  
+    .Navopen, .main-box {
+        .box {
+            min-width: 250px;
+            width: 290px;
+            height: 320px;
+        }
+        .thumbnailContainer{
+            height: 160px;
+        }
+    }
 }
-.time{
-    color: #808080;
-    font-size: 0.9rem;
-}
-.dot{
-    display: flex;
-    flex-direction: column;
-    justify-content:flex-start;
-    color: gray;
-    margin: 0 2px 5px 2px;
-}
-
-

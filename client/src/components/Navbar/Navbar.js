@@ -38,14 +38,14 @@ function Navbar() {
                 </div>
                 <div className="sidebar-item">
                     <FaHistory className="sidebar-icon" size={24} />
-                    <Link to="/watch-history">
-                        <span className="sidebar-label">Watch History</span>
+                    <Link to="/watch-history" className="sidebar-label">
+                        Watch History
                     </Link>
                 </div>
-                <div className="sidebar-item">
+                <div className="sidebar-item" >
                     <CgPlayList className="sidebar-icon" size={24} />
-                    <Link>
-                        <span className="sidebar-label">Playlists</span>
+                    <Link className="sidebar-label">
+                        Playlists                    
                     </Link>
                 </div>
                 <div className="sidebar-item">

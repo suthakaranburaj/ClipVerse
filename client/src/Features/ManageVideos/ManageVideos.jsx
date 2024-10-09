@@ -38,15 +38,15 @@ function ManageVideos() {
             <div className='SearchBar'>
                 <SearchBar />
             </div>
-            <div className='layoutContainer'>
-                <div className='left-side2'>
+            <div className='manageVideoslayoutContainer'>
+                <div className='manageVideosleft-side2'>
                     {isNavOpen ? " " : <NoNavbar />}
                 </div>
 
-                <div className={`left-side ${isNavOpen ? '' : 'hidden'}`}>
+                <div className={`manageVideosleft-side ${isNavOpen ? '' : 'hidden'}`}>
                     {isNavOpen ? <Navbar /> : <NoNavbar />}
                 </div>
-                <div className={isNavOpen ? 'right-side-WithNav' : 'right-side-WithoutNav'}>
+                <div className={isNavOpen ? 'manageVideosright-side-WithNav' : 'manageVideosright-side-WithoutNav'}>
                     <Outlet />
                     {renderContent()}
                 </div>

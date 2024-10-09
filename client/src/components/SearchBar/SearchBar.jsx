@@ -32,7 +32,7 @@ function SearchBar() {
     };
 
     return (
-        <div className="cont">
+        <div className="containerSearchBar">
             <div>
                 <FontAwesomeIcon
                     className='icon-large'
