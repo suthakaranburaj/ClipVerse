@@ -121,7 +121,7 @@ const getVideoById = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Video id required !!");
     }
 
-    const video = await Video.findById(videoId); //yaha error hua tha which was Video.findById({videoId})
+    const video = await Video.findById(videoId).populate('owner', 'avatar fullName'); //yaha error hua tha which was Video.findById({videoId})
 
     if (!video) {
         throw new ApiError(400, "Video not found !!");
@@ -294,7 +294,7 @@ const increamentViews = asyncHandler(async (req, res) => {
 
     const video = await Video.findByIdAndUpdate(
         videoId,
-        { $inc: { views: 0.5 } }, // Increment views by 1
+        { $inc: { views: 1 } }, // Increment views by 1
         { new: true } // Return the updated document
     );
     // console.log("Hellow")

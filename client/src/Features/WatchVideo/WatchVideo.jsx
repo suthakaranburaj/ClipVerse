@@ -7,6 +7,15 @@ import useVideosStore from '../../store/useVideosStore';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/NavMangeVideo/Sidebar';
 import SearchBar from './components/ManageSearchBar/SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import {faSort } from '@fortawesome/free-solid-svg-icons'; // Example icons
+import useStore from '../../store/userStore';
+
+
+
 
 
 function WatchVideo() {
@@ -82,6 +91,8 @@ function WatchVideo() {
     const [isPlaying, setIsPlaying] = useState(false);
 
     const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews } = useVideosStore(); // Fetch the video from the store
+
+    const {user} = useStore();
     const location = useLocation();
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -106,20 +117,11 @@ function WatchVideo() {
     if (isLoading) return <p>Loading video...</p>;
     if (error) return <p>Error: {error}</p>;
 
+    dayjs.extend(relativeTime);
+
     return (
         <div className='box'>
-        <div className='SearchBar'>
-                <SearchBar />
-            </div>
-            <div className='layout'>
-                
-                
-                <div className={`left-side ${isNavOpen ? '' : 'hidden'}`}>
-                <Navbar />
-                </div>
-                <div className={isNavOpen ? 'right-side-WithNav' : 'right-side-WithoutNav'}>
-                    <Outlet />
-                    <div className='watchVideo-container'>
+            <div className='watchVideo-container'>
                 <div className='watchVideo-left-side'>
                     <div>
                         {video ? (
@@ -138,6 +140,90 @@ function WatchVideo() {
                     </div>
                     <div>
                         <p className='video-title'>{video ? video?.title : 'Video Title Here'}</p>
+                    </div>
+                    <div className='subscribeSection'>
+                        <div className='section1'>
+                            <div className='section11'>
+                                <div className='section111'>
+                                    <img src={video?.owner?.avatar} alt="" />
+                                </div>
+                                <div className='section112'>
+                                    <p className='ownerName'>{video?.owner?.fullName}</p>
+                                    <p className='ownerSubscribers'>No of Subscribers</p>
+                                </div>
+                            </div>
+                            <div className='section12'>
+                                <button className='subscribeButton'>
+                                    Subscribe
+                                </button>
+                                <div className='likeButton'>
+                                    <FontAwesomeIcon icon={faThumbsUp} className='likeIcon'/>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <div className='section2'>
+                            <button>
+
+                            </button>
+
+                        </div> */}
+                    </div>
+                    <div className='description'>
+                        <div className='section21'>
+                            <p className='views'>{video?.views} views</p>
+                            {/* <p className='dot'>•</p> */}
+                            <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
+                        </div>
+                        <div className='section22'>
+                            <p className='section221'>Description</p>
+                            <p className='descriptionContent'>{video?.description}</p>
+                        </div>
+                    </div>
+                    <div className='commentSection'>
+                        <div className='commentSection1'>
+                            <p className='commentSection12'>No of Comments</p>
+                        </div>
+                        <div className='commentSection2'>
+                            <FontAwesomeIcon icon={faSort} />
+                            <p className='commentSection21'>Sort by</p>
+                        </div>
+                    </div>
+                    <div className='comments'>
+                        <div className='comments1'>
+                            <div className='comments11'>
+                                <img src={user?.avatar} alt="" />
+                                <input 
+                                    type="text"
+                                    placeholder='Add a Comment'
+                                />
+                                <button>
+                                    Cancel
+                                </button>
+                                <button>
+                                    Comment
+                                </button>
+                            </div>
+                            <div className='divider'>
+
+                            </div>
+                        </div>
+                        {/* <div className='comments2'>
+                        </div> */}
+                    </div>
+                    <div className='channelComments'>
+                        <div className='userAvatar'>
+                            <img src={video.owner.avatar} alt="" />
+                        </div>
+                        <div className='channelComments1'>
+                            <p className='commentOwner'>User</p>
+                            <p>Time ago</p>
+                        </div>
+                        <div className='channelComments2'>
+                            <p className='userComment'>user comment</p>
+                        </div>
+                    </div>
+                    <div className='commentLike'>
+                            <FontAwesomeIcon icon={faThumbsUp} className='commentLikeIcon'/>
                     </div>
                 </div>
 
@@ -167,9 +253,6 @@ function WatchVideo() {
                     ))}
                 </div>
             </div>
-                </div>
-            </div>
-            
         </div>
 
 

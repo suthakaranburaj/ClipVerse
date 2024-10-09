@@ -24,8 +24,9 @@ const router = createBrowserRouter(
                     <Route path='community' element={<UserCommunity />} />
                 </Route>
                 <Route path='/watch-history' element={<WatchHistory/>}/>
+                <Route path='watchvideo' element={<WatchVideo />} />
             </Route>
-            <Route path='watchvideo' element={<WatchVideo />} />
+            
         </>
     )
 );

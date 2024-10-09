@@ -21,7 +21,7 @@
     .left-side2{
         position: fixed;
         margin-top: 4%;
-        width: 5%;
+        // width: 5%;
         height: 100vh;
         color: $text-color;
         z-index: 2;
@@ -40,6 +40,7 @@
     .right-side-WithNav {
         margin-top:3.5%;
         margin-left: 17%;
+        margin-right: 2%;
         width: 85%;
         height: 90vh;
         display: flex;

@@ -49,7 +49,7 @@ function HomePage() {
     if (error) return <div>Error loading videos</div>;
 
     return (
-        <div className={`${isNavOpen ? 'HomePageContainer pl-2' : 'HomePageContainer1'}`}>
+        <div className='HomePageContainer pl-2'>
             <div className="headball flex space-x-4 py-2 overflow-x-auto text-xs font-bold fixed b w-full">
                 <button className="live-recommend-btn text-white py-2 px-3 rounded-lg">All</button>
                 <button className="recommend-btn text-white py-2 px-3 rounded-lg">Web Development</button>
