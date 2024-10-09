@@ -1,15 +1,16 @@
+@import '../../../../index.scss';
 .Man-sidebar {
     width: 240px;
     padding: 1rem;
-    background-color: #0f0f0f;
-    color: #fff;
+    background-color: $background-color;
+    color: $text-color;
     font-family: Arial, sans-serif;
     height: 100vh;
     
     .Man-sidebar-divider {
       width: 100%;
       height: 1px;
-      background-color: #333;
+      background-color: $background-color;
       margin: 1rem 0;
     }
     .Profile-sidebar-section{

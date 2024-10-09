@@ -88,20 +88,20 @@ function WatchVideo() {
         const videoId = queryParams.get('videoId');
         console.log(videoId);
         if (videoId) {
-            getVideoById(videoId); // Fetch the video based on videoId
+            getVideoById(videoId);
             incrementVideoViews(videoId);
             userWatchHistory(videoId);
         }
     }, [location, getVideoById, userWatchHistory, incrementVideoViews]);
-    // incrementVideoViews
-    const togglePlayPause = () => {
-        if (isPlaying) {
-            videoRef.current.pause();
-        } else {
-            videoRef.current.play();
-        }
-        setIsPlaying(!isPlaying);
-    };
+
+    // const togglePlayPause = () => {
+    //     if (isPlaying) {
+    //         videoRef.current.pause();
+    //     } else {
+    //         videoRef.current.play();
+    //     }
+    //     setIsPlaying(!isPlaying);
+    // };
 
     if (isLoading) return <p>Loading video...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -125,17 +125,16 @@ function WatchVideo() {
                         {video ? (
                             <video
                                 ref={videoRef}
-                                src={video?.videoFile} // Assuming the video URL comes from the store
-                                controls // Adds default video controls
-                                 // Make it responsive
-                                style={{ borderRadius: '10px' }} // Optional: style to make it look better
+                                src={video?.videoFile}
+                                controls
+                                style={{ borderRadius: '10px' }}
                             />
                         ) : (
                             <p>No video found.</p>
                         )}
-                        <button onClick={togglePlayPause}>
+                        {/* <button onClick={togglePlayPause}>
                             {isPlaying ? 'Pause' : 'Play'}
-                        </button>
+                        </button> */}
                     </div>
                     <div>
                         <p className='video-title'>{video ? video?.title : 'Video Title Here'}</p>

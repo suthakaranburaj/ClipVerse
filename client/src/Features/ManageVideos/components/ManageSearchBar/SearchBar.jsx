@@ -102,7 +102,7 @@ function SearchBar() {
                     <div className='flex items-center relative'>
                        
                         <div className="relative">
-                            <button className='bttn bg-gray-800 rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
+                            <button className='bttn rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
                             <MdVideoCall className="dropdown-icon" size={22} />
                                 Create
                             </button>

@@ -1,6 +1,7 @@
+@import '../../../index.scss';
 .UserChannel-Container {
     color: white;
-    background-color: #0f0f0f;
+    background-color: $background-color;
     height: 100vh;
     padding: 0%;
 

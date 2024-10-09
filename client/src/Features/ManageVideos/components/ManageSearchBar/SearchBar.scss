@@ -1,4 +1,7 @@
-.nav-center {
+@import '../../../../index.scss';
+.cont{
+  background-color:$background-color ;
+  .nav-center {
     display: flex;
     align-items: center;
     flex-grow: 1;
@@ -157,6 +160,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    background-color: $button-color;
     .dropdown-icon{
       margin-right: 10px;
       background-color: transparent;
@@ -300,6 +304,7 @@
         }
         
     }
+}
 }
 
 
