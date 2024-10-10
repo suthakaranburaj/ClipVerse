@@ -101,6 +101,7 @@ function WatchVideo() {
             const videoId = queryParams.get('videoId');
             console.log(videoId);
             if (videoId) {
+                await userWatchHistory(videoId);
                 await getVideoById(videoId);
                 await incrementVideoViews(videoId);
                 await getVideoComments(videoId);

@@ -282,7 +282,7 @@ const addUserWatchHistoryand = asyncHandler(async ( req,res)=>{
 
     return res
     .status(200)
-    .json(200,updatedUser.watchHistory,"Video added to Watch History successfully !!")
+    .json(new ApiResponse(200,updatedUser.updatedUser.watchHistory,"Video added to Watch History successfully !!"))
 
 })
 
