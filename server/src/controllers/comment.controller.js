@@ -21,7 +21,8 @@ const getVideoComments = asyncHandler(async (req, res) => {
                     // .sort(sortOptions)   // Sort the videos
                     .skip(skip)          // Skip the previous videos for pagination
                     .limit(commentLimit)
-                    .sort({createdAt:-1});
+                    .sort({createdAt:-1})
+                    .populate('owner','avatar username');
     const totalCommentsCount = await Comment.countDocuments({ video: videoId });
 
     const responseData = {

@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {getVideosCommentsServices,getAllVideosCommentsServices} from '../Features/zServices/commentsServices'
+import {getVideoCommentsServices,getAllVideosCommentsServices} from '../Features/zServices/commentsServices'
 
 const useCommentsStore = create((set)=>({
     commentsOfVideo:[],
@@ -8,32 +8,31 @@ const useCommentsStore = create((set)=>({
     isLoading:false,
     error:null,
 
-    // getVideoComments: async (params = {page: 1, limit: 40}) => {
-    //     set({ isLoading: true, error: null });
+    getVideoComments: async (videoId,params = {page: 1, limit: 40}) => {
+        set({ isLoading: true, error: null });
     
-    //     try {
-    //       // Destructure page and limit from params    
-    //     const response = await getVideosCommentsServices(params);
-    //     console.log(response);
-    //     console.log(response.data.data.results.videoId);
+        try {
 
-    //     // console.log(response);
-    //     set({
-    //         commentsOfVideos: response.data.results.videoId.comments,   // Array of objects containing videoId, comments, and commentsCount
-    //         totalCommentsCount: response.data.results, // Total number of comments for all videos
-    //         isLoading: false,
-    //         error: null,
-    //     });
+        const response = await getVideoCommentsServices(videoId,params);
+        // console.log(response);
+        // console.log(response.data.data.results);
+        // console.log(response);
 
-    //     return true;
-    //     } catch (error) {
-    //     set({
-    //         isLoading: false,
-    //         error: error.response?.data?.message || "Failed fetching Video comments",
-    //     });
-    //     return false;
-    //     }
-    // },
+        set({
+            commentsOfVideo: response.data.data.results,
+            isLoading: false,
+            error: null,
+        });
+        // console.log(commentsOfVideo)
+        return true;
+        } catch (error) {
+        set({
+            isLoading: false,
+            error: error.response?.data?.message || "Failed fetching Video comments",
+        });
+        return false;
+        }
+    },
 
 
     getAllVideosComments: async () => {

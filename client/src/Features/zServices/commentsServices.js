@@ -7,9 +7,9 @@ const getToken = () => {
     return accessToken; // Adjust based on how you store the token
 };
 
-const getVideosCommentsServices = async ({ page = 1, limit = 40 }, videoId) => {
+const getVideoCommentsServices = async (videoId,{ page = 1, limit = 40 }) => {
     try {
-        console.log(`${BACKEND_URL}/${videoId}`)
+        // console.log(`${BACKEND_URL}/${videoId}`)
         const response = await axios.get(`${BACKEND_URL}/${videoId}`,{
             params: {
                 page,  // Pass page from params
@@ -96,7 +96,7 @@ const deleteCommentOnVideoServices = async(commentId) =>{
 //     }
 // };
 export{
-    getVideosCommentsServices,
+    getVideoCommentsServices,
     addCommentOnVideoServices,
     updateCommentOnVideoServices,
     deleteCommentOnVideoServices,

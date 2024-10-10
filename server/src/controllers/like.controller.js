@@ -5,6 +5,7 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import { Video } from "../models/video.model.js"
 import {Tweet} from '../models/tweet.model.js'
+import { Comment } from "../models/comment.model.js"
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
     //TODO: toggle like on video
@@ -63,7 +64,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
     }
 
     
-    const comment = await Comment.findById(commentId);
+    const comment = await Comment.findById({_id:commentId});
     if(!comment){
         throw new ApiError(404,"Comment Does not exist");
     }

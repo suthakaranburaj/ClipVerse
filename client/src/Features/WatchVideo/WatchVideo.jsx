@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {faSort } from '@fortawesome/free-solid-svg-icons'; // Example icons
 import useStore from '../../store/userStore';
-
+import useCommentsStore from '../../store/useCommentsStore'
 
 
 
@@ -91,19 +91,24 @@ function WatchVideo() {
     const [isPlaying, setIsPlaying] = useState(false);
 
     const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews } = useVideosStore(); // Fetch the video from the store
-
     const {user} = useStore();
     const location = useLocation();
+    const { commentsOfVideo,getVideoComments} = useCommentsStore();
+    console.log(commentsOfVideo);
     useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const videoId = queryParams.get('videoId');
-        console.log(videoId);
-        if (videoId) {
-            getVideoById(videoId);
-            incrementVideoViews(videoId);
-            userWatchHistory(videoId);
+        const fetchData =async()=>{
+            const queryParams = new URLSearchParams(location.search);
+            const videoId = queryParams.get('videoId');
+            console.log(videoId);
+            if (videoId) {
+                await getVideoById(videoId);
+                await incrementVideoViews(videoId);
+                await getVideoComments(videoId);
+                console.log(commentsOfVideo);
+            }
         }
-    }, [location, getVideoById, userWatchHistory, incrementVideoViews]);
+        fetchData();
+    }, [location, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments]);
 
     // const togglePlayPause = () => {
     //     if (isPlaying) {
@@ -211,20 +216,30 @@ function WatchVideo() {
                         </div> */}
                     </div>
                     <div className='channelComments'>
-                        <div className='userAvatar'>
-                            <img src={video.owner.avatar} alt="" />
-                        </div>
-                        <div className='channelComments1'>
-                            <p className='commentOwner'>User</p>
-                            <p>Time ago</p>
-                        </div>
-                        <div className='channelComments2'>
-                            <p className='userComment'>user comment</p>
-                        </div>
+                        {commentsOfVideo?.map((comment)=>{
+                        return(
+                            <div key={comment?._id} className='channelCommentsSection'>
+                                <div className='channelCommentsSection1'>
+                                    <img src={comment?.owner?.avatar} alt="" />
+                                </div>
+                                <div className='channelCommentsSection2'>
+                                    <div className='channelCommentsSection21'>
+                                        <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
+                                        <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
+                                    </div>
+                                    <div className='channelCommentsSecton22'>
+                                        <p className='channelCommentsSection212'>{comment?.content}</p>
+                                    </div>
+                                    <div className='channelCommensSection23'>
+                                        <FontAwesomeIcon icon={faThumbsUp} className=''/>
+                                        <p>4</p>
+                                    </div>
+                                </div>
+                            </div>
+                            );
+                        })}
                     </div>
-                    <div className='commentLike'>
-                            <FontAwesomeIcon icon={faThumbsUp} className='commentLikeIcon'/>
-                    </div>
+                    
                 </div>
 
                 <div className='watchVideo-right-side'>
