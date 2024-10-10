@@ -56,8 +56,7 @@ const useVideosStore = create((set,get)=>({
                 isLoading:false,
                 error:null
             }));
-            window.location.reload();
-
+            // window.location.reload();
         } catch (error) {
             set({
                 isLoading:false,

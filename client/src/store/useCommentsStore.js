@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {getVideoCommentsServices,getAllVideosCommentsServices} from '../Features/zServices/commentsServices'
+import {getVideoCommentsServices,getAllVideosCommentsServices,addCommentOnVideoServices} from '../Features/zServices/commentsServices'
 
 const useCommentsStore = create((set)=>({
     commentsOfVideo:[],
@@ -68,6 +68,26 @@ const useCommentsStore = create((set)=>({
         }
     },
     
+    addCommentOnVideo:async(videoId,content)=>{
+        set({isLoading:true,error:null});
+        try {
+            const response = await addCommentOnVideoServices(videoId,content);
+            const VideoComment = response.data
+            console.log(VideoComment)
+            set((state) =>({
+                commentsOfVideo:[VideoComment,...state.commentsOfVideo],
+                allComments:[VideoComment,...state.allComments],
+                isLoading:false,
+                error:null,
+            }))
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.data?.message || "Failed to publich Comment",
+            })
+        }
+    }
 
 }));
 

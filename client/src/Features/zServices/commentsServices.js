@@ -40,9 +40,9 @@ const getAllVideosCommentsServices = async() => {
     }
 };
 
-const addCommentOnVideoServices = async(videoId,commentData) => {
+const addCommentOnVideoServices = async(videoId,content) => {
     try {
-        const response = await axios.post(`${BACKEND_URL}/${videoId}`,commentData,{
+        const response = await axios.post(`${BACKEND_URL}/${videoId}`,{content},{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },

@@ -89,36 +89,49 @@ function WatchVideo() {
 
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [commentsUpdated, setCommentsUpdated] = useState(false);
+    const [commentContent, setCommentContent] = useState('');
 
-    const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews } = useVideosStore(); // Fetch the video from the store
+    const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews,getAllVideos } = useVideosStore(); // Fetch the video from the store
     const {user} = useStore();
     const location = useLocation();
-    const { commentsOfVideo,getVideoComments} = useCommentsStore();
+    const { commentsOfVideo,getVideoComments,addCommentOnVideo} = useCommentsStore();
     console.log(commentsOfVideo);
     useEffect(() => {
         const fetchData =async()=>{
             const queryParams = new URLSearchParams(location.search);
             const videoId = queryParams.get('videoId');
-            console.log(videoId);
+            // console.log(videoId);
             if (videoId) {
                 await userWatchHistory(videoId);
                 await getVideoById(videoId);
                 await incrementVideoViews(videoId);
                 await getVideoComments(videoId);
-                console.log(commentsOfVideo);
+                // console.log(commentsOfVideo);
             }
         }
         fetchData();
-    }, [location, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments]);
+    }, [location, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated]);
 
-    // const togglePlayPause = () => {
-    //     if (isPlaying) {
-    //         videoRef.current.pause();
-    //     } else {
-    //         videoRef.current.play();
-    //     }
-    //     setIsPlaying(!isPlaying);
-    // };
+    const handleAddComment = async()=>{
+        const queryParams = new URLSearchParams(location.search);
+        const videoId = queryParams.get('videoId');
+        if(videoId && commentContent){
+            await addCommentOnVideo(videoId,commentContent);
+            setCommentContent('');
+            setCommentsUpdated(prev => !prev); // Trigger refetch
+        }
+    }
+
+    // useEffect(() => {
+    //     const handleAutoSubmit = () => {
+    //         if (commentContent.trim()) {
+    //             handleAddComment();
+    //         }
+    //     };
+
+    //     handleAutoSubmit();
+    // }, [commentContent]); // Run handleSubmit when commentContent changes
 
     if (isLoading) return <p>Loading video...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -187,7 +200,7 @@ function WatchVideo() {
                     </div>
                     <div className='commentSection'>
                         <div className='commentSection1'>
-                            <p className='commentSection12'>No of Comments</p>
+                            <p className='commentSection12'>{commentsOfVideo?.length} Comments</p>
                         </div>
                         <div className='commentSection2'>
                             <FontAwesomeIcon icon={faSort} />
@@ -201,11 +214,18 @@ function WatchVideo() {
                                 <input 
                                     type="text"
                                     placeholder='Add a Comment'
+                                    value={commentContent}
+                                    onChange={(e)=>setCommentContent(e.target.value)}
                                 />
-                                <button>
+                                <button 
+                                    onClick={()=>setCommentContent('')}
+                                >
                                     Cancel
                                 </button>
-                                <button>
+                                <button 
+                                    onClick={handleAddComment}
+                                    disabled={!commentContent.trim()}
+                                >
                                     Comment
                                 </button>
                             </div>
@@ -217,28 +237,33 @@ function WatchVideo() {
                         </div> */}
                     </div>
                     <div className='channelComments'>
-                        {commentsOfVideo?.map((comment)=>{
-                        return(
-                            <div key={comment?._id} className='channelCommentsSection'>
-                                <div className='channelCommentsSection1'>
-                                    <img src={comment?.owner?.avatar} alt="" />
-                                </div>
-                                <div className='channelCommentsSection2'>
-                                    <div className='channelCommentsSection21'>
-                                        <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
-                                        <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
+                        {
+                            commentsOfVideo && commentsOfVideo.length > 0 ?
+                            commentsOfVideo.map((comment)=>{
+                                return(
+                                    <div key={comment?._id} className='channelCommentsSection'>
+                                        <div className='channelCommentsSection1'>
+                                            <img src={comment?.owner?.avatar} alt="" />
+                                        </div>
+                                        <div className='channelCommentsSection2'>
+                                            <div className='channelCommentsSection21'>
+                                                <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
+                                                <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
+                                            </div>
+                                            <div className='channelCommentsSecton22'>
+                                                <p className='channelCommentsSection212'>{comment?.content}</p>
+                                            </div>
+                                            <div className='channelCommensSection23'>
+                                                <FontAwesomeIcon icon={faThumbsUp} className=''/>
+                                                <p>4</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className='channelCommentsSecton22'>
-                                        <p className='channelCommentsSection212'>{comment?.content}</p>
-                                    </div>
-                                    <div className='channelCommensSection23'>
-                                        <FontAwesomeIcon icon={faThumbsUp} className=''/>
-                                        <p>4</p>
-                                    </div>
-                                </div>
-                            </div>
-                            );
-                        })}
+                                    );
+                                }) 
+                                :
+                            <p>No Comments</p>
+                        }
                     </div>
                     
                 </div>

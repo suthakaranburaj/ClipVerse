@@ -43,8 +43,9 @@ const addComment = asyncHandler(async (req, res) => {
     //content from the body
     //content hai ki nahi check karenge
     const userId = req.user._id;
-    
     const {content} = req.body;
+    console.log(content);
+
     if(!content){
         throw new ApiError(400,"Content is required !!");
     }
@@ -63,7 +64,7 @@ const addComment = asyncHandler(async (req, res) => {
 
     return res
     .status(201)
-    .json( new ApiResponse(201,"Comment created and uploaded successfully !!"));
+    .json( new ApiResponse(201,newComment,"Comment created and uploaded successfully !!"));
 
 })
 
