@@ -7,9 +7,12 @@ import {asyncHandler} from "../utils/asyncHandler.js"
 
 
 const toggleSubscription = asyncHandler(async (req, res) => {
-    const {channelId} = req.params
-    console.log(req)
-    console.log(req.params)
+    const {channelId} = req.params;
+    // console.log(req)
+    // console.log(req.params)
+    // console.log("hellow")
+    // console.log(channelId)
+    
     if(!channelId){
         throw new ApiError(400,"Channel Id is missing !!")
     }

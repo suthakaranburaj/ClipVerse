@@ -44,7 +44,7 @@ const addComment = asyncHandler(async (req, res) => {
     //content hai ki nahi check karenge
     const userId = req.user._id;
     const {content} = req.body;
-    console.log(content);
+    // console.log(content);
 
     if(!content){
         throw new ApiError(400,"Content is required !!");

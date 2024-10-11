@@ -14,76 +14,12 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import {faSort } from '@fortawesome/free-solid-svg-icons'; // Example icons
 import useStore from '../../store/userStore';
 import useCommentsStore from '../../store/useCommentsStore'
+import useSubscriptionStore from '../../store/useSubscriptionStore';
 
 
 
 
 function WatchVideo() {
-    const videoData = [
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-        {
-            image1: image1,
-            description: 'How to Work with full energy -By Tushar Hasule',
-            userChannel: 'Tushar Hasule Talks',
-            views: '1.1M views',
-            time: '1 day ago',
-        },
-    ];
 
     const { isNavOpen } = devStore();
 
@@ -91,38 +27,72 @@ function WatchVideo() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [commentsUpdated, setCommentsUpdated] = useState(false);
     const [commentContent, setCommentContent] = useState('');
+    const [isSubscribed,setIsSubscribed] = useState(false);
+    const [channelId, setChannelId] = useState(null);
 
-    const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews,getAllVideos } = useVideosStore(); // Fetch the video from the store
+    const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews,getAllVideos,videos } = useVideosStore(); // Fetch the video from the store
     const {user} = useStore();
     const location = useLocation();
     const { commentsOfVideo,getVideoComments,addCommentOnVideo} = useCommentsStore();
-    console.log(commentsOfVideo);
+    // console.log(commentsOfVideo);
+    const {getUserChannelSubscribers, channelSubscribers,toggleSubscription, error:subscriptionError} = useSubscriptionStore();
+
+    const queryParams = new URLSearchParams(location.search);
+    const videoId = queryParams.get('videoId');
     useEffect(() => {
         const fetchData =async()=>{
-            const queryParams = new URLSearchParams(location.search);
-            const videoId = queryParams.get('videoId');
-            // console.log(videoId);
             if (videoId) {
-                await userWatchHistory(videoId);
+                // await userWatchHistory(videoId);
                 await getVideoById(videoId);
                 await incrementVideoViews(videoId);
                 await getVideoComments(videoId);
-                // console.log(commentsOfVideo);
+                await getAllVideos();
+
+                const channelId = await video?.owner?._id;
+                // console.log(video?.owner?._id);
+                if(video?.owner?._id){
+                    setChannelId(video.owner._id);
+                    // console.log(video?.owner?._id);
+                    await getUserChannelSubscribers(channelId);
+                }
             }
-        }
+        };
         fetchData();
-    }, [location, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated]);
+    }, [videoId, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated,getAllVideos,getUserChannelSubscribers]);
+
+    useEffect( () => {
+        const fetchData = async()=>{
+            if (channelSubscribers.length > 0 && user) {
+                const isUserSubscribed = channelSubscribers.some(subscriber => subscriber._id === user._id);
+                setIsSubscribed(isUserSubscribed);
+            }
+            const channelId = await video?.owner?._id;
+            await getVideoById(videoId);
+            // await getUserChannelSubscribers(channelId);
+        };
+        fetchData();
+    }, [channelSubscribers, user,videoId]);
 
     const handleAddComment = async()=>{
-        const queryParams = new URLSearchParams(location.search);
-        const videoId = queryParams.get('videoId');
+
         if(videoId && commentContent){
             await addCommentOnVideo(videoId,commentContent);
             setCommentContent('');
-            setCommentsUpdated(prev => !prev); // Trigger refetch
+            setCommentsUpdated(prev => !prev);
         }
     }
 
+    const handleSubscription = async () => {
+        if (channelId) {
+            await toggleSubscription(channelId);
+            if(isSubscribed){
+                channelSubscribers.length -= 1;
+            }else{
+                channelSubscribers.length += 1;
+            }
+            setIsSubscribed((prev) => !prev);
+        }
+    };
     // useEffect(() => {
     //     const handleAutoSubmit = () => {
     //         if (commentContent.trim()) {
@@ -168,15 +138,20 @@ function WatchVideo() {
                                 </div>
                                 <div className='section112'>
                                     <p className='ownerName'>{video?.owner?.fullName}</p>
-                                    <p className='ownerSubscribers'>No of Subscribers</p>
+                                    <p className='ownerSubscribers'>{channelSubscribers.length}</p>
                                 </div>
                             </div>
                             <div className='section12'>
-                                <button className='subscribeButton'>
-                                    Subscribe
+                                <button 
+                                    className='subscribeButton'
+                                    onClick={handleSubscription}
+                                >
+                                    {isSubscribed ? 'Subscribed' : 'Subscribe'}
                                 </button>
+
                                 <div className='likeButton'>
                                     <FontAwesomeIcon icon={faThumbsUp} className='likeIcon'/>
+                                    <p>45</p>
                                 </div>
                             </div>
                         </div>
@@ -269,28 +244,27 @@ function WatchVideo() {
                 </div>
 
                 <div className='watchVideo-right-side'>
-                    {videoData.map((video, index) => (
-                        <div key={index} className='vids flex gap-2'>
-                            <div className='w-[50%]'>
-                                <img src={video.image1} className='rounded-lg' alt="" />
-                            </div>
-                            <div className='flex flex-col gap-1'>
-                                <div>
-                                    <p className='font-bold' >{video.description}</p>
+                    {videos.length > 0 && videos.map((video, index) => (
+                        video?._id != videoId && (
+                            <div key={index} className='watchVideoSection'>
+                                <div className='watchVideoSection1'>
+                                    <img src={video?.thumbnail} className='watchVideoSection11' alt="" />
                                 </div>
-                                <div>
-                                    <p className='text-[#808080] text-[1%] '>{video.userChannel}</p>
-                                </div>
-                                <div className='flex'>
-                                    <div>
-                                        <p className='text-[#808080] text-[90%] '>{video.views}</p>
+                                <div className='watchVideoSection2'>
+                                    <div className='watchVideoSection21'>
+                                        <p className='watchVideoSection211'>{video?.title}</p>
                                     </div>
-                                    <div>
-                                        <p className='text-[#808080] text-[90%] '>{video.time}</p>
+                                    <div className='watchVideoSection22'>
+                                        <p className='watchVideoSection221'>{video?.owner?.username}</p>
+                                    </div>
+                                    <div className='watchVideoSection23'>
+                                            <p className='views'>{video?.views} views</p>
+                                            <p className='dot'>•</p>
+                                            <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        )
                     ))}
                 </div>
             </div>

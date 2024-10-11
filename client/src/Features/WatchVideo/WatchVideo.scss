@@ -82,6 +82,7 @@
                 display: flex;
                 justify-content: space-between;
                 padding: 3px;
+                width: 100%;
 
                 .section1{
                     width: 50%;
@@ -128,7 +129,7 @@
                             color: $background-color;
                             background-color: $secondary-text;
                             height: 40px;
-                            width: 40px;
+                            width: 80px;
                             border-radius: 20px;
                             display: flex;
                             align-items: center;
@@ -138,6 +139,11 @@
                                 font-size:30px;
                                 background-color: $secondary-text;
                                 border-radius: 50%;
+                            }
+                            p{
+                                margin-left: 4px;
+                                font-size: 22px;
+                                font-weight: 700;
                             }
                         }
                     }
@@ -295,16 +301,69 @@
         }
     
         .watchVideo-right-side {
-            width: 30%;
+            width: 400px;
             display: flex;
             flex-direction: column;
             margin-right: 5px;
-            color: white;
-            font-size: 0.9rem;
+            color: $text-color;
+            font-size: $base-font-size;
             background-color: $background-color;
-            height: 100vh;
-            .vids{
-                padding: 10px;
+            height: auto;
+            align-items: center;
+            .watchVideoSection{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                padding: 2px 5px;
+                transition-duration: 0.5s;
+                border-radius: 10px;
+
+                &:hover{
+                    background-color:$secondary-color;
+                }
+                .watchVideoSection1{
+                    width: 55%;
+                    height: 110px;
+                    display: flex;
+                    align-items: center;
+                    .watchVideoSection11{
+                        margin: 0 6px 0 0 ;
+                        width: 150px;
+                        height: 100px;
+                        border-radius: 10px;
+                    }
+                }
+                .watchVideoSection2{
+                    width: 50%;
+                    .watchVideoSection21{
+                        .watchVideoSection211{
+                            font-size: 14px;
+                            font-weight: 700;
+                        }
+                    }
+                    .watchVideoSection22{
+                        margin-top: 5px;
+                        .watchVideoSection221{
+                            font-size: 13px;
+                            color: $secondary-text;
+                        }
+                    }
+                    .watchVideoSection23{
+                        display: flex;
+                        flex-direction: row;
+                        font-size: 12px;
+                        color: $secondary-text;
+                        .views{
+                            font-size: 12px;
+                        }
+                        .dot{
+                            font-size: 12px;
+                        }
+                        .time{
+                            font-size: 12px;
+                        }
+                    }
+                }
             }
         }
     

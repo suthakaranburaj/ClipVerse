@@ -7,9 +7,12 @@ const getToken = () => {
     return accessToken; // Adjust based on how you store the token
 };
 
-const toggleSubscriptionServices = async(channelId,SubscriptionData)=>{
+const toggleSubscriptionServices = async(channelId)=>{
+    // console.log('Channel ID:', channelId); // Check the value of channelId
+    // console.log('Authorization Token:', getToken());
+
     try {
-        const response = await axios.post(`${BACKEND_URL}/c/${channelId}`,SubscriptionData,{
+        const response = await axios.post(`${BACKEND_URL}/c/${channelId}`,{},{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },
@@ -23,7 +26,7 @@ const toggleSubscriptionServices = async(channelId,SubscriptionData)=>{
 
 const getUserChannelSubscribersServices = async(channelId)=>{
     try {
-        console.log(channelId)
+        // console.log(channelId)
         const response = await axios.get(`${BACKEND_URL}/c/${channelId}`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
