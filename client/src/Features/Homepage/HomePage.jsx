@@ -34,13 +34,7 @@ function HomePage() {
         });
     }, [getAllVideos]);
 
-    const handleMouseEnter = (index) => {
-        const videoElement = videoRefs.current[index];
-        if (videoElement && videoElement.readyState >= 2) {
-            videoElement.style.display = 'block';
-            videoElement.play().catch((videoStoreError) => console.videoStoreError('Video play failed:', videoStoreError));
-        }
-    };
+
 
     const handleMouseLeave = (index) => {
         const videoElement = videoRefs.current[index];
@@ -51,7 +45,13 @@ function HomePage() {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div>Loading...</div>;    const handleMouseEnter = (index) => {
+        const videoElement = videoRefs.current[index];
+        if (videoElement && videoElement.readyState >= 2) {
+            videoElement.style.display = 'block';
+            videoElement.play().catch((videoStoreError) => console.error('Video play failed:', videoStoreError));
+        }
+    };
     if (videoStoreError) return <div>Error loading videos</div>;
 
     return (

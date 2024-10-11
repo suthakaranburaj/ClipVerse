@@ -41,6 +41,7 @@ const getAllVideosService = async ({ page = 1, limit = 10, query = '', sortBy = 
         });
         return response;
     } catch (error) {
+        console.log(error);
         throw error;
     }
 };

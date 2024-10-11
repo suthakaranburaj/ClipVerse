@@ -91,7 +91,7 @@ function LoginPage() {
                     </div>
                 )}
 
-                {error && <p className="text-red-500 text-2xl">{error}</p>}
+                {error && <p className="text-red-500 text-xl">{error}</p>}
             </div>
         </div>
     );

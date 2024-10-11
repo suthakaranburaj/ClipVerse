@@ -96,6 +96,8 @@ const registerUser = asyncHandler(async (req, res) => {
         "-password -refreshToken"
     )
 
+    const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id)
+
     if (!createdUser) {
         return res
         .status(500)
@@ -103,7 +105,12 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     return res.status(201).json(
-        new ApiResponse(200, createdUser, "User registered Successfully")
+        new ApiResponse(
+            200,
+            {
+                user:createdUser,accessToken,refreshToken
+            }, 
+            "User registered Successfully")
     )
 
 })
