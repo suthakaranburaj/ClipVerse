@@ -58,7 +58,7 @@ function WatchVideo() {
             }
         };
         fetchData();
-    }, [videoId, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated,getAllVideos,getUserChannelSubscribers]);
+    }, [videoId,channelId, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated,getAllVideos,getUserChannelSubscribers]);
 
     useEffect( () => {
         const fetchData = async()=>{
@@ -66,12 +66,12 @@ function WatchVideo() {
                 const isUserSubscribed = channelSubscribers.some(subscriber => subscriber._id === user._id);
                 setIsSubscribed(isUserSubscribed);
             }
-            const channelId = await video?.owner?._id;
-            await getVideoById(videoId);
+            // const channelId = await video?.owner?._id;
+            // await getVideoById(videoId);
             // await getUserChannelSubscribers(channelId);
         };
         fetchData();
-    }, [channelSubscribers, user,videoId]);
+    }, [channelSubscribers, user]);
 
     const handleAddComment = async()=>{
 
