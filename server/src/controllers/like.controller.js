@@ -6,6 +6,7 @@ import {asyncHandler} from "../utils/asyncHandler.js"
 import { Video } from "../models/video.model.js"
 import {Tweet} from '../models/tweet.model.js'
 import { Comment } from "../models/comment.model.js"
+import { response } from "express"
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
     //TODO: toggle like on video
@@ -208,10 +209,39 @@ const getLikesOfVideos = asyncHandler( async(req,res) =>{
     .json(new ApiResponse(200,responseData,"Likes of Videos Fetch successfully"))
 })
 
+const getLikesOfVideo = asyncHandler( async(req,res)=>{
+
+    const {videoId} = req.params;
+    if(!videoId){
+        return res
+        .status(400)
+        .json(new ApiError(400,"Video Id is missing !!"));
+    }
+
+    const likes = await Like.find({video:videoId});
+    if(likes.length === 0){
+        return res
+        .status(200)
+        .json(new ApiResponse(200,"No likes for the video"))
+    }
+
+    const likesCount = likes.length;
+
+    const responseData = {
+        likes,
+        videoLikesCount:likesCount,
+    }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,responseData,"Likes of the video Fetched successfully !!"))
+})
+
 export {
     toggleCommentLike,
     toggleTweetLike,
     toggleVideoLike,
     getLikedVideos,
     getLikesOfVideos,
+    getLikesOfVideo
 }

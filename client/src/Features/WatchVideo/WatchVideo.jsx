@@ -15,6 +15,7 @@ import {faSort } from '@fortawesome/free-solid-svg-icons'; // Example icons
 import useStore from '../../store/userStore';
 import useCommentsStore from '../../store/useCommentsStore'
 import useSubscriptionStore from '../../store/useSubscriptionStore';
+import useLikesStore from '../../store/useLikesStore';
 
 
 
@@ -29,13 +30,14 @@ function WatchVideo() {
     const [commentContent, setCommentContent] = useState('');
     const [isSubscribed,setIsSubscribed] = useState(false);
     const [channelId, setChannelId] = useState(null);
+    const [isVideoLiked,setIsVideoLiked] = useState(false);
 
     const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews,getAllVideos,videos } = useVideosStore(); // Fetch the video from the store
     const {user} = useStore();
     const location = useLocation();
     const { commentsOfVideo,getVideoComments,addCommentOnVideo} = useCommentsStore();
-    // console.log(commentsOfVideo);
     const {getUserChannelSubscribers, channelSubscribers,toggleSubscription, error:subscriptionError} = useSubscriptionStore();
+    const {toggleVideoLike, getVideoLikes,likesOfVideo,likesOfVideoNumber} = useLikesStore();
 
     const queryParams = new URLSearchParams(location.search);
     const videoId = queryParams.get('videoId');
@@ -47,24 +49,28 @@ function WatchVideo() {
                 await incrementVideoViews(videoId);
                 await getVideoComments(videoId);
                 await getAllVideos();
+                await getVideoLikes(videoId);
 
                 const channelId = await video?.owner?._id;
-                // console.log(video?.owner?._id);
                 if(video?.owner?._id){
                     setChannelId(video.owner._id);
-                    // console.log(video?.owner?._id);
                     await getUserChannelSubscribers(channelId);
                 }
             }
         };
         fetchData();
-    }, [videoId,channelId, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated,getAllVideos,getUserChannelSubscribers]);
+    }, [videoId,channelId, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated,getAllVideos,getUserChannelSubscribers,getVideoLikes]);
 
     useEffect( () => {
         const fetchData = async()=>{
             if (channelSubscribers.length > 0 && user) {
                 const isUserSubscribed = channelSubscribers.some(subscriber => subscriber._id === user._id);
                 setIsSubscribed(isUserSubscribed);
+            }
+            if(likesOfVideoNumber > 0 && user){
+                const isVideoLiked = likesOfVideo.some(u => u.likedBy === user._id);
+                setIsVideoLiked(isVideoLiked);
+                // console.log(setIsVideoLiked);
             }
             // const channelId = await video?.owner?._id;
             // await getVideoById(videoId);
@@ -91,6 +97,20 @@ function WatchVideo() {
                 channelSubscribers.length += 1;
             }
             setIsSubscribed((prev) => !prev);
+        }
+    };
+
+    const handleVideoLike = async()=>{
+        if(videoId){
+            await toggleVideoLike(videoId);
+            await getVideoLikes(videoId);
+            // if(isVideoLiked){
+            //     likesOfVideoCount -= 1;
+            // }
+            // else{
+            //     likesOfVideoCount += 1;
+            // }
+            setIsVideoLiked((prev)=> !prev);
         }
     };
 
@@ -141,8 +161,12 @@ function WatchVideo() {
                                 </button>
 
                                 <div className='likeButton'>
-                                    <FontAwesomeIcon icon={faThumbsUp} className='likeIcon'/>
-                                    <p>45</p>
+                                    <FontAwesomeIcon 
+                                        icon={faThumbsUp} 
+                                        onClick={handleVideoLike}
+                                        className={`${isVideoLiked ? 'likeIcon' : 'unLikeIcon'}`}
+                                    />
+                                    <p>{likesOfVideoNumber}</p>
                                 </div>
                             </div>
                         </div>

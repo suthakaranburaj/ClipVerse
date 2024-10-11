@@ -30,7 +30,8 @@ const useSubscriptionStore = create((set)=>({
         set({isLoading:true, error:null});
         try {
             const response = await toggleSubscriptionServices(channelId);
-            console.log(response);
+            // console.log(response);
+            return response;
             set({ 
                 isLoading: false,
                 error:null,

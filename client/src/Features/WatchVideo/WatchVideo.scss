@@ -138,6 +138,12 @@
                             .likeIcon{
                                 font-size:30px;
                                 background-color: $secondary-text;
+                                color: $button-color;
+                                border-radius: 50%;
+                            }
+                            .unLikeIcon{
+                                font-size:30px;
+                                background-color: $secondary-text;
                                 border-radius: 50%;
                             }
                             p{

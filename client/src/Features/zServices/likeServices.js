@@ -9,7 +9,7 @@ const getToken = () => {
 
 const toggleVideoLikeServices = async(videoId)=>{
     try {
-        const response = await axios.post(`${BACKEND_URL}/toggle/v/${videoId}`,{
+        const response = await axios.post(`${BACKEND_URL}/toggle/v/${videoId}`,{},{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
                 'Content-Type': 'multipart/form-data',
@@ -82,10 +82,26 @@ const getLikesOfVideosServices = async() =>{
     }
 }
 
+const getLikesOfVideoServices = async(videoId) =>{
+    try {
+        const response = await axios.get(`${BACKEND_URL}/${videoId}`,{
+            headers: {
+                Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'multipart/form-data',
+            },
+            withCredentials: true,
+        });
+        return response;
+    } catch (error) {
+        throw(error)
+    }
+}
+
 export{
     toggleVideoLikeServices,
     toggleCommentLikeServices,
     toggleTweetLikeServices,
     getLikedVideosServices,
     getLikesOfVideosServices,
+    getLikesOfVideoServices,
 }
