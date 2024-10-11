@@ -93,15 +93,6 @@ function WatchVideo() {
             setIsSubscribed((prev) => !prev);
         }
     };
-    // useEffect(() => {
-    //     const handleAutoSubmit = () => {
-    //         if (commentContent.trim()) {
-    //             handleAddComment();
-    //         }
-    //     };
-
-    //     handleAutoSubmit();
-    // }, [commentContent]); // Run handleSubmit when commentContent changes
 
     if (isLoading) return <p>Loading video...</p>;
     if (error) return <p>Error: {error}</p>;

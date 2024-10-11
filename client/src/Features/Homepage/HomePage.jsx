@@ -7,12 +7,18 @@ import { Link } from 'react-router-dom';
 import useStore from '../../store/userStore';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
     const videoRefs = useRef([]);
     const { isNavOpen } = devStore();
-    const { videos, getAllVideos, loading, error } = useVideosStore();
-    const {user}=useStore();
+    const { videos, getAllVideos, loading, error:videoStoreError } = useVideosStore();
+    const {user,isAuthenticated}=useStore();
+
+    const navigate = useNavigate();
+    if(isAuthenticated == false){
+        navigate("/login");
+    }
 
     dayjs.extend(relativeTime);
 
@@ -32,7 +38,7 @@ function HomePage() {
         const videoElement = videoRefs.current[index];
         if (videoElement && videoElement.readyState >= 2) {
             videoElement.style.display = 'block';
-            videoElement.play().catch((error) => console.error('Video play failed:', error));
+            videoElement.play().catch((videoStoreError) => console.videoStoreError('Video play failed:', videoStoreError));
         }
     };
 
@@ -46,7 +52,7 @@ function HomePage() {
     };
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error loading videos</div>;
+    if (videoStoreError) return <div>Error loading videos</div>;
 
     return (
         <div className='HomePageContainer pl-2'>

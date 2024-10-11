@@ -9,11 +9,15 @@ const createPlaylist = asyncHandler(async (req, res) => {
     //TODO: create playlist
     const {name, description , videos} = req.body
     if(!name || !description){
-        throw new ApiError(400,"Name and Description is required !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Name and Description is required !!"));
     }
 
     if(!Array.isArray(videos)){
-        throw new ApiError(400,"VideoIds should be in an array !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"VideoIds should be in an array !!"));
     }
     const userId = req.user._id;
 
@@ -56,16 +60,22 @@ const getPlaylistById = asyncHandler(async (req, res) => {
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
     const {playlistId, videoId} = req.params
     if(!playlistId){
-        throw new ApiError(400,"Playlist Id is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Playlist Id is missing !!"));
     }
     if(!videoId){
-        throw new ApiError(400,"VideoId is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"VideoId is missing !!"));
     }
 
     const playlist = await Playlist.findById(playlistId);
 
     if (!playlist) {
-        throw new ApiError(404, "Playlist not found!");
+        return res
+        .status(404)
+        .json( new ApiError(404, "Playlist not found!"));
     }
     playlist.videos.push(videoId);
     await playlist.save();
@@ -80,20 +90,28 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
     const {playlistId, videoId} = req.params
     // TODO: remove video from playlist
     if(!playlistId){
-        throw new ApiError(400,"Playlist Id is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Playlist Id is missing !!"));
     }
     if(!videoId){
-        throw new ApiError(400,"VideoId is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"VideoId is missing !!"));
     }
 
     const playlist = await Playlist.findById(playlistId);
 
     const playlistVideos = playlist.videos;
     if(playlistVideos.length === 0){
-        throw new ApiError(400,"No videos present in the Playlist")
+        return res
+        .status(400)
+        .json( new ApiError(400,"No videos present in the Playlist"));
     }
     if(!playlistVideos.includes(videoId)){
-        throw new ApiError(404,"Video not found in the playlist")
+        return res
+        .status(404)
+        .json( new ApiError(404,"Video not found in the playlist"));
     }
     playlistVideos.remove(videoId);
     await playlist.save();
@@ -107,16 +125,22 @@ const deletePlaylist = asyncHandler(async (req, res) => {
     // TODO: delete playlist
     const {playlistId} = req.params
     if(!playlistId){
-        throw new ApiError(400,"Playlist Id is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Playlist Id is missing !!"));
     }
 
     const playlist= await Playlist.findById(playlistId);
     if (!playlist) {
-        throw new ApiError(404, "Playlist not found!");
+        return res
+        .status(404)
+        .json( new ApiError(404, "Playlist not found!"));
     }
 
     if(req.user._id.toString() !== playlist.owner.toString()){
-        throw new ApiError(403,"Unautherized to delete this Playlist")
+        return res
+        .status(403)
+        .json( new ApiError(403,"Unautherized to delete this Playlist"));
     }
 
     await Playlist.findByIdAndDelete(playlistId);
@@ -131,17 +155,23 @@ const updatePlaylist = asyncHandler(async (req, res) => {
 
     const {playlistId} = req.params
     if(!playlistId){
-        throw new ApiError(400,"Playlist ID not found !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Playlist ID not found !!"));
     }
     const {name, description} = req.body
 
     const playlist = await Playlist.findById(playlistId);
     if(!playlist){
-        throw new ApiError(400,"Playlist not found");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Playlist not found"));
     }
 
     if(req.user._id.toString() !== playlist.owner.toString()){
-        throw new ApiError(403,"Unauthorized to Update the Playlist !");
+        return res
+        .status(403)
+        .json( new ApiError(403,"Unauthorized to Update the Playlist !"));
     }
 
     playlist.description = description;

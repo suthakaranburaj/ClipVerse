@@ -15,18 +15,24 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
 
     const {videoId} = req.params
     if(!videoId){
-        throw new ApiError(400,"Video Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Video Id is missing"));
     }
     
     const userId= req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
 
     
     const video = await Video.findById(videoId);
     if(!video){
-        throw new ApiError(404,"Video Does not exist");
+        return res
+        .status(404)
+        .json( new ApiError(404,"Video Does not exist"));
     }
 
     const existingLike = await Like.findOne({video:videoId,likedBy:userId})
@@ -55,18 +61,24 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
     //same as of toggleVideoLike
 
     if(!commentId){
-        throw new ApiError(400,"Comment Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Comment Id is missing"));
     }
     
     const userId= req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
 
     
     const comment = await Comment.findById({_id:commentId});
     if(!comment){
-        throw new ApiError(404,"Comment Does not exist");
+        return res
+        .status(404)
+        .json( new ApiError(404,"Comment Does not exist"));
     }
 
     const existingLike = await Like.findOne({comment:commentId,likedBy:userId})
@@ -95,18 +107,24 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
     //TODO: toggle like on tweet
     //same as of toggleVideoLike
     if(!tweetId){
-        throw new ApiError(400,"Tweet Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Tweet Id is missing"));
     }
     
     const userId= req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
 
     
     const tweet = await Tweet.findById(tweetId);
     if(!tweet){
-        throw new ApiError(404,"tweet Does not exist");
+        return res
+        .status(404)
+        .json( new ApiError(404,"tweet Does not exist"));
     }
 
     const existingLike = await Like.findOne({tweet:tweetId,likedBy:userId})
@@ -134,10 +152,14 @@ const getLikedVideos = asyncHandler(async (req, res) => {
     //TODO: get all liked videos
     const userId = req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
     if(!mongoose.isValidObjectId(userId)){
-        throw new ApiError(400,"Invalid User ID")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Invalid User ID"));
     }
 
     const userLikedVideo= await Like.find({likedBy:userId}).populate('video');
@@ -158,7 +180,9 @@ const getLikesOfVideos = asyncHandler( async(req,res) =>{
 
     const userVideosIds = await Video.find({owner:userId}).select(Video._id);
     if(!userVideosIds){
-        throw new ApiError(400,"No Videos Found");
+        return res
+        .status(400)
+        .json( new ApiError(400,"No Videos Found"));
     }
 
     const allVideosLikesCount = await Promise.all(

@@ -10,7 +10,9 @@ const healthcheck = asyncHandler(async (req, res) => {
         .status(200)
         .json(new ApiResponse(200,"Healthcheck successful"))
     } catch (error) {
-        throw new ApiError(400,"Healthcheck unsuccessful")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Healthcheck unsuccessful"));
     }
 })
 

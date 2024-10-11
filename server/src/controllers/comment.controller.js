@@ -47,12 +47,16 @@ const addComment = asyncHandler(async (req, res) => {
     // console.log(content);
 
     if(!content){
-        throw new ApiError(400,"Content is required !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Content is required !!"));
     }
 
     const {videoId} = req.params;
     if(!videoId){
-        throw new ApiError(400,"Video Id is Missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Video Id is Missing !!"));
     }
 
     const newComment = await Comment.create({
@@ -72,24 +76,32 @@ const updateComment = asyncHandler(async (req, res) => {
     // TODO: update a comment
     const{content}=req.body;
     if(!content){
-        throw new ApiError(400,"Content is required !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Content is required !!"));
     }
 
     const {commentId} = req.params;
     if(!commentId){
-        throw new ApiError(400,"Comment Id is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Comment Id is missing !!"));
     }
 
     const comment = await Comment.findById(commentId);
     if(!comment){
-        throw new ApiError(400,"Comment not found");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Comment not found"));
     }
 
     const userId = req.user._id;
 
     const videoId = await Comment.findById({owner:userId,_id:commentId});
     if(!videoId){
-        throw new ApiError(400,"Video Id is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Video Id is missing !!"));
     }
 
     comment.content=content;
@@ -104,16 +116,22 @@ const deleteComment = asyncHandler(async (req, res) => {
     // TODO: delete a comment
     const {commentId}=req.params;
     if(!commentId){
-        throw new ApiError(400,"Comment ID is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Comment ID is missing"));
     }
 
     const comment = await Comment.findById(commentId);
     if(!comment){
-        throw new ApiError(400,"Comment not found");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Comment not found"));
     }
 
     if(req.user._id.toString() !== comment.owner.toString()){
-        throw new ApiError(404,"Unautherized to delete this Comment")
+        return res
+        .status(404)
+        .json( new ApiError(404,"Unautherized to delete this Comment"));
     }
 
     await Comment.findByIdAndDelete(commentId);
@@ -129,7 +147,9 @@ const getAllVideosComments = asyncHandler(async(req,res)=>{
     
         const userVideosIds = await Video.find({owner:userId}).select(Video._id);
         if(!userVideosIds){
-            throw new ApiError(400,"No Videos Found");
+            return res
+            .status(400)
+            .json( new ApiError(400,"No Videos Found"));
         }
         // console.log(userVideosIds);
         const allVideosCommentsCount = await Promise.all(

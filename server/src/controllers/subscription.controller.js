@@ -14,7 +14,9 @@ const toggleSubscription = asyncHandler(async (req, res) => {
     // console.log(channelId)
     
     if(!channelId){
-        throw new ApiError(400,"Channel Id is missing !!")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Channel Id is missing !!"));
     }
     // TODO: toggle subscription
     //1)user ko find karenge
@@ -24,11 +26,15 @@ const toggleSubscription = asyncHandler(async (req, res) => {
 
     const subscriberId = req.user._id;
     if(!subscriberId){
-        throw new ApiError(400,"Subscriber ID is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Subscriber ID is missing !!"));
     }
 
     if(subscriberId.toString()==channelId.toString()){
-        throw new ApiError(400,"You cannot subscribe your own channel !!")
+        return res
+        .status(400)
+        .json( new ApiError(400,"You cannot subscribe your own channel !!"));
     }
     const existingSubriber = await Subscription.findOne({
         subscriber: subscriberId,
@@ -58,11 +64,15 @@ const toggleSubscription = asyncHandler(async (req, res) => {
 const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     const {channelId} = req.params;
     if(!channelId){
-        throw new ApiError(400,"Channel Id is missing !!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Channel Id is missing !!"));
     }
 
     if(!mongoose.isValidObjectId(channelId)){
-        throw new  ApiError(400,"Invalid Channel ID")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Invalid Channel ID"));
     }
 
     const subscriptions = await Subscription.find({ channel: channelId }).populate('subscriber', 'fullName username avatar');
@@ -83,10 +93,14 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
 const getSubscribedChannels = asyncHandler(async (req, res) => {
     const { subscriberId } = req.params
     if(!subscriberId){
-        throw new ApiError(400,"SubscriberId is Missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"SubscriberId is Missing"));
     }
     if(!mongoose.isValidObjectId(subscriberId)){
-        throw new ApiError(400,"Invalid Subscriber ID")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Invalid Subscriber ID"));
     }
 
     const subscribedChannel= await Subscription.find({subscriber:subscriberId}).populate('channel','username fullName');

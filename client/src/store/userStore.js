@@ -43,10 +43,10 @@ const useStore = create((set) => ({
             localStorage.setItem("user", JSON.stringify(userData));
             localStorage.setItem("accessToken",accessToken)
         } catch (error) {
-            console.log("errorr::::::",error);
+            console.log("errorr::::::",error.response.data.message);
             
             set(() => ({
-                error: error.message || 'Login failed',
+                error: error?.response?.data?.message || 'Login failed',
                 isAuthenticated: false,
                 isLoading: false
             }));
