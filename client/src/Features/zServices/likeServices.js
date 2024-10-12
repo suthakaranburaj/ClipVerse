@@ -52,9 +52,9 @@ const toggleTweetLikeServices = async(tweetId) =>{
     }
 };
 
-const getLikedVideosServices = async(videoIds)=>{
+const getLikedVideosServices = async()=>{
     try {
-        const response = await axios.get(`${BACKEND_URL}/videos`,videoIds,{
+        const response = await axios.get(`${BACKEND_URL}/videos`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
                 'Content-Type': 'multipart/form-data',

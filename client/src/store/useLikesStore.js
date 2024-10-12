@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {  getLikesOfVideosServices ,toggleVideoLikeServices,getLikesOfVideoServices} from "../Features/zServices/likeServices";
+import {  getLikesOfVideosServices ,toggleVideoLikeServices,getLikesOfVideoServices, getLikedVideosServices} from "../Features/zServices/likeServices";
 
 const useLikesStore = create((set)=>({
     likesOfVideo:[],
@@ -7,6 +7,7 @@ const useLikesStore = create((set)=>({
     isLoading:false,
     error:null,
     likesOfVideoNumber:0,
+    likedVideos:[],
 
     getLikesVideos: async()=>{
         set({isLoading:true,error:null});
@@ -62,7 +63,27 @@ const useLikesStore = create((set)=>({
                 error:error.response?.data?.message || "Failed to fetch likes of video !!"
             })
         }
+    },
+
+    getLikedVideos : async()=>{
+        set({isLoading:true,error:null})
+        try {
+            const response = await getLikedVideosServices();
+            set({
+                isLoading:false,
+                error:null,
+                likedVideos:response.data.data,
+            })
+            console.log(response.data.data);
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to fetch Liked Videos"
+            })
+        }
     }
+
 }));
 
 export default useLikesStore;

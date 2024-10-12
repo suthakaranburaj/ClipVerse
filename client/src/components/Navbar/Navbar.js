@@ -59,10 +59,12 @@ function Navbar() {
                     <RiPlayListLine className="sidebar-icon" size={24} />
                     <span className="sidebar-label">Watch later</span>
                 </div>
-                <div className="sidebar-item">
-                    <FaRegThumbsUp className="sidebar-icon" size={24} />
-                    <span className="sidebar-label">Liked videos</span>
-                </div>
+                <Link to='likedvideos'>
+                    <div className="sidebar-item">
+                        <FaRegThumbsUp className="sidebar-icon" size={24} />
+                        <span className="sidebar-label">Liked videos</span>
+                    </div>
+                </Link>
             </div>
             <div className="sidebar-divider"></div>
             <div className="sidebar-section">

@@ -50,8 +50,10 @@ function UserChannel() {
                 </div>
             </div>
             <div className='nav-links'>
-                <NavLink to='playlist'>Playlists</NavLink>
-                <NavLink to='community'>Community</NavLink>
+                <NavLink to='videos' >Videos</NavLink>
+                <NavLink to='live' >Live</NavLink>
+                <NavLink to='playlist' >Playlists</NavLink>
+                <NavLink to='community' >Community</NavLink>
             </div>
 
             <div className='separator'></div>

@@ -7,6 +7,7 @@ import { Video } from "../models/video.model.js"
 import {Tweet} from '../models/tweet.model.js'
 import { Comment } from "../models/comment.model.js"
 import { response } from "express"
+import path from "path"
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
     //TODO: toggle like on video
@@ -163,7 +164,18 @@ const getLikedVideos = asyncHandler(async (req, res) => {
         .json( new ApiError(400,"Invalid User ID"));
     }
 
-    const userLikedVideo= await Like.find({likedBy:userId}).populate('video');
+    const userLikedVideo= await Like
+    .find({likedBy:userId})
+    .populate({
+        path:'video',
+        select:'owner thumbnail description title views createdAt',
+        populate:{
+            path:'owner',
+            select:'username avatar fullName'
+        }
+    });
+    // .populate('owner','username fullName avatar')
+
     if (!userLikedVideo || userLikedVideo.length === 0) {
         return res.status(200).json(new ApiResponse(200, [], "No Liked Video found for this user"));
     }
