@@ -22,10 +22,13 @@ function Navbar() {
                     <SiYoutubeshorts className="sidebar-icon" size={24} />
                     <span className="sidebar-label">Shorts</span>
                 </div>
-                <div className="sidebar-item">
-                    <MdOutlineSubscriptions className="sidebar-icon" size={24} />
-                    <span className="sidebar-label">Subscriptions</span>
-                </div>
+                <Link to='/subscription'>
+                    <div className="sidebar-item">
+                        <MdOutlineSubscriptions className="sidebar-icon" size={24} />
+
+                        <span className="sidebar-label">Subscriptions</span>
+                    </div>
+                </Link>
             </div>
             <div className="sidebar-divider"></div>
             <div className="sidebar-section">

@@ -10,6 +10,7 @@ import LoginPage from "./Features/Authentication/LoginPage/LoginPage";
 import RegistrationPage from "./Features/Authentication/RegistrationPage/RegistrationPage";
 import ManageVideos from './Features/ManageVideos/ManageVideos'
 import WatchHistory from "./Features/WatchHistory/WatchHistory";
+import Subscriptions from "./Features/Subscriptions/Subscriptions";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
                     <Route path='playlist' element={<UserPlaylist />} />
                     <Route path='community' element={<UserCommunity />} />
                 </Route>
+                <Route path='subscription' element={<Subscriptions />} />
                 <Route path='/watch-history' element={<WatchHistory/>}/>
                 <Route path='watchvideo' element={<WatchVideo />} />
             </Route>

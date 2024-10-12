@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import {getUserChannelSubscribersServices ,toggleSubscriptionServices} from '../Features/zServices/subscriptionServices'
+import {getUserChannelSubscribersServices ,toggleSubscriptionServices, getSubscribedChannelsServices} from '../Features/zServices/subscriptionServices'
 
 const useSubscriptionStore = create((set)=>({
     channelSubscribers:[],
     isLoading:false,
     error:null,
     subscribe:false,
+    subscribedChannels:[],
 
 
     getUserChannelSubscribers: async(channelId)=>{
@@ -31,16 +32,35 @@ const useSubscriptionStore = create((set)=>({
         try {
             const response = await toggleSubscriptionServices(channelId);
             // console.log(response);
-            return response;
             set({ 
                 isLoading: false,
                 error:null,
                 subscribe:true,
             });
+            return response;
         } catch (error) {
             set({
                 isLoading:false,
                 error:error.response?.data?.message || "Failed to Toggle Subscription"
+            })
+        }
+    },
+
+    getSubscribedChannels : async(subscriberId)=>{
+        set({isLoading:true,error:null})
+        try {
+            const response = await getSubscribedChannelsServices(subscriberId);
+            set({
+                isLoading:false,
+                error:null,
+                subscribedChannels:response.data.data,
+            })
+            // console.log(response.data);
+            // console.log(response)
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to Fetch subscribed channels list!"
             })
         }
     }
