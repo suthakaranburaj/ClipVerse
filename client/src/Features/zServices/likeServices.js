@@ -24,10 +24,9 @@ const toggleVideoLikeServices = async(videoId)=>{
 
 const toggleCommentLikeServices = async(commentId)=>{
     try {
-        const response = await axios.post(`${BACKEND_URL}/toggle/c/${commentId}`,{
+        const response = await axios.post(`${BACKEND_URL}/toggle/c/${commentId}`,{},{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
-                'Content-Type': 'multipart/form-data',
             },
             withCredentials: true,
         });
