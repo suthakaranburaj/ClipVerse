@@ -549,6 +549,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
             )
         )
 })
+
 const getAllComments= asyncHandler(async (req, res)=>{
     const {userId} = req.params;
     if (!userId) {

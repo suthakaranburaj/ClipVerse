@@ -121,8 +121,6 @@ const publishAVideo = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, { video: newVideo }, "Video published successfully!")); // Return the new video object
 });
 
-
-
 const getVideoById = asyncHandler(async (req, res) => {
     const { videoId } = req.params
     //TODO: get video by id

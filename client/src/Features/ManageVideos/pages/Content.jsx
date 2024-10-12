@@ -134,7 +134,7 @@ function Content() {
 
                 <div className='level-4'>
                     {videos?.length > 0 ? (
-                        videos.map((video) => (
+                        videos?.map((video) => (
                             <React.Fragment key={video?._id}>
                                 <div className='videoContainer'>
                                     <img src={video?.thumbnail ? video?.thumbnail : image1} alt="Thumbnail" />
