@@ -31,23 +31,29 @@ const useVideosStore = create(
             }
         },
 
-        getVideoById: async(videoId) =>{
-            set({ isLoading :true, error: null});
+        getVideoById: async (videoId) => {
+            set({ isLoading: true, error: null });
             try {
                 const response = await getVideoByIdService(videoId);
-                // console.log(response.data.video);
-                set({
-                    video:response.data.video,
-                    isLoading:false,
-                    error:null
-                });
+                const fetchedVideo = response.data.video;
+        
+                set((state) => ({
+                    video: fetchedVideo,
+                    videos: [
+                        ...state.videos, // Spread the existing videos (array) to preserve them
+                        fetchedVideo,    // Add the newly fetched video
+                    ],
+                    isLoading: false,
+                    error: null,
+                }));
             } catch (error) {
                 set({
-                    isLoading:false,
+                    isLoading: false,
                     error: error.response?.data?.message || "Failed to fetch video",
                 });
             }
         },
+        
 
         publishAVideo: async(videoData) =>{
             set({ isLoading: true, error: null});
