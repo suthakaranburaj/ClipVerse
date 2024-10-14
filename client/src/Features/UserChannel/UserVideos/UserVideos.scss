@@ -1,0 +1,81 @@
+@import '../../../index.scss';
+
+.userVideosContainer {
+    .container {
+        .container1 {
+            font-weight: 700;
+            font-size: 20px;
+        }
+        .container2 {
+            color: $secondary-text;
+            cursor: pointer;
+        }
+        .container3 {
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1rem;
+            .container31 {
+                width: 200px;
+                height: 250px;
+                box-shadow: 0 0px 10px rgba(151, 73, 73, 0.8);
+                border-radius: 10px;
+                transition: background-color 0.3s ease;
+                cursor: pointer;
+
+                .container311 {
+                    width: 100%;
+                    height: 130px;
+                    img {
+                        border-radius: 10px;
+                        height: 100%;
+                    }
+                }
+                .container312 {
+                    .container3121, .container3122, .container3123 {
+                        font-size: 13px;
+                    }
+                }
+
+                &.selectedVideo {
+                    background-color: $secondary-color;
+                }
+            }
+        }
+    }
+}
+.createPlaylistForm{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.452);
+    z-index: 1000;
+    form{
+        width: 30%;
+        height: 25%;
+        background-color: $background-color;
+        .createPlaylistForm1{
+
+        }
+        .createPlaylistForm2{
+
+        }
+        .createPlaylistForm3{
+
+            .createPlaylistForm31{
+
+            }
+            .createPlaylistForm32{
+
+            }
+        }
+    }
+}

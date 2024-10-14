@@ -8,11 +8,13 @@ const getToken = () => {
     return accessToken; // Adjust based on how you store the token
 };
 
-const createPlaylistServices = async(playlistData)=>{
+const createPlaylistServices = async({name, description,videos})=>{
     try {
-        const response = await axios.post(`${BACKEND_URL}`,playlistData,{
+        console.log(getToken())
+        const response = await axios.post(`${BACKEND_URL}`,{name, description,videos},{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json',
             },
             withCredentials: true,
         });

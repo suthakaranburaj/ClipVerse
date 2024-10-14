@@ -7,7 +7,9 @@ import {asyncHandler} from "../utils/asyncHandler.js"
 
 const createPlaylist = asyncHandler(async (req, res) => {
     //TODO: create playlist
+
     const {name, description , videos} = req.body
+    console.log(name,description,videos);
     if(!name || !description){
         return res
         .status(400)
