@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import {getUserPlaylistsServices, createPlaylistServices} from '../Features/zServices/playlistServices'
+import {getUserPlaylistsServices, createPlaylistServices, getPlaylistByIdServices} from '../Features/zServices/playlistServices'
 
 const usePlaylistStore = create((set)=>({
     userPlaylists:[],
     isLoading:false,
     error:null,
+    playlist:null,
 
     getUserPlaylists : async(userId) =>{
         set({isLoading:true,error:null})
@@ -26,9 +27,9 @@ const usePlaylistStore = create((set)=>({
     },
 
     createPlaylist : async({name, description,videos}) =>{
-        console.log(name)
-        console.log(description)
-        console.log(videos,"helo")
+        // console.log(name)
+        // console.log(description)
+        // console.log(videos,"helo")
         set({isLoading:true,error:null});
         try {
             //         for (const [key, value] of formData.entries()) {
@@ -47,6 +48,23 @@ const usePlaylistStore = create((set)=>({
             set({
                 isLoading:false,
                 error:error.response?.data?.message || "Failed to Create Playlist !!"
+            })
+        }
+    },
+
+    getPlaylistById : async(playlistId)=>{
+        set({isLoading:true,error:null});
+        try {
+            const response = await getPlaylistByIdServices(playlistId);
+            set({
+                isLoading:false,
+                error:null,
+                playlist:response.data.data,
+            })
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.data?.message || "failed to fetch the playlist !!"
             })
         }
     }

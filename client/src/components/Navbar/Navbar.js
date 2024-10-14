@@ -5,10 +5,14 @@ import { MdOutlineSubscriptions } from "react-icons/md";
 import { CgPlayList, CgProfile } from "react-icons/cg";
 import { RiVideoLine, RiPlayListLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import useStore from '../../store/userStore';
 
 import './Navbar.scss';
 
 function Navbar() {
+
+    const {user} = useStore();
+    const channelId = user?._id;
     return (
         <div className="sidebar">
             <div className="sidebar-section">
@@ -20,7 +24,7 @@ function Navbar() {
                 </Link>
                 <div className="sidebar-item">
                     <SiYoutubeshorts className="sidebar-icon" size={24} />
-                    <span className="sidebar-label">Shorts</span>
+                    <span className="sidebar-label">Feeds</span>
                 </div>
                 <Link to='/subscription'>
                     <div className="sidebar-item">
@@ -35,9 +39,11 @@ function Navbar() {
                 <div className="sidebar-header">You</div>
                 <div className="sidebar-item">
                     <CgProfile className="sidebar-icon" size={24} />
-                    <Link to="/userchannel" className="sidebar-label">
+                    {/* <Link to="/userchannel" className="sidebar-label"> */}
+                    <Link to={`/userchannel/${channelId}`} key={channelId} className='sidebar-label'>
                         Your channel
                     </Link>
+                    {/* </Link> */}
                 </div>
                 <div className="sidebar-item">
                     <FaHistory className="sidebar-icon" size={24} />

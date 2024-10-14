@@ -1,17 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './UserCommunity.scss'
 import profilePic from '../../../assets/profile_pic.webp'
 
 function UserCommunity() {
-
-    const [isCreatePost,setIsCreatePost]=useState(false);
     return (
-        <>
-        <div>
-            <p>Create</p>
-        </div>
-        {isCreatePost && (
-            <div className='userCommunityContainer'>
+        <div className='userCommunityContainer'>
             <div className='tweetContainer'>
                 <div className='firstRow'>
                     <div>
@@ -32,8 +25,6 @@ function UserCommunity() {
                 </div>
             </div>
         </div>
-        )}
-        </>
     )
 }
 
