@@ -4,6 +4,7 @@ import  {
             createPlaylistServices, 
             getPlaylistByIdServices,
             deletePlaylistServices,
+            removeVideoFromPlaylistServices,
         } from '../Features/zServices/playlistServices'
 
 const usePlaylistStore = create((set)=>({
@@ -22,8 +23,8 @@ const usePlaylistStore = create((set)=>({
                 error:null,
                 userPlaylists:response.data.data,
             })
-            console.log(response.data.data)
-            console.log(response.data)
+            // console.log(response.data.data)
+            // console.log(response.data)
         } catch (error) {
             set({
                 isLoading:false,
@@ -83,6 +84,25 @@ const usePlaylistStore = create((set)=>({
             set({
                 isLoading:false,
                 error:null,
+            })
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data,
+            })
+        }
+    },
+
+    removeVideoFromPlaylist : async(videoId,playlistId)=>{
+        set({isLoading:true,error:null});
+        try {
+            // console.log("Video ID:", videoId);
+            // console.log("Playlist ID:", playlistId);
+
+            await removeVideoFromPlaylistServices(videoId,playlistId)
+            set({
+                isLoading:false,
+                error:null
             })
         } catch (error) {
             set({

@@ -68,7 +68,10 @@ const addVideoToPlaylistServices = async(playlistId,videoId)=>{
 
 const removeVideoFromPlaylistServices = async(videoId,playlistId) =>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/remove/${videoId}/${playlistId}`,{
+        // console.log("Video ID:", videoId);
+        // console.log("Playlist ID:", playlistId);
+
+        const response = await axios.patch(`${BACKEND_URL}/remove/${videoId}/${playlistId}`,{},{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },
