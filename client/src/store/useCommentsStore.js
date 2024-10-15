@@ -4,7 +4,9 @@ import  {
             getAllVideosCommentsServices,
             addCommentOnVideoServices,
             deleteCommentOnVideoServices,
+            updateCommentOnVideoServices,
         } from '../Features/zServices/commentsServices'
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const useCommentsStore = create((set)=>({
     commentsOfVideo:[],
@@ -110,8 +112,27 @@ const useCommentsStore = create((set)=>({
                 isLoading:false,
             });
         }
-    }
+    },
 
+    updateCommentOnVideo : async(commentId,content) =>{
+        set({isLoading:true,error:null})
+        try {
+            const response = await updateCommentOnVideoServices(commentId,content);
+            const updatedComment = response.data.data;
+            set((state)=>({
+                commentsOfVideo:[updatedComment,...state.commentsOfVideo],
+                allComments:[updatedComment,...state.allComments],
+                isLoading:false,
+                error:null,
+            }))
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data,
+            })
+        }
+    }
 }));
 
 export default useCommentsStore;

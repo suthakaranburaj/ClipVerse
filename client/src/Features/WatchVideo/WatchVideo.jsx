@@ -17,6 +17,7 @@ import useStore from '../../store/userStore';
 import useCommentsStore from '../../store/useCommentsStore'
 import useSubscriptionStore from '../../store/useSubscriptionStore';
 import useLikesStore from '../../store/useLikesStore';
+import { useForm } from 'react-hook-form';
 
 
 
@@ -32,10 +33,11 @@ function WatchVideo() {
     const [isSubscribed,setIsSubscribed] = useState(false);
     const [channelId, setChannelId] = useState(null);
     const [isVideoLiked,setIsVideoLiked] = useState(false);
-    const [likedComments , setLikedComments] = useState([]);
-    const [isCommentEdit,setIsCommentEdit] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
+    const [isEditComment,setIsEditComment] = useState(false);
+    const [currentComment, setCurrentComment] = useState();
     
+    const { register, handleSubmit, reset } = useForm();
 
     const { 
         video, 
@@ -55,6 +57,7 @@ function WatchVideo() {
         getVideoComments,
         addCommentOnVideo,
         deleteCommentOnVideo,
+        updateCommentOnVideo,
     } = useCommentsStore();
 
     const {
@@ -120,7 +123,7 @@ function WatchVideo() {
         getUserChannelSubscribers,
         getVideoLikes,
         getLikesOfComment,
-        
+        updateCommentOnVideo,
         
     ]);
 
@@ -201,12 +204,32 @@ function WatchVideo() {
         await deleteCommentOnVideo(commentId);
     }
 
+    const handleCommentEdit = (comment)=>{
+        setIsEditComment(true);
+        setCurrentComment(comment);
+    }
+
+    const onSubmit = async(data)=>{ 
+        try {
+            await updateCommentOnVideo(currentComment?._id,{content: data.content});
+            reset();
+
+        } catch (error) {
+            console.error("Error while updating the comment !!")
+        }
+    };
+
+    const handleCloseEdit = ()=>{
+        setIsEditComment(false);
+        reset();
+    }
     if (isLoading) return <p>Loading video...</p>;
     if (error) return <p>Error: {error}</p>;
 
     dayjs.extend(relativeTime);
 
     return (
+        <>
         <div className='box'>
             <div className='watchVideo-container'>
                 <div className='watchVideo-left-side'>
@@ -328,8 +351,10 @@ function WatchVideo() {
                                     // console.log(commentLikeData.likedByUser)
                                     // console.log(comment?.owner)
                                     // console.log(video?.owner?._id)
-                                    console.log(channelId)
-                                    console.log(user?._id)
+                                    // console.log(channelId)
+                                    // console.log(user?._id)
+                                    // console.log(user?._id)
+                                    // console.log(currentComment)
                                 return(
                                     <div key={comment?._id} className='channelCommentsSection'>
                                         <div className='channelCommentsSection1'>
@@ -346,7 +371,7 @@ function WatchVideo() {
                                                 />
                                                 {isDropdownOpen === comment._id && (comment?.owner?._id === user?._id || channelId === user?._id)  &&( // Conditionally render dropdown
                                                     <div className='commentDropdown'>
-                                                        <button onClick={() => setIsCommentEdit(true)}>Edit</button>
+                                                        <button onClick={() => handleCommentEdit(comment)}>Edit</button>
                                                         <button onClick={()=>handleCommentDelete(comment?._id)}>Delete</button>
                                                     </div>
                                                 )}
@@ -374,6 +399,7 @@ function WatchVideo() {
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     );
                                 }) 
                                 :
@@ -409,7 +435,30 @@ function WatchVideo() {
                 </div>
             </div>
         </div>
-
+        {isEditComment && currentComment?.owner?._id === user?._id &&(
+            <div className='editCommentContainer'>
+                <form onSubmit={handleSubmit(onSubmit)} className='editCommentContainer1'>
+                    <p className='editCommentContainer11'>Edit Comment</p>
+                    <div className='editCommentContainer12'>
+                        <label className='editCommentContainer121'>
+                            Content
+                        </label>
+                        <input 
+                            type="text" 
+                            {...register('content')}
+                            defaultValue={currentComment.content}
+                            className='editCommentContainer122'
+                        />
+                    </div>
+                    <div className="formButtons">
+                                <button type="submit">Submit</button>
+                                <button type="button" onClick={handleCloseEdit}>Close</button>
+                    </div>
+                </form>
+            </div>
+        )}
+        
+    </>
 
 
     );

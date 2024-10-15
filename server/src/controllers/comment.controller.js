@@ -74,7 +74,10 @@ const addComment = asyncHandler(async (req, res) => {
 
 const updateComment = asyncHandler(async (req, res) => {
     // TODO: update a comment
+    
     const{content}=req.body;
+    console.log("hi")
+    console.log(content);
     if(!content){
         return res
         .status(400)
@@ -89,27 +92,29 @@ const updateComment = asyncHandler(async (req, res) => {
     }
 
     const comment = await Comment.findById(commentId);
+    // console.log(comment)
+
     if(!comment){
         return res
         .status(400)
         .json( new ApiError(400,"Comment not found"));
     }
+    // console.log('2')
 
     const userId = req.user._id;
-
     const videoId = await Comment.findById({owner:userId,_id:commentId});
     if(!videoId){
         return res
         .status(400)
         .json( new ApiError(400,"Video Id is missing !!"));
-    }
-
+    }   
+    console.log(comment)
     comment.content=content;
     await comment.save();
-
+    console.log(comment)
     return res
     .status(201)
-    .json(new ApiResponse(201,"Comment updated successfully !!"));
+    .json(new ApiResponse(201,comment,"Comment updated successfully !!"));
 })
 
 const deleteComment = asyncHandler(async (req, res) => {

@@ -54,11 +54,12 @@ const addCommentOnVideoServices = async(videoId,content) => {
     }
 };
 
-const updateCommentOnVideoServices = async(commentId,commentData)=>{
+const updateCommentOnVideoServices = async(commentId,content)=>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/c/${commentId}`,commentData,{
+        const response = await axios.patch(`${BACKEND_URL}/c/${commentId}`,content,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json',
             },
             withCredentials: true,
         });
