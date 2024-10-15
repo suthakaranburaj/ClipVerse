@@ -52,6 +52,7 @@ const getPlaylistByIdServices = async(playlistId) =>{
     }
 };
 
+//pending
 const addVideoToPlaylistServices = async(playlistId,videoId)=>{
     try {
         const response = await axios.patch(`${BACKEND_URL}/add/${videoId}/${playlistId}`,{
@@ -97,9 +98,9 @@ const deletePlaylistServices = async(playlistId) =>{
     }
 };
 
-const updatePlaylistServices = async(playlistId)=>{
+const updatePlaylistServices = async(playlistId,{name, description})=>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/${playlistId}`,{
+        const response = await axios.patch(`${BACKEND_URL}/${playlistId}`,{name , description},{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },

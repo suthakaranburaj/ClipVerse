@@ -5,7 +5,9 @@ import  {
             getPlaylistByIdServices,
             deletePlaylistServices,
             removeVideoFromPlaylistServices,
+            updatePlaylistServices,
         } from '../Features/zServices/playlistServices'
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const usePlaylistStore = create((set)=>({
     userPlaylists:[],
@@ -108,6 +110,24 @@ const usePlaylistStore = create((set)=>({
             set({
                 isLoading:false,
                 error:error.response?.message?.data,
+            })
+        }
+    },
+
+    updatePlaylist : async(playlistId,{name , description})=>{
+        set({isLoading:true,error:null})
+        try {
+            const response = await updatePlaylistServices(playlistId,{name , description});
+            // const updatedPlaylist = response.data.data
+            set({
+                isLoading:false,
+                error:null,
+            })
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to update Playlist"
             })
         }
     }

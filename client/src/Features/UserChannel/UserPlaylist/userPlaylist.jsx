@@ -8,13 +8,23 @@ import userStore from '../../../store/userStore';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'; // Example icons 
+import { useForm } from 'react-hook-form';
 
 function UserPlaylist() {
 
     // const [isDelete,setIsDelete] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
+    const [isEdit, setIsEdit] = useState(false);
+    const [currentPlaylist, setCurrentPlaylist] = useState(null);
+    const {reset, handleSubmit, register} = useForm();
 
-    const { getUserPlaylists, userPlaylists ,deletePlaylist } = usePlaylistStore();
+    const { 
+        getUserPlaylists, 
+        userPlaylists,
+        deletePlaylist,
+        updatePlaylist,
+    } = usePlaylistStore();
+
     const { user } = userStore();
     const { playlistId } = useParams(); 
     const location = useLocation(); 
@@ -40,6 +50,27 @@ function UserPlaylist() {
     const handleDelete = async(playlistId)=>{
         await deletePlaylist(playlistId);
         // setIsDropdownOpen(null);
+    }
+
+    const handlePlaylistEdit = (playlist)=>{
+        setIsEdit(true);
+        setCurrentPlaylist(playlist);
+    }
+
+    const handleCloseEdit = ()=>{
+        setIsEdit(false);
+        reset();
+    }
+
+    const onSubmit = async(data)=>{
+        try {
+            await updatePlaylist(currentPlaylist?._id,{name:data.name,description:data.description});
+            reset();
+            setIsEdit(false);
+            setIsDropdownOpen(null);
+        } catch (error) {
+            console.error("Error while updating playlist !!")
+        }
     }
     return (
         <div className="userPlaylistContainer">
@@ -75,6 +106,12 @@ function UserPlaylist() {
                                             >
                                                 Delete
                                             </button>
+                                            <button
+                                                className='deleteContainer2'
+                                                onClick={()=>handlePlaylistEdit(playlist)}
+                                            >
+                                                Edit
+                                            </button>
                                         </div>
                                     )}
                                 </div>
@@ -85,6 +122,37 @@ function UserPlaylist() {
             )}
             {/* The nested route will be rendered here (only if viewing a playlist) */}
             {isViewingPlaylist && <Outlet />}
+            {isEdit && (
+                <div className='editPlaylistContainer'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='editPlaylistContainer1'>
+                        <p className='editPlaylistContainer11'>Edit Playlist</p>
+                        <div className='editPlaylistContainer12'>
+                            <label className='editPlaylistContainer121'>
+                                Name
+                            </label>
+                            <input 
+                                type="text" 
+                                {...register('name')}
+                                defaultValue={currentPlaylist.name}
+                                className='editPlaylistContainer122'
+                            />
+                            <lable>
+                                Description
+                            </lable>
+                            <input 
+                                type="text" 
+                                {...register('description')}
+                                defaultValue={currentPlaylist.description}
+                                className='editPlaylistContainer122'
+                            />
+                        </div>
+                        <div className="formButtons">
+                                    <button type="submit">Submit</button>
+                                    <button type="button" onClick={handleCloseEdit}>Close</button>
+                        </div>
+                    </form>
+                </div>
+            )}
         </div>
     );
 }
