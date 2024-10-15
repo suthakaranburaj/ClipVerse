@@ -10,10 +10,10 @@ import { CgPlayListAdd } from "react-icons/cg";
 import { FaGoogle, FaUnlockAlt } from "react-icons/fa";
 import { PiSignOut } from "react-icons/pi";
 import { SiYoutubestudio } from "react-icons/si";
-import { FiDatabase,FiUpload,FiEdit } from "react-icons/fi";
+import { FiDatabase, FiUpload, FiEdit } from "react-icons/fi";
 import { IoLanguage, IoMoonSharp } from "react-icons/io5";
-import { MdOutlineFeedback, MdOutlineSwitchAccount,MdOutlinePodcasts, MdOutlineHelpOutline,MdVideoCall } from "react-icons/md";
-import { IoMdSettings,IoMdWifi } from "react-icons/io";
+import { MdOutlineFeedback, MdOutlineSwitchAccount, MdOutlinePodcasts, MdOutlineHelpOutline, MdUpload, MdVideoCall, MdOutlineCancel } from "react-icons/md";
+import { IoMdSettings, IoMdWifi } from "react-icons/io";
 import useStore from '../../../../store/userStore';
 import './SearchBar.scss'; // Ensure this file contains the necessary styling
 import image1 from '../../../../assets/profile_pic.webp';
@@ -31,7 +31,7 @@ function SearchBar() {
     // Dropdown state
     const [isDropdownVisible, setDropdownVisible] = useState(false); // Initially set to false
     const [isDropdownVisible1, setDropdownVisible1] = useState(false);
-  
+
 
     const submitHandler = () => {
         logout();
@@ -58,21 +58,21 @@ function SearchBar() {
         // Further processing can be done with the file, like uploading it to a server
     };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const {publishAVideo , isLoading , error} = useVideoStore();
+    const { publishAVideo, isLoading, error } = useVideoStore();
 
-    const onSubmit = async(data) =>{
+    const onSubmit = async (data) => {
         const formData = new FormData();
-        formData.append('title',data.title);
-        formData.append('description',data.description);
-        formData.append('thumbnail',data.thumbnail[0]);
-        formData.append('videoFile',data.videoFile[0]);
+        formData.append('title', data.title);
+        formData.append('description', data.description);
+        formData.append('thumbnail', data.thumbnail[0]);
+        formData.append('videoFile', data.videoFile[0]);
         formData.append('isPublished', data.isPublished);
 
         try {
             await publishAVideo(formData);
-            handleCloseModal();  
+            handleCloseModal();
         } catch (error) {
-            console.error("Error during uploading video !!",error);
+            console.error("Error during uploading video !!", error);
         }
     }
     return (
@@ -100,10 +100,10 @@ function SearchBar() {
                         <FontAwesomeIcon icon={faMicrophone} className="mic-icon" />
                     </div>
                     <div className='flex items-center relative'>
-                       
+
                         <div className="relative">
                             <button className='bttn rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
-                            <MdVideoCall className="dropdown-icon" size={22} />
+                                <MdVideoCall className="dropdown-icon" size={22} />
                                 Create
                             </button>
 
@@ -270,59 +270,70 @@ function SearchBar() {
             </div>
             {isModalVisible && (
                 <div className="modal-overlay">
+
                     <div className="modal-content">
+                        <div className='modal-topbar'>
+                            <div className="btn-upload"
+                                onClick={handleCloseModal}>
+                                < MdOutlineFeedback className="dropdown-icon" size={22} />
+
+                            </div>
+                            <div className="btn-upload"
+                                onClick={handleCloseModal}>
+                                < MdOutlineCancel className="dropdown-icon" size={22} />
+
+                            </div>
+                        </div>
+
                         <h2 className='label'>Select a Video to Upload</h2>
                         <div className="dropdown-divider"></div>
                         <form className='formContainer' onSubmit={handleSubmit(onSubmit)}>
 
-                            <input 
-                            type="text" 
-                            placeholder='Enter the title of the video'
-                            className={`${errors.title ? 'border-red-500':''} `}
-                            {...register('title',{required:'Title is required'})}
+                            <input
+                                type="text"
+                                placeholder='Enter the title of the video'
+                                className={`${errors.title ? 'border-red-500' : ''} `}
+                                {...register('title', { required: 'Title is required' })}
                             />
 
-                            <input 
-                            type="text"
-                            placeholder='Enter the description of the video'
-                            className={`${errors.description ? 'border-red-500' : ''}`}
-                            {...register('description',{required:'Description is required'})} 
+                            <input
+                                type="text"
+                                placeholder='Enter the description of the video'
+                                className={`${errors.description ? 'border-red-500' : ''}`}
+                                {...register('description', { required: 'Description is required' })}
                             />
 
                             <label className=''>Upload the thumbnail</label>
-                            <input 
-                            type="file"
-                            className=''
-                            accept="image/*"
-                            {...register('thumbnail',{required:'Thumbnail is required'})}
+                            <input
+                                type="file"
+                                className=''
+                                accept="image/*"
+                                {...register('thumbnail', { required: 'Thumbnail is required' })}
                             />
 
                             <label className=''>Upload the video file</label>
-                            <input 
-                            type="file"
-                            accept="video/*"
-                            className=''
-                            // onChange={handleFileChange} 
-                            {...register('videoFile',{required:'Video File is required'})}
+                            <input
+                                type="file"
+                                accept="video/*"
+                                className=''
+                                // onChange={handleFileChange} 
+                                {...register('videoFile', { required: 'Video File is required' })}
                             />
-                            
-                            <input 
-                            type="checkbox" 
-                            {...register('isPublished')}
-                            />
-                            <button 
-                            className="btn-upload" 
-                            type='submit'
-                            >
-                                submit
+                            <button className='submit-btn rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
+                                <div className='bttn-inside'>
+                                    <input
+                                        type="checkbox"
+                                        {...register('isPublished')}
+                                    />
+
+
+                                    <MdUpload className="dropdown-icon" size={22} />
+                                    Submit
+                                </div>
+
                             </button>
 
-                            <button 
-                            className="btn-upload" 
-                            onClick={handleCloseModal}
-                            >
-                                Close
-                            </button>
+
                         </form>
                         {isLoading && (
                             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
