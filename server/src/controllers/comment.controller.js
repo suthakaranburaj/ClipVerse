@@ -76,8 +76,8 @@ const updateComment = asyncHandler(async (req, res) => {
     // TODO: update a comment
     
     const{content}=req.body;
-    console.log("hi")
-    console.log(content);
+    // console.log("hi")
+    // console.log(content);
     if(!content){
         return res
         .status(400)
@@ -108,10 +108,10 @@ const updateComment = asyncHandler(async (req, res) => {
         .status(400)
         .json( new ApiError(400,"Video Id is missing !!"));
     }   
-    console.log(comment)
+    // console.log(comment)
     comment.content=content;
     await comment.save();
-    console.log(comment)
+    // console.log(comment)
     return res
     .status(201)
     .json(new ApiResponse(201,comment,"Comment updated successfully !!"));

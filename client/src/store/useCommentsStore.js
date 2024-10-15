@@ -6,7 +6,6 @@ import  {
             deleteCommentOnVideoServices,
             updateCommentOnVideoServices,
         } from '../Features/zServices/commentsServices'
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const useCommentsStore = create((set)=>({
     commentsOfVideo:[],
@@ -114,25 +113,31 @@ const useCommentsStore = create((set)=>({
         }
     },
 
-    updateCommentOnVideo : async(commentId,content) =>{
-        set({isLoading:true,error:null})
+    updateCommentOnVideo: async (commentId, content) => {
+        set({ isLoading: true, error: null });
         try {
-            const response = await updateCommentOnVideoServices(commentId,content);
+            const response = await updateCommentOnVideoServices(commentId, content);
             const updatedComment = response.data.data;
-            set((state)=>({
-                commentsOfVideo:[updatedComment,...state.commentsOfVideo],
-                allComments:[updatedComment,...state.allComments],
-                isLoading:false,
-                error:null,
-            }))
+            console.log(content)
+            console.log(updatedComment)
+            set((state) => ({
+                commentsOfVideo: state.commentsOfVideo.map((comment) =>
+                    comment._id === updatedComment._id ? updatedComment : comment
+                ),
+                allComments: state.allComments.map((comment) =>
+                    comment._id === updatedComment._id ? updatedComment : comment
+                ),
+                isLoading: false,
+                error: null,
+            }));
             return response;
         } catch (error) {
             set({
-                isLoading:false,
-                error:error.response?.message?.data,
-            })
+                isLoading: false,
+                error: error.response?.message?.data,
+            });
         }
-    }
+    },
 }));
 
 export default useCommentsStore;

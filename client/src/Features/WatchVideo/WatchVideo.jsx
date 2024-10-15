@@ -113,9 +113,9 @@ function WatchVideo() {
         fetchData();
     }, [
         videoId,
-        channelId, 
-        getVideoById, 
-        userWatchHistory, 
+        channelId,
+        getVideoById,
+        userWatchHistory,
         incrementVideoViews,
         getVideoComments,
         commentsUpdated,
@@ -123,8 +123,6 @@ function WatchVideo() {
         getUserChannelSubscribers,
         getVideoLikes,
         getLikesOfComment,
-        updateCommentOnVideo,
-        
     ]);
 
     useEffect(() => {
@@ -193,6 +191,7 @@ function WatchVideo() {
             // console.log(likesOfComments)
             await toggleCommentLike(commentId);
             await getLikesOfComment(commentId);
+            // setIsVideoLiked((prev) => !prev);
         }
     };
 
@@ -202,6 +201,8 @@ function WatchVideo() {
 
     const handleCommentDelete = async(commentId) =>{
         await deleteCommentOnVideo(commentId);
+        setCommentsUpdated((prev) => !prev); // Trigger refetch after deletion
+
     }
 
     const handleCommentEdit = (comment)=>{
@@ -211,8 +212,11 @@ function WatchVideo() {
 
     const onSubmit = async(data)=>{ 
         try {
+            // console.log(data.content)
             await updateCommentOnVideo(currentComment?._id,{content: data.content});
             reset();
+            setIsEditComment(false);
+            setCommentsUpdated((prev) => !prev); // Trigger refetch after deletion
 
         } catch (error) {
             console.error("Error while updating the comment !!")
