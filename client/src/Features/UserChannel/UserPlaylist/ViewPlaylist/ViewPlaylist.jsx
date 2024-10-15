@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 function ViewPlaylist() {
     const { playlist, getPlaylistById } = usePlaylistStore();
-    const { getVideoById, videos } = useVideosStore();
+    const { getVideoById, videos:videosStore } = useVideosStore();
     const { playlistId } = useParams();
 
     useEffect(() => {
@@ -29,7 +29,7 @@ function ViewPlaylist() {
                     {/* Map over playlist video IDs and match with the fetched videos */}
                     {playlist && playlist.videos && playlist.videos.length > 0 ? (
                         playlist.videos.map(videoId => {
-                            const video = videos.find(v => v._id === videoId); // Find the correct video from the videos array
+                            const video = videosStore.find(v => v._id === videoId); // Find the correct video from the videos array
                             return (
                                 video && (
                                     <div key={videoId} className='video-item'>

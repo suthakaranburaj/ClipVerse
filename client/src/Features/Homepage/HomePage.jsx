@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 function HomePage() {
     const videoRefs = useRef([]);
     const { isNavOpen } = devStore();
-    const { videos, getAllVideos, loading, error:videoStoreError } = useVideosStore();
+    const { videos, getAllVideos, isLoading, error:videoStoreError } = useVideosStore();
     const {user,isAuthenticated}=useStore();
 
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ function HomePage() {
         }
     };
 
-    if (loading) return <div>Loading...</div>;    const handleMouseEnter = (index) => {
+    if (isLoading) return <div>Loading...</div>;    const handleMouseEnter = (index) => {
         const videoElement = videoRefs.current[index];
         if (videoElement && videoElement.readyState >= 2) {
             videoElement.style.display = 'block';
@@ -63,7 +63,7 @@ function HomePage() {
                 {/* Other buttons */}
             </div>
             <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-3 mt-16' : 'main-box flex text-white flex-wrap gap-6 mt-16'}`}>
-                {videos
+                {Array.isArray(videos) && videos
                 .filter(video => video?.isPublished)
                 .map((video, index) => (
                     <Link to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} key={video?._id} className='box relative pb-10'>

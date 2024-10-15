@@ -6,6 +6,7 @@ const usePlaylistStore = create((set)=>({
     isLoading:false,
     error:null,
     playlist:null,
+    playlist:null,
 
     getUserPlaylists : async(userId) =>{
         set({isLoading:true,error:null})
@@ -40,6 +41,7 @@ const usePlaylistStore = create((set)=>({
             console.log(response);
             set((state) =>({
                 userPlaylists:[playlist,...state.userPlaylists],
+                playlist:playlist,
                 isLoading:false,
                 error:null,
             }));

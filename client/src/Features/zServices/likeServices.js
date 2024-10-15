@@ -96,6 +96,19 @@ const getLikesOfVideoServices = async(videoId) =>{
     }
 }
 
+const getLikesOfCommentServices = async(commentId)=>{
+    try {
+        const response = await axios.get(`${BACKEND_URL}/comment/${commentId}`,{
+            headers:{
+                Authorization:`Bearer ${getToken()}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        throw(error)
+    }
+}
+
 export{
     toggleVideoLikeServices,
     toggleCommentLikeServices,
@@ -103,4 +116,5 @@ export{
     getLikedVideosServices,
     getLikesOfVideosServices,
     getLikesOfVideoServices,
+    getLikesOfCommentServices,
 }

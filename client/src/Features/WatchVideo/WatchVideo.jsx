@@ -31,13 +31,51 @@ function WatchVideo() {
     const [isSubscribed,setIsSubscribed] = useState(false);
     const [channelId, setChannelId] = useState(null);
     const [isVideoLiked,setIsVideoLiked] = useState(false);
+    const [likedComments , setLikedComments] = useState([]);
+    
 
-    const { video, getVideoById, isLoading, error, userWatchHistory, incrementVideoViews,getAllVideos,videos } = useVideosStore(); // Fetch the video from the store
+    const { 
+        video, 
+        getVideoById, 
+        isLoading, 
+        error, 
+        userWatchHistory, 
+        incrementVideoViews,
+        getAllVideos,
+        videos 
+    } = useVideosStore(); // Fetch the video from the store
+
     const {user} = useStore();
     const location = useLocation();
-    const { commentsOfVideo,getVideoComments,addCommentOnVideo} = useCommentsStore();
-    const {getUserChannelSubscribers, channelSubscribers,toggleSubscription, error:subscriptionError} = useSubscriptionStore();
-    const {toggleVideoLike, getVideoLikes,likesOfVideo,likesOfVideoNumber} = useLikesStore();
+    const { 
+        commentsOfVideo,
+        getVideoComments,
+        addCommentOnVideo
+    } = useCommentsStore();
+
+    const {
+        getUserChannelSubscribers, 
+        channelSubscribers,
+        toggleSubscription, 
+        error:subscriptionError
+    } = useSubscriptionStore();
+    
+    const {
+        toggleVideoLike, 
+        getVideoLikes,
+        likesOfVideo,
+        likesOfVideoNumber, 
+        likesOfComments,
+        toggleCommentLike, 
+        getLikesOfComment,
+        setCurrentUserId,
+    } = useLikesStore();
+
+    // useEffect(()=>{
+    //     if(user && user?._id){
+    //         setCurrentUserId(user._id);
+    //     }
+    // })
 
     const queryParams = new URLSearchParams(location.search);
     const videoId = queryParams.get('videoId');
@@ -56,35 +94,53 @@ function WatchVideo() {
                     setChannelId(video.owner._id);
                     await getUserChannelSubscribers(channelId);
                 }
-            }
-        };
-        fetchData();
-    }, [videoId,channelId, getVideoById, userWatchHistory, incrementVideoViews,getVideoComments,commentsUpdated,getAllVideos,getUserChannelSubscribers,getVideoLikes]);
 
-    useEffect( () => {
-        const fetchData = async()=>{
-            if (channelSubscribers.length > 0 && user) {
-                const isUserSubscribed = channelSubscribers.some(subscriber => subscriber._id === user._id);
-                setIsSubscribed(isUserSubscribed);
+                // Fetch likes for each comment
+                if (commentsOfVideo && commentsOfVideo.length > 0) {
+                    for (const comment of commentsOfVideo) {
+                        await getLikesOfComment(comment._id);
+                    }
+                }
             }
-            if(likesOfVideoNumber > 0 && user){
-                const isVideoLiked = likesOfVideo.some(u => u.likedBy === user._id);
-                setIsVideoLiked(isVideoLiked);
-                // console.log(setIsVideoLiked);
-            }
-            // const channelId = await video?.owner?._id;
-            // await getVideoById(videoId);
-            // await getUserChannelSubscribers(channelId);
         };
         fetchData();
-    }, [channelSubscribers, user]);
+    }, [
+        videoId,
+        channelId, 
+        getVideoById, 
+        userWatchHistory, 
+        incrementVideoViews,
+        getVideoComments,
+        commentsUpdated,
+        getAllVideos,
+        getUserChannelSubscribers,
+        getVideoLikes,
+        getLikesOfComment,
+
+        
+    ]);
+
+    useEffect(() => {
+        if (channelSubscribers.length > 0 && user) {
+            const isUserSubscribed = channelSubscribers.some(
+                (subscriber) => subscriber._id === user._id
+            );
+            setIsSubscribed(isUserSubscribed);
+        }
+
+        if (likesOfVideoNumber > 0 && user) {
+            const isVideoLiked = likesOfVideo.some(
+                (u) => u.likedBy === user._id
+            );
+            setIsVideoLiked(isVideoLiked);
+        }
+    }, [channelSubscribers, user, likesOfVideoNumber, likesOfVideo]);
 
     const handleAddComment = async()=>{
-
         if(videoId && commentContent){
             await addCommentOnVideo(videoId,commentContent);
             setCommentContent('');
-            setCommentsUpdated(prev => !prev);
+            setCommentsUpdated((prev) => !prev);
         }
     }
 
@@ -111,6 +167,20 @@ function WatchVideo() {
             //     likesOfVideoCount += 1;
             // }
             setIsVideoLiked((prev)=> !prev);
+        }
+    };
+
+    useEffect(() => {
+        if (user && user._id) {
+            setCurrentUserId(user._id);
+        }
+    }, [user, setCurrentUserId]);
+    const handleCommentLike = async (commentId) => {
+        if (commentId) {
+            console.log(likesOfComments)
+            await toggleCommentLike(commentId);
+            await getLikesOfComment(commentId);
+            console.log(likesOfComments);
         }
     };
 
@@ -230,6 +300,15 @@ function WatchVideo() {
                         {
                             commentsOfVideo && commentsOfVideo.length > 0 ?
                             commentsOfVideo.map((comment)=>{
+                                const commentLikeData =
+                                // console.log(likesOfComments)
+                                    likesOfComments[comment._id] ||{
+                                        likes:0,
+                                        likedbyUser:false,
+                                    };
+                                    // console.log(commentLikeData);
+                                    // console.log(commentLikeData)
+                                    // console.log(commentLikeData.likedByUser)
                                 return(
                                     <div key={comment?._id} className='channelCommentsSection'>
                                         <div className='channelCommentsSection1'>
@@ -244,8 +323,22 @@ function WatchVideo() {
                                                 <p className='channelCommentsSection212'>{comment?.content}</p>
                                             </div>
                                             <div className='channelCommensSection23'>
-                                                <FontAwesomeIcon icon={faThumbsUp} className=''/>
-                                                <p>4</p>
+                                                <div className='channelCommensSection231'>
+                                                    <FontAwesomeIcon
+                                                        icon={faThumbsUp} 
+                                                        className={`${
+                                                            commentLikeData.likedByUser
+                                                                ? 'likeIcon'
+                                                                : 'unLikeIcon'
+                                                        }`}
+                                                        onClick={()=>
+                                                            handleCommentLike(
+                                                                comment?._id
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                                <p>{commentLikeData.likes}</p>
                                             </div>
                                         </div>
                                     </div>

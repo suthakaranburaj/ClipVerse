@@ -19,7 +19,7 @@ const useVideosStore = create(
             try {
                 const response = await getAllVideosService(params);
                 set({
-                    videos:response.data.videos,
+                    videos:Array.isArray(response.data.videos) ? response.data.videos : [],
                     isLoading:false,
                     error:null
                 });
@@ -40,8 +40,8 @@ const useVideosStore = create(
                 set((state) => ({
                     video: fetchedVideo,
                     videos: [
-                        ...state.videos, // Spread the existing videos (array) to preserve them
-                        fetchedVideo,    // Add the newly fetched video
+                        ...state.videos.filter(video => video._id !== fetchedVideo._id), // Spread the existing videos (array) to preserve them
+                        fetchedVideo,
                     ],
                     isLoading: false,
                     error: null,

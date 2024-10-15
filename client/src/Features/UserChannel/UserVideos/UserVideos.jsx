@@ -3,14 +3,15 @@ import './UserVideos.scss';
 import userStatsStore from '../../../store/userStatsStore';
 import usePlaylistStore from '../../../store/usePlaylistStore';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function UserVideos() {
     const { getChannelVideos, videos: channelVideos } = userStatsStore();
-    const {createPlaylist} = usePlaylistStore();
+    const {createPlaylist, playlist,getPlaylist} = usePlaylistStore();
     const [isCreatePlaylistActive, setIsCreatePlaylistActive] = useState(false);
     const [selectedVideos, setSelectedVideos] = useState([]);
-    
+    const {channelId}=useParams();
+    // console.log(playlist?._id);
 
     const handleCreatePlaylist = () => {
         setIsCreatePlaylistActive((prev) => !prev);
@@ -32,9 +33,9 @@ function UserVideos() {
 
     const[isCreate,setIsCreate]=useState(false);
     const handleCreateChange = () => {
-        console.log('Before toggle:', isCreate);
+        // console.log('Before toggle:', isCreate);
         setIsCreate((prev) => !prev);
-        console.log('After toggle:', !isCreate);
+        // console.log('After toggle:', !isCreate);
     };
     const handleCancelForm = () => {
         setIsCreate(false);
@@ -57,13 +58,13 @@ function UserVideos() {
         try {
             console.log(data.name);
             console.log(data.description);
-            console.log(videos);
+            // console.log(videos);
             await createPlaylist({ name: data.name, description: data.description, videos: videos }); // Correct
             reset();
             handleCancelForm();
             handleCreatePlaylist();
             alert("Playlist created successfully!!")
-            navigate('playlist')
+            navigate(`/userchannel/${channelId}/playlist/${playlist?._id}`)
         } catch (error) {
             console.error("Error while creating playlist !!");
         }

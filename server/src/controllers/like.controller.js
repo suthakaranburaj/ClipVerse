@@ -104,6 +104,33 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 
 })
 
+const getLikesOfComment = asyncHandler( async(req,res)=>{
+    const {commentId} = req.params;
+
+    if(!commentId){
+        return res
+        .status(400)
+        .json(new ApiError(400,"CommentId is missing !!"));
+    }
+
+    const likes = await Like.find({comment:commentId});
+    const likesCount = likes.length;
+    if(likes.length === 0 ){
+        return res
+        .status(200)
+        .json(new ApiResponse(200,likes,"No likes found !!"));
+    }
+
+    const response ={
+        likesCount,
+        likes,
+    }
+    return res
+    .status(200)
+    .json(new ApiResponse(200,response,"Likes of Comment fetched successfully !!"))
+
+})
+
 const toggleTweetLike = asyncHandler(async (req, res) => {
     const {tweetId} = req.params
     //TODO: toggle like on tweet
@@ -255,5 +282,6 @@ export {
     toggleVideoLike,
     getLikedVideos,
     getLikesOfVideos,
-    getLikesOfVideo
+    getLikesOfVideo,
+    getLikesOfComment
 }
