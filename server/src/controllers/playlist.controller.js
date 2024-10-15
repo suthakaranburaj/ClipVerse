@@ -187,6 +187,43 @@ const updatePlaylist = asyncHandler(async (req, res) => {
     
 })
 
+const addVideosToPlaylist = asyncHandler(async(req,res)=>{
+    const {playlistId}= req.params;
+    const { videoIds } = req.body;
+
+    if (!playlistId) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "Playlist Id is missing !!"));
+    }
+
+    if (!videoIds || !Array.isArray(videoIds) || videoIds.length === 0) {
+        return res
+            .status(400)
+            .json(new ApiError(400, "An array of Video IDs is required !!"));
+    }
+
+    const playlist = await Playlist.findById(playlistId);
+
+    if (!playlist) {
+        return res
+            .status(404)
+            .json(new ApiError(404, "Playlist not found!"));
+    }
+
+    videoIds.forEach((videoId) => {
+        if (!playlist.videos.includes(videoId)) {
+            playlist.videos.push(videoId);
+        }
+    });
+
+    await playlist.save();
+
+    return res
+        .status(200)
+        .json(new ApiResponse(201, "Videos added to the playlist successfully !!"));
+})
+
 export {
     createPlaylist,
     getUserPlaylists,
@@ -194,5 +231,6 @@ export {
     addVideoToPlaylist,
     removeVideoFromPlaylist,
     deletePlaylist,
-    updatePlaylist
+    updatePlaylist,
+    addVideosToPlaylist,
 }

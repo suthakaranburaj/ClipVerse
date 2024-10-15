@@ -4,13 +4,30 @@ import userStatsStore from '../../../store/userStatsStore';
 import usePlaylistStore from '../../../store/usePlaylistStore';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function UserVideos() {
     const { getChannelVideos, videos: channelVideos } = userStatsStore();
-    const {createPlaylist, playlist,getPlaylist} = usePlaylistStore();
+    const 
+    {
+        createPlaylist,
+        playlist,
+        getPlaylist,
+        addVideosToPlaylist
+    } = usePlaylistStore();
+
+    const { register, handleSubmit, reset,setValue } = useForm();
+
+    const[isCreate,setIsCreate]=useState(false);
     const [isCreatePlaylistActive, setIsCreatePlaylistActive] = useState(false);
     const [selectedVideos, setSelectedVideos] = useState([]);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [currentPlaylist, setCurrentPlaylist] = useState(null);
+
     const {channelId}=useParams();
+
+    const location = useLocation();
+    const navigate = useNavigate();
     // console.log(playlist?._id);
 
     const handleCreatePlaylist = () => {
@@ -31,7 +48,7 @@ function UserVideos() {
         });
     };
 
-    const[isCreate,setIsCreate]=useState(false);
+
     const handleCreateChange = () => {
         // console.log('Before toggle:', isCreate);
         setIsCreate((prev) => !prev);
@@ -49,28 +66,42 @@ function UserVideos() {
         fetchData();
     }, []);
 
-    const { register, handleSubmit, reset } = useForm();
 // src/components/UserVideos/UserVideos.jsx
 
-    const navigate = useNavigate();
+    
     const onSubmit = async (data) => {
-        const videos = selectedVideos;
         try {
-            console.log(data.name);
-            console.log(data.description);
-            // console.log(videos);
-            await createPlaylist({ name: data.name, description: data.description, videos: videos }); // Correct
+            const videos = selectedVideos;
+            console.log(videos)
+            if(isEditMode){
+                console.log(videos)
+                await addVideosToPlaylist(currentPlaylist?._id,{videoIds:videos});
+                alert("Playlist updated successfully!");
+            }
+            else{
+                await createPlaylist({ name: data.name, description: data.description, videos: videos }); // Correct
+                alert("Playlist created successfully!");
+            }
             reset();
-            handleCancelForm();
-            handleCreatePlaylist();
-            alert("Playlist created successfully!!")
+            // handleCancelForm();
+            // handleCreatePlaylist();
+            setIsCreatePlaylistActive(false);
             navigate(`/userchannel/${channelId}/playlist/${playlist?._id}`)
         } catch (error) {
             console.error("Error while creating playlist !!");
         }
     };
 
-    
+    useEffect(()=>{
+        if(location?.state?.isEditMode){
+            setIsCreatePlaylistActive(true);
+            setIsEditMode(true);
+            setCurrentPlaylist(location.state.playlist);
+            setValue('name',location.state.playlist.name);
+            setValue('description',location.state.playlist.description);
+            setSelectedVideos(location.state.playlist.videos || []);
+        }
+    },[location.state,setValue]);
 
     return (
         <>
@@ -104,7 +135,7 @@ function UserVideos() {
                         </div>
                     ))}
                 </div>
-                {isCreatePlaylistActive &&(
+                {isCreatePlaylistActive && !isEditMode && (
                     <button
                     onClick={handleCreateChange}
                     >
@@ -113,7 +144,7 @@ function UserVideos() {
                 )}
             </div>
         </div>
-        {isCreate &&(
+        {isCreate && !isEditMode && (
             <div className='createPlaylistForm'>
                 <p>Playlist</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -150,6 +181,13 @@ function UserVideos() {
                         </button>
                     </div>                    
                 </form>
+            </div>
+        )}
+        {isEditMode && (
+            <div className='updatePlaylistForm'>
+                <button onClick={onSubmit}>
+                    Update Videos
+                </button>
             </div>
         )}
         </>

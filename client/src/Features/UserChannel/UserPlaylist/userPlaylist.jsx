@@ -9,6 +9,7 @@ import userStore from '../../../store/userStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'; // Example icons 
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 function UserPlaylist() {
 
@@ -17,6 +18,7 @@ function UserPlaylist() {
     const [isEdit, setIsEdit] = useState(false);
     const [currentPlaylist, setCurrentPlaylist] = useState(null);
     const {reset, handleSubmit, register} = useForm();
+    const navigate = useNavigate();
 
     const { 
         getUserPlaylists, 
@@ -60,6 +62,12 @@ function UserPlaylist() {
     const handleCloseEdit = ()=>{
         setIsEdit(false);
         reset();
+    }
+
+    const handlePlaylistAddVideos=(playlist)=>{
+        navigate(`/userchannel/${user._id}/videos`, { 
+            state: { isEditMode: true, playlist} 
+        });
     }
 
     const onSubmit = async(data)=>{
@@ -111,6 +119,12 @@ function UserPlaylist() {
                                                 onClick={()=>handlePlaylistEdit(playlist)}
                                             >
                                                 Edit
+                                            </button>
+                                            <button
+                                                className='deleteContainer3'
+                                                onClick={()=>handlePlaylistAddVideos(playlist)}
+                                            >
+                                                Add
                                             </button>
                                         </div>
                                     )}

@@ -52,10 +52,10 @@ const getPlaylistByIdServices = async(playlistId) =>{
     }
 };
 
-//pending
-const addVideoToPlaylistServices = async(playlistId,videoId)=>{
+
+const addVideoToPlaylistServices = async(videoId,playlistId)=>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/add/${videoId}/${playlistId}`,{
+        const response = await axios.patch(`${BACKEND_URL}/add/${videoId}/${playlistId}`,{},{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },
@@ -112,6 +112,18 @@ const updatePlaylistServices = async(playlistId,{name, description})=>{
     }
 };
 
+const addVideosToPlaylistServices = async(playlistId,{videoIds})=>{
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/${playlistId}/add/videos`,{videoIds},{
+            headers:{
+                Authorization:`Bearer ${getToken()}`
+            },
+            withCredentials:true,
+        });
+    } catch (error) {
+        throw(error);
+    }
+}
 export {
     createPlaylistServices,
     getUserPlaylistsServices,
@@ -120,4 +132,5 @@ export {
     removeVideoFromPlaylistServices,
     deletePlaylistServices,
     updatePlaylistServices,
+    addVideosToPlaylistServices,
 }
