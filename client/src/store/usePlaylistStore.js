@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import {getUserPlaylistsServices, createPlaylistServices, getPlaylistByIdServices} from '../Features/zServices/playlistServices'
+import  {
+            getUserPlaylistsServices,
+            createPlaylistServices, 
+            getPlaylistByIdServices,
+            deletePlaylistServices,
+        } from '../Features/zServices/playlistServices'
 
 const usePlaylistStore = create((set)=>({
     userPlaylists:[],
@@ -67,6 +72,22 @@ const usePlaylistStore = create((set)=>({
             set({
                 isLoading:false,
                 error:error.response?.data?.message || "failed to fetch the playlist !!"
+            })
+        }
+    },
+
+    deletePlaylist : async(playlistId)=>{
+        set({isLoading:true,error:null});
+        try {
+            await deletePlaylistServices(playlistId);
+            set({
+                isLoading:false,
+                error:null,
+            })
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data,
             })
         }
     }

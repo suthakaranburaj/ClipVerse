@@ -13,19 +13,39 @@
         display: flex;
         flex-direction: column;
         padding: 0 5px 10px 5px;
-        img{
+        .playlistContainer1{
             width: 100%;
             border-radius: 10px;
             
         }
-        div{
-            p{
-                font-size: 1rem;
+        .playlistContainer2{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .playlistContainer21{
+                .playlistContainer211{
+                    font-size: 1rem;
+                }
+                .playlistContainer212{
+                    font-size: 1rem;
+                }
+                button{
+                    font-size: 0.8rem;
+                    color: gray;
+                }
             }
-            button{
-                font-size: 0.8rem;
-                color: gray;
+            .playlistContainer22{
+                width: 20%;
+                .channelCommentsSection221{
+
+                }
+                .deleteContainer{
+                    position: absolute;
+                    margin-right: 100px;
+                    background-color: rgb(70, 68, 68);
+                }
             }
+            
         }
     }
 }
