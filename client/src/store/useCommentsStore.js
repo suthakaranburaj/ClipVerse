@@ -1,5 +1,11 @@
 import {create} from "zustand";
-import {getVideoCommentsServices,getAllVideosCommentsServices,addCommentOnVideoServices} from '../Features/zServices/commentsServices'
+import  {
+            getVideoCommentsServices,
+            getAllVideosCommentsServices,
+            addCommentOnVideoServices,
+            deleteCommentOnVideoServices,
+            updateCommentOnVideoServices,
+        } from '../Features/zServices/commentsServices'
 
 const useCommentsStore = create((set)=>({
     commentsOfVideo:[],
@@ -87,10 +93,51 @@ const useCommentsStore = create((set)=>({
                 error:error.response?.data?.message || "Failed to publich Comment",
             })
         }
-    }
+    },
 
-    
+    deleteCommentOnVideo : async(commentId) =>{
+        set({isLoading:true,error:null})
+        try {
+            await deleteCommentOnVideoServices(commentId);
+            set((state) =>({
+                commentsOfVideo:state.commentsOfVideo.filter((comment) => comment._id !== commentId),
+                allComments:state.allComments.filter((comment) => comment._id !== commentId),
+                isLoading:false,
+                error:null,
+            }));
+        } catch (error) {
+            set({
+                error:error.response?.message?.data,
+                isLoading:false,
+            });
+        }
+    },
 
+    updateCommentOnVideo: async (commentId, content) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await updateCommentOnVideoServices(commentId, content);
+            const updatedComment = response.data.data;
+            console.log(content)
+            console.log(updatedComment)
+            set((state) => ({
+                commentsOfVideo: state.commentsOfVideo.map((comment) =>
+                    comment._id === updatedComment._id ? updatedComment : comment
+                ),
+                allComments: state.allComments.map((comment) =>
+                    comment._id === updatedComment._id ? updatedComment : comment
+                ),
+                isLoading: false,
+                error: null,
+            }));
+            return response;
+        } catch (error) {
+            set({
+                isLoading: false,
+                error: error.response?.message?.data,
+            });
+        }
+    },
 }));
 
 export default useCommentsStore;

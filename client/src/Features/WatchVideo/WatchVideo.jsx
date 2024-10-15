@@ -8,7 +8,8 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './components/NavMangeVideo/Sidebar';
 import SearchBar from './components/ManageSearchBar/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons
+import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons 
+import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'; 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {faSort } from '@fortawesome/free-solid-svg-icons'; // Example icons
@@ -16,6 +17,7 @@ import useStore from '../../store/userStore';
 import useCommentsStore from '../../store/useCommentsStore'
 import useSubscriptionStore from '../../store/useSubscriptionStore';
 import useLikesStore from '../../store/useLikesStore';
+import { useForm } from 'react-hook-form';
 
 
 
@@ -31,8 +33,11 @@ function WatchVideo() {
     const [isSubscribed,setIsSubscribed] = useState(false);
     const [channelId, setChannelId] = useState(null);
     const [isVideoLiked,setIsVideoLiked] = useState(false);
-    const [likedComments , setLikedComments] = useState([]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(null);
+    const [isEditComment,setIsEditComment] = useState(false);
+    const [currentComment, setCurrentComment] = useState();
     
+    const { register, handleSubmit, reset } = useForm();
 
     const { 
         video, 
@@ -50,7 +55,9 @@ function WatchVideo() {
     const { 
         commentsOfVideo,
         getVideoComments,
-        addCommentOnVideo
+        addCommentOnVideo,
+        deleteCommentOnVideo,
+        updateCommentOnVideo,
     } = useCommentsStore();
 
     const {
@@ -106,9 +113,9 @@ function WatchVideo() {
         fetchData();
     }, [
         videoId,
-        channelId, 
-        getVideoById, 
-        userWatchHistory, 
+        channelId,
+        getVideoById,
+        userWatchHistory,
         incrementVideoViews,
         getVideoComments,
         commentsUpdated,
@@ -116,8 +123,6 @@ function WatchVideo() {
         getUserChannelSubscribers,
         getVideoLikes,
         getLikesOfComment,
-
-        
     ]);
 
     useEffect(() => {
@@ -174,22 +179,61 @@ function WatchVideo() {
         if (user && user._id) {
             setCurrentUserId(user._id);
         }
-    }, [user, setCurrentUserId]);
+    }, [user, 
+        setCurrentUserId, 
+        toggleCommentLike,
+        getLikesOfComment,
+        // commentsOfVideo,
+    ]);
+    
     const handleCommentLike = async (commentId) => {
         if (commentId) {
-            console.log(likesOfComments)
+            // console.log(likesOfComments)
             await toggleCommentLike(commentId);
             await getLikesOfComment(commentId);
-            console.log(likesOfComments);
+            // setIsVideoLiked((prev) => !prev);
         }
     };
 
+    const toggleDropdown = (commentId) => {
+        setIsDropdownOpen((prev) => (prev === commentId ? null : commentId));
+    };
+
+    const handleCommentDelete = async(commentId) =>{
+        await deleteCommentOnVideo(commentId);
+        setCommentsUpdated((prev) => !prev); // Trigger refetch after deletion
+
+    }
+
+    const handleCommentEdit = (comment)=>{
+        setIsEditComment(true);
+        setCurrentComment(comment);
+    }
+
+    const onSubmit = async(data)=>{ 
+        try {
+            // console.log(data.content)
+            await updateCommentOnVideo(currentComment?._id,{content: data.content});
+            reset();
+            setIsEditComment(false);
+            setCommentsUpdated((prev) => !prev); // Trigger refetch after deletion
+
+        } catch (error) {
+            console.error("Error while updating the comment !!")
+        }
+    };
+
+    const handleCloseEdit = ()=>{
+        setIsEditComment(false);
+        reset();
+    }
     if (isLoading) return <p>Loading video...</p>;
     if (error) return <p>Error: {error}</p>;
 
     dayjs.extend(relativeTime);
 
     return (
+        <>
         <div className='box'>
             <div className='watchVideo-container'>
                 <div className='watchVideo-left-side'>
@@ -309,6 +353,12 @@ function WatchVideo() {
                                     // console.log(commentLikeData);
                                     // console.log(commentLikeData)
                                     // console.log(commentLikeData.likedByUser)
+                                    // console.log(comment?.owner)
+                                    // console.log(video?.owner?._id)
+                                    // console.log(channelId)
+                                    // console.log(user?._id)
+                                    // console.log(user?._id)
+                                    // console.log(currentComment)
                                 return(
                                     <div key={comment?._id} className='channelCommentsSection'>
                                         <div className='channelCommentsSection1'>
@@ -318,6 +368,17 @@ function WatchVideo() {
                                             <div className='channelCommentsSection21'>
                                                 <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
                                                 <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
+                                                <FontAwesomeIcon 
+                                                    icon={faEllipsisVertical} 
+                                                    className='channelCommentsSection213' 
+                                                    onClick={()=>toggleDropdown(comment._id)}
+                                                />
+                                                {isDropdownOpen === comment._id && (comment?.owner?._id === user?._id || channelId === user?._id)  &&( // Conditionally render dropdown
+                                                    <div className='commentDropdown'>
+                                                        <button onClick={() => handleCommentEdit(comment)}>Edit</button>
+                                                        <button onClick={()=>handleCommentDelete(comment?._id)}>Delete</button>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className='channelCommentsSecton22'>
                                                 <p className='channelCommentsSection212'>{comment?.content}</p>
@@ -342,6 +403,7 @@ function WatchVideo() {
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     );
                                 }) 
                                 :
@@ -377,7 +439,30 @@ function WatchVideo() {
                 </div>
             </div>
         </div>
-
+        {isEditComment && currentComment?.owner?._id === user?._id &&(
+            <div className='editCommentContainer'>
+                <form onSubmit={handleSubmit(onSubmit)} className='editCommentContainer1'>
+                    <p className='editCommentContainer11'>Edit Comment</p>
+                    <div className='editCommentContainer12'>
+                        <label className='editCommentContainer121'>
+                            Content
+                        </label>
+                        <input 
+                            type="text" 
+                            {...register('content')}
+                            defaultValue={currentComment.content}
+                            className='editCommentContainer122'
+                        />
+                    </div>
+                    <div className="formButtons">
+                                <button type="submit">Submit</button>
+                                <button type="button" onClick={handleCloseEdit}>Close</button>
+                    </div>
+                </form>
+            </div>
+        )}
+        
+    </>
 
 
     );
