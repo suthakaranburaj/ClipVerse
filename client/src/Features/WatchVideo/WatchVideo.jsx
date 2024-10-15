@@ -8,7 +8,8 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './components/NavMangeVideo/Sidebar';
 import SearchBar from './components/ManageSearchBar/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons
+import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons 
+import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'; 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {faSort } from '@fortawesome/free-solid-svg-icons'; // Example icons
@@ -32,6 +33,8 @@ function WatchVideo() {
     const [channelId, setChannelId] = useState(null);
     const [isVideoLiked,setIsVideoLiked] = useState(false);
     const [likedComments , setLikedComments] = useState([]);
+    const [isCommentEdit,setIsCommentEdit] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     
 
     const { 
@@ -50,7 +53,8 @@ function WatchVideo() {
     const { 
         commentsOfVideo,
         getVideoComments,
-        addCommentOnVideo
+        addCommentOnVideo,
+        deleteCommentOnVideo,
     } = useCommentsStore();
 
     const {
@@ -116,7 +120,7 @@ function WatchVideo() {
         getUserChannelSubscribers,
         getVideoLikes,
         getLikesOfComment,
-
+        
         
     ]);
 
@@ -174,15 +178,28 @@ function WatchVideo() {
         if (user && user._id) {
             setCurrentUserId(user._id);
         }
-    }, [user, setCurrentUserId]);
+    }, [user, 
+        setCurrentUserId, 
+        toggleCommentLike,
+        getLikesOfComment,
+        // commentsOfVideo,
+    ]);
+    
     const handleCommentLike = async (commentId) => {
         if (commentId) {
-            console.log(likesOfComments)
+            // console.log(likesOfComments)
             await toggleCommentLike(commentId);
             await getLikesOfComment(commentId);
-            console.log(likesOfComments);
         }
     };
+
+    const toggleDropdown = (commentId) => {
+        setIsDropdownOpen((prev) => (prev === commentId ? null : commentId));
+    };
+
+    const handleCommentDelete = async(commentId) =>{
+        await deleteCommentOnVideo(commentId);
+    }
 
     if (isLoading) return <p>Loading video...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -309,6 +326,10 @@ function WatchVideo() {
                                     // console.log(commentLikeData);
                                     // console.log(commentLikeData)
                                     // console.log(commentLikeData.likedByUser)
+                                    // console.log(comment?.owner)
+                                    // console.log(video?.owner?._id)
+                                    console.log(channelId)
+                                    console.log(user?._id)
                                 return(
                                     <div key={comment?._id} className='channelCommentsSection'>
                                         <div className='channelCommentsSection1'>
@@ -318,6 +339,17 @@ function WatchVideo() {
                                             <div className='channelCommentsSection21'>
                                                 <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
                                                 <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
+                                                <FontAwesomeIcon 
+                                                    icon={faEllipsisVertical} 
+                                                    className='channelCommentsSection213' 
+                                                    onClick={()=>toggleDropdown(comment._id)}
+                                                />
+                                                {isDropdownOpen === comment._id && (comment?.owner?._id === user?._id || channelId === user?._id)  &&( // Conditionally render dropdown
+                                                    <div className='commentDropdown'>
+                                                        <button onClick={() => setIsCommentEdit(true)}>Edit</button>
+                                                        <button onClick={()=>handleCommentDelete(comment?._id)}>Delete</button>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div className='channelCommentsSecton22'>
                                                 <p className='channelCommentsSection212'>{comment?.content}</p>

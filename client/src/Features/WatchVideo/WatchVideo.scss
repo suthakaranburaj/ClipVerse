@@ -255,11 +255,24 @@
                         
                         .channelCommentsSection21{
                             display: flex;
+                            align-items: center;
                             .channelCommentsSection211{
                                 margin: 0 20px 0 0;
                             }
                             .channelCommentsSection212{
                                 color: $secondary-text;
+                            }
+                            .channelCommentsSection213{
+                                margin-left: 2rem;
+                            }
+                            .commentDropdown{
+                                position: absolute;
+                                display: flex;
+                                flex-direction: column;
+                                margin-left: 300px;
+                                button{
+                                    font-size: 10px;
+                                }
                             }
                         }
                         .channelCommensSection23{

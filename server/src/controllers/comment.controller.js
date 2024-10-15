@@ -128,11 +128,11 @@ const deleteComment = asyncHandler(async (req, res) => {
         .json( new ApiError(400,"Comment not found"));
     }
 
-    if(req.user._id.toString() !== comment.owner.toString()){
-        return res
-        .status(404)
-        .json( new ApiError(404,"Unautherized to delete this Comment"));
-    }
+    // if(req.user._id.toString() !== comment.owner.toString()){
+    //     return res
+    //     .status(404)
+    //     .json( new ApiError(404,"Unautherized to delete this Comment"));
+    // }
 
     await Comment.findByIdAndDelete(commentId);
 
