@@ -285,7 +285,7 @@ function SearchBar() {
                             </div>
                         </div>
 
-                        <h2 className='label'>Select a Video to Upload</h2>
+                        <h2 className='main-label'>Select a Video to Upload</h2>
                         <div className="dropdown-divider"></div>
                         <form className='formContainer' onSubmit={handleSubmit(onSubmit)}>
 
@@ -319,16 +319,18 @@ function SearchBar() {
                                 // onChange={handleFileChange} 
                                 {...register('videoFile', { required: 'Video File is required' })}
                             />
+                            <div className='checker'>
+                                <label className=''>submit</label>
+                                <input className='square'
+                                    type="checkbox"
+                                    {...register('isPublished')}
+                                />
+                            </div>
+
                             <button className='submit-btn rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
                                 <div className='bttn-inside'>
-                                    <input
-                                        type="checkbox"
-                                        {...register('isPublished')}
-                                    />
-
-
                                     <MdUpload className="dropdown-icon" size={22} />
-                                    Submit
+                                    Upload
                                 </div>
 
                             </button>
