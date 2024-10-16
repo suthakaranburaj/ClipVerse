@@ -3,6 +3,7 @@ import
     {
     getUserTweetsServices,
     createTweetServices,
+    updateTweetServices,
     } from '../Features/zServices/tweetsServices'
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
@@ -45,6 +46,28 @@ const useTweetStore = create((set)=>({
             set({
                 isLoading:false,
                 error:error.response?.message?.data || "Failed to create Tweet",
+            })
+        }
+    },
+
+    updateTweet : async(tweetId,content)=>{
+        set({isLoading:true,error:null})
+        try {
+            // console.log(content)
+            const response = await updateTweetServices(tweetId,content);
+
+            // const updatedTweet = response.data.data
+            console.log(response);
+            set({
+                // userTweets:,
+                isLoading:false,
+                error:null,
+            })
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to update tweet !!"
             })
         }
     }

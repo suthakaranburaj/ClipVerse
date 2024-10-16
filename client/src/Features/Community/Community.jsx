@@ -6,6 +6,7 @@ import './Community.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons 
 import {faPlus } from '@fortawesome/free-solid-svg-icons';
+import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useLocation } from 'react-router-dom';
 import useTweetStore from '../../store/useTweetStore'
 import useStore from '../../store/userStore';
@@ -19,9 +20,11 @@ function Community() {
     // console.log(location)
 
     // console.log(subscribedChannel);
-    const {getUserTweets, userTweets, createTweet} = useTweetStore();
+    const {getUserTweets, userTweets, createTweet, updateTweet} = useTweetStore();
     const [isCreateTweet, setIsCreateTweet] = useState(false);
     const [newTweetContent, setNewTweetContent] = useState('');
+    const [isEditTweet , setIsEditTweet] = useState(false);
+    const [currentTweet , setCurrentTweet] = useState(null);
 
     useEffect(()=>{
         
@@ -32,20 +35,38 @@ function Community() {
             // console.log(userTweets)
         }
         fetchData();
-    },[userTweets])
+    },[subscribedChannel?._id])
     // console.log(userTweets)
 
-    const handleCretePost = ()=>{
+    const handleCreatePost = ()=>{
         setIsCreateTweet((prev) => !prev);
         console.log(isCreateTweet)
     }
 
     const handleCreateTweet= async()=>{
-        if (newTweetContent.trim()) {
-            await createTweet({content:newTweetContent}); // Pass the content to createTweet
-            setNewTweetContent(''); // Clear the textarea after posting
-            setIsCreateTweet(false); // Optionally close the post form after submission
+        if(isEditTweet && currentTweet){
+            if (newTweetContent.trim()) {
+                await updateTweet(currentTweet?._id,{content: newTweetContent});    
+                // console.log(newTweetContent);            
+                setNewTweetContent(''); // Clear the textarea after posting
+                setIsCreateTweet(false); // Optionally close the post form after submission
+                setCurrentTweet(null);
+                setIsEditTweet(false);
+            }
         }
+        else{
+            if (newTweetContent.trim()) {
+                await createTweet({content:newTweetContent}); // Pass the content to createTweet
+                setNewTweetContent(''); // Clear the textarea after posting
+                setIsCreateTweet(false); // Optionally close the post form after submission
+            }
+        }
+    }
+
+    const handleEditTweet = (tweet)=>{
+        setIsEditTweet(true);
+        setCurrentTweet(tweet)
+        setNewTweetContent(tweet.content); // Populate the textarea with the current tweet content
     }
     return (
         <>
@@ -58,13 +79,35 @@ function Community() {
                     <div className='communityPostContainer' key={tweet?._id}>
                         <div className='communityPostContainer1'>
                             <div className='communityPostContainer11'>
-                                <img 
-                                    className='communityPostContainer111' 
-                                    src={subscribedChannel?.avatar}
-                                    alt="" 
-                                />
+                                <div className='communityPostContainer111'>
+                                    <img 
+                                        className='communityPostContainer1111' 
+                                        src={subscribedChannel?.avatar}
+                                        alt="" 
+                                    />
+                                </div>
+                                <p className='communityPostContainer112'>{subscribedChannel?.username}</p>
                             </div>
-                            <p className='communityPostContainer12'>{subscribedChannel?.username}</p>
+                            {subscribedChannel?._id === user?._id && (
+                                <div 
+                                    className='communityPostContainer12'
+                                    onClick={()=>handleEditTweet(tweet)}
+                                >
+                                    <FontAwesomeIcon 
+                                        icon={faEllipsisVertical} 
+                                        className='communityPostContainer121'
+                                        
+                                    />
+                                {isEditTweet && currentTweet?._id === tweet?._id && (
+                                    <button
+                                        className='communityPostContainer122'
+                                        onClick={handleCreatePost}
+                                    >
+                                        Edit
+                                    </button>
+                                )}
+                            </div>
+                        )}
                         </div>
                         <div className='communityPostContainer2'>
                             <p>{tweet?.content}</p>
@@ -83,17 +126,17 @@ function Community() {
                     </div>
                 ))}
             </div>
-            <button 
+            {subscribedChannel?._id === user?._id && (<button 
                 className='mainContainer1'
-                onClick={handleCretePost}
+                onClick={handleCreatePost}
             >
                 <FontAwesomeIcon 
                     icon={faPlus} 
                     className='mainContainer11'
                 />
-            </button>
+            </button>)}
         </div>
-        {isCreateTweet &&(
+        {isCreateTweet &&  (
             <div className='commnityPost'>
                 <div className='userCommunityContainer'>
                     <div className='tweetContainer'>

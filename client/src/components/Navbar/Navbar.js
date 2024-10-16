@@ -29,8 +29,8 @@ function Navbar() {
             }
         }
         fetchData();
-    },[subscriberId])
-
+    },[subscriberId ])
+    console.log(subscribedChannels)
     const handleLinkToCommunity = (subscribedChannel)=>{
         navigate(`/community/${subscribedChannel?._id}`, { 
             state: { subscribedChannel } 
@@ -96,7 +96,7 @@ function Navbar() {
                 </Link>
             </div>
             <div className="sidebar-divider"></div>
-            <div className="sidebar-section">
+            <div className="sidebar-section pb-12">
                 <div className="sidebar-header">Communities</div>
                 {subscribedChannels?.map((subscribedChannel)=>(
                     <div 

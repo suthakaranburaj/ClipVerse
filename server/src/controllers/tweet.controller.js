@@ -69,6 +69,7 @@ const updateTweet = asyncHandler(async (req, res) => {
     //save it in database
     
     const {content} = req.body;
+    // console.log(content);
     if(!content){
         return res
         .status(400)

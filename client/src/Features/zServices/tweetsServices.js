@@ -36,11 +36,12 @@ const getUserTweetsServices = async(userId) =>{
     }
 };
 
-const updateTweetServices = async(tweetId,tweeData)=>{
+const updateTweetServices = async(tweetId,content)=>{
     try {
-        const response = await axios.post(`${BACKEND_URL}/${tweetId}`,tweeData,{
+        const response = await axios.patch(`${BACKEND_URL}/${tweetId}`,content,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json',
             },
             withCredentials: true,
         });
