@@ -55,18 +55,18 @@ function HomePage() {
     if (videoStoreError) return <div>Error loading videos</div>;
 
     return (
-        <div className='HomePageContainer pl-2'>
-            <div className="headball flex space-x-4 py-2 overflow-x-auto text-xs font-bold fixed b w-full">
-                <button className="live-recommend-btn text-white py-2 px-3 rounded-lg">All</button>
-                <button className="recommend-btn text-white py-2 px-3 rounded-lg">Web Development</button>
-                <button className="recommend-btn text-white py-2 px-3 rounded-lg">Startup Company</button>
+        <div className='HomePageContainer'>
+            <div className="headball">
+                <button className="live-recommend-btn">All</button>
+                <button className="recommend-btn">Web Development</button>
+                <button className="recommend-btn">Startup Company</button>
                 {/* Other buttons */}
             </div>
             <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-3 mt-16' : 'main-box flex text-white flex-wrap gap-6 mt-16'}`}>
                 {Array.isArray(videos) && videos
                 .filter(video => video?.isPublished)
                 .map((video, index) => (
-                    <Link to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} key={video?._id} className='box relative pb-10'>
+                    <Link to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} key={video?._id} className='box'>
                         <div 
                             onMouseEnter={() => handleMouseEnter(index)} 
                             onMouseLeave={() => handleMouseLeave(index)}
@@ -75,7 +75,7 @@ function HomePage() {
                             <div className='thumbnailContainer'>
                                 <video
                                     ref={(el) => videoRefs.current[index] = el} // Assign video ref
-                                    className='vid absolute top-0 left-0'
+                                    className='vid'
                                     src={video?.videoFile}
                                     loop
                                     preload="auto"
@@ -87,12 +87,12 @@ function HomePage() {
                                     alt={video?.title}
                                 />
                             </div>
-                            <div className='flex my-3'>
+                            <div className='channelContainer flex my-3'>
                                 <img
-                                    className='w-[36px] h-[36px] rounded-full mx-2'
+                                    className='channelContainer1 w-[36px] h-[36px] rounded-full mx-2'
                                     src={video?.owner?.avatar || ''}
                                 />
-                                <div className='flex-col'>
+                                <div className='channelContainer2'>
                                     <p className='description'>{video?.title}</p>
                                     <p className='userChannel'>{video?.owner?.username}</p>
                                     <div className='flex'>

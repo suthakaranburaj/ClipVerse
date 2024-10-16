@@ -18,6 +18,22 @@
       background-color: $background-color;
       overflow-y: auto; // Enables vertical scrolling
       max-height: 35vh; // Adjust this value to limit height and trigger scrolling
+        // Add smooth scrolling
+      scroll-behavior: smooth;
+
+      // Custom scrollbar styles
+      &::-webkit-scrollbar {
+        width: 8px; // Width of the scrollbar
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: $secondary-color; // Color of the scrollbar thumb
+        border-radius: 4px; // Roundness of the scrollbar thumb
+      }
+      
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: rgb(95, 8, 8); // Change color on hover
+      }
       
       .sidebar-header {
         font-size: $base-font-size;
@@ -31,12 +47,13 @@
         display: flex;
         align-items: center;
         padding: 10px;
+        margin: 4px 0 0 0 ;
         border-radius: 10px;
         cursor: pointer;
         transition:  0.2s ease;
         background-color: transparent;
         &:hover {
-          background-color: $hover-bg-color;
+          background-color: $secondary-color;
         }
         .sidebar-icon {
           color: $text-color;
@@ -53,7 +70,7 @@
         }
   
         &.active {
-          background-color: $hover-bg-color;
+          background-color: $secondary-color;
           border-radius: 10px;
         }
   

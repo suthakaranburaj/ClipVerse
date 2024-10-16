@@ -89,7 +89,7 @@ function WatchVideo() {
     useEffect(() => {
         const fetchData =async()=>{
             if (videoId) {
-                // await userWatchHistory(videoId);
+                await userWatchHistory(videoId);
                 await getVideoById(videoId);
                 await incrementVideoViews(videoId);
                 await getVideoComments(videoId);
