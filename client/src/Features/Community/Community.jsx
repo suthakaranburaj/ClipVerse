@@ -20,7 +20,7 @@ function Community() {
     // console.log(location)
 
     // console.log(subscribedChannel);
-    const {getUserTweets, userTweets, createTweet, updateTweet} = useTweetStore();
+    const {getUserTweets, userTweets, createTweet, updateTweet, deleteTweet} = useTweetStore();
     const [isCreateTweet, setIsCreateTweet] = useState(false);
     const [newTweetContent, setNewTweetContent] = useState('');
     const [isEditTweet , setIsEditTweet] = useState(false);
@@ -35,7 +35,7 @@ function Community() {
             // console.log(userTweets)
         }
         fetchData();
-    },[subscribedChannel?._id])
+    },[subscribedChannel?._id,currentTweet])
     // console.log(userTweets)
 
     const handleCreatePost = ()=>{
@@ -68,6 +68,12 @@ function Community() {
         setCurrentTweet(tweet)
         setNewTweetContent(tweet.content); // Populate the textarea with the current tweet content
     }
+
+    const handleDeleteTweet = async()=>{
+        await deleteTweet(currentTweet?._id);
+        setCurrentTweet(null);
+        setIsEditTweet(false);
+    }
     return (
         <>
         <div className='communityContianer'>
@@ -99,12 +105,20 @@ function Community() {
                                         
                                     />
                                 {isEditTweet && currentTweet?._id === tweet?._id && (
-                                    <button
-                                        className='communityPostContainer122'
-                                        onClick={handleCreatePost}
-                                    >
-                                        Edit
-                                    </button>
+                                    <div className='communityPostContainer122'>
+                                        <button
+                                            className='communityPostContainer1221'
+                                            onClick={handleCreatePost}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className='communityPostContainer1222'
+                                            onClick={handleDeleteTweet}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         )}

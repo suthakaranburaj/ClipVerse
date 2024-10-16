@@ -4,6 +4,7 @@ import
     getUserTweetsServices,
     createTweetServices,
     updateTweetServices,
+    deleteTweetServices,
     } from '../Features/zServices/tweetsServices'
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
@@ -68,6 +69,23 @@ const useTweetStore = create((set)=>({
             set({
                 isLoading:false,
                 error:error.response?.message?.data || "Failed to update tweet !!"
+            })
+        }
+    },
+
+    deleteTweet : async(tweetId)=>{
+        set({isLoading:true,error:null})
+        try {
+            const response = await deleteTweetServices(tweetId);
+            set({
+                isLoading:false,
+                error:null,
+            })
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to delete tweet !!",
             })
         }
     }
