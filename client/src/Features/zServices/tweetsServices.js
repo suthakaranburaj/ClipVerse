@@ -7,9 +7,9 @@ const getToken = () => {
     return accessToken; // Adjust based on how you store the token
 };
 
-const createTweetServices = async(tweetData) =>{
+const createTweetServices = async(content) =>{
     try {
-        const response = await axios.post(`${BACKEND_URL}`,tweetData,{
+        const response = await axios.post(`${BACKEND_URL}`,content,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
             },

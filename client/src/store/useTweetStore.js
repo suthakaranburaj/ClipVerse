@@ -1,8 +1,10 @@
 import { create } from "zustand";
 import 
     {
-    getUserTweetsServices
+    getUserTweetsServices,
+    createTweetServices,
     } from '../Features/zServices/tweetsServices'
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 
 const useTweetStore = create((set)=>({
@@ -25,6 +27,24 @@ const useTweetStore = create((set)=>({
             set({
                 isLoading:false, 
                 error:error.response?.message?.data || "Failed to fetch user tweets"
+            })
+        }
+    },
+
+    createTweet: async(content)=>{
+        set({isLoading:true,error:null});
+        try {
+            const response = await createTweetServices(content);
+            const newTweet = response.data.data.tweet
+            set((state)=>({
+                isLoading:false,
+                error:null,
+                userTweets:[newTweet,...state.userTweets]
+            }))
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to create Tweet",
             })
         }
     }
