@@ -4,8 +4,12 @@ import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { CgPlayList, CgProfile } from "react-icons/cg";
 import { RiVideoLine, RiPlayListLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useStore from '../../store/userStore';
+import { useState, useEffect } from "react";
+
+
+import useSubscriptionStore from "../../store/useSubscriptionStore";
 
 import './Navbar.scss';
 
@@ -13,6 +17,25 @@ function Navbar() {
 
     const {user} = useStore();
     const channelId = user?._id;
+    const navigate = useNavigate();
+
+    const {getSubscribedChannels,subscribedChannels} = useSubscriptionStore();
+    const subscriberId = user?._id;
+
+    useEffect(()=>{
+        const fetchData = async()=>{
+            if(subscriberId){
+                await getSubscribedChannels(subscriberId);
+            }
+        }
+        fetchData();
+    },[subscriberId])
+
+    const handleLinkToCommunity = (subscribedChannel)=>{
+        navigate(`/community/${subscribedChannel?._id}`, { 
+            state: { subscribedChannel } 
+        });
+    }
     return (
         <div className="sidebar">
             <div className="sidebar-section">
@@ -57,14 +80,14 @@ function Navbar() {
                         Playlists                    
                     </Link>
                 </div>
-                <div className="sidebar-item">
+                {/* <div className="sidebar-item">
                     <RiVideoLine className="sidebar-icon" size={24} />
                     <span className="sidebar-label">Your videos</span>
-                </div>
-                <div className="sidebar-item">
+                </div> */}
+                {/* <div className="sidebar-item">
                     <RiPlayListLine className="sidebar-icon" size={24} />
                     <span className="sidebar-label">Watch later</span>
-                </div>
+                </div> */}
                 <Link to='likedvideos'>
                     <div className="sidebar-item">
                         <FaRegThumbsUp className="sidebar-icon" size={24} />
@@ -74,23 +97,21 @@ function Navbar() {
             </div>
             <div className="sidebar-divider"></div>
             <div className="sidebar-section">
-                <div className="sidebar-header">Subscriptions</div>
-                <div className="sidebar-item">
-                    <img
-                        src="/path-to-profile-image1.jpg"
-                        alt="Profile 1"
-                        className="profile-img"
-                    />
-                    <span className="sidebar-label">SR PAY</span>
-                </div>
-                <div className="sidebar-item">
-                    <img
-                        src="/path-to-profile-image4.jpg"
-                        alt="Profile 4"
-                        className="profile-img"
-                    />
-                    <span className="sidebar-label">Joe Rogan</span>
-                </div>
+                <div className="sidebar-header">Communities</div>
+                {subscribedChannels?.map((subscribedChannel)=>(
+                    <div 
+                        className="sidebar-item" 
+                        key={subscribedChannel?._id}
+                        onClick={()=>handleLinkToCommunity(subscribedChannel)}
+                    >
+                        <img
+                            src={subscribedChannel?.avatar}
+                            alt="Profile 1"
+                            className="profile-img"
+                        />
+                        <span className="sidebar-label">{subscribedChannel.username}</span>
+                    </div>
+                ))}
             </div>
         </div>
   );

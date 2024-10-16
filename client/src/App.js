@@ -15,6 +15,7 @@ import UserVideos from "./Features/UserChannel/UserVideos/UserVideos";
 import UserLive from "./Features/UserChannel/UserLive/UserLive";
 import LikedVideos from "./Features/LikedVideos/LikedVideos";
 import ViewPlaylist from "./Features/UserChannel/UserPlaylist/ViewPlaylist/ViewPlaylist";
+import Community from "./Features/Community/Community";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
                 <Route path='subscription' element={<Subscriptions />} />
                 <Route path='/watch-history' element={<WatchHistory/>}/>
                 <Route path='watchvideo' element={<WatchVideo />} />
+                <Route path='/community/:channelId' element={<Community />} />
             </Route>
             
         </>

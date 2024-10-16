@@ -16,6 +16,9 @@
       display: flex;
       flex-direction: column;
       background-color: $background-color;
+      overflow-y: auto; // Enables vertical scrolling
+      max-height: 35vh; // Adjust this value to limit height and trigger scrolling
+      
       .sidebar-header {
         font-size: $base-font-size;
         font-weight: bold;

@@ -23,6 +23,7 @@ const createTweetServices = async(tweetData) =>{
 
 const getUserTweetsServices = async(userId) =>{
     try {
+        // console.log(userId)
         const response = await axios.get(`${BACKEND_URL}/user/${userId}`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`,
