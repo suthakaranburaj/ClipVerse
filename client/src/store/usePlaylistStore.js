@@ -1,5 +1,13 @@
 import { create } from "zustand";
-import {getUserPlaylistsServices, createPlaylistServices, getPlaylistByIdServices} from '../Features/zServices/playlistServices'
+import  {
+            getUserPlaylistsServices,
+            createPlaylistServices, 
+            getPlaylistByIdServices,
+            deletePlaylistServices,
+            removeVideoFromPlaylistServices,
+            updatePlaylistServices,
+            addVideosToPlaylistServices,
+        } from '../Features/zServices/playlistServices'
 
 const usePlaylistStore = create((set)=>({
     userPlaylists:[],
@@ -17,8 +25,8 @@ const usePlaylistStore = create((set)=>({
                 error:null,
                 userPlaylists:response.data.data,
             })
-            console.log(response.data.data)
-            console.log(response.data)
+            // console.log(response.data.data)
+            // console.log(response.data)
         } catch (error) {
             set({
                 isLoading:false,
@@ -67,6 +75,76 @@ const usePlaylistStore = create((set)=>({
             set({
                 isLoading:false,
                 error:error.response?.data?.message || "failed to fetch the playlist !!"
+            })
+        }
+    },
+
+    deletePlaylist : async(playlistId)=>{
+        set({isLoading:true,error:null});
+        try {
+            await deletePlaylistServices(playlistId);
+            set({
+                isLoading:false,
+                error:null,
+            })
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data,
+            })
+        }
+    },
+
+    removeVideoFromPlaylist : async(videoId,playlistId)=>{
+        set({isLoading:true,error:null});
+        try {
+            // console.log("Video ID:", videoId);
+            // console.log("Playlist ID:", playlistId);
+
+            await removeVideoFromPlaylistServices(videoId,playlistId)
+            set({
+                isLoading:false,
+                error:null
+            })
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data,
+            })
+        }
+    },
+
+    updatePlaylist : async(playlistId,{name , description})=>{
+        set({isLoading:true,error:null})
+        try {
+            const response = await updatePlaylistServices(playlistId,{name , description});
+            // const updatedPlaylist = response.data.data
+            set({
+                isLoading:false,
+                error:null,
+            })
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to update Playlist"
+            })
+        }
+    },
+
+    addVideosToPlaylist: async(playlistId,{videoIds})=>{
+        set({isLoading:true,error:null});
+        try {
+            const response = await addVideosToPlaylistServices(playlistId,{videoIds});
+            set({
+                isLoading:false,
+                error:null,
+            })
+            return response;
+        } catch (error) {
+            set({
+                isLoading:false,
+                error:error.response?.message?.data || "Failed to add videos to the playlist !!"
             })
         }
     }

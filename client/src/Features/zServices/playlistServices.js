@@ -52,9 +52,10 @@ const getPlaylistByIdServices = async(playlistId) =>{
     }
 };
 
-const addVideoToPlaylistServices = async(playlistId,videoId)=>{
+
+const addVideoToPlaylistServices = async(videoId,playlistId)=>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/add/${videoId}/${playlistId}`,{
+        const response = await axios.patch(`${BACKEND_URL}/add/${videoId}/${playlistId}`,{},{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },
@@ -68,7 +69,10 @@ const addVideoToPlaylistServices = async(playlistId,videoId)=>{
 
 const removeVideoFromPlaylistServices = async(videoId,playlistId) =>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/remove/${videoId}/${playlistId}`,{
+        // console.log("Video ID:", videoId);
+        // console.log("Playlist ID:", playlistId);
+
+        const response = await axios.patch(`${BACKEND_URL}/remove/${videoId}/${playlistId}`,{},{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },
@@ -94,9 +98,9 @@ const deletePlaylistServices = async(playlistId) =>{
     }
 };
 
-const updatePlaylistServices = async(playlistId)=>{
+const updatePlaylistServices = async(playlistId,{name, description})=>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/${playlistId}`,{
+        const response = await axios.patch(`${BACKEND_URL}/${playlistId}`,{name , description},{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },
@@ -108,6 +112,18 @@ const updatePlaylistServices = async(playlistId)=>{
     }
 };
 
+const addVideosToPlaylistServices = async(playlistId,{videoIds})=>{
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/${playlistId}/add/videos`,{videoIds},{
+            headers:{
+                Authorization:`Bearer ${getToken()}`
+            },
+            withCredentials:true,
+        });
+    } catch (error) {
+        throw(error);
+    }
+}
 export {
     createPlaylistServices,
     getUserPlaylistsServices,
@@ -116,4 +132,5 @@ export {
     removeVideoFromPlaylistServices,
     deletePlaylistServices,
     updatePlaylistServices,
+    addVideosToPlaylistServices,
 }
