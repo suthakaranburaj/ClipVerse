@@ -12,7 +12,9 @@ const createTweet = asyncHandler(async (req, res) => {
     //3.return res
     const {content} = req.body;
     if(!content){
-        throw new ApiError(400,"Content is required");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Content is required"));
     }
 
     const newTweet = await Tweet.create({
@@ -37,12 +39,16 @@ const getUserTweets = asyncHandler(async (req, res) => {
 
     const {userId} = req.params;
     if(!userId){
-        throw new ApiError(400,"User Id not found!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id not found!"));
     }
 
     const user = await User.findById(userId);
     if(!user){
-        throw new ApiError(400,"User not found!");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User not found!"));
     }
 
     const tweets = await Tweet.find({owner:userId});
@@ -63,23 +69,32 @@ const updateTweet = asyncHandler(async (req, res) => {
     //save it in database
     
     const {content} = req.body;
+    // console.log(content);
     if(!content){
-        throw new ApiError(400,"Content is required");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Content is required"));
     }
 
     const {tweetId} = req.params;
     if(!tweetId){
-        throw new ApiError(400,"Tweet Id not found")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Tweet Id not found"));
     }
 
     const tweet = await Tweet.findById(tweetId);
     if(!tweet){
-        throw new ApiError(400,"Tweet not found")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Tweet not found"));
     }
 
     const userId = await User.findById(tweet.owner);
     if(!userId){
-        throw new ApiError(404,"User not found");
+        return res
+        .status(404)
+        .json( new ApiError(404,"User not found"));
     }
 
     tweet.content=content;
@@ -103,16 +118,22 @@ const deleteTweet = asyncHandler(async (req, res) => {
 
     const {tweetId} = req.params;
     if(!tweetId){
-        throw new ApiError(400,"TweetId is not found")
+        return res
+        .status(400)
+        .json( new ApiError(400,"TweetId is not found"));
     }
 
     const tweet = await Tweet.findById(tweetId);
     if(!tweet){
-        throw new ApiError(400,"Tweet not found");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Tweet not found"));
     }
 
     if(req.user._id.toString() !== tweet.owner.toString()){
-        throw new ApiError(404,"Unautherized to delete this Tweet")
+        return res
+        .status(404)
+        .json( new ApiError(404,"Unautherized to delete this Tweet"));
     }
 
     await Tweet.findByIdAndDelete(tweetId);

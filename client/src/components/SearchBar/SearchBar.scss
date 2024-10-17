@@ -1,12 +1,13 @@
-.cont {
+@import '../../index.scss';
+.containerSearchBar {
     height: 56px;
     display: flex;
     justify-content: space-between;
     padding-left: 1rem;
     padding-right: 1.25rem;
     align-items: center;
-    background-color: #121212;
     color: white;
+    background-color: $background-color;
 }
 
 .icon-large {
@@ -26,12 +27,12 @@
     justify-content: space-between;
     align-items: center;
     width: 65%;
+    background-color: $background-color;
 
     .search-bar {
         display: flex;
         align-items: center;
         height: 40px;
-        background-color: #121212;
         border-radius: 40px;
         border: 1px solid #323232;
         padding: 5px;
@@ -49,7 +50,6 @@
     }
 
     .search-button {
-        background-color: #323232;
         padding: 10px;
         height: 40px;
         border-bottom-right-radius: 40%;
@@ -64,16 +64,18 @@
         padding: 10px;
         margin-left: 10px;
         cursor: pointer;
+        background-color: $background-color;
     }
 }
 
 .profile-section {
     display: flex;
     align-items: center;
+    background-color: $background-color;
 }
 
 .login-button, .logout-button {
-    background-color: #323232;
+    background-color:$button-color ;
     border-radius: 20px;
     padding: 0 1rem;
     margin-right: 1.25rem;
@@ -91,7 +93,7 @@
 }
 
 .dropdown-menu {
-    background-color: #323232;
+    background-color: $background-color;
     border-radius: 0.25rem;
     padding: 0.5rem;
     position: absolute;
@@ -114,7 +116,7 @@
     padding: 0.5rem;
     cursor: pointer;
     &:hover {
-        background-color: #505050;
+        background-color: $hover-bg-color;
     }
 }
 

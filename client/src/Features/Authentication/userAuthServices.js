@@ -17,6 +17,7 @@ const registerUser = async(formData) => {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
+            withCredentials: true,
         });        
         return response;
     } catch (error) {
@@ -62,6 +63,8 @@ const updateUserAvatar = async(formData) => {
         throw error; // Re-throw the error for further handling
     }
 }
+
+
 
 
 export {

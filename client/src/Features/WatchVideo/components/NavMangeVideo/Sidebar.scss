@@ -1,0 +1,204 @@
+.Man-sidebar {
+    width: 240px;
+    padding: 1rem;
+    background-color: #0f0f0f;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    
+    .Man-sidebar-divider {
+      width: 100%;
+      height: 1px;
+      background-color: #333;
+      margin: 1rem 0;
+    }
+    .Profile-sidebar-section{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 25%;
+      
+      align-items: center;
+      .image{
+        width: 100px;
+        height: 100px;
+      }
+      .label{
+        background-color: transparent;
+      }
+    }
+    .sidebar-divider {
+      width: 100%;
+      height: 1px;
+      background-color: #fff;
+      margin: 0.5rem 0;
+     
+    }
+    .Option-sidebar-section{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 50%;
+  
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        width: 8px; /* Set width of the scrollbar */
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background-color: #888; /* Color of the scrollbar thumb */
+        border-radius: 10px; /* Rounded edges for a more polished look */
+        border: 2px solid transparent; /* Space around the thumb */
+      }
+    
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: #555; /* Color when hovering */
+      }
+    
+      &::-webkit-scrollbar-track {
+        background-color: #1e1e1e; /* Color of the track */
+        border-radius: 10px; /* Match thumb border-radius */
+      }
+      
+      .Man-sidebar-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:  0.2s ease;
+        background-color: transparent;
+        
+  
+        &:hover {
+          background-color: #333;
+        }
+  
+        .Man-sidebar-icon {
+          color: #ffffff;
+          margin-right: 10px;
+          background-color: transparent;
+        }
+  
+        .Man-sidebar-label {
+          font-size: 14px;
+          font-weight: 500;
+          color: #ffffff;
+          background-color: transparent;
+        }
+  
+        &.active {
+          background-color: #333;
+          border-radius: 10px;
+        }
+  
+        .profile-img {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+      }
+      
+    }
+    .help-sidebar-section{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 20%;
+      
+      .Man-sidebar-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:  0.2s ease;
+        background-color: transparent;
+        
+  
+        &:hover {
+          background-color: #333;
+        }
+  
+        .Man-sidebar-icon {
+          color: #ffffff;
+          margin-right: 10px;
+          background-color: transparent;
+        }
+  
+        .Man-sidebar-label {
+          font-size: 14px;
+          font-weight: 500;
+          color: #ffffff;
+          background-color: transparent;
+        }
+  
+        &.active {
+          background-color: #333;
+          border-radius: 10px;
+        }
+  
+        .profile-img {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+      }
+
+    }
+    .Man-sidebar-section {
+      display: flex;
+      flex-direction: column;
+      
+     
+  
+      .Man-sidebar-header {
+        font-size: 14px;
+        font-weight: bold;
+        color: #aaaaaa;
+        margin: 1rem 0;
+      }
+  
+      .Man-sidebar-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:  0.2s ease;
+        background-color: transparent;
+  
+        &:hover {
+          background-color: #333;
+        }
+  
+        .Man-sidebar-icon {
+          color: #ffffff;
+          margin-right: 10px;
+          background-color: transparent;
+        }
+  
+        .Man-sidebar-label {
+          font-size: 14px;
+          font-weight: 500;
+          color: #ffffff;
+          background-color: transparent;
+        }
+  
+        &.active {
+          background-color: #333;
+          border-radius: 10px;
+        }
+  
+        .profile-img {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  

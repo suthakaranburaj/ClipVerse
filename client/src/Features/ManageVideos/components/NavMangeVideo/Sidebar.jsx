@@ -18,8 +18,8 @@ function Sidebar() {
           className="image rounded-full bg-green-600 mr-5 mb-5 flex items-center justify-center text-white font-bold cursor-pointer"
 
         />
-        <div className="label">{isAuthenticated && user?.fullName ? user.fullName : "Name"}</div>
-        <div className="label">{isAuthenticated && user?.username ? user.username : "Username"}</div>
+        <div className="label">{isAuthenticated && user?.fullName ? user?.fullName : "Name"}</div>
+        <div className="label">{isAuthenticated && user?.username ? user?.username : "Username"}</div>
       </div>
       <div className="Option-sidebar-section">
         <div className="Man-sidebar-item" onClick={() => setDisplayer('dashboard')}>
@@ -34,11 +34,11 @@ function Sidebar() {
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Analytics</span>
         </div>
-        <div className="Man-sidebar-item">
+        <div className="Man-sidebar-item" onClick={() => setDisplayer('comments')}>
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Comments</span>
         </div>
-        <div className="Man-sidebar-item">
+        <div className="Man-sidebar-item" onClick={()=> setDisplayer('subscription')}>
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Subtitle</span>
         </div>

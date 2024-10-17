@@ -5,6 +5,7 @@ import { Like } from "../models/like.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
+import { Comment } from "../models/comment.model.js"
 
 const getChannelStats = asyncHandler(async (req, res) => {
 
@@ -18,7 +19,9 @@ const getChannelStats = asyncHandler(async (req, res) => {
 
     const userId = req.user._id;
     if (!userId) {
-        throw new ApiError(400, "User id not found !!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "User id not found !!"));
     }
 
     const userVideos = await Video.find({ owner: userId });
@@ -31,12 +34,18 @@ const getChannelStats = asyncHandler(async (req, res) => {
     const totalVideos = userVideos.length;
     const totalVideoViews = userVideos.reduce((sum, video) => sum + video.views,0);
 
-    const totalSubs = await Subscription.find({ channel: userId });
-    const totalSubCount = totalSubs.length;
+    const totalSubscribers = await Subscription.find({ channel: userId });
+    const totalSubscribersCount = totalSubscribers.length;
 
     const totalLikes = await Like.find({ video: userVideos._id });
     const totalLikesCount = totalLikes.length;
-    // const totalComments = await Comment.find({ video: userVideos[0]._id });
+
+    const videoIds = userVideos.map(video => video._id);
+    const totalComments = await Comment.countDocuments({ video: { $in: videoIds } });
+    const comments = await Comment.find({ video: { $in: videoIds } })
+        .populate("owner", "name") // Populate owner details (e.g., user's name)
+        .populate("video", "title") // Populate video details (e.g., video's title)
+        .sort({ createdAt: -1 }); // Sort comments by latest first
 
     return res
         .status(200)
@@ -45,9 +54,12 @@ const getChannelStats = asyncHandler(async (req, res) => {
             {
                 totalVideos,
                 totalVideoViews,
-                totalSubCount,
+                userVideos,
+                totalSubscribersCount,
+                totalSubscribers,
                 totalLikesCount,
-                // totalComments
+                totalComments,
+                comments,
             },
             "User Stats fetched successfully"
         ));

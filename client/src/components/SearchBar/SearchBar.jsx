@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch, faMicrophone } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ import image1 from '../../assets/profile_pic.webp';
 
 function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); 
-    const { user, isAuthenticated, logout } = useStore();
+    const { user, isAuthenticated, logout ,register} = useStore();
 
     const [isDropdownVisible, setDropdownVisible] = useState(false); 
 
@@ -31,8 +31,18 @@ function SearchBar() {
         setDropdownVisible(prev => !prev);
     };
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            const fetchData = async () => {
+                await user;
+            };
+            fetchData();
+        }
+    }, [user, isAuthenticated]);
+    
+
     return (
-        <div className="cont">
+        <div className="containerSearchBar">
             <div>
                 <FontAwesomeIcon
                     className='icon-large'

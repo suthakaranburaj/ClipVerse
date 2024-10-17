@@ -8,8 +8,7 @@ import { uploadOnCloudinary,deleteOnCloudinary } from "../utils/cloudinary.js"
 
 
 const getAllVideos = asyncHandler(async (req, res) => {
-    const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query
-    
+    const { page = 1, limit = 20, query, sortBy, sortType, userId } = req.query
     //TODO: get all videos based on query, sort, pagination
     let filter = {};
     // console.log(req.query);
@@ -41,7 +40,8 @@ const getAllVideos = asyncHandler(async (req, res) => {
     const videos = await Video.find(filter)
         .sort(sortOptions)   // Sort the videos
         .skip(skip)          // Skip the previous videos for pagination
-        .limit(videoLimit);   // Limit the number of videos returned
+        .limit(videoLimit)   // Limit the number of videos returned
+        .populate('owner', 'avatar username');
 
     // 7. Get the total count of videos that match the filter for pagination metadata
     const totalVideos = await Video.countDocuments(filter);
@@ -61,28 +61,25 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     const { title, description, isPublished } = req.body;
 
-    let categories = req.body.categories;
-    if (typeof categories === 'string') {
-        try {
-            categories = JSON.parse(categories);
-        } catch (error) {
-            throw new ApiError(400, "Invalid format for categories");
-        }
-    }
 
-
-    if (!title || !description || !categories.length === 0 || !isPublished) {
-        throw new ApiError(400, "All fields are required!");
+    if (!title || !description || !isPublished) {
+        return res
+        .status(400)
+        .json( new ApiError(400, "All fields are required!"));
     }
 
     const videoPath = req.files?.videoFile?.[0]?.path; 
     const thumbnailPath = req.files?.thumbnail?.[0]?.path;
 
     if (!videoPath) {
-        throw new ApiError(400, "Video file not found!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video file not found!"));
     }
     if (!thumbnailPath) {
-        throw new ApiError(400, "Thumbnail file not found!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Thumbnail file not found!"));
     }
 
 
@@ -91,10 +88,14 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
 
     if (!video) {
-        throw new ApiError(400, "Failed to upload video!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Failed to upload video!"));
     }
     if (!thumbnail) {
-        throw new ApiError(400, "Failed to upload thumbnail!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Failed to upload thumbnail!"));
     }
 
 
@@ -106,7 +107,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
         thumbnail: thumbnail.url, 
         title,
         description,
-        categories,
+        // categories,
         isPublished,
         duration,
         owner: req.user?._id 
@@ -115,26 +116,27 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     await newVideo.save();
 
- 
     return res
         .status(200)
         .json(new ApiResponse(200, { video: newVideo }, "Video published successfully!")); // Return the new video object
 });
-
-
 
 const getVideoById = asyncHandler(async (req, res) => {
     const { videoId } = req.params
     //TODO: get video by id
 
     if (!videoId) {
-        throw new ApiError(400, "Video id required !!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video id required !!"));
     }
 
-    const video = await Video.findById(videoId); //yaha error hua tha which was Video.findById({videoId})
+    const video = await Video.findById(videoId).populate('owner', 'avatar fullName'); //yaha error hua tha which was Video.findById({videoId})
 
     if (!video) {
-        throw new ApiError(400, "Video not found !!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video not found !!"));
     }
 
     res
@@ -147,27 +149,35 @@ const getVideoById = asyncHandler(async (req, res) => {
 })
 
 const updateVideo = asyncHandler(async (req, res) => {
-    const { title, description, categories } = req.body;  // Change 'categorizes' to 'categories'
+    const { title, description,isPublished } = req.body;  // Change 'categorizes' to 'categories'
     const thumbnail = req.files?.thumbnail?.[0]?.path;
 
     const { videoId } = req.params;
     if (!videoId) {
-        throw new ApiError(400, "Video ID is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video ID is missing"));
     }
 
     const video = await Video.findById(videoId);
     if (!video) {
-        throw new ApiError(400, "Video not found");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video not found"));
     }
 
     const videoOwnerId = await User.findById(video.owner);
     if (!videoOwnerId) {
-        throw new ApiError(404, "User not found");
+        return res
+        .status(404)
+        .json( new ApiError(404, "User not found"));
     }
 
     // Check if the current user is the video owner
     if (req.user._id.toString() !== video.owner.toString()) {
-        throw new ApiError(403, "Unauthorized to update this video");
+        return res
+        .status(403)
+        .json( new ApiError(403, "Unauthorized to update this video"));
     }
 
     // Handle thumbnail update
@@ -181,17 +191,18 @@ const updateVideo = asyncHandler(async (req, res) => {
         video.thumbnail = uploadedThumbnail.secure_url;
     }
 
+    if(isPublished) video.isPublished = isPublished;
     // Update title if provided
     if (title) video.title = title;
 
     // Update description if provided
     if (description) video.description = description;
-    console.log(req.body.categories)
+    // console.log(req.body.categories)
     // Update categories if provided and validate
     // if (categories) {
     //     if (Array.isArray(categories) && categories.length <= 5) {
-    video.categories = categories;
-    console.log(video.categories)
+    // video.categories = categories;
+    // console.log(video.categories)
 
     await video.save();
 
@@ -203,20 +214,26 @@ const updateVideo = asyncHandler(async (req, res) => {
 });
 
 const deleteVideo = asyncHandler(async (req, res) => {
-    const { videoId } = req.params
+    const {videoId}  = req.params
     
     if(!videoId){
-        throw new ApiError(400,"Video Id is missing")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Video Id is missing"));
     }
 
     const video = await Video.findById(videoId);
 
     if(!video){
-        throw new ApiError(400,"Video not found");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Video not found"));
     }
 
     if (req.user._id.toString() !== video.owner.toString()) {
-        throw new ApiError(403, "Unauthorized to delete this video");
+        return res
+        .status(403)
+        .json( new ApiError(403, "Unauthorized to delete this video"));
     }
 
     if (video.videoFile) {
@@ -243,13 +260,17 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
 
     if (!videoId) {
-        throw new ApiError(400, "Video id not found !!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video id not found !!"));
     }
 
     const video = await Video.findById( videoId );  //yaha pe error hua
 
     if (!video) {
-        throw new ApiError(400, "Video not found !!");
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video not found !!"));
     }
 
     const status = video.isPublished ? false : true;
@@ -264,11 +285,71 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
 
 })
 
+const addUserWatchHistoryand = asyncHandler(async ( req,res)=>{
+    const {videoId} = req.params;
+    const userId = req.user?._id;
+
+    if(!videoId){
+        throw ApiError(400,"Video Id is missing !!")
+    }
+    if(!userId){
+        throw ApiError(400,"User Id is missing !!")
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+            $addToSet: { watchHistory: videoId },  // Ensure the video is not added multiple times
+        },
+        { new: true }
+    ).populate({
+        path: 'watchHistory',
+        populate: {
+            path: 'owner',
+            select: 'fullName username avatar',
+        },
+    });
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,updatedUser.updatedUser.watchHistory,"Video added to Watch History successfully !!"))
+
+})
+
+const increamentViews = asyncHandler(async (req, res) => {
+    const { videoId } = req.params; // Extract the videoId from params
+    if (!videoId) {
+        return res
+        .status(400)
+        .json( new ApiError(400, "Video Id is missing !!"));
+    }
+
+    const video = await Video.findByIdAndUpdate(
+        videoId,
+        { $inc: { views: 1 } }, // Increment views by 1
+        { new: true } // Return the updated document
+    );
+    // console.log("Hellow")
+
+    if (!video) {
+        return res
+            .status(404)
+            .json(new ApiError(404, "Video not found !!"));
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, "Views of the video incremented successfully !!"));
+});
+
+
 export {
     getAllVideos,
     publishAVideo,
     getVideoById,
     updateVideo,
     deleteVideo,
-    togglePublishStatus
+    togglePublishStatus,
+    addUserWatchHistoryand,
+    increamentViews,
 }

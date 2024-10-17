@@ -1,0 +1,82 @@
+@import '../../index.scss';
+
+.LikedVideosContainer {
+    background-color: $background-color;
+    color: $text-color;
+    padding: 20px;
+
+.videoContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .videoContainer1 {
+    display: flex;
+    gap: 15px;
+    background-color: $hover-bg-color;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $secondary-color;
+    }
+
+    .videoContainer11 {
+        img {
+        width: 120px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        }
+    }
+
+    .videoContainer12 {
+        display: flex;
+        gap: 10px;
+
+        .videoContainer121 {
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        }
+
+        .videoContainer122 {
+        display: flex;
+        flex-direction: column;
+
+        .videoContainer1221 {
+            font-size: 16px;
+            font-weight: bold;
+            color: $text-color;
+            margin-bottom: 5px;
+        }
+
+        .videoContainer1222 {
+            font-size: 14px;
+            color: $secondary-text;
+            margin-bottom: 5px;
+        }
+
+        .videoContainer1223 {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            .views, .dot, .time {
+            font-size: 12px;
+            color: $secondary-text;
+            }
+
+            .dot {
+            font-weight: bold;
+            }
+        }
+        }
+    }
+    }
+}
+}

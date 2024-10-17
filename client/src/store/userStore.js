@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { loginUser, registerUser } from "../Features/Authentication/userAuthServices";
+import { loginUser, registerUser} from "../Features/Authentication/userAuthServices";
 
 // Get user data from localStorage if available
 const getStoredUser = () => {
@@ -21,6 +21,7 @@ const useStore = create((set) => ({
     error: null,
     isLoading: false,
     isAuthenticated: !!localStorage.getItem("user"),
+    watchHistory: [],
 
     login: async ({ username, email, password }) => {
         set(() => ({ isLoading: true, error: null }));
@@ -28,7 +29,9 @@ const useStore = create((set) => ({
         try {
             const response = await loginUser({ username, email, password });
             const userData = response.data.data.user;
-            console.log("response:::::::::",response);
+            const accessToken = response.data.data.accessToken;
+            // console.log(accessToken);
+            // console.log("response:::::::::",response);
 
             set({
                 user: userData,
@@ -38,11 +41,12 @@ const useStore = create((set) => ({
             });
 
             localStorage.setItem("user", JSON.stringify(userData));
+            localStorage.setItem("accessToken",accessToken)
         } catch (error) {
-            console.log("errorr::::::",error);
+            // console.log("errorr::::::",error.response.data.message);
             
             set(() => ({
-                error: error.message || 'Login failed',
+                error: error?.response?.data?.message || 'Login failed',
                 isAuthenticated: false,
                 isLoading: false
             }));
@@ -55,19 +59,19 @@ const useStore = create((set) => ({
 
         try {
             const response = await registerUser(formData);
-            // console.log("Registration response:", response);
+            const accessToken = response.data.data.accessToken;
             set({
-                user: response.data.data,
+                user: response.data.data.user,
                 isAuthenticated: true,
                 error: null,
             });
-
-            localStorage.setItem("user", JSON.stringify(response.data.user));
-            // console.log("User registered:", JSON.stringify(response.data.user));
-            // console.log("LocalStorage User:", localStorage.getItem("user"));
+            console.log(response.data)
+            console.log(response.data.data);
+            console.log(accessToken)
+            localStorage.setItem("user", JSON.stringify(response.data.data.user));
+            localStorage.setItem("accessToken",accessToken);
 
             set(() => ({ isLoading: false }));
-
 
         } catch (error) {
             set({
@@ -91,8 +95,11 @@ const useStore = create((set) => ({
             });
 
             localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
         } catch (error) {
-            console.error("Logout error: ", error);
+            set({
+                error: error?.response?.data?.message,
+            })
         }
     },
 

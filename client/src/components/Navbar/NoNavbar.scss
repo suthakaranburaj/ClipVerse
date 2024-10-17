@@ -1,8 +1,9 @@
+@import '../../index.scss';
 .sidebar2 {
     width: 100px;
     padding: 1rem;
-    background-color: #0f0f0f;
-    color: #fff;
+    background-color: $background-color;
+    color: $text-color;
     font-family: Arial, sans-serif;
   
   
@@ -15,7 +16,7 @@
       .sidebar2-header {
         font-size: 14px;
         font-weight: bold;
-        color: #aaaaaa;
+        color: $secondary-text;
         margin: 1rem 0;
       }
   
@@ -36,11 +37,11 @@
         transition: background-color 0.2s ease;
   
         &:hover {
-          background-color: #333;
+          background-color: $hover-bg-color;
         }
   
         .sidebar2-icon {
-          color: #ffffff;
+          color: $text-color;
           margin-right: 10px;
           background-color: transparent;
         }
@@ -49,11 +50,11 @@
           background-color: transparent;
           font-size: 10px;
           font-weight: 200;
-          color: #ffffff;
+          color: $text-color;
         }
   
         &.active {
-          background-color: #333;
+          background-color: $background-color;
           border-radius: 10px;
         }
   

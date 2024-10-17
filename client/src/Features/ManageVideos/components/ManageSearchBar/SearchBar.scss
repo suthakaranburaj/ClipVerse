@@ -1,4 +1,9 @@
-.nav-center {
+@import '../../../../index.scss';
+
+.cont {
+  background-color: $background-color ;
+
+  .nav-center {
     display: flex;
     align-items: center;
     flex-grow: 1;
@@ -28,8 +33,8 @@
       }
 
       .search-button {
-        background-color: #0f0f0f;
-        
+        background-color: transparent;
+
         padding: 10px;
         height: 40px;
         width: 10%;
@@ -38,7 +43,7 @@
         cursor: pointer;
         border: none;
         color: white;
-        
+
       }
     }
 
@@ -50,59 +55,66 @@
       color: white;
     }
   }
-  
 
-  .cont{
-   
+
+  .cont {
+
     height: 56px;
     display: flex;
     align-items: center;
-   background-color: #0f0f0f;
+    background-color: #0f0f0f;
+
     .icon-large {
-        font-size: 1.3rem; // Adjust size as needed
+      font-size: 1.3rem; // Adjust size as needed
     }
-    
-}
-.dropdown-menu {
-    
+
+  }
+
+  .dropdown-menu {
+
     border-radius: 0.25rem;
-    
+
     padding: 0.5rem;
-    z-index: 100;
+    z-index: 200;
     top: 0px;
     left: -770%;
-   
-}
-.dropdown-menu a, .dropdown-menu button {
+
+  }
+
+  .dropdown-menu a,
+  .dropdown-menu button {
     padding: 0.5rem 1rem;
     color: white;
     display: block;
-}
-.dropdown-menu a:hover, .dropdown-menu button:hover {
+  }
+
+  .dropdown-menu a:hover,
+  .dropdown-menu button:hover {
     background-color: #444;
-}
-.dropdown {
+  }
+
+  .dropdown {
     width: 300px;
     padding: 1rem;
     background-color: #323232;
     border-radius: 10px;
     color: #fff;
     font-family: Arial, sans-serif;
- 
+
     .dropdown-divider {
       width: 100%;
       height: 1px;
       background-color: #fff;
       margin: 0.5rem 0;
-     
+
     }
-  
+
     .dropdown-section {
       display: flex;
       flex-direction: column;
       background-color: transparent;
-      
-  
+
+
       .dropdown-item {
         background-color: #323232;
         display: flex;
@@ -111,38 +123,41 @@
         border-radius: 10px;
         cursor: pointer;
         transition: background-color 0.2s ease;
-  
+
         &:hover {
           background-color: #222222;
         }
-        .profile-details{
-            background-color: transparent;
+
+        .profile-details {
+          background-color: transparent;
         }
+
         .dropdown-icon {
           color: #ffffff;
           margin-right: 10px;
           background-color: transparent;
         }
-  
+
         .dropdown-label {
           font-size: 14px;
           font-weight: 500;
           color: #ffffff;
           background-color: transparent;
         }
-        .dropdown-label-link{
-            font-size: 14px;
+
+        .dropdown-label-link {
+          font-size: 14px;
           font-weight: 500;
           color: #4179ed;
-          text-decoration:underline;
+          text-decoration: underline;
           background-color: transparent;
         }
-        
+
         &.active {
           background-color: #333;
           border-radius: 10px;
         }
-  
+
         .profile-img {
           width: 28px;
           height: 28px;
@@ -152,4 +167,259 @@
       }
     }
   }
-  
+
+  .bttn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: $button-color;
+
+    .dropdown-icon {
+      margin-right: 10px;
+      background-color: transparent;
+    }
+  }
+
+  .dropdown-menu2 {
+
+    border-radius: 0.25rem;
+    background-color: transparent;
+    padding: 0.5rem;
+    z-index: 200;
+    top: 35px;
+    left: -85%;
+
+  }
+
+  .dropdown-menu a,
+  .dropdown-menu button {
+    padding: 0.5rem 1rem;
+    color: white;
+    display: block;
+  }
+
+  .dropdown-menu a:hover,
+  .dropdown-menu button:hover {
+    background-color: #444;
+  }
+
+  .dropdown {
+    width: 200px;
+    padding: 1rem;
+    background-color: #323232;
+    border-radius: 10px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+
+    .dropdown-divider {
+      width: 100%;
+      height: 1px;
+      background-color: #fff;
+      margin: 0.5rem 0;
+
+    }
+
+    .dropdown-section {
+      display: flex;
+      flex-direction: column;
+      background-color: transparent;
+
+
+      .dropdown-item {
+        background-color: #323232;
+        display: flex;
+        align-items: center;
+        padding: 6px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: #222222;
+        }
+
+        .profile-details {
+          background-color: transparent;
+        }
+
+        .dropdown-icon {
+          color: #ffffff;
+          margin-right: 10px;
+          background-color: transparent;
+        }
+
+        .dropdown-label {
+          font-size: 14px;
+          font-weight: 500;
+          color: #ffffff;
+          background-color: transparent;
+        }
+
+        .dropdown-label-link {
+          font-size: 14px;
+          font-weight: 500;
+          color: #4179ed;
+          text-decoration: underline;
+          background-color: transparent;
+        }
+
+        &.active {
+          background-color: #333;
+          border-radius: 10px;
+        }
+
+        .profile-img {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9); // Semi-transparent black background
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; // Ensure it stays above all other content
+  }
+
+  .modal-content {
+    // White background for the modal content
+    padding: 2rem; // Padding inside the modal
+    border-radius: 8px; // Rounded corners for the modal box
+    max-width: 600px; // Maximum width for the modal
+    width: 100%; // Make it responsive to the viewport
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); // Slight shadow for a floating effect
+    text-align: center;
+    position: relative;
+
+    h2 {
+      font-size: 1.5rem; // Adjusting the size of the heading
+      margin-bottom: 1rem; // Space below the heading
+      color: #ffffff; // Color for the heading
+    }
+
+    .modal-topbar {
+      display: flex;
+      flex-direction: row;
+
+      justify-content: flex-end;
+    }
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background-color: #ccc;
+    margin: 1rem 0;
+  }
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    input[type="text"],
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+
+      &::placeholder {
+        color: #aaa;
+      }
+    }
+
+    input[type="text"] {
+      color: #333;
+    }
+
+    input[type="file"] {
+      color: #666;
+
+    }
+
+    .checker {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+
+      label {
+        display: block;
+        text-align: left;
+
+
+        margin-bottom: 0.5rem;
+        color: #fffdfd;
+      }
+
+      input[type="checkbox"] {
+        color: #666;
+        margin-left: 10px;
+        margin-bottom: 10px;
+      }
+    }
+
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 0.5rem;
+      color: #fffefe;
+    }
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #555;
+  }
+
+  .error {
+    border: 1px solid red; // Red border for error inputs
+  }
+
+  .bttn-inside {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+  }
+
+  .submit-btn {
+    background-color: #4CAF50; // Green background for submit button
+    color: white;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: #45a049; // Darker green on hover
+    }
+  }
+
+
+}

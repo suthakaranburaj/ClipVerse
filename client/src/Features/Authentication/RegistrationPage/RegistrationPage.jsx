@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 function RegistrationPage() {
     const { register, handleSubmit, formState: { errors } } = useForm(); // Initialize useForm
-    const { register: registerUser, isLoading, error ,isAuthenticated } = useStore();
+    const { register: registerUser, isLoading, error:registrationError ,isAuthenticated } = useStore();
     const navigate = useNavigate();
 
 
@@ -75,6 +75,7 @@ function RegistrationPage() {
                     <input
                         type="file"
                         className="file-input text-white border border-gray-700 rounded-md p-2 focus:outline-none"
+                        accept="image/*"
                         {...register('avatar', { required: 'Avatar is required' })}
                     />
                     {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>} {/* Avatar error */}
@@ -83,9 +84,10 @@ function RegistrationPage() {
                     <input
                         type="file"
                         className="file-input text-white border border-gray-700 rounded-md p-2 focus:outline-none"
-                        {...register('coverImage', { required: 'Cover image is required' })}
+                        accept="image/*"
+                        {...register('coverImage')}
                     />
-                    {errors.coverImage && <p className="text-red-500">{errors.coverImage.message}</p>} {/* Cover Image error */}
+                    {/* {errors.coverImage && <p className="text-red-500">{errors.coverImage.message}</p>} Cover Image error */}
 
                     <input
                         type="password"
@@ -110,7 +112,7 @@ function RegistrationPage() {
                     </div>
                 )}
 
-                {error && <p className="text-red-500">{error}</p>}
+                {registrationError && <p className="text-red-500">{registrationError}</p>}
             </div>
         </div>
     );

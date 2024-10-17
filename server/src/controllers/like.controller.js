@@ -5,6 +5,9 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import { Video } from "../models/video.model.js"
 import {Tweet} from '../models/tweet.model.js'
+import { Comment } from "../models/comment.model.js"
+import { response } from "express"
+import path from "path"
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
     //TODO: toggle like on video
@@ -14,18 +17,24 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
 
     const {videoId} = req.params
     if(!videoId){
-        throw new ApiError(400,"Video Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Video Id is missing"));
     }
     
     const userId= req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
 
     
     const video = await Video.findById(videoId);
     if(!video){
-        throw new ApiError(404,"Video Does not exist");
+        return res
+        .status(404)
+        .json( new ApiError(404,"Video Does not exist"));
     }
 
     const existingLike = await Like.findOne({video:videoId,likedBy:userId})
@@ -54,18 +63,24 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
     //same as of toggleVideoLike
 
     if(!commentId){
-        throw new ApiError(400,"Comment Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Comment Id is missing"));
     }
     
     const userId= req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
 
     
-    const comment = await Comment.findById(commentId);
+    const comment = await Comment.findById({_id:commentId});
     if(!comment){
-        throw new ApiError(404,"Comment Does not exist");
+        return res
+        .status(404)
+        .json( new ApiError(404,"Comment Does not exist"));
     }
 
     const existingLike = await Like.findOne({comment:commentId,likedBy:userId})
@@ -89,23 +104,56 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 
 })
 
+const getLikesOfComment = asyncHandler( async(req,res)=>{
+    const {commentId} = req.params;
+
+    if(!commentId){
+        return res
+        .status(400)
+        .json(new ApiError(400,"CommentId is missing !!"));
+    }
+
+    const likes = await Like.find({comment:commentId});
+    const likesCount = likes.length;
+    if(likes.length === 0 ){
+        return res
+        .status(200)
+        .json(new ApiResponse(200,likes,"No likes found !!"));
+    }
+
+    const response ={
+        likesCount,
+        likes,
+    }
+    return res
+    .status(200)
+    .json(new ApiResponse(200,response,"Likes of Comment fetched successfully !!"))
+
+})
+
 const toggleTweetLike = asyncHandler(async (req, res) => {
     const {tweetId} = req.params
     //TODO: toggle like on tweet
     //same as of toggleVideoLike
     if(!tweetId){
-        throw new ApiError(400,"Tweet Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"Tweet Id is missing"));
     }
     
     const userId= req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
 
     
     const tweet = await Tweet.findById(tweetId);
     if(!tweet){
-        throw new ApiError(404,"tweet Does not exist");
+        return res
+        .status(404)
+        .json( new ApiError(404,"tweet Does not exist"));
     }
 
     const existingLike = await Like.findOne({tweet:tweetId,likedBy:userId})
@@ -133,13 +181,28 @@ const getLikedVideos = asyncHandler(async (req, res) => {
     //TODO: get all liked videos
     const userId = req.user._id;
     if(!userId){
-        throw new ApiError(400,"User Id is missing");
+        return res
+        .status(400)
+        .json( new ApiError(400,"User Id is missing"));
     }
     if(!mongoose.isValidObjectId(userId)){
-        throw new ApiError(400,"Invalid User ID")
+        return res
+        .status(400)
+        .json( new ApiError(400,"Invalid User ID"));
     }
 
-    const userLikedVideo= await Like.find({likedBy:userId}).populate('video');
+    const userLikedVideo= await Like
+    .find({likedBy:userId})
+    .populate({
+        path:'video',
+        select:'owner thumbnail description title views createdAt',
+        populate:{
+            path:'owner',
+            select:'username avatar fullName'
+        }
+    });
+    // .populate('owner','username fullName avatar')
+
     if (!userLikedVideo || userLikedVideo.length === 0) {
         return res.status(200).json(new ApiResponse(200, [], "No Liked Video found for this user"));
     }
@@ -152,9 +215,73 @@ const getLikedVideos = asyncHandler(async (req, res) => {
 
 })
 
+const getLikesOfVideos = asyncHandler( async(req,res) =>{
+    const userId = req.user?._id;
+
+    const userVideosIds = await Video.find({owner:userId}).select(Video._id);
+    if(!userVideosIds){
+        return res
+        .status(400)
+        .json( new ApiError(400,"No Videos Found"));
+    }
+
+    const allVideosLikesCount = await Promise.all(
+        userVideosIds.map(async(videoId)=>{
+        const likes = await Like.find({video:videoId})
+                                .sort({createdAt:-1});
+
+        const video = likes.length>0 ? likes[0].video : null;
+        return{
+            video,
+            likesCount:likes.length,
+            likes
+        };
+        })
+    );
+
+    const responseData={
+        results:allVideosLikesCount,
+    }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,responseData,"Likes of Videos Fetch successfully"))
+})
+
+const getLikesOfVideo = asyncHandler( async(req,res)=>{
+
+    const {videoId} = req.params;
+    if(!videoId){
+        return res
+        .status(400)
+        .json(new ApiError(400,"Video Id is missing !!"));
+    }
+
+    const likes = await Like.find({video:videoId});
+    if(likes.length === 0){
+        return res
+        .status(200)
+        .json(new ApiResponse(200,"No likes for the video"))
+    }
+
+    const likesCount = likes.length;
+
+    const responseData = {
+        likes,
+        videoLikesCount:likesCount,
+    }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,responseData,"Likes of the video Fetched successfully !!"))
+})
+
 export {
     toggleCommentLike,
     toggleTweetLike,
     toggleVideoLike,
-    getLikedVideos
+    getLikedVideos,
+    getLikesOfVideos,
+    getLikesOfVideo,
+    getLikesOfComment
 }
