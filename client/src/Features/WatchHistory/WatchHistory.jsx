@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import useVideosStore from '../../store/useVideosStore';
 import './WatchHistory.scss'
+import Loader from '../../components/Loader/Loader';
 
 function WatchHistory() {
-const { watchHistorys,getuserWatchHistory, isLoading, error } = useVideosStore();
+const { watchHistorys,getuserWatchHistory, isLoading:videoStoreLoading, error } = useVideosStore();
 console.log(watchHistorys)
 useEffect(() => {
     const fetchWatchHistory = async () => {
@@ -13,7 +14,7 @@ useEffect(() => {
     fetchWatchHistory(); // Call the async function when component mounts
 }, []); // Empty dependency array ensures this runs only once on mo
 
-if (isLoading) return <div>Loading watch history...</div>;
+if (videoStoreLoading) return <div><Loader/></div>;
 if (error) return <div>Error: {error}</div>;
 
 return (
