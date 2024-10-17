@@ -25,7 +25,7 @@ const router = createBrowserRouter(
             <Route path='/channel' element={<ManageVideos />} />
             <Route path='/' element={<LayoutPage />}>
                 <Route path='' element={<HomePage />} />
-                <Route path='userchannel/:channelId' element={<UserChannel />} >
+                <Route path='/:username/:channelId' element={<UserChannel />} >
                     <Route path='' element={<Navigate to='videos' replace />} />
                     <Route path='playlist' element={<UserPlaylist />} >
                         <Route path=':playlistId' element={<ViewPlaylist />} />

@@ -107,7 +107,11 @@ function HomePage() {
                                 />
                                 <div className='channelContainer2'>
                                     <p className='description'>{video?.title}</p>
-                                    <p className='userChannel'>{video?.owner?.username}</p>
+                                    <Link to={`/${video?.owner?.username}/${video?.owner?._id}`}>
+                                        <p className='userChannel'>
+                                            {video?.owner?.username}
+                                        </p>
+                                    </Link>
                                     <div className='flex'>
                                         <p className='views'>{video?.views} views</p>
                                         <p className='dot'>•</p>

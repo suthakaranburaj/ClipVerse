@@ -10,6 +10,7 @@ import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useLocation } from 'react-router-dom';
 import useTweetStore from '../../store/useTweetStore'
 import useStore from '../../store/userStore';
+import userStatsStore from '../../store/userStatsStore';
 
 function Community() {
 
@@ -25,14 +26,20 @@ function Community() {
     const [newTweetContent, setNewTweetContent] = useState('');
     const [isEditTweet , setIsEditTweet] = useState(false);
     const [currentTweet , setCurrentTweet] = useState(null);
+    const {channelId}=useParams();
+    const {channel,fetchChannelProfile} = userStatsStore();
 
     useEffect(()=>{
         
         const fetchData = async()=>{
-            const userId = subscribedChannel?._id;
-            // console.log(userId)
+            let userId = user?._id;
+            if(channelId !== userId){
+                userId = channelId;
+            }
+            console.log(userId)
             await getUserTweets(userId);
             // console.log(userTweets)
+            await fetchChannelProfile(userId);
         }
         fetchData();
     },[subscribedChannel?._id,currentTweet])
@@ -88,13 +95,13 @@ function Community() {
                                 <div className='communityPostContainer111'>
                                     <img 
                                         className='communityPostContainer1111' 
-                                        src={subscribedChannel?.avatar}
+                                        src={channel?.avatar}
                                         alt="" 
                                     />
                                 </div>
-                                <p className='communityPostContainer112'>{subscribedChannel?.username}</p>
+                                <p className='communityPostContainer112'>{channel?.username}</p>
                             </div>
-                            {subscribedChannel?._id === user?._id && (
+                            {channel?._id === user?._id && (
                                 <div 
                                     className='communityPostContainer12'
                                     onClick={()=>handleEditTweet(tweet)}
@@ -140,7 +147,7 @@ function Community() {
                     </div>
                 ))}
             </div>
-            {subscribedChannel?._id === user?._id && (<button 
+            {channel?._id === user?._id && (<button 
                 className='mainContainer1'
                 onClick={handleCreatePost}
             >

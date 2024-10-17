@@ -63,7 +63,7 @@ function Navbar() {
             <div className="sidebar-section">
                 <div className="sidebar-header">You</div>
                 <NavLink 
-                    to={`/userchannel/${channelId}`} key={channelId} 
+                    to={`/${user?.username}/${channelId}`} key={channelId} 
                     className='sidebar-item'
                 >
                     <CgProfile className="sidebar-icon" size={24} />

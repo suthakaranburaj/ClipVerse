@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const BACKEND_URL='http://localhost:8000/api/v1/dashboard';
+const Channel_url = 'http://localhost:8000/api/v1/users'
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -25,7 +26,7 @@ const getChannelStatsService= async() =>{
 
 const getChannelVideosService = async()=>{
     try {
-        const response = await axios.get('http://localhost:8000/api/v1/dashboard/videos',{
+        const response = await axios.get(`${BACKEND_URL}/videos`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },
@@ -35,8 +36,24 @@ const getChannelVideosService = async()=>{
     } catch (error) {
         throw(error);
     }
-}
+};
+
+const getUserChannelProfileServices = async(username)=>{
+    try {
+        const response = await axios.get(`${Channel_url}/c/${username}`,{
+            headers:{
+                Authorization: `Bearer ${getToken()}`
+            },
+            withCredentials:true,
+        });
+        return response;
+    } catch (error) {
+        throw (error);
+    }
+};
+
 export{
     getChannelStatsService,
     getChannelVideosService,
+    getUserChannelProfileServices,
 }

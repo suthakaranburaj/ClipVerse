@@ -1,5 +1,5 @@
-import React from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Outlet, NavLink, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,16 +8,28 @@ import userCoverImage from '../../../assets/user_coverImage.jpg';
 
 import './UserChannel.scss';
 import useStore from '../../../store/userStore';
+import userStatsStore from '../../../store/userStatsStore';
 
 function UserChannel() {
     const { isAuthenticated, user } = useStore();
+    const {fetchChannelProfile,channel} = userStatsStore();
+    const {channelId} = useParams();
+    const {username} = useParams();
+
+    useEffect(()=>{
+        const fetchData = async()=>{
+            await fetchChannelProfile(username);
+        }
+        fetchData();
+    },[])
+
 
     return (
         <div className='UserChannel-Container'>
             <div className='UserProfileContainer'>
                 <div className='cover-container'>
                     <img 
-                        src={isAuthenticated && user?.coverImage ? user?.coverImage : userCoverImage} 
+                        src={isAuthenticated && channel?.coverImage ? channel?.coverImage : userCoverImage} 
                         alt="Cover" 
                     />
                     {/* <span className="edit-icon">
@@ -28,7 +40,7 @@ function UserChannel() {
                 <div className='profile-container'>
                     <div className='avatar-container'>
                         <img 
-                            src={isAuthenticated && user?.avatar ? user?.avatar : image2} 
+                            src={isAuthenticated && channel?.avatar ? channel?.avatar : image2} 
                             alt="Avatar" 
                         />
                         {/* <span className="edit-icon">
@@ -37,9 +49,9 @@ function UserChannel() {
                     </div>
                     <div className='profile-info'>
                         <p className='name'>
-                            {isAuthenticated && user?.fullName ? user?.fullName : "Name"}
+                            {isAuthenticated && channel?.fullName ? channel?.fullName : "Name"}
                         </p>
-                        <p>{isAuthenticated && user?.username ? user?.username : "Username"}</p>
+                        <p>{isAuthenticated && channel?.username ? channel?.username : "Username"}</p>
                         <p>More about this channel <span className='more-info'>...more</span></p>
                         <div className='buttons'>
                             <button>Customise channel</button>
@@ -53,7 +65,7 @@ function UserChannel() {
                 <NavLink to='videos' >Videos</NavLink>
                 <NavLink to='live' >Live</NavLink>
                 <NavLink to='playlist' >Playlists</NavLink>
-                <NavLink to={`/community/${user?._id}`} >Community</NavLink>
+                <NavLink to={`/community/${channelId}`} >Community</NavLink>
             </div>
 
             <div className='separator'></div>

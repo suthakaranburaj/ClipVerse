@@ -5,9 +5,12 @@ import usePlaylistStore from '../../../store/usePlaylistStore';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import useVideosStore from '../../../store/useVideosStore';
+import useStore from '../../../store/userStore';
 
 function UserVideos() {
-    const { getChannelVideos, videos: channelVideos } = userStatsStore();
+    const { getChannelVideos, channelVideos } = useVideosStore();
+    const {user} = useStore();
     const 
     {
         createPlaylist,
@@ -61,7 +64,7 @@ function UserVideos() {
     
     useEffect(() => {
         const fetchData = async () => {
-            await getChannelVideos();
+            await getChannelVideos(channelId);
         };
         fetchData();
     }, []);
@@ -108,9 +111,11 @@ function UserVideos() {
         <div className='userVideosContainer'>
             <div className='container'>
                 <p className='container1'>Videos</p>
-                <p className='container2' onClick={handleCreatePlaylist}>
+                {user?._id === channelId &&(
+                    <p className='container2' onClick={handleCreatePlaylist}>
                     {isCreatePlaylistActive ? 'Cancel Playlist' : 'Create Playlist'}
                 </p>
+                )}
                 <div className='container3'>
                     {channelVideos.map((video) => (
                         <div

@@ -32,11 +32,11 @@ function UserPlaylist() {
     const location = useLocation(); 
 
 
-    const userId = user?._id;
+    const {channelId} = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
-            await getUserPlaylists(userId);
+            await getUserPlaylists(channelId);
         };
         fetchData();
     }, [userPlaylists]);

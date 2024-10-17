@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getChannelVideosService ,getChannelStatsService } from "../Features/zServices/userStatsServices";
+import { getChannelVideosService ,getChannelStatsService,getUserChannelProfileServices  } from "../Features/zServices/userStatsServices";
 
 const userStatsStore = create((set)=>({
     user:null,
@@ -11,6 +11,7 @@ const userStatsStore = create((set)=>({
     comments:[],
     views:0,
     totalSubscribers:0,
+    channel:null,
 
     getChannelStats:async () =>{
         set({isLoading:true, error: null});
@@ -54,6 +55,28 @@ const userStatsStore = create((set)=>({
 
         }
     },
+
+    fetchChannelProfile: async (username) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await getUserChannelProfileServices(username);
+            set({
+            channel: response.data.data, // assuming response follows your ApiResponse format
+            isLoading: false,
+            error: null,
+            });
+        } catch (err) {
+            set({
+            isLoading: false,
+            error: err.response ? err.response.data.message : err.message,
+            });
+        }
+        },
+
+        // Clear channel data
+        clearChannel: () => {
+        set({ channel: null, error: null });
+        }
 
 }));
 
