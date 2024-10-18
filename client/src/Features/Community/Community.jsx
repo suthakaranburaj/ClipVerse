@@ -7,10 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons 
 import {faPlus } from '@fortawesome/free-solid-svg-icons';
 import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import useTweetStore from '../../store/useTweetStore'
 import useStore from '../../store/userStore';
 import userStatsStore from '../../store/userStatsStore';
+import Loader from '../../components/Loader/Loader';
+import useSubscriptionStore from '../../store/useSubscriptionStore'
 
 function Community() {
 
@@ -21,7 +23,19 @@ function Community() {
     // console.log(location)
 
     // console.log(subscribedChannel);
-    const {getUserTweets, userTweets, createTweet, updateTweet, deleteTweet} = useTweetStore();
+    const {
+        getUserTweets, 
+        userTweets, 
+        createTweet, 
+        updateTweet, 
+        deleteTweet,
+        isLoading:tweetsLoadingStore,
+    } = useTweetStore();
+    const {
+        getUserChannelSubscribers,
+        channelSubscribers
+    } = useSubscriptionStore();
+
     const [isCreateTweet, setIsCreateTweet] = useState(false);
     const [newTweetContent, setNewTweetContent] = useState('');
     const [isEditTweet , setIsEditTweet] = useState(false);
@@ -29,6 +43,7 @@ function Community() {
     const {channelId}=useParams();
     const {channel,fetchChannelProfile} = userStatsStore();
     const {username}=useParams();
+    const [minLoading,setminLoading]=useState(true);
 
     useEffect(()=>{
         
@@ -40,8 +55,13 @@ function Community() {
             console.log(userId)
             await getUserTweets(userId);
             // console.log(userId)
+            await getUserChannelSubscribers(userId);
             await fetchChannelProfile(username);
             console.log(channel);
+            
+            setTimeout(()=>{
+                setminLoading(false);
+            },1000);
         }
         fetchData();
     },[channelId,currentTweet])
@@ -83,13 +103,25 @@ function Community() {
         setCurrentTweet(null);
         setIsEditTweet(false);
     }
+
+    if (tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
+
     return (
         <>
         <div className='communityContianer'>
-            <div className='mainContainer'>
-                <div className='channelProfileContainer'>
-
+        <div className='channelProfileContainer'>
+                    <div className='channelProfileContainer1'>
+                        <img src={channel?.avatar} className='channelProfileContainer11' alt="" />
+                    </div>
+                    <div className='channelProfileContainer2'>
+                        <Link to={`/${channel?.username}/${channel?._id}`}>
+                            <p className='channelProfileContainer21'>{channel?.username}</p>
+                        </Link>
+                        <p className='channelProfileContainer22'>{channelSubscribers?.length} subscribers</p>
+                    </div>
                 </div>
+            <div className='mainContainer'>
+                
                 {userTweets?.map((tweet)=>(
                     <div className='communityPostContainer' key={tweet?._id}>
                         <div className='communityPostContainer1'>
