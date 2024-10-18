@@ -32,7 +32,7 @@ function Navbar() {
     },[subscriberId ])
     console.log(subscribedChannels)
     const handleLinkToCommunity = (subscribedChannel)=>{
-        navigate(`/community/${subscribedChannel?._id}`, { 
+        navigate(`/community/${subscribedChannel?.username}/${subscribedChannel?._id}`, { 
             state: { subscribedChannel } 
         });
     }

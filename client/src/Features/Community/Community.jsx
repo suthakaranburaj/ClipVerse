@@ -28,6 +28,7 @@ function Community() {
     const [currentTweet , setCurrentTweet] = useState(null);
     const {channelId}=useParams();
     const {channel,fetchChannelProfile} = userStatsStore();
+    const {username}=useParams();
 
     useEffect(()=>{
         
@@ -38,11 +39,12 @@ function Community() {
             }
             console.log(userId)
             await getUserTweets(userId);
-            // console.log(userTweets)
-            await fetchChannelProfile(userId);
+            // console.log(userId)
+            await fetchChannelProfile(username);
+            console.log(channel);
         }
         fetchData();
-    },[subscribedChannel?._id,currentTweet])
+    },[channelId,currentTweet])
     // console.log(userTweets)
 
     const handleCreatePost = ()=>{

@@ -65,7 +65,7 @@ function UserChannel() {
                 <NavLink to='videos' >Videos</NavLink>
                 <NavLink to='live' >Live</NavLink>
                 <NavLink to='playlist' >Playlists</NavLink>
-                <NavLink to={`/community/${channelId}`} >Community</NavLink>
+                <NavLink to={`/community/${username}/${channelId}`} >Community</NavLink>
             </div>
 
             <div className='separator'></div>
