@@ -1,4 +1,5 @@
 import React, { useEffect ,useState} from 'react'
+import { Link } from 'react-router-dom'
 import './Subscriptions.scss'
 import useSubscriptionStore from '../../store/useSubscriptionStore'
 import userStore from '../../store/userStore'
@@ -53,16 +54,18 @@ function Subscriptions() {
         <div className='SubscriptionContainer'>
             <div className='SubscribedChannel'>
                 {subscribedChannels?.map((subscribedChannel)=>(
-                    <div key={subscribedChannel?._id} className='subscribedChannelContainer'>
-                        <div className='subscribedChannelContainer1'>
-                            <img src={subscribedChannel?.avatar} alt="" />
+                    <Link key={subscribedChannel?._id} to={`/${subscribedChannel?.username}/${subscribedChannel?._id}`}>
+                        <div  className='subscribedChannelContainer'>
+                            <div className='subscribedChannelContainer1'>
+                                <img src={subscribedChannel?.avatar} alt="" />
+                            </div>
+                            <div className='subscribedChannelContainer2'>
+                                <p>{subscribedChannel?.username}</p>
+                                <p>{subscribedChannel?.fullName}</p>
+                                <p>{subscribersMap[subscribedChannel?._id] || 0} subscribers</p>
+                            </div>
                         </div>
-                        <div className='subscribedChannelContainer2'>
-                            <p>{subscribedChannel?.username}</p>
-                            <p>{subscribedChannel?.fullName}</p>
-                            <p>{subscribersMap[subscribedChannel?._id] || 0} subscribers</p>
-                        </div>
-                    </div>
+                    </Link>
                 ))}
                 
             </div>
