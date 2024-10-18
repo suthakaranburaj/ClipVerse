@@ -19,6 +19,7 @@ const useSubscriptionStore = create((set)=>({
                 isLoading:false,
                 error:null
             });
+            return response.data.data;
         } catch (error) {
             set({
                 isLoading:false,
