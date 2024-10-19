@@ -135,6 +135,13 @@
                 }
             }
         }
+
+        .noTweets{
+            position: fixed;
+            margin-top: 30vh;
+            font-size: 30px;
+            color: $secondary-text;
+        }
     }
     .mainContainer1{
         position: fixed;
@@ -170,7 +177,7 @@
         padding: 1%;
     
         .tweetContainer{
-            border: 1px solid gray;
+            border: 1px solid red;
             height: 30vh;
             width: 700px;
             border-radius: 20px;
@@ -233,11 +240,26 @@
             .secondRow2{
                 display: flex;
                 justify-content: end;
+
                 .secondRow21{
-                    color:black;
-                    background-color: skyblue;
+                    color:white;
+                    background-color: $hover-bg-color;
                     padding: 4px 15px;
                     border-radius: 25px;
+                    margin-right: 10px;
+                    &:hover{
+                        background-color: red;
+                    }
+                }
+                .secondRow22{
+                    color:white;
+                    background-color: $hover-bg-color;
+                    padding: 4px 15px;
+                    border-radius: 25px;
+
+                    &:hover{
+                        background-color: red;
+                    }
                 }
             }
         }

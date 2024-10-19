@@ -52,24 +52,24 @@ function Community() {
             if(channelId !== userId){
                 userId = channelId;
             }
-            console.log(userId)
+            // console.log(userId)
             await getUserTweets(userId);
             // console.log(userId)
             await getUserChannelSubscribers(userId);
             await fetchChannelProfile(username);
-            console.log(channel);
+            // console.log(channel);
             
             setTimeout(()=>{
                 setminLoading(false);
             },1000);
         }
         fetchData();
-    },[channelId,currentTweet])
+    },[channelId,isEditTweet])
     // console.log(userTweets)
 
     const handleCreatePost = ()=>{
         setIsCreateTweet((prev) => !prev);
-        console.log(isCreateTweet)
+        // console.log(isCreateTweet)
     }
 
     const handleCreateTweet= async()=>{
@@ -100,6 +100,12 @@ function Community() {
 
     const handleDeleteTweet = async()=>{
         await deleteTweet(currentTweet?._id);
+        setCurrentTweet(null);
+        setIsEditTweet(false);
+    }
+
+    const handleCancelTweet = ()=>{
+        setIsCreateTweet(false);
         setCurrentTweet(null);
         setIsEditTweet(false);
     }
@@ -178,8 +184,12 @@ function Community() {
                                 45
                             </p>
                         </div>
+                        
                     </div>
                 ))}
+                { userTweets.length === 0 && (
+                    <div className='noTweets'>No Tweets</div>
+                )}
             </div>
             {channel?._id === user?._id && (<button 
                 className='mainContainer1'
@@ -217,6 +227,12 @@ function Community() {
                         <div className='secondRow2'>
                             <button 
                                 className='secondRow21'
+                                onClick={handleCancelTweet}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                className='secondRow22'
                                 onClick={handleCreateTweet}
                             >
                                 Post
