@@ -45,9 +45,9 @@ function Dashboard() {
             <div className='wrapper'>
                 <div className='header'>Channel dashboard</div>
                 <div className='sub-wrapper'>
-                    <div className='col-1'>
+                    {/* <div className='col-1'>
                         <div className='container-upload'><button className='bttn' onClick={handleUploadClick}>Upload videos</button></div>
-                    </div>
+                    </div> */}
                     
                     <div className='col-2'>
                         <div className='container-subs'>
@@ -75,9 +75,9 @@ function Dashboard() {
                         </div>
                         
                     </div>
-                    <div className='col-3'>
+                    {/* <div className='col-3'>
 
-                    </div>
+                    </div> */}
                 </div>
                 {isModalVisible && (
                 <div className="modal-overlay">

@@ -115,7 +115,7 @@ function Content() {
                 </div>
                 <div className='level-3'>
                     <div className='part-1'>
-                        <div className='box'></div>
+                        {/* <div className='box'></div> */}
                         <div className='label'>videos</div>
                     </div>
                     <div className='part-2'>
@@ -137,7 +137,9 @@ function Content() {
                         videos?.map((video) => (
                             <React.Fragment key={video?._id}>
                                 <div className='videoContainer'>
-                                    <img src={video?.thumbnail ? video?.thumbnail : image1} alt="Thumbnail" />
+                                    <div className='videoContainer1'>
+                                        <img src={video?.thumbnail ? video?.thumbnail : image1} alt="Thumbnail" />
+                                    </div>
                                     <div className='videoTitleDescriptionContainer'>
                                         <p>{video?.title ? video?.title : 'Title here'}</p>
                                         <p>{video?.description ? video?.description : 'Description here'}</p>
@@ -174,7 +176,7 @@ function Content() {
                                     />
 
                                 </div>
-                                <div className="divider"></div>
+                                {/* <div className="divider"></div> */}
                             </React.Fragment>
                         ))
                     ) : (

@@ -30,46 +30,46 @@ function Sidebar() {
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Content</span>
         </div>
-        <div className="Man-sidebar-item" onClick={() => setDisplayer('analytics')}>
+        {/* <div className="Man-sidebar-item" onClick={() => setDisplayer('analytics')}>
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Analytics</span>
-        </div>
+        </div> */}
         <div className="Man-sidebar-item" onClick={() => setDisplayer('comments')}>
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Comments</span>
         </div>
         <div className="Man-sidebar-item" onClick={()=> setDisplayer('subscription')}>
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
-          <span className="Man-sidebar-label">Subtitle</span>
+          <span className="Man-sidebar-label">Subscribers</span>
         </div>
-        <div className="Man-sidebar-item">
+        {/* <div className="Man-sidebar-item">
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Copyright</span>
-        </div>
-        <div className="Man-sidebar-item">
+        </div> */}
+        {/* <div className="Man-sidebar-item">
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Earn</span>
-        </div>
-        <div className="Man-sidebar-item">
+        </div> */}
+        {/* <div className="Man-sidebar-item">
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Customisation</span>
         </div>
         <div className="Man-sidebar-item">
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Audio Library</span>
-        </div>
+        </div> */}
         
       </div>
       <div className="sidebar-divider"></div>
       <div className="help-sidebar-section">
-        <div className="Man-sidebar-item">
+        {/* <div className="Man-sidebar-item">
           <SiYoutubeshorts className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Shorts</span>
         </div>
         <div className="Man-sidebar-item">
           <MdOutlineSubscriptions className="Man-sidebar-icon" size={24} />
           <span className="Man-sidebar-label">Subscriptions</span>
-        </div>
+        </div> */}
       </div>
       {/* <div className="sidebar-section">
         <Link to="/">
