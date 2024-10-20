@@ -96,6 +96,9 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
         .status(400)
         .json( new ApiError(400,"Playlist Id is missing !!"));
     }
+
+    const userId = req.user?._id;
+
     if(!videoId){
         return res
         .status(400)
@@ -103,7 +106,16 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
     }
 
     const playlist = await Playlist.findById(playlistId);
+    // console.log(playlist)
 
+    // console.log(playlist?.owner?._id)
+    // console.log(user)
+    if(!playlist.owner._id.equals(userId)){
+        return res
+            .status(400)
+            .json(new ApiError(400,"Unauthorized Access !!"));
+    }
+    
     const playlistVideos = playlist.videos;
     if(playlistVideos.length === 0){
         return res

@@ -20,6 +20,7 @@ import image1 from '../../../../assets/profile_pic.webp';
 import { useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
 import useVideoStore from '../../../../store/useVideosStore'
+import logo from '../../../../assets/ClipVerse_logo.png'
 // import { Link } from 'react-router-dom';
 
 function SearchBar() {
@@ -78,12 +79,15 @@ function SearchBar() {
     }
     return (
         <div className="cont text-white p-4 flex justify-between">
-            <div className='mx-4'>
+            <div className='mx-4 cont1'>
                 <FontAwesomeIcon
                     className='text-white icon-large'
                     icon={isNavOpen ? faTimes : faBars} // Conditional rendering of icons
                     onClick={() => toggleNav()}
                 />
+                <Link to='/'>
+                    <img src={logo} alt="" />
+                </Link>
             </div>
             <div className='mx-10 w-[80%]'>
                 <div className="flex justify-between">

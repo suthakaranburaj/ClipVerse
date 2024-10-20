@@ -61,7 +61,7 @@ function UserChannel() {
                             {isAuthenticated && channel?.fullName ? channel?.fullName : "Name"}
                         </p>
                         <p>{isAuthenticated && channel?.username ? channel?.username : "Username"}</p>
-                        <p>More about this channel <span className='more-info'>...more</span></p>
+                        {/* <p>More about this channel <span className='more-info'>...more</span></p> */}
                         <div className='buttons'>
                             {user?._id === channelId &&(
                                 <>
