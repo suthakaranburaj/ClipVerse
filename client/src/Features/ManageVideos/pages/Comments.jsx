@@ -1,32 +1,60 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import useCommentsStore from '../../../store/useCommentsStore'; // Adjust the import path
+import Loader from '../../../components/Loader/Loader';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import './Comments.scss'
+import { Link } from 'react-router-dom'
+
 
 function Comments() {
-    const { allComments, getAllVideosComments, isLoading, error } = useCommentsStore();
+    const { allComments, getAllVideosComments, isLoading:commentLoadingStore, error } = useCommentsStore();
+    const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+
 
     // Fetch comments when component mounts
     useEffect(() => {
-        getAllVideosComments(); // Trigger fetching all comments
+        const fetchData = async()=>{
+            await getAllVideosComments(); // Trigger fetching all comments
+            setTimeout(() => {
+                setMinLoading(false);
+            }, 1000);
+        }
+        fetchData();
+
     }, [getAllVideosComments]);
 
+    dayjs.extend(relativeTime);
     return (
         <div>
-            {isLoading ? (
-                <p>Loading comments...</p>
+            {commentLoadingStore || minLoading ? (
+                <Loader/>
             ) : error ? (
                 <p>Error: {error}</p>
             ) : (
-                <div>
+                <div className='mainDiv'>
                     {allComments.length === 0 ? (
-                        <p>No comments available.</p>
+                        <p className='NoComments'>No comments available.</p>
                     ) : (
-                        <ul>
+                        <ul className='commentsContainer'>
                             {allComments.map((comment) => (
-                                <li key={comment._id}>
-                                    <img src={comment.owner.avatar} className='w-10 h-10 rounded-full' alt="" />
-                                    <p>{comment.content}</p>
-                                    <p><strong>Video Title</strong> {comment.video.title}</p>
-                                    <hr />
+                                <li key={comment._id} className='commentsMain'>
+                                    <Link to={`/${comment.owner?.username}/${comment.owner?._id}`}>
+                                        <div className='commentsMain1'>
+                                            <div className='commentsMain11'>
+                                                <img src={comment.owner.avatar} className='commentsMain111' alt="" />
+                                            </div>
+                                            <p className='commentsMain12'>{comment.owner?.username}</p>
+                                        </div>
+                                    </Link>
+                                    <div className='commentsMain2'>
+                                        <p className='commentsMain21'>{comment.content}</p>
+                                    </div>
+                                    <div className='commentsMain3'>
+                                        <p className='commentsMain31'><strong>Video Title:</strong>{comment.video.title}</p>
+                                        <p className='time'>{dayjs(comment?.createdAt).fromNow()}</p>
+                                    </div>
+                                    {/* <hr /> */}
                                 </li>
                             ))}
                         </ul>
