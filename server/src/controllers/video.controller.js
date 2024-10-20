@@ -310,6 +310,11 @@ const addUserWatchHistoryand = asyncHandler(async ( req,res)=>{
         },
     });
 
+    if(!updatedUser.watchHistory){
+        return res
+        .status(200)
+        .json(new ApiResponse(400,"Video is already watched !!"))
+    }
     return res
     .status(200)
     .json(new ApiResponse(200,updatedUser.updatedUser.watchHistory,"Video added to Watch History successfully !!"))

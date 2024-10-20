@@ -178,11 +178,11 @@ function Community() {
                                 icon={faThumbsUp} 
                                 className='communityPostContainer31'
                             />
-                            <p
+                            {/* <p
                                 className='communityPostContainer32'
                             >
                                 45
-                            </p>
+                            </p> */}
                         </div>
                         
                     </div>
