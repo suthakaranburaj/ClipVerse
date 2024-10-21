@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BACKEND_URL='http://localhost:8000/api/v1/dashboard';
-const Channel_url = 'http://localhost:8000/api/v1/users'
+const BACKEND_URL='https://clip-verse-backend.onrender.com/api/v1/dashboard';
+const Channel_url = 'https://clip-verse-backend.onrender.com/api/v1/users'
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
