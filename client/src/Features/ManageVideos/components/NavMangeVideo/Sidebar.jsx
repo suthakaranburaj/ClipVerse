@@ -1,5 +1,4 @@
 import React from 'react';
-import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import './Sidebar.scss';
 import devStore from '../../../../store/devStore';
@@ -12,8 +11,8 @@ import { faUser} from '@fortawesome/free-solid-svg-icons';
 
 
 function Sidebar() {
-  const { displayer, setDisplayer } = devStore(); // Access state and action
-  const { isNavOpen } = devStore();
+  const { setDisplayer } = devStore(); // Access state and action
+  // const { isNavOpen } = devStore();
   const { user, isAuthenticated, logout } = useStore();
      
   return (

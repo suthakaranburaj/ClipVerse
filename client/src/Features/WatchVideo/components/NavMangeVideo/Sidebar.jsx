@@ -6,10 +6,10 @@ import devStore from '../../../../store/devStore';
 import useStore from '../../../../store/userStore';
 import image1 from '../../../../assets/profile_pic.webp';
 function Sidebar() {
-  const { displayer, setDisplayer } = devStore(); // Access state and action
-  const { isNavOpen } = devStore();
+  const { setDisplayer } = devStore(); // Access state and action
+  // const { isNavOpen } = devStore();
   const { user, isAuthenticated, logout } = useStore();
-     
+
   return (
     <div className='Man-sidebar'>
       <div className="Profile-sidebar-section">

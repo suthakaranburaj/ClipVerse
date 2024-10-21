@@ -3,17 +3,11 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch, faMicrophone } from '@fortawesome/free-solid-svg-icons'; // Import the cross icon
 import devStore from '../../../../store/devStore';
-import { HiCurrencyDollar } from "react-icons/hi";
-import { GrLanguage } from "react-icons/gr";
-import { FaRegKeyboard } from "react-icons/fa6";
 import { CgPlayListAdd } from "react-icons/cg";
-import { FaGoogle, FaUnlockAlt } from "react-icons/fa";
-import { PiSignOut } from "react-icons/pi";
-import { SiYoutubestudio } from "react-icons/si";
-import { FiDatabase, FiUpload, FiEdit } from "react-icons/fi";
-import { IoLanguage, IoMoonSharp } from "react-icons/io5";
-import { MdOutlineFeedback, MdOutlineSwitchAccount, MdOutlinePodcasts, MdOutlineHelpOutline, MdUpload, MdVideoCall, MdOutlineCancel } from "react-icons/md";
-import { IoMdSettings, IoMdWifi } from "react-icons/io";
+
+import { FiUpload, FiEdit } from "react-icons/fi";
+import { MdOutlineFeedback, MdUpload, MdVideoCall, MdOutlineCancel } from "react-icons/md";
+import {  IoMdWifi } from "react-icons/io";
 import useStore from '../../../../store/userStore';
 import './SearchBar.scss'; // Ensure this file contains the necessary styling
 import image1 from '../../../../assets/profile_pic.webp';
@@ -25,19 +19,18 @@ import logo from '../../../../assets/ClipVerse_logo.png'
 
 function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); // Get isNavOpen state from the store
-    const { user, isAuthenticated, logout } = useStore();
+    const { user, isAuthenticated } = useStore();
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [selectedVideo, setSelectedVideo] = useState(null);
 
     // Dropdown state
     const [isDropdownVisible, setDropdownVisible] = useState(false); // Initially set to false
     const [isDropdownVisible1, setDropdownVisible1] = useState(false);
 
 
-    const submitHandler = () => {
-        logout();
-    };
+    // const submitHandler = () => {
+    //     logout();
+    // };
 
     const toggleDropdown = () => {
         setDropdownVisible(prev => !prev); // Toggle dropdown visibility
@@ -54,13 +47,13 @@ function SearchBar() {
         setModalVisible(false);  // Close the modal
     };
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedVideo(file);
-        // Further processing can be done with the file, like uploading it to a server
-    };
+    // const handleFileChange = (event) => {
+    //     const file = event.target.files[0];
+    //     setSelectedVideo(file);
+    //     // Further processing can be done with the file, like uploading it to a server
+    // };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { publishAVideo, isLoading, error } = useVideoStore();
+    const { publishAVideo, isLoading } = useVideoStore();
 
     const onSubmit = async (data) => {
         const formData = new FormData();

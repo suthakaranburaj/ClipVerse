@@ -1,8 +1,6 @@
 import React from 'react';
-import { useState,useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import SplashScreen from "./components/SplashScreen/SplashScreen";
 
 import App from './App';
 

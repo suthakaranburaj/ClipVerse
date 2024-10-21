@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, NavLink, useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import image2 from '../../../assets/profile_pic.webp';
 import userCoverImage from '../../../assets/user_coverImage.jpg';

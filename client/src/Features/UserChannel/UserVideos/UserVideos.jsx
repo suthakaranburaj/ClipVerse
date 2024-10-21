@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './UserVideos.scss';
-import userStatsStore from '../../../store/userStatsStore';
 import usePlaylistStore from '../../../store/usePlaylistStore';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import useVideosStore from '../../../store/useVideosStore';
 import useStore from '../../../store/userStore';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../../../components/Loader/Loader';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -24,8 +22,6 @@ function UserVideos() {
     const 
     {
         createPlaylist,
-        playlist,
-        getPlaylist,
         addVideosToPlaylist
     } = usePlaylistStore();
 

@@ -1,12 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useLocation ,Link} from 'react-router-dom';
-import devStore from '../../store/devStore';
 import './WatchVideo.scss';
-import image1 from '../../assets/video1_thumbnail.jpg'
 import useVideosStore from '../../store/useVideosStore';
-import { Outlet } from 'react-router-dom';
-import Navbar from './components/NavMangeVideo/Sidebar';
-import SearchBar from './components/ManageSearchBar/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons 
 import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'; 
@@ -25,10 +20,10 @@ import Loader from '../../components/Loader/Loader';
 
 function WatchVideo() {
 
-    const { isNavOpen } = devStore();
+    // const { isNavOpen } = devStore();
 
     const videoRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+    // const [isPlaying, setIsPlaying] = useState(false);
     const [commentsUpdated, setCommentsUpdated] = useState(false);
     const [commentContent, setCommentContent] = useState('');
     const [isSubscribed,setIsSubscribed] = useState(false);
@@ -67,7 +62,7 @@ function WatchVideo() {
         getUserChannelSubscribers, 
         channelSubscribers,
         toggleSubscription, 
-        error:subscriptionError
+        // error:subscriptionError
     } = useSubscriptionStore();
     
     const {
@@ -124,16 +119,8 @@ function WatchVideo() {
     }, [
         videoId,
         channelId,
-        // getVideoById,
         userWatchHistory,
-        // incrementVideoViews,
-        // getVideoComments,
-        // commentsUpdated,
-        // getAllVideos,
-        // getUserChannelSubscribers,
-        // getVideoLikes,
         getLikesOfComment,
-
     ]);
 
     useEffect(() => {
@@ -445,7 +432,7 @@ function WatchVideo() {
 
                 <div className='watchVideo-right-side'>
                     {videos.length > 0 && videos.map((video, index) => (
-                        video?._id != videoId && (
+                        video?._id !== videoId && (
                             <Link key={index} to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} >
                                 <div key={index} className='watchVideoSection'>
                                     <div className='watchVideoSection1'>
