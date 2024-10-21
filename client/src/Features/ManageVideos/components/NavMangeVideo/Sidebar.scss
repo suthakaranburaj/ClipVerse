@@ -1,4 +1,4 @@
-@import '../../../../index.scss';
+@use '../../../../index.scss' as *;
 .Man-sidebar {
     width: 240px;
     padding: 1rem;
