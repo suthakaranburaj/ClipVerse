@@ -15,7 +15,7 @@ function HomePage() {
     const videoRefs = useRef([]);
     const { isNavOpen } = devStore();
     const { videos, getAllVideos, isLoading:videoStoreLoading, error:videoStoreError } = useVideosStore();
-    const {user,isAuthenticated}=useStore();
+    const {isAuthenticated}=useStore();
     const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
 
 

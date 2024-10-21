@@ -1,12 +1,10 @@
 import React from "react";
 import { FaHome, FaHistory, FaRegThumbsUp } from "react-icons/fa";
-import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
-import { CgPlayList, CgProfile } from "react-icons/cg";
-import { RiVideoLine, RiPlayListLine } from "react-icons/ri";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
+import {  useNavigate, NavLink } from "react-router-dom";
 import useStore from '../../store/userStore';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 
 import useSubscriptionStore from "../../store/useSubscriptionStore";
@@ -29,8 +27,8 @@ function Navbar() {
             }
         }
         fetchData();
-    },[subscriberId ])
-    console.log(subscribedChannels)
+    },[subscriberId ,getSubscribedChannels])
+    // console.log(subscribedChannels)
     const handleLinkToCommunity = (subscribedChannel)=>{
         navigate(`/community/${subscribedChannel?.username}/${subscribedChannel?._id}`, { 
             state: { subscribedChannel } 

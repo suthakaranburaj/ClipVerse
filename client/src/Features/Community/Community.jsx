@@ -17,7 +17,7 @@ import useSubscriptionStore from '../../store/useSubscriptionStore'
 function Community() {
 
     const location = useLocation();
-    const {user} = useStore();
+    const {user, isLoading:userLoadingStore} = useStore();
     const subscribedChannel = location.state?.subscribedChannel || user;
     // console.log(user)
     // console.log(location)
@@ -33,7 +33,8 @@ function Community() {
     } = useTweetStore();
     const {
         getUserChannelSubscribers,
-        channelSubscribers
+        channelSubscribers,
+        isLoading:subscriberLoadingStore,
     } = useSubscriptionStore();
 
     const [isCreateTweet, setIsCreateTweet] = useState(false);
@@ -45,26 +46,31 @@ function Community() {
     const {username}=useParams();
     const [minLoading,setminLoading]=useState(true);
 
-    useEffect(()=>{
-        
-        const fetchData = async()=>{
+    useEffect(() => {
+        const fetchData = async () => {
+            setminLoading(true);  // Start loading
+    
             let userId = user?._id;
-            if(channelId !== userId){
+            if (channelId !== userId) {
                 userId = channelId;
             }
-            // console.log(userId)
-            await getUserTweets(userId);
-            // console.log(userId)
-            await getUserChannelSubscribers(userId);
-            await fetchChannelProfile(username);
-            // console.log(channel);
-            
-            setTimeout(()=>{
-                setminLoading(false);
-            },1000);
-        }
+    
+            try {
+                await Promise.all([
+                    getUserTweets(userId),
+                    getUserChannelSubscribers(userId),
+                    fetchChannelProfile(username),
+                ]);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // Handle any errors here if necessary
+            } finally {
+                setminLoading(false);  // End loading after all data is fetched
+            }
+        };
+    
         fetchData();
-    },[channelId,isEditTweet])
+    }, [channelId, isEditTweet]);
     // console.log(userTweets)
 
     const handleCreatePost = ()=>{
@@ -110,7 +116,7 @@ function Community() {
         setIsEditTweet(false);
     }
 
-    if (tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
+    if (subscriberLoadingStore||userLoadingStore||tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
 
     return (
         <>

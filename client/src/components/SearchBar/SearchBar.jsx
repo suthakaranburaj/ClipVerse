@@ -3,16 +3,6 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import devStore from '../../store/devStore';
-import { HiCurrencyDollar } from "react-icons/hi";
-import { GrLanguage } from "react-icons/gr";
-import { FaRegKeyboard } from "react-icons/fa6";
-import { FaGoogle, FaUnlockAlt } from "react-icons/fa";
-import { PiSignOut } from "react-icons/pi";
-import { SiYoutubestudio } from "react-icons/si";
-import { FiDatabase } from "react-icons/fi";
-import { IoLanguage, IoMoonSharp } from "react-icons/io5";
-import { MdOutlineFeedback, MdOutlineSwitchAccount, MdOutlineHelpOutline } from "react-icons/md";
-import { IoMdSettings } from "react-icons/io";
 import useStore from '../../store/userStore';
 import './SearchBar.scss'; // Ensure this file contains the necessary styling
 import image1 from '../../assets/profile_pic.webp';
@@ -20,9 +10,9 @@ import logo from '../../assets/ClipVerse_logo.png'
 
 function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); 
-    const { user, isAuthenticated, logout ,register} = useStore();
+    const { user, isAuthenticated, logout } = useStore();
 
-    const [isDropdownVisible, setDropdownVisible] = useState(false); 
+    const [ setDropdownVisible] = useState(false); 
 
     const submitHandler = () => {
         logout();
@@ -90,6 +80,7 @@ function SearchBar() {
                                 src={isAuthenticated && user?.avatar ? user.avatar : image1}
                                 className="profile-image"
                                 onClick={toggleDropdown} 
+                                alt=''
                             />
                             {/* {isDropdownVisible && (
                                 <div

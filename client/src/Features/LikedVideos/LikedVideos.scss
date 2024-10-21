@@ -4,6 +4,11 @@
     background-color: $background-color;
     color: $text-color;
     padding: 20px;
+    .header{
+        font-size: 26px;
+        font-weight: 700;
+        margin: 10px 0;
+    }
 
 .videoContainer {
     display: flex;

@@ -14,7 +14,6 @@ import
         getuserWatchHistoryService,
         getChannelVideosService,
     } from "../Features/zServices/userVideosServices";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const useVideosStore = create(
     persist(
@@ -151,9 +150,10 @@ const useVideosStore = create(
         userWatchHistory: async (videoId) =>{
             set({isLoading:true,error:null});
             try {
+                
                 const response = await userWatchHistoryService(videoId);
                 const watchHistory = response.data.user.watchHistory;
-                // console.log(watchHistory);
+                console.log(watchHistory)
                 set((state) =>({
                     watchHistorys: [watchHistory,...state.watchHistorys],
                     isLoading:false,

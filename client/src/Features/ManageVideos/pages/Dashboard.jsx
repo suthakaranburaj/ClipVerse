@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 
 import './Dashboard.scss';
 import userStatsStore from '../../../store/userStatsStore';
-import useStore from '../../../store/userStore'
 import Loader from '../../../components/Loader/Loader';
 
 

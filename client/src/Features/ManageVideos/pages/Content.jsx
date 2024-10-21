@@ -140,8 +140,8 @@ function Content() {
                 <div className="divider"></div>
 
                 <div className='level-4'>
-                    {videos?.length > 0 ? (
-                        videos?.map((video) => (
+                    {videos?.length && Array.isArray(videos) > 0 ? (
+                        videos.map((video) => (
                             <React.Fragment key={video?._id}>
                                 <div className='videoContainer'>
                                     <div className='videoContainer1'>
@@ -217,7 +217,7 @@ function Content() {
                                 {...register('thumbnail')}
                             />
 
-                            <label>Is Published</label>
+                            <label className='publish'>Is Published</label>
                             <input
                                 type="checkbox"
                                 {...register('isPublished')}

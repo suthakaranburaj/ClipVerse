@@ -6,7 +6,6 @@ import
     updateTweetServices,
     deleteTweetServices,
     } from '../Features/zServices/tweetsServices'
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 
 const useTweetStore = create((set)=>({
