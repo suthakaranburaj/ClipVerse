@@ -10,7 +10,7 @@ app.use(cors({
             'http://localhost:3000', 
             'https://clip-verse.vercel.app',
             'https://clipverse.vercel.app',
-            'https://clip-verse-suthakar-anburajs-projects.vercel.app/'
+            'https://clip-verse-suthakar-anburajs-projects.vercel.app',
         ],
     credentials: true
 }))
