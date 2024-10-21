@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-async-generator-functions": "^7.25.8",
+    "@babel/plugin-transform-dynamic-import": "^7.25.8",
+    "@babel/plugin-transform-json-strings": "^7.25.8",
+    "@babel/plugin-transform-optional-catch-binding": "^7.25.8",
+    "@babel/plugin-transform-unicode-property-regex": "^7.25.7",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
@@ -51,9 +56,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "tailwindcss": "^3.4.12",
     "webpack": "^5.95.0",
-    "webpack-cli": "^5.1.4",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "webpack-cli": "^5.1.4"
   }
 }
