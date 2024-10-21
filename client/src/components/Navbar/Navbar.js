@@ -28,7 +28,7 @@ function Navbar() {
         }
         fetchData();
     },[subscriberId ,getSubscribedChannels])
-    console.log(subscribedChannels)
+    // console.log(subscribedChannels)
     const handleLinkToCommunity = (subscribedChannel)=>{
         navigate(`/community/${subscribedChannel?.username}/${subscribedChannel?._id}`, { 
             state: { subscribedChannel } 

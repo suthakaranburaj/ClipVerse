@@ -328,7 +328,7 @@ function SearchBar() {
                                 {...register('videoFile', { required: 'Video File is required' })}
                             />
                             <div className='checker'>
-                                <label className=''>submit</label>
+                                <label className=''>Publish</label>
                                 <input className='square'
                                     type="checkbox"
                                     {...register('isPublished')}

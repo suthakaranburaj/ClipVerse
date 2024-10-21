@@ -1,28 +1,38 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+
 import './LikedVideos.scss'
 
 import useLikesStore from '../../store/useLikesStore'
+import Loader from '../../components/Loader/Loader';
 
 function LikedVideos() {
 
-    const {likedVideos,getLikedVideos}= useLikesStore();
+    const {likedVideos,getLikedVideos,isLoading:LikedVideosLoadingStore}= useLikesStore();
+    const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+
 
     useEffect(()=>{
         const fetchData= async() =>{
             await getLikedVideos();
             // console.log(likedVideos);
+            setTimeout(() => {
+                setMinLoading(false);
+            }, 1000);
         }
         fetchData();
     },[])
 
     dayjs.extend(relativeTime);
+
+    if (LikedVideosLoadingStore || minLoading) return <div><Loader /></div>;  
     return (
         <div className='LikedVideosContainer'>
+            <p className='header'>Liked Videos</p>
             <div className='videoContainer'>
                 {likedVideos?.map((video)=>(
                     video && (

@@ -45,7 +45,8 @@ function WatchVideo() {
         userWatchHistory, 
         incrementVideoViews,
         getAllVideos,
-        videos 
+        videos,
+        watchHistorys
     } = useVideosStore(); // Fetch the video from the store
 
     const {user} = useStore();
@@ -88,19 +89,33 @@ function WatchVideo() {
     useEffect(() => {
         const fetchData =async()=>{
             if (videoId) {
+                setChannelId(video?.owner?._id)
+
+                const isVideoInHistory = watchHistorys.some(history => history._id === videoId);
+
+                // If videoId is not in the watch history, call userWatchHistory
+                if (!isVideoInHistory) {
+                    // console.log("hellow")
+                    await userWatchHistory(videoId);
+                }
+                // if(isVideoInHistory){
+                //     console.log("hello")
+                // }
+                
                 await Promise.all([
-                    userWatchHistory(videoId),
                     getVideoById(videoId),
                     incrementVideoViews(videoId),
                     getVideoComments(videoId),
                     getAllVideos(),
                     getVideoLikes(videoId),
+                    getUserChannelSubscribers(channelId)
                 ]);
-
+                
                 
                 if(video?.owner?._id){
-                    setChannelId(video.owner._id);
+                    setChannelId(video?.owner._id);
                     await getUserChannelSubscribers(channelId);
+                    // console.log(channelSubscribers);
                 }
 
                 // Fetch likes for each comment
@@ -121,6 +136,9 @@ function WatchVideo() {
         channelId,
         userWatchHistory,
         getLikesOfComment,
+        
+    
+        // commentsOfVideo
     ]);
 
     useEffect(() => {
@@ -129,47 +147,88 @@ function WatchVideo() {
                 (subscriber) => subscriber._id === user._id
             );
             setIsSubscribed(isUserSubscribed);
+            // console.log(isSubscribed);
         }
 
-        if (likesOfVideoNumber > 0 && user) {
-            const isVideoLiked = likesOfVideo.some(
+        if (likesOfVideoNumber >= 0 && user) {
+            getVideoLikes(videoId);
+            const isVideoLike = likesOfVideo.some(
                 (u) => u.likedBy === user._id
             );
-            setIsVideoLiked(isVideoLiked);
+            setIsVideoLiked(isVideoLike);
+
         }
-    }, [channelSubscribers, user, likesOfVideoNumber, likesOfVideo,videoId]);
+    }, [
+        channelSubscribers,
+        user, 
+        likesOfVideoNumber, 
+        likesOfVideo,
+        videoId,
+        isVideoLiked,
+        isSubscribed,
+        getVideoLikes,
+    ]);
+
+    // useEffect(()=>{
+    //     const fetchData = async()=>{
+    //         await Promise.all([
+                
+    //         ])
+    //     }
+    //     fetchData();
+    // },[isVideoLiked])
 
     const handleAddComment = async()=>{
         if(videoId && commentContent){
-            await addCommentOnVideo(videoId,commentContent);
+            await Promise.all([
+                addCommentOnVideo(videoId,commentContent),
+                getVideoComments(videoId), // Fetch updated comments after adding the comment
+            ])
             setCommentContent('');
             setCommentsUpdated((prev) => !prev);
         }
     }
 
+    useEffect(() => {
+        const fetchData = async()=>{
+            if (videoId) {
+                await getVideoComments(videoId);  // Re-fetch comments when the videoId or commentsUpdated changes
+            }
+        }
+        fetchData();
+    }, [videoId, commentsUpdated]);
+    
+
     const handleSubscription = async () => {
         if (channelId) {
-            await toggleSubscription(channelId);
-            if(isSubscribed){
-                channelSubscribers.length -= 1;
-            }else{
-                channelSubscribers.length += 1;
-            }
-            setIsSubscribed((prev) => !prev);
+            await Promise.all([
+                toggleSubscription(channelId),
+                getUserChannelSubscribers(channelId),
+            ])
+            // if(isSubscribed){
+            //     channelSubscribers.length -= 1;
+                
+            // }else{
+            //     channelSubscribers.length += 1;
+            // }
+            // setIsSubscribed((prev) => !prev);
+            
         }
     };
 
     const handleVideoLike = async()=>{
         if(videoId){
-            await toggleVideoLike(videoId);
-            await getVideoLikes(videoId);
+            await Promise.all([
+                toggleVideoLike(videoId),
+                getVideoLikes(videoId),
+            ])
             // if(isVideoLiked){
             //     likesOfVideoCount -= 1;
             // }
             // else{
             //     likesOfVideoCount += 1;
             // }
-            setIsVideoLiked((prev)=> !prev);
+            // setIsVideoLiked((prev)=>!prev);
         }
     };
 
@@ -408,11 +467,17 @@ function WatchVideo() {
                                                                 ? 'likeIcon'
                                                                 : 'unLikeIcon'
                                                         }`}
-                                                        onClick={()=>{
-                                                            handleCommentLike(
-                                                                comment?._id
-                                                            )
-                                                            commentLikeData.likedByUser = !commentLikeData.likedByUser; // Toggle the like status
+                                                        onClick={() => {
+                                                            // Toggle the like status locally
+                                                            commentLikeData.likedByUser = !commentLikeData.likedByUser;
+                                                            if (commentLikeData.likedByUser) {
+                                                                commentLikeData.likes += 1; // Increment the like count
+                                                            } else {
+                                                                commentLikeData.likes -= 1; // Decrement the like count
+                                                            }
+                                            
+                                                            // Call the like API
+                                                            handleCommentLike(comment?._id);
                                                         }}
                                                     />
                                                 </div>
