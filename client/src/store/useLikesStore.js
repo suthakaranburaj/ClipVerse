@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import {  getLikesOfVideosServices ,toggleVideoLikeServices,getLikesOfVideoServices, getLikedVideosServices, toggleCommentLikeServices,getLikesOfCommentServices} from "../Features/zServices/likeServices";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const useLikesStore = create((set)=>({
     likesOfVideo:[],

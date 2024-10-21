@@ -14,7 +14,6 @@ import
         getuserWatchHistoryService,
         getChannelVideosService,
     } from "../Features/zServices/userVideosServices";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const useVideosStore = create(
     persist(

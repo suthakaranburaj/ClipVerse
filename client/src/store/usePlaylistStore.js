@@ -14,7 +14,6 @@ const usePlaylistStore = create((set)=>({
     isLoading:false,
     error:null,
     playlist:null,
-    playlist:null,
 
     getUserPlaylists : async(userId) =>{
         set({isLoading:true,error:null})

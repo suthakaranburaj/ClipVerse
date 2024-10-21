@@ -1,6 +1,4 @@
 import React from 'react';
-import { FaHome, FaHistory, FaRegThumbsUp } from "react-icons/fa";
-import { SiYoutubeshorts } from "react-icons/si";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons'; // Import the cross icon 
@@ -11,13 +9,12 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import './NoSideBar.scss';
 import devStore from '../../../../store/devStore';
 import useStore from '../../../../store/userStore';
-import { Link } from 'react-router-dom';
 
 
 function Navbar() {
-    const { isNavOpen } = devStore();
-    const { isAuthenticated, user } = useStore();
-    const { displayer, setDisplayer } = devStore(); 
+    // const { isNavOpen } = devStore();
+    // const { isAuthenticated, user } = useStore();
+    const { setDisplayer } = devStore(); 
     return (
         <div className='sidebar2'>
 

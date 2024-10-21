@@ -120,6 +120,7 @@ const addVideosToPlaylistServices = async(playlistId,{videoIds})=>{
             },
             withCredentials:true,
         });
+        return response;
     } catch (error) {
         throw(error);
     }
