@@ -11,6 +11,7 @@ app.use(cors({
             'https://clip-verse.vercel.app',
             'https://clipverse.vercel.app',
             'https://clip-verse-suthakar-anburajs-projects.vercel.app',
+            'https://clipverse-pink.vercel.app'
         ],
     credentials: true
 }))
