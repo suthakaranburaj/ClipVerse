@@ -310,6 +310,11 @@ const addUserWatchHistoryand = asyncHandler(async ( req,res)=>{
         },
     });
 
+    if(!updatedUser.watchHistory){
+        return res
+        .status(200)
+        .json(new ApiResponse(400,"Video is already watched !!"))
+    }
     return res
     .status(200)
     .json(new ApiResponse(200,updatedUser.updatedUser.watchHistory,"Video added to Watch History successfully !!"))
@@ -342,6 +347,25 @@ const increamentViews = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, "Views of the video incremented successfully !!"));
 });
 
+const getChannelVideos = asyncHandler(async(req,res)=>{
+    const {channelId} = req.params;
+    if(!channelId){
+        return res
+        .status(400)
+        .json(new ApiError(400,"Channel ID is missing !!"));
+    }
+
+    const channelVideos = await Video.find({owner:channelId});
+    if(!channelVideos){
+        return res
+        .status(400)
+        .json(new ApiError(400, " No Videos Found !!"))
+    }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200,channelVideos,"Videos Fetched successfully!!"))
+})
 
 export {
     getAllVideos,
@@ -352,4 +376,5 @@ export {
     togglePublishStatus,
     addUserWatchHistoryand,
     increamentViews,
+    getChannelVideos,
 }

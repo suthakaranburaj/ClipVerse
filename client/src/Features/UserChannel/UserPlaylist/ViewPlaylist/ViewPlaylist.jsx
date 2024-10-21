@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 import './ViewPlaylist.scss';
 import useVideosStore from '../../../../store/useVideosStore';
 import usePlaylistStore from '../../../../store/usePlaylistStore';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 function ViewPlaylist() {
     const { playlist, getPlaylistById, removeVideoFromPlaylist } = usePlaylistStore();
@@ -36,6 +39,7 @@ function ViewPlaylist() {
         }
     }, []);
 
+    dayjs.extend(relativeTime);
     return (
         <div className='ViewPlaylist'>
             <p className='ViewPlaylist1'>Playlist Videos</p>
@@ -48,28 +52,41 @@ function ViewPlaylist() {
                             return (
                                 video && (
                                     <div key={videoId} className='video-item'>
-                                        <div  className='video-item1'>
-                                            <img src={video.thumbnail} alt={video.title} className='video-thumbnail' />
-                                            <p className='video-title'>{video.title}</p>
-                                        </div>
-                                        <div className='video-item2'>
-                                            <FontAwesomeIcon 
-                                                icon={faEllipsisVertical} 
-                                                className='video-item21' 
-                                                onClick={() =>handleDeleteDropDown(video?._id)}
-                                            />
-                                            {isDropdownOpen === video?._id &&(
-                                                <div className='deleteContainer'>
-                                                    <button 
-                                                        className='deleteContainer1'
-                                                        onClick={()=>handleDelete(video?._id,playlist?._id)}
-                                                    >
-                                                        Delete
-                                                    </button>
+                                            {/* <div className='video-item1'> */}
+                                            <Link to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} key={video?._id} >
+                                                <div  className='video-item1'>
+                                                    <img src={video.thumbnail} alt={video.title} className='video-item11' />
                                                 </div>
-                                            )}
+                                            </Link>
+                                            <div className='video-item2'>
+                                                <div className='video-item21'>
+                                                    <p className='video-item211'>{video.title}</p>
+                                                    <div className='video-item212'>
+                                                        <p className='views'>{video?.views} views</p>
+                                                        <p className='dot'> • </p>
+                                                        <p className='time'> {dayjs(video?.createdAt).fromNow()}</p>
+                                                    </div>
+                                                </div>
+                                                <div className='video-item22'>
+                                                    <FontAwesomeIcon 
+                                                        icon={faEllipsisVertical} 
+                                                        className='video-item221' 
+                                                        onClick={() =>handleDeleteDropDown(video?._id)}
+                                                    />
+                                                    {isDropdownOpen === video?._id &&(
+                                                        <div className='deleteContainer'>
+                                                            <button 
+                                                                className='deleteContainer1'
+                                                                onClick={()=>handleDelete(video?._id,playlist?._id)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    
                                 )
                             );
                         })

@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route, Navigate } from "react-router-dom";
-
+import { useState, useEffect} from "react";
 import LayoutPage from "./Layout/LayoutPage";
 import HomePage from './Features/Homepage/HomePage';
 import UserChannel from "./Features/UserChannel/UserChannelTemplate/UserChannel";
@@ -16,8 +16,11 @@ import UserLive from "./Features/UserChannel/UserLive/UserLive";
 import LikedVideos from "./Features/LikedVideos/LikedVideos";
 import ViewPlaylist from "./Features/UserChannel/UserPlaylist/ViewPlaylist/ViewPlaylist";
 import Community from "./Features/Community/Community";
+import SplashScreen from "./components/SplashScreen/SplashScreen";
 
 const router = createBrowserRouter(
+
+    
     createRoutesFromElements(
         <>
             <Route path='/login' element={<LoginPage />} />
@@ -25,7 +28,7 @@ const router = createBrowserRouter(
             <Route path='/channel' element={<ManageVideos />} />
             <Route path='/' element={<LayoutPage />}>
                 <Route path='' element={<HomePage />} />
-                <Route path='userchannel/:channelId' element={<UserChannel />} >
+                <Route path='/:username/:channelId' element={<UserChannel />} >
                     <Route path='' element={<Navigate to='videos' replace />} />
                     <Route path='playlist' element={<UserPlaylist />} >
                         <Route path=':playlistId' element={<ViewPlaylist />} />
@@ -38,7 +41,7 @@ const router = createBrowserRouter(
                 <Route path='subscription' element={<Subscriptions />} />
                 <Route path='/watch-history' element={<WatchHistory/>}/>
                 <Route path='watchvideo' element={<WatchVideo />} />
-                <Route path='/community/:channelId' element={<Community />} />
+                <Route path='/community/:username/:channelId' element={<Community />} />
             </Route>
             
         </>
@@ -46,8 +49,24 @@ const router = createBrowserRouter(
 );
 
 function App() {
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+        localStorage.setItem('splashShown', 'false');
+    
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
-        <RouterProvider router={router} />
+        <div>
+            {loading ? <SplashScreen /> : <RouterProvider router={router} />}
+        </div>
     );
 }
 

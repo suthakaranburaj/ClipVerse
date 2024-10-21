@@ -3,6 +3,17 @@
 .cont {
   background-color: $background-color ;
 
+  &1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+
+    img{
+      width: 65px;
+      height: 40px;
+    }
+  }
   .nav-center {
     display: flex;
     align-items: center;

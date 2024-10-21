@@ -5,13 +5,16 @@ import { useEffect } from 'react';
 import './Dashboard.scss';
 import userStatsStore from '../../../store/userStatsStore';
 import useStore from '../../../store/userStore'
+import Loader from '../../../components/Loader/Loader';
 
 
 
 function Dashboard() {
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState(null);
-    const {getChannelStats, views, likes, commentsCount,totalSubscribers,}=userStatsStore();
+    const {getChannelStats, views, likes, commentsCount,totalSubscribers,isLoading:statsLoadingStore}=userStatsStore();
+    const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+
     // Dropdown state
 
     useEffect(() => {
@@ -20,6 +23,9 @@ function Dashboard() {
             try {
                 await getChannelStats();
                 // Process the fetched videos here
+                setTimeout(() => {
+                    setMinLoading(false);
+                }, 1000);
             } catch (error) {
                 console.error("Error fetching stats:", error);
             }
@@ -40,14 +46,16 @@ function Dashboard() {
         setSelectedVideo(file);
         // Further processing can be done with the file, like uploading it to a server
     };
+
+    if(minLoading || statsLoadingStore) return <div><Loader/></div>
     return (
         <>
             <div className='wrapper'>
                 <div className='header'>Channel dashboard</div>
                 <div className='sub-wrapper'>
-                    <div className='col-1'>
+                    {/* <div className='col-1'>
                         <div className='container-upload'><button className='bttn' onClick={handleUploadClick}>Upload videos</button></div>
-                    </div>
+                    </div> */}
                     
                     <div className='col-2'>
                         <div className='container-subs'>
@@ -75,9 +83,9 @@ function Dashboard() {
                         </div>
                         
                     </div>
-                    <div className='col-3'>
+                    {/* <div className='col-3'>
 
-                    </div>
+                    </div> */}
                 </div>
                 {isModalVisible && (
                 <div className="modal-overlay">

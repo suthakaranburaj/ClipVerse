@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation ,Link} from 'react-router-dom';
 import devStore from '../../store/devStore';
 import './WatchVideo.scss';
 import image1 from '../../assets/video1_thumbnail.jpg'
@@ -18,6 +18,7 @@ import useCommentsStore from '../../store/useCommentsStore'
 import useSubscriptionStore from '../../store/useSubscriptionStore';
 import useLikesStore from '../../store/useLikesStore';
 import { useForm } from 'react-hook-form';
+import Loader from '../../components/Loader/Loader';
 
 
 
@@ -36,13 +37,15 @@ function WatchVideo() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(null);
     const [isEditComment,setIsEditComment] = useState(false);
     const [currentComment, setCurrentComment] = useState();
+    const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+
     
     const { register, handleSubmit, reset } = useForm();
 
     const { 
         video, 
         getVideoById, 
-        isLoading, 
+        isLoading:videoLoadingStore, 
         error, 
         userWatchHistory, 
         incrementVideoViews,
@@ -86,17 +89,20 @@ function WatchVideo() {
 
     const queryParams = new URLSearchParams(location.search);
     const videoId = queryParams.get('videoId');
+    // const channelId = video?.owner?._id;
     useEffect(() => {
         const fetchData =async()=>{
             if (videoId) {
-                await userWatchHistory(videoId);
-                await getVideoById(videoId);
-                await incrementVideoViews(videoId);
-                await getVideoComments(videoId);
-                await getAllVideos();
-                await getVideoLikes(videoId);
+                await Promise.all([
+                    userWatchHistory(videoId),
+                    getVideoById(videoId),
+                    incrementVideoViews(videoId),
+                    getVideoComments(videoId),
+                    getAllVideos(),
+                    getVideoLikes(videoId),
+                ]);
 
-                const channelId = await video?.owner?._id;
+                
                 if(video?.owner?._id){
                     setChannelId(video.owner._id);
                     await getUserChannelSubscribers(channelId);
@@ -109,20 +115,25 @@ function WatchVideo() {
                     }
                 }
             }
+
+            setTimeout(() => {
+                setMinLoading(false);
+            }, 1000);
         };
         fetchData();
     }, [
         videoId,
         channelId,
-        getVideoById,
+        // getVideoById,
         userWatchHistory,
-        incrementVideoViews,
-        getVideoComments,
-        commentsUpdated,
-        getAllVideos,
-        getUserChannelSubscribers,
-        getVideoLikes,
+        // incrementVideoViews,
+        // getVideoComments,
+        // commentsUpdated,
+        // getAllVideos,
+        // getUserChannelSubscribers,
+        // getVideoLikes,
         getLikesOfComment,
+
     ]);
 
     useEffect(() => {
@@ -139,7 +150,7 @@ function WatchVideo() {
             );
             setIsVideoLiked(isVideoLiked);
         }
-    }, [channelSubscribers, user, likesOfVideoNumber, likesOfVideo]);
+    }, [channelSubscribers, user, likesOfVideoNumber, likesOfVideo,videoId]);
 
     const handleAddComment = async()=>{
         if(videoId && commentContent){
@@ -227,7 +238,22 @@ function WatchVideo() {
         setIsEditComment(false);
         reset();
     }
-    if (isLoading) return <p>Loading video...</p>;
+
+    const handleDoubleClick = (event) => {
+        const rect = videoRef.current.getBoundingClientRect();
+        const clickX = event.clientX - rect.left; // X coordinate of click relative to video
+        const videoWidth = rect.width;
+
+        if (clickX < videoWidth / 3) {
+            // Clicked on the left third of the video, skip backward
+            videoRef.current.currentTime -= 5; // Move backward by 5 seconds
+        } else if (clickX > (videoWidth * 2) / 3) {
+            // Clicked on the right third of the video, skip forward
+            videoRef.current.currentTime += 5; // Move forward by 5 seconds
+        }
+    };
+
+    if (videoLoadingStore || minLoading) return <Loader/>
     if (error) return <p>Error: {error}</p>;
 
     dayjs.extend(relativeTime);
@@ -244,6 +270,7 @@ function WatchVideo() {
                                 src={video?.videoFile}
                                 controls
                                 style={{ borderRadius: '10px' }}
+                                onDoubleClick={handleDoubleClick}
                             />
                         ) : (
                             <p>No video found.</p>
@@ -257,15 +284,17 @@ function WatchVideo() {
                     </div>
                     <div className='subscribeSection'>
                         <div className='section1'>
-                            <div className='section11'>
-                                <div className='section111'>
-                                    <img src={video?.owner?.avatar} alt="" />
+                            <Link to={`/${video?.owner?.username}/${video?.owner?._id}`}>
+                                <div className='section11'>
+                                    <div className='section111'>
+                                        <img src={video?.owner?.avatar} alt="" />
+                                    </div>
+                                    <div className='section112'>
+                                        <p className='ownerName'>{video?.owner?.fullName}</p>
+                                        <p className='ownerSubscribers'>{channelSubscribers.length}</p>
+                                    </div>
                                 </div>
-                                <div className='section112'>
-                                    <p className='ownerName'>{video?.owner?.fullName}</p>
-                                    <p className='ownerSubscribers'>{channelSubscribers.length}</p>
-                                </div>
-                            </div>
+                            </Link>
                             <div className='section12'>
                                 <button 
                                     className='subscribeButton'
@@ -392,14 +421,15 @@ function WatchVideo() {
                                                                 ? 'likeIcon'
                                                                 : 'unLikeIcon'
                                                         }`}
-                                                        onClick={()=>
+                                                        onClick={()=>{
                                                             handleCommentLike(
                                                                 comment?._id
                                                             )
-                                                        }
+                                                            commentLikeData.likedByUser = !commentLikeData.likedByUser; // Toggle the like status
+                                                        }}
                                                     />
                                                 </div>
-                                                <p>{commentLikeData.likes}</p>
+                                                <p>{commentLikeData.likes }</p>
                                             </div>
                                         </div>
                                     </div>
@@ -416,24 +446,26 @@ function WatchVideo() {
                 <div className='watchVideo-right-side'>
                     {videos.length > 0 && videos.map((video, index) => (
                         video?._id != videoId && (
-                            <div key={index} className='watchVideoSection'>
-                                <div className='watchVideoSection1'>
-                                    <img src={video?.thumbnail} className='watchVideoSection11' alt="" />
+                            <Link key={index} to={`/watchvideo?videoId=${encodeURIComponent(video?._id)}`} >
+                                <div key={index} className='watchVideoSection'>
+                                    <div className='watchVideoSection1'>
+                                        <img src={video?.thumbnail} className='watchVideoSection11' alt="" />
+                                    </div>
+                                    <div className='watchVideoSection2'>
+                                        <div className='watchVideoSection21'>
+                                            <p className='watchVideoSection211'>{video?.title}</p>
+                                        </div>
+                                        <div className='watchVideoSection22'>
+                                            <p className='watchVideoSection221'>{video?.owner?.username}</p>
+                                        </div>
+                                        <div className='watchVideoSection23'>
+                                                <p className='views'>{video?.views} views</p>
+                                                <p className='dot'>•</p>
+                                                <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='watchVideoSection2'>
-                                    <div className='watchVideoSection21'>
-                                        <p className='watchVideoSection211'>{video?.title}</p>
-                                    </div>
-                                    <div className='watchVideoSection22'>
-                                        <p className='watchVideoSection221'>{video?.owner?.username}</p>
-                                    </div>
-                                    <div className='watchVideoSection23'>
-                                            <p className='views'>{video?.views} views</p>
-                                            <p className='dot'>•</p>
-                                            <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
-                                    </div>
-                                </div>
-                            </div>
+                            </Link>
                         )
                     ))}
                 </div>

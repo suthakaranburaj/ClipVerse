@@ -8,12 +8,16 @@ import useStore from '../../store/userStore';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
+import { useState } from 'react';
 
 function HomePage() {
     const videoRefs = useRef([]);
     const { isNavOpen } = devStore();
-    const { videos, getAllVideos, isLoading, error:videoStoreError } = useVideosStore();
+    const { videos, getAllVideos, isLoading:videoStoreLoading, error:videoStoreError } = useVideosStore();
     const {user,isAuthenticated}=useStore();
+    const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+
 
     const navigate = useNavigate();
     if(isAuthenticated == false){
@@ -23,15 +27,22 @@ function HomePage() {
     dayjs.extend(relativeTime);
 
     useEffect(() => {
-        // Fetch all videos when the component is mounted
-        getAllVideos({
-            page: 1, // default params
-            limit: 20, 
-            query: '', 
-            sortBy: 'views', 
-            sortType: 'desc',
-            userId: null 
-        });
+        const startLoading = async () => {
+            await getAllVideos({
+                page: 1,
+                limit: 20,
+                query: '',
+                sortBy: 'views',
+                sortType: 'desc',
+                userId: null,
+            });
+            // Ensure loader is shown for at least 1.5 seconds
+            setTimeout(() => {
+                setMinLoading(false);
+            }, 1000);
+        };
+
+        startLoading();
     }, [getAllVideos]);
 
 
@@ -45,7 +56,9 @@ function HomePage() {
         }
     };
 
-    if (isLoading) return <div>Loading...</div>;    const handleMouseEnter = (index) => {
+    if (videoStoreLoading || minLoading) return <div><Loader /></div>;  
+    
+    const handleMouseEnter = (index) => {
         const videoElement = videoRefs.current[index];
         if (videoElement && videoElement.readyState >= 2) {
             videoElement.style.display = 'block';
@@ -94,7 +107,11 @@ function HomePage() {
                                 />
                                 <div className='channelContainer2'>
                                     <p className='description'>{video?.title}</p>
-                                    <p className='userChannel'>{video?.owner?.username}</p>
+                                    <Link to={`/${video?.owner?.username}/${video?.owner?._id}`}>
+                                        <p className='userChannel'>
+                                            {video?.owner?.username}
+                                        </p>
+                                    </Link>
                                     <div className='flex'>
                                         <p className='views'>{video?.views} views</p>
                                         <p className='dot'>•</p>

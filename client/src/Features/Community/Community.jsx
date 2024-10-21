@@ -7,9 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faThumbsUp } from '@fortawesome/free-solid-svg-icons'; // Example icons 
 import {faPlus } from '@fortawesome/free-solid-svg-icons';
 import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import useTweetStore from '../../store/useTweetStore'
 import useStore from '../../store/userStore';
+import userStatsStore from '../../store/userStatsStore';
+import Loader from '../../components/Loader/Loader';
+import useSubscriptionStore from '../../store/useSubscriptionStore'
 
 function Community() {
 
@@ -20,27 +23,53 @@ function Community() {
     // console.log(location)
 
     // console.log(subscribedChannel);
-    const {getUserTweets, userTweets, createTweet, updateTweet, deleteTweet} = useTweetStore();
+    const {
+        getUserTweets, 
+        userTweets, 
+        createTweet, 
+        updateTweet, 
+        deleteTweet,
+        isLoading:tweetsLoadingStore,
+    } = useTweetStore();
+    const {
+        getUserChannelSubscribers,
+        channelSubscribers
+    } = useSubscriptionStore();
+
     const [isCreateTweet, setIsCreateTweet] = useState(false);
     const [newTweetContent, setNewTweetContent] = useState('');
     const [isEditTweet , setIsEditTweet] = useState(false);
     const [currentTweet , setCurrentTweet] = useState(null);
+    const {channelId}=useParams();
+    const {channel,fetchChannelProfile} = userStatsStore();
+    const {username}=useParams();
+    const [minLoading,setminLoading]=useState(true);
 
     useEffect(()=>{
         
         const fetchData = async()=>{
-            const userId = subscribedChannel?._id;
+            let userId = user?._id;
+            if(channelId !== userId){
+                userId = channelId;
+            }
             // console.log(userId)
             await getUserTweets(userId);
-            // console.log(userTweets)
+            // console.log(userId)
+            await getUserChannelSubscribers(userId);
+            await fetchChannelProfile(username);
+            // console.log(channel);
+            
+            setTimeout(()=>{
+                setminLoading(false);
+            },1000);
         }
         fetchData();
-    },[subscribedChannel?._id,currentTweet])
+    },[channelId,isEditTweet])
     // console.log(userTweets)
 
     const handleCreatePost = ()=>{
         setIsCreateTweet((prev) => !prev);
-        console.log(isCreateTweet)
+        // console.log(isCreateTweet)
     }
 
     const handleCreateTweet= async()=>{
@@ -74,13 +103,31 @@ function Community() {
         setCurrentTweet(null);
         setIsEditTweet(false);
     }
+
+    const handleCancelTweet = ()=>{
+        setIsCreateTweet(false);
+        setCurrentTweet(null);
+        setIsEditTweet(false);
+    }
+
+    if (tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
+
     return (
         <>
         <div className='communityContianer'>
-            <div className='mainContainer'>
-                <div className='channelProfileContainer'>
-
+        <div className='channelProfileContainer'>
+                    <div className='channelProfileContainer1'>
+                        <img src={channel?.avatar} className='channelProfileContainer11' alt="" />
+                    </div>
+                    <div className='channelProfileContainer2'>
+                        <Link to={`/${channel?.username}/${channel?._id}`}>
+                            <p className='channelProfileContainer21'>{channel?.username}</p>
+                        </Link>
+                        <p className='channelProfileContainer22'>{channelSubscribers?.length} subscribers</p>
+                    </div>
                 </div>
+            <div className='mainContainer'>
+                
                 {userTweets?.map((tweet)=>(
                     <div className='communityPostContainer' key={tweet?._id}>
                         <div className='communityPostContainer1'>
@@ -88,13 +135,13 @@ function Community() {
                                 <div className='communityPostContainer111'>
                                     <img 
                                         className='communityPostContainer1111' 
-                                        src={subscribedChannel?.avatar}
+                                        src={channel?.avatar}
                                         alt="" 
                                     />
                                 </div>
-                                <p className='communityPostContainer112'>{subscribedChannel?.username}</p>
+                                <p className='communityPostContainer112'>{channel?.username}</p>
                             </div>
-                            {subscribedChannel?._id === user?._id && (
+                            {channel?._id === user?._id && (
                                 <div 
                                     className='communityPostContainer12'
                                     onClick={()=>handleEditTweet(tweet)}
@@ -131,16 +178,20 @@ function Community() {
                                 icon={faThumbsUp} 
                                 className='communityPostContainer31'
                             />
-                            <p
+                            {/* <p
                                 className='communityPostContainer32'
                             >
                                 45
-                            </p>
+                            </p> */}
                         </div>
+                        
                     </div>
                 ))}
+                { userTweets.length === 0 && (
+                    <div className='noTweets'>No Tweets</div>
+                )}
             </div>
-            {subscribedChannel?._id === user?._id && (<button 
+            {channel?._id === user?._id && (<button 
                 className='mainContainer1'
                 onClick={handleCreatePost}
             >
@@ -176,6 +227,12 @@ function Community() {
                         <div className='secondRow2'>
                             <button 
                                 className='secondRow21'
+                                onClick={handleCancelTweet}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                className='secondRow22'
                                 onClick={handleCreateTweet}
                             >
                                 Post

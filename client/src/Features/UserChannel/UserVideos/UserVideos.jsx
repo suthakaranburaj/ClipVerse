@@ -3,11 +3,24 @@ import './UserVideos.scss';
 import userStatsStore from '../../../store/userStatsStore';
 import usePlaylistStore from '../../../store/usePlaylistStore';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import useVideosStore from '../../../store/useVideosStore';
+import useStore from '../../../store/userStore';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import Loader from '../../../components/Loader/Loader';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'; // Example icons 
 
 function UserVideos() {
-    const { getChannelVideos, videos: channelVideos } = userStatsStore();
+    const { 
+        getChannelVideos, 
+        channelVideos,
+        isLoading:videosLoading,
+    } = useVideosStore();
+    const {user} = useStore();
     const 
     {
         createPlaylist,
@@ -23,6 +36,7 @@ function UserVideos() {
     const [selectedVideos, setSelectedVideos] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false);
     const [currentPlaylist, setCurrentPlaylist] = useState(null);
+    const [minLoading,setMinLoading]=useState(true)
 
     const {channelId}=useParams();
 
@@ -61,10 +75,16 @@ function UserVideos() {
     
     useEffect(() => {
         const fetchData = async () => {
-            await getChannelVideos();
+            await getChannelVideos(channelId);
+
+            setTimeout(()=>{
+                setMinLoading(false);
+            },1000);
+            // setMinLoading(true);
         };
         fetchData();
-    }, []);
+        
+    }, [channelId]);
 
 // src/components/UserVideos/UserVideos.jsx
 
@@ -86,7 +106,7 @@ function UserVideos() {
             // handleCancelForm();
             // handleCreatePlaylist();
             setIsCreatePlaylistActive(false);
-            navigate(`/userchannel/${channelId}/playlist/${playlist?._id}`)
+            navigate(`/userchannel/${channelId}/playlist`)
         } catch (error) {
             console.error("Error while creating playlist !!");
         }
@@ -103,41 +123,70 @@ function UserVideos() {
         }
     },[location.state,setValue]);
 
+    if(videosLoading) return<div><Loader/></div>
+
+    dayjs.extend(relativeTime);
+
     return (
         <>
         <div className='userVideosContainer'>
             <div className='container'>
                 <p className='container1'>Videos</p>
-                <p className='container2' onClick={handleCreatePlaylist}>
+                {user?._id === channelId &&(
+                    <p className='container2' onClick={handleCreatePlaylist}>
                     {isCreatePlaylistActive ? 'Cancel Playlist' : 'Create Playlist'}
                 </p>
+                )}
                 <div className='container3'>
-                    {channelVideos.map((video) => (
+                {channelVideos.map((video) => {
+                    const VideoContent = (
                         <div
-                            key={video?._id}
                             className={`container31 ${
                                 isCreatePlaylistActive && selectedVideos.includes(video._id)
                                     ? 'selectedVideo'
                                     : ''
                             }`}
-                            onClick={() =>
-                                isCreatePlaylistActive && handleCheckboxChange(video._id)
-                            }
+                            onClick={() => isCreatePlaylistActive && handleCheckboxChange(video._id)}
                         >
                             <div className='container311'>
                                 <img src={video?.thumbnail} alt="" className='' />
                             </div>
                             <div className='container312'>
-                                <p className='container3121'>{video?.title}</p>
-                                <p className='container3122'>{video?.description}</p>
-                                <p className='container3123'>{video?.views}</p>
+                                <div>
+                                    <p className='container3121'>{video?.title}</p>
+                                    <div className='container3122'>
+                                        <p className=''>{video?.views} views</p>
+                                        <p className='dot'> • </p>
+                                        <p className='time'> {dayjs(video?.createdAt).fromNow()}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <FontAwesomeIcon 
+                                        icon={faEllipsisVertical} 
+                                        className='channelCommentsSection221 ml-2' 
+                                    />
+                                </div>
                             </div>
                         </div>
-                    ))}
+                    );
+
+                    return isCreatePlaylistActive ? (
+                        <div key={video._id}>
+                            {VideoContent}
+                        </div>
+                    ) : (
+                        <Link key={video._id} to={`/watchvideo?videoId=${encodeURIComponent(video._id)}`}>
+                            {VideoContent}
+                        </Link>
+                    );
+                })}
+
                 </div>
                 {isCreatePlaylistActive && !isEditMode && (
+                    
                     <button
-                    onClick={handleCreateChange}
+                        onClick={handleCreateChange}
+                        className='mainCreateButton'
                     >
                         Create
                     </button>
@@ -146,36 +195,42 @@ function UserVideos() {
         </div>
         {isCreate && !isEditMode && (
             <div className='createPlaylistForm'>
-                <p>Playlist</p>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className='createPlaylistForm1'>
+                
+                <form onSubmit={handleSubmit(onSubmit)} className='createPlaylistForm1'>
+                    <p>Playlist</p>
+                    <div className='createPlaylistForm11'>
                         <label>
                             Name
                         </label>
                         <input 
                             type="text" 
-                            {...register('name')}
+                            {...register('name',{ maxLength: 30 })}
+                            required
+                            maxLength={30}
                         />
                     </div>
-                    <div className='createPlaylistForm2'>
+                    <div className='createPlaylistForm12'>
                         <label>
                             Description
                         </label>
                         <input 
                             type="text" 
-                            {...register('description')}
+                            {...register('description',{ maxLength: 75 })}
+                            required
+                            maxLength={75}
                         />
                     </div>
-                    <div className='createPlaylistForm3'>
+                    <div className='createPlaylistForm13'>
                         <button 
                             type='submit'
-                            className='createPlaylistForm31'
+                            className='createPlaylistForm131'
                         >
                             Create
                         </button>
                         <button
+                            type='button' 
                             onClick={handleCancelForm}
-                            className='createPlaylistForm32'
+                            className='createPlaylistForm132'
                         >
                             Cancel
                         </button>
@@ -184,8 +239,11 @@ function UserVideos() {
             </div>
         )}
         {isEditMode && (
-            <div className='updatePlaylistForm'>
-                <button onClick={onSubmit}>
+            <div className=''>
+                <button 
+                onClick={onSubmit}
+                className='updatePlaylistForm'
+                >
                     Update Videos
                 </button>
             </div>

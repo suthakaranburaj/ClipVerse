@@ -1,7 +1,20 @@
 import { create } from "zustand";
 import useStore from "./userStore";
 import { persist } from "zustand/middleware";
-import { getAllVideosService, updateVideoService, getVideoByIdService, publishAVideoService, deleteVideoService, togglePublishStatusService, incrementVideoViewsService, userWatchHistoryService, getuserWatchHistoryService} from "../Features/zServices/userVideosServices";
+import 
+    { 
+        getAllVideosService, 
+        updateVideoService, 
+        getVideoByIdService, 
+        publishAVideoService, 
+        deleteVideoService, 
+        togglePublishStatusService, 
+        incrementVideoViewsService, 
+        userWatchHistoryService, 
+        getuserWatchHistoryService,
+        getChannelVideosService,
+    } from "../Features/zServices/userVideosServices";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const useVideosStore = create(
     persist(
@@ -13,6 +26,7 @@ const useVideosStore = create(
         error:null,
         isAuthenticated:useStore.getState().isAuthenticated,
         watchHistorys:[],
+        channelVideos:[],
 
         getAllVideos: async(params={}) => {
             set({isLoading: true, error:null});
@@ -185,6 +199,24 @@ const useVideosStore = create(
                 set({
                     isLoading:false,
                     error:error.response?.data?.message || "Failed to fetch the watch history !!"
+                })
+            }
+        },
+
+        getChannelVideos : async(channelId)=>{
+            set({isLoading:true,error:null});
+            try {
+                const response = await getChannelVideosService(channelId);
+                set({
+                    channelVideos:response.data.data,
+                    isLoading:false,
+                    error:null
+                })
+            } catch (error) {
+                set({
+                    isLoading:false,
+                    error:error.response?.message?.data || "failed to fetch channel Videos !!",
+
                 })
             }
         }

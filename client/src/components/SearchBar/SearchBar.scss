@@ -8,6 +8,17 @@
     align-items: center;
     color: white;
     background-color: $background-color;
+    width: 100%;
+    &1{
+        width: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        img{
+            width: 65px;
+            height: 40px;
+        }
+    }
 }
 
 .icon-large {
@@ -26,9 +37,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 65%;
     background-color: $background-color;
-
+    // width: 70vw;
     .search-bar {
         display: flex;
         align-items: center;
@@ -37,6 +47,8 @@
         border: 1px solid #323232;
         padding: 5px;
         width: 100%;
+        background-color: $secondary-color;
+        box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
     }
 
     .search-input {
@@ -47,6 +59,7 @@
         color: white;
         border-radius: 40px;
         outline: none;
+        
     }
 
     .search-button {
@@ -72,9 +85,10 @@
     display: flex;
     align-items: center;
     background-color: $background-color;
+    width: 15%;
 }
 
-.login-button, .logout-button {
+.login-button{
     background-color:$button-color ;
     border-radius: 20px;
     padding: 0 1rem;
@@ -83,6 +97,74 @@
     color: white;
     cursor: pointer;
     border: none;
+}
+
+/* From Uiverse.io by vinodjangid07 */ 
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    background-color: rgb(255, 0, 0);
+}
+
+/* plus sign */
+.sign {
+width: 100%;
+transition-duration: .3s;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.sign svg {
+width: 17px;
+}
+
+.sign svg path {
+fill: white;
+}
+/* text */
+.text {
+position: absolute;
+right: 0%;
+width: 0%;
+opacity: 0;
+color: white;
+font-size: 1.2em;
+// font-weight: 600;
+transition-duration: .3s;
+}
+/* hover effect on button width */
+.logout-button:hover {
+width: 125px;
+border-radius: 40px;
+transition-duration: .3s;
+}
+
+.logout-button:hover .sign {
+width: 30%;
+transition-duration: .3s;
+padding-left: 20px;
+}
+/* hover effect button's text */
+.logout-button:hover .text {
+opacity: 1;
+width: 70%;
+transition-duration: .3s;
+padding-right: 10px;
+}
+/* button click effect*/
+.logout-button:active {
+transform: translate(2px ,2px);
 }
 
 .profile-image {

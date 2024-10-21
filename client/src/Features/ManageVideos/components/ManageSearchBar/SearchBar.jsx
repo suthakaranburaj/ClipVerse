@@ -20,6 +20,8 @@ import image1 from '../../../../assets/profile_pic.webp';
 import { useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
 import useVideoStore from '../../../../store/useVideosStore'
+import logo from '../../../../assets/ClipVerse_logo.png'
+// import { Link } from 'react-router-dom';
 
 function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); // Get isNavOpen state from the store
@@ -77,12 +79,15 @@ function SearchBar() {
     }
     return (
         <div className="cont text-white p-4 flex justify-between">
-            <div className='mx-4'>
+            <div className='mx-4 cont1'>
                 <FontAwesomeIcon
                     className='text-white icon-large'
                     icon={isNavOpen ? faTimes : faBars} // Conditional rendering of icons
                     onClick={() => toggleNav()}
                 />
+                <Link to='/'>
+                    <img src={logo} alt="" />
+                </Link>
             </div>
             <div className='mx-10 w-[80%]'>
                 <div className="flex justify-between">
@@ -122,24 +127,32 @@ function SearchBar() {
 
                                             <div className="dropdown-item" onClick={handleUploadClick}>
                                                 <FiUpload className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Upload videos</span>
+                                                <Link>
+                                                    <span className="dropdown-label">Upload videos</span>
+                                                </Link>
                                             </div>
                                             <div className="dropdown-item">
                                                 <IoMdWifi className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Go live</span>
+                                                <Link>
+                                                    <span className="dropdown-label">Go live</span>
+                                                </Link>
                                             </div>
                                             <div className="dropdown-item">
                                                 <FiEdit className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Create post</span>
+                                                <Link to={`/community/${user?.username}/${user?._id}`}>
+                                                    <span className="dropdown-label">Create post</span>
+                                                </Link>
                                             </div>
                                             <div className="dropdown-item">
                                                 <CgPlayListAdd className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">New playlist</span>
+                                                <Link to={`/${user?.username}/${user?._id}/videos`}>
+                                                    <span className="dropdown-label">New playlist</span>
+                                                </Link>
                                             </div>
-                                            <div className="dropdown-item">
+                                            {/* <div className="dropdown-item">
                                                 <MdOutlinePodcasts className="dropdown-icon" size={22} />
                                                 <span className="dropdown-label">New podcast</span>
-                                            </div>
+                                            </div> */}
                                         </div>
 
 
@@ -156,114 +169,116 @@ function SearchBar() {
 
 
                         {/* Profile Image with dropdown */}
-                        <div className="relative">
-                            <img
-                                src={isAuthenticated && user?.avatar ? user.avatar : image1}
-                                className="rounded-full bg-green-600 w-10 h-10 flex items-center justify-center text-white font-bold cursor-pointer"
-                                onClick={toggleDropdown} // Click to toggle dropdown
-                            />
-                            {/* Dropdown Menu */}
-                            {isDropdownVisible && (
-                                <div
-                                    className="dropdown-menu absolute right-0 w-48 text-white rounded-lg shadow-lg"
-                                    onMouseLeave={() => setDropdownVisible(false)} // Hide on mouse leave
-                                >
-                                    <div className='dropdown '>
+                        <Link to={`/${user?.username}/${user?._id}`}>
+                            <div className="relative">
+                                <img
+                                    src={isAuthenticated && user?.avatar ? user.avatar : image1}
+                                    className="rounded-full bg-green-600 w-10 h-10 flex items-center justify-center text-white font-bold cursor-pointer"
+                                    onClick={toggleDropdown} // Click to toggle dropdown
+                                />
+                                {/* Dropdown Menu */}
+                                {/* {isDropdownVisible && (
+                                    <div
+                                        className="dropdown-menu absolute right-0 w-48 text-white rounded-lg shadow-lg"
+                                        onMouseLeave={() => setDropdownVisible(false)} // Hide on mouse leave
+                                    >
+                                        <div className='dropdown '>
 
-                                        <div className="dropdown-section">
+                                            <div className="dropdown-section">
 
-                                            <div className="dropdown-item">
+                                                <div className="dropdown-item">
 
-                                                <img
-                                                    src={isAuthenticated && user?.avatar ? user.avatar : image1}
-                                                    className="rounded-full bg-green-600 w-10 h-10 mr-5 mb-5 flex items-center justify-center text-white font-bold cursor-pointer"
+                                                    <img
+                                                        src={isAuthenticated && user?.avatar ? user.avatar : image1}
+                                                        className="rounded-full bg-green-600 w-10 h-10 mr-5 mb-5 flex items-center justify-center text-white font-bold cursor-pointer"
 
-                                                />
-                                                <div className='profile-details'>
-                                                    <div className="dropdown-label">{isAuthenticated && user?.fullName ? user.fullName : "Name"}</div>
-                                                    <div className="dropdown-label">{isAuthenticated && user?.username ? user.username : "Username"}</div>
-                                                    <Link to="/userchannel" className="dropdown-label-link">View Channel</ Link>
+                                                    />
+                                                    <div className='profile-details'>
+                                                        <div className="dropdown-label">{isAuthenticated && user?.fullName ? user.fullName : "Name"}</div>
+                                                        <div className="dropdown-label">{isAuthenticated && user?.username ? user.username : "Username"}</div>
+                                                        <Link to="/userchannel" className="dropdown-label-link">View Channel</ Link>
+                                                    </div>
+
+                                                </div>
+                                                <div className="dropdown-divider"></div>
+
+                                                <Link to="/account" className="dropdown-item">
+                                                    <FaGoogle className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Google Account</span>
+                                                </ Link>
+                                                <div className="dropdown-item">
+                                                    <MdOutlineSwitchAccount className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Switch Account</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    <PiSignOut className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Sign out</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="dropdown-divider"></div>
+
+                                            <div className="dropdown-section">
+
+                                                <div className="dropdown-item">
+                                                    <SiYoutubestudio className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">YouTube Studio</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    <HiCurrencyDollar className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Purchase ans memberships</span>
+                                                </div>
+                                                <div className="dropdown-divider"></div>
+                                                <div className="dropdown-item">
+                                                    <FiDatabase className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Your data in YouTube</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    <IoMoonSharp className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Appearance: Device theme</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    <IoLanguage className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Language:Britsh English</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    <FaUnlockAlt className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Restricted Mode:Off</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    <GrLanguage className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Location:India</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    <FaRegKeyboard className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Keyboard shortcuts</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="dropdown-divider"></div>
+
+                                            <div className="dropdown-section">
+
+                                                <div className="dropdown-item">
+                                                    <IoMdSettings className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Settings</span>
+                                                </div>
+                                                <div className="dropdown-divider"></div>
+                                                <div className="dropdown-item">
+                                                    <MdOutlineHelpOutline className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Help</span>
+                                                </div>
+                                                <div className="dropdown-item">
+                                                    < MdOutlineFeedback className="dropdown-icon" size={22} />
+                                                    <span className="dropdown-label">Send feedback</span>
                                                 </div>
 
                                             </div>
-                                            <div className="dropdown-divider"></div>
-
-                                            <Link to="/account" className="dropdown-item">
-                                                <FaGoogle className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Google Account</span>
-                                            </ Link>
-                                            <div className="dropdown-item">
-                                                <MdOutlineSwitchAccount className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Switch Account</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                <PiSignOut className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Sign out</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="dropdown-divider"></div>
-
-                                        <div className="dropdown-section">
-
-                                            <div className="dropdown-item">
-                                                <SiYoutubestudio className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">YouTube Studio</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                <HiCurrencyDollar className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Purchase ans memberships</span>
-                                            </div>
-                                            <div className="dropdown-divider"></div>
-                                            <div className="dropdown-item">
-                                                <FiDatabase className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Your data in YouTube</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                <IoMoonSharp className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Appearance: Device theme</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                <IoLanguage className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Language:Britsh English</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                <FaUnlockAlt className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Restricted Mode:Off</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                <GrLanguage className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Location:India</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                <FaRegKeyboard className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Keyboard shortcuts</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="dropdown-divider"></div>
-
-                                        <div className="dropdown-section">
-
-                                            <div className="dropdown-item">
-                                                <IoMdSettings className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Settings</span>
-                                            </div>
-                                            <div className="dropdown-divider"></div>
-                                            <div className="dropdown-item">
-                                                <MdOutlineHelpOutline className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Help</span>
-                                            </div>
-                                            <div className="dropdown-item">
-                                                < MdOutlineFeedback className="dropdown-icon" size={22} />
-                                                <span className="dropdown-label">Send feedback</span>
-                                            </div>
-
                                         </div>
                                     </div>
-                                </div>
-                            )}
-                        </div>
+                                )} */}
+                            </div>
+                        </Link>
                     </div>
                 </div>
                 {/* Tabs */}

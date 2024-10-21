@@ -575,6 +575,17 @@ const getAllComments= asyncHandler(async (req, res)=>{
 
 })
 
+// const findUser = asyncHandler(async(req,res)=>{
+//     const {channelId} = req.params;
+//     if(!channelId){
+//         return res
+//         .status(400)
+//         .json(new ApiError(400,"Channel Id is missing !!"));
+//     }
+
+
+// })
+
 export {
     registerUser,
     loginUser,
@@ -588,4 +599,5 @@ export {
     getUserChannelProfile,
     getWatchHistory,
     getAllComments,
+    // findUser,
 }

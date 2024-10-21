@@ -5,6 +5,7 @@
 // body{
 //     background-color:#0f0f0f;
 // }
+@import '../../index.scss';
 
 .manageVideosSearchBar{
     position: fixed;
@@ -16,7 +17,7 @@
 .manageVideoslayoutContainer  {
     
     display: flex;
-    background-color:#0f0f0f;
+    background-color:$background-color;
     width: 100vw;
     .displayer{
         width: 100%;
@@ -24,40 +25,40 @@
     }
     .manageVideosleft-side2{
         position: fixed;
-        margin-top: 4%;
+        margin-top: 3.5%;
         width: 5%;
         height: 100vh;
         color: white;
-        background-color:#0f0f0f;
+        background-color:$background-color;
         z-index: 2;
     }
     .manageVideosleft-side {
         position: fixed;
-        margin-top: 4%;
+        margin-top: 3.5%;
         width: 15%;
         height: 100vh;
         color: white;
-        background-color:#0f0f0f;
+        background-color:$background-color;
         z-index: 2;
     }
     .manageVideosright-side-WithNav {
-        margin-top:4%;
-        margin-left: 250px;
+        margin-top:3.5%;
+        margin-left: 240px;
         width: 100%;
         height: 90vh;
         display: flex;
         flex-direction: column;
-        background-color:#0f0f0f;
+        background-color:$background-color;
         
     }
     .manageVideosright-side-WithoutNav{
-        margin-top:4%;
+        margin-top:3.5%;
         margin-left: 100px;
         width: 100%;
         height: 90vh;
         display: flex;
         flex-direction: column;
-        background-color:#0f0f0f;
+        background-color:$background-color;
         
     }
 }

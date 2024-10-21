@@ -14,16 +14,19 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 
 import useVideosStore from '../../../store/useVideosStore';
+import Loader from '../../../components/Loader/Loader';
 
 function Content() {
     const {getChannelVideos ,isLoading,error,videos} = userStatsStore();
     const {getAllVideosComments,commentsOfVideoCount} = useCommentsStore();
     const {getLikesVideos,likesOfVideoCount}=useLikesStore();
     const {user}=useStore();
-    const {deleteVideo, updateVideo, getAllVideos}=useVideosStore();
+    const {deleteVideo, updateVideo, getAllVideos,isLoading:videoLoadingStore}=useVideosStore();
 
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [currentVideo, setCurrentVideo] = useState(null);
+    const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+
 
     const { register, handleSubmit, reset } = useForm();
 
@@ -33,6 +36,9 @@ function Content() {
                 await getChannelVideos();
                 await getAllVideosComments();
                 await getLikesVideos();
+                setTimeout(() => {
+                    setMinLoading(false);
+                }, 1000);
             } catch (error) {
                 console.error("Error fetching videos or comments:", error);
             }
@@ -87,6 +93,7 @@ function Content() {
         reset(); // Reset the form fields
     };
 
+    if(videoLoadingStore || minLoading) return <div><Loader/></div>
     return (
         <>
             <div className='contentContainer'>
@@ -115,7 +122,7 @@ function Content() {
                 </div>
                 <div className='level-3'>
                     <div className='part-1'>
-                        <div className='box'></div>
+                        {/* <div className='box'></div> */}
                         <div className='label'>videos</div>
                     </div>
                     <div className='part-2'>
@@ -137,7 +144,9 @@ function Content() {
                         videos?.map((video) => (
                             <React.Fragment key={video?._id}>
                                 <div className='videoContainer'>
-                                    <img src={video?.thumbnail ? video?.thumbnail : image1} alt="Thumbnail" />
+                                    <div className='videoContainer1'>
+                                        <img src={video?.thumbnail ? video?.thumbnail : image1} alt="Thumbnail" />
+                                    </div>
                                     <div className='videoTitleDescriptionContainer'>
                                         <p>{video?.title ? video?.title : 'Title here'}</p>
                                         <p>{video?.description ? video?.description : 'Description here'}</p>
@@ -174,7 +183,7 @@ function Content() {
                                     />
 
                                 </div>
-                                <div className="divider"></div>
+                                {/* <div className="divider"></div> */}
                             </React.Fragment>
                         ))
                     ) : (

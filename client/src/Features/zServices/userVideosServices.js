@@ -1,5 +1,6 @@
 import axios from "axios";
 const BACKEND_URL = 'http://localhost:8000/api/v1/videos';
+const BACKEND_URL2 ='http://localhost:8000/api/v1/users/history';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -133,11 +134,25 @@ const incrementVideoViewsService = async (videoId) => {
 
 const getuserWatchHistoryService = async () =>{
     try {
-        const response = await axios.get(`http://localhost:8000/api/v1/users/history`,{
+        const response = await axios.get(`${BACKEND_URL2}`,{
             headers: {
                 Authorization: `Bearer ${getToken()}`
             },
             withCredentials: true,
+        });
+        return response;
+    } catch (error) {
+        throw(error);
+    }
+};
+
+const getChannelVideosService = async(channelId) =>{
+    try {
+        const response = await axios.get(`${BACKEND_URL}/${channelId}/videos`,{
+            headers:{
+                Authorization:`Bearer ${getToken()}`
+            },
+
         });
         return response;
     } catch (error) {
@@ -155,4 +170,5 @@ export {
     userWatchHistoryService,
     incrementVideoViewsService,
     getuserWatchHistoryService,
+    getChannelVideosService,
 }

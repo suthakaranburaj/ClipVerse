@@ -32,11 +32,11 @@ function UserPlaylist() {
     const location = useLocation(); 
 
 
-    const userId = user?._id;
+    const {channelId} = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
-            await getUserPlaylists(userId);
+            await getUserPlaylists(channelId);
         };
         fetchData();
     }, [userPlaylists]);
@@ -101,11 +101,13 @@ function UserPlaylist() {
                                     </Link>
                                 </div >
                                 <div className='playlistContainer22'>
-                                    <FontAwesomeIcon 
+                                    {channelId === user?._id && (
+                                        <FontAwesomeIcon 
                                         icon={faEllipsisVertical} 
                                         className='channelCommentsSection221' 
                                         onClick={() =>handleDeleteDropDown(playlist?._id)}
-                                    />
+                                        />
+                                    )}
                                     {isDropdownOpen === playlist?._id &&(
                                         <div className='deleteContainer'>
                                             <button 
@@ -134,35 +136,34 @@ function UserPlaylist() {
                     ))}
                 </>
             )}
-            {/* The nested route will be rendered here (only if viewing a playlist) */}
             {isViewingPlaylist && <Outlet />}
             {isEdit && (
                 <div className='editPlaylistContainer'>
                     <form onSubmit={handleSubmit(onSubmit)} className='editPlaylistContainer1'>
-                        <p className='editPlaylistContainer11'>Edit Playlist</p>
-                        <div className='editPlaylistContainer12'>
-                            <label className='editPlaylistContainer121'>
-                                Name
-                            </label>
-                            <input 
-                                type="text" 
-                                {...register('name')}
-                                defaultValue={currentPlaylist.name}
-                                className='editPlaylistContainer122'
-                            />
-                            <lable>
-                                Description
-                            </lable>
-                            <input 
-                                type="text" 
-                                {...register('description')}
-                                defaultValue={currentPlaylist.description}
-                                className='editPlaylistContainer122'
-                            />
-                        </div>
+                        {/* <div className='editPlaylistContainer12'> */}
+                        <p className=''>Edit Playlist</p>
+                        <label className='editPlaylistContainer11'>
+                            Name
+                        </label>
+                        <input 
+                            type="text" 
+                            {...register('name')}
+                            defaultValue={currentPlaylist.name}
+                            className='editPlaylistContainer12'
+                        />
+                        <lable className='editPlaylistContainer13'>
+                            Description
+                        </lable>
+                        <input 
+                            type="text" 
+                            {...register('description')}
+                            defaultValue={currentPlaylist.description}
+                            className='editPlaylistContainer14'
+                        />
+                        {/* </div> */}
                         <div className="formButtons">
-                                    <button type="submit">Submit</button>
-                                    <button type="button" onClick={handleCloseEdit}>Close</button>
+                            <button type="submit">Update</button>
+                            <button type="button" onClick={handleCloseEdit}>Close</button>
                         </div>
                     </form>
                 </div>

@@ -32,7 +32,7 @@ function Navbar() {
     },[subscriberId ])
     console.log(subscribedChannels)
     const handleLinkToCommunity = (subscribedChannel)=>{
-        navigate(`/community/${subscribedChannel?._id}`, { 
+        navigate(`/community/${subscribedChannel?.username}/${subscribedChannel?._id}`, { 
             state: { subscribedChannel } 
         });
     }
@@ -63,7 +63,7 @@ function Navbar() {
             <div className="sidebar-section">
                 <div className="sidebar-header">You</div>
                 <NavLink 
-                    to={`/userchannel/${channelId}`} key={channelId} 
+                    to={`/${user?.username}/${channelId}`} key={channelId} 
                     className='sidebar-item'
                 >
                     <CgProfile className="sidebar-icon" size={24} />
