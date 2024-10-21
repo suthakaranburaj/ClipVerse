@@ -5,7 +5,13 @@ import cookieParser from "cookie-parser"
 const app = express()
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://clip-verse.vercel.app'],
+    origin: 
+        [
+            'http://localhost:3000', 
+            'https://clip-verse.vercel.app',
+            'https://clipverse.vercel.app',
+            'https://clip-verse-suthakar-anburajs-projects.vercel.app/'
+        ],
     credentials: true
 }))
 
