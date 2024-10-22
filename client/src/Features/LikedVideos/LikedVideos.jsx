@@ -9,6 +9,8 @@ import './LikedVideos.scss'
 
 import useLikesStore from '../../store/useLikesStore'
 import Loader from '../../components/Loader/Loader';
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 function LikedVideos() {
 
@@ -43,7 +45,7 @@ function LikedVideos() {
                             </div>
                             <div className='videoContainer12'>
                                 <div className='videoContainer121'>
-                                    <img src={video?.owner?.avatar} alt="" />
+                                    <img src={video?.owner?.avatar ? video.owner.avatar : defaultImage} alt="" />
                                 </div>
                                 <div className='videoContainer122'>
                                     <p className='videoContainer1221'>
@@ -66,6 +68,11 @@ function LikedVideos() {
                     )
                 ))}
             </div>
+            {likedVideos.length === 0 &&(
+                <div className='NoLikedVideosContainer'>
+                    <p className='NoLikedVideos'>No Liked Videos Found</p>
+                </div>
+            )}
         </div>
     )
 }

@@ -4,6 +4,8 @@ import './Subscriptions.scss'
 import useSubscriptionStore from '../../store/useSubscriptionStore'
 import userStore from '../../store/userStore'
 import Loader from '../../components/Loader/Loader'
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 function Subscriptions() {
 
@@ -60,13 +62,14 @@ function Subscriptions() {
 
     if (subscriptionStoreLoading || minLoading) return <div><Loader /></div>;  
     return (
+        <>
         <div className='SubscriptionContainer'>
             <div className='SubscribedChannel'>
                 {subscribedChannels?.map((subscribedChannel)=>(
                     <Link key={subscribedChannel?._id} to={`/${subscribedChannel?.username}/${subscribedChannel?._id}`}>
                         <div  className='subscribedChannelContainer'>
                             <div className='subscribedChannelContainer1'>
-                                <img src={subscribedChannel?.avatar} alt="" />
+                                <img src={subscribedChannel?.avatar ? subscribedChannel.avatar : defaultImage} alt="" />
                             </div>
                             <div className='subscribedChannelContainer2'>
                                 <p>{subscribedChannel?.username}</p>
@@ -78,7 +81,14 @@ function Subscriptions() {
                 ))}
                 
             </div>
+            {subscribedChannels.length === 0 &&(
+            <div className='NoSubscriptionContainer'>
+                <p className='NoSubscription'>Not Subscribed any channel</p>
+            </div>
+        )}
         </div>
+        
+        </>
     )
 }
 

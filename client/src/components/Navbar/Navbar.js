@@ -5,6 +5,8 @@ import { CgProfile } from "react-icons/cg";
 import {  useNavigate, NavLink } from "react-router-dom";
 import useStore from '../../store/userStore';
 import { useEffect } from "react";
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 
 import useSubscriptionStore from "../../store/useSubscriptionStore";
@@ -107,7 +109,7 @@ function Navbar() {
                         onClick={()=>handleLinkToCommunity(subscribedChannel)}
                     >
                         <img
-                            src={subscribedChannel?.avatar}
+                            src={subscribedChannel?.avatar ? subscribedChannel.avatar : defaultImage}
                             alt="Profile 1"
                             className="profile-img"
                         />

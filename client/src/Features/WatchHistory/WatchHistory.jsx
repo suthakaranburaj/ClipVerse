@@ -3,6 +3,8 @@ import useVideosStore from '../../store/useVideosStore';
 import './WatchHistory.scss'
 import Loader from '../../components/Loader/Loader';
 import { Link } from 'react-router-dom';
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 function WatchHistory() {
 const { watchHistorys,getuserWatchHistory, isLoading:videoStoreLoading, error } = useVideosStore();
@@ -37,7 +39,7 @@ return (
                 </div>
                 <div className='watchHistoryContainer312'>
                     <div className='watchHistoryContainer3121'>
-                        <img src={video?.owner?.avatar} alt="" />
+                        <img src={video?.owner?.avatar ? video.owner.avatar : defaultImage} alt="" />
                     </div>
                     <div className="watchHistoryContainer3122">
                         <div className='watchHistoryContainer31221'>

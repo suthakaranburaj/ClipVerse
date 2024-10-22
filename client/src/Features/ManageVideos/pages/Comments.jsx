@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import './Comments.scss'
 import { Link } from 'react-router-dom'
+import defaultImage from '../../../assets/profile_pic.webp'
+
 
 
 function Comments() {
@@ -34,7 +36,9 @@ function Comments() {
             ) : (
                 <div className='mainDiv'>
                     {allComments.length === 0 ? (
-                        <p className='NoComments'>No comments available.</p>
+                        <div className='NoCommentsContainer'>
+                            <p className='NoComments'>No comments available.</p>
+                        </div>
                     ) : (
                         <ul className='commentsContainer'>
                             {allComments.map((comment) => (
@@ -42,7 +46,10 @@ function Comments() {
                                     <Link to={`/${comment.owner?.username}/${comment.owner?._id}`}>
                                         <div className='commentsMain1'>
                                             <div className='commentsMain11'>
-                                                <img src={comment.owner.avatar} className='commentsMain111' alt="" />
+                                                <img 
+                                                    src={comment?.owner?.avatar ? comment.owner.avatar : defaultImage} 
+                                                    className='commentsMain111' alt="" 
+                                                />
                                             </div>
                                             <p className='commentsMain12'>{comment.owner?.username}</p>
                                         </div>

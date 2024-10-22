@@ -10,6 +10,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { useState } from 'react';
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 function HomePage() {
     const videoRefs = useRef([]);
@@ -103,7 +105,7 @@ function HomePage() {
                             <div className='channelContainer flex my-3'>
                                 <img
                                     className='channelContainer1 w-[36px] h-[36px] rounded-full mx-2'
-                                    src={video?.owner?.avatar || ''}
+                                    src={video?.owner?.avatar ? video.owner.avatar : defaultImage}
                                 />
                                 <div className='channelContainer2'>
                                     <p className='description'>{video?.title}</p>

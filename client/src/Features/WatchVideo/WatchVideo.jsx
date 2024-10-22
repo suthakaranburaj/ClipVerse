@@ -14,6 +14,8 @@ import useSubscriptionStore from '../../store/useSubscriptionStore';
 import useLikesStore from '../../store/useLikesStore';
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/Loader/Loader';
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 
 
@@ -361,7 +363,7 @@ function WatchVideo() {
                             <Link to={`/${video?.owner?.username}/${video?.owner?._id}`}>
                                 <div className='section11'>
                                     <div className='section111'>
-                                        <img src={video?.owner?.avatar} alt="" />
+                                        <img src={video?.owner?.avatar ? video.owner.avatar : defaultImage} alt="" />
                                     </div>
                                     <div className='section112'>
                                         <p className='ownerName'>{video?.owner?.fullName}</p>
@@ -419,7 +421,7 @@ function WatchVideo() {
                     <div className='comments'>
                         <div className='comments1'>
                             <div className='comments11'>
-                                <img src={user?.avatar} alt="" />
+                                <img src={user?.avatar ? user.avatar : defaultImage} alt="" />
                                 <input 
                                     type="text"
                                     placeholder='Add a Comment'
@@ -467,7 +469,7 @@ function WatchVideo() {
                                 return(
                                     <div key={comment?._id} className='channelCommentsSection'>
                                         <div className='channelCommentsSection1'>
-                                            <img src={comment?.owner?.avatar} alt="" />
+                                            <img src={comment?.owner?.avatar ? comment.owner.avatar : defaultImage} alt="" />
                                         </div>
                                         <div className='channelCommentsSection2'>
                                             <div className='channelCommentsSection21'>

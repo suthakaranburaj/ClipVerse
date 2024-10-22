@@ -97,4 +97,18 @@
     }
     }
 }
+
+.NoLikedVideosContainer{
+    position: fixed;
+    width: 80vw;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .NoLikedVideos{
+        font-size: 26px;
+        color: #131313;
+    }
+}
 }

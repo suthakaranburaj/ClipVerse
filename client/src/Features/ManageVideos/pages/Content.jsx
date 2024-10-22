@@ -45,7 +45,7 @@ function Content() {
         };
 
         fetchVideosAndComments();
-    }, [getChannelVideos, user?.userId,getAllVideosComments,getLikesVideos]);
+    }, [getChannelVideos, user?.userId,getAllVideosComments,getLikesVideos,updateVideo,deleteVideo]);
 
 
     const getCommentsCountForVideo = (videoId) => {
@@ -114,7 +114,7 @@ function Content() {
                 <div className="divider"></div>
 
                 {/* Loading and Error States */}
-                {isLoading && <p>Loading videos...</p>}
+                {/* {isLoading && <p>Loading videos...</p>} */}
                 {error && <p>Error: {error}</p>}
 
                 <div className='level-2'>
@@ -158,7 +158,7 @@ function Content() {
                                                 <p>Published</p>
                                             ) : (<p>Not Published</p>)}
                                         </div>
-                                            <p>{video?.duration}</p>
+                                            <p>{Math.floor(video?.duration / 60)}m {Math.floor(video?.duration % 60)}s</p>
                                             <div>
                                                 <p>{new Date(video?.createdAt).toLocaleDateString()}</p>
                                                 {/* <p>{video?.isPublished ? "Published" : "Unpublished"}</p> */}
