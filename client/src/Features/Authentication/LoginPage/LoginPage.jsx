@@ -42,13 +42,13 @@ function LoginPage() {
                 <form className='input-container flex flex-col gap-4 w-full px-10' onSubmit={handleSubmit(onSubmit)}>
                     <input
                         type="text"
-                        placeholder='Enter your username'
+                        placeholder='Enter your username or email'
                         className={`p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.username ? 'border-red-500' : ''}`}
                         {...register('username', { required: 'Username is required' })}
                     />
                     {errors.username && <p className="text-red-500">{errors.username.message}</p>}
 
-                    <input
+                    {/* <input
                         type="email"
                         placeholder='Enter your email'
                         className={`p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-500' : ''}`}
@@ -60,7 +60,7 @@ function LoginPage() {
                             },
                         })}
                     />
-                    {errors.email && <p className="text-red-500">{errors.email.message}</p>}  {/* Error message for email */}
+                    {errors.email && <p className="text-red-500">{errors.email.message}</p>}  Error message for email */}
 
                     <input
                         type="password"

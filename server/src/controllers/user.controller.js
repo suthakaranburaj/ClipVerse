@@ -122,9 +122,9 @@ const loginUser = asyncHandler(async (req, res) => {
     //password check
     //access and referesh token
     //send cookie
-
-    const { email, username, password } = req.body
-    console.log(email);
+    console.log("hello")
+    const {username, password } = req.body
+    console.log(username);
 
     if (!username && !email) {
         return res
@@ -132,16 +132,20 @@ const loginUser = asyncHandler(async (req, res) => {
         .json( new ApiError(400, "username or email is required"));
     }
 
-    // Here is an alternative of above code based on logic discussed in video:
-    // if (!(username || email)) {
-    //     throw new ApiError(400, "username or email is required")
+    let searchCriteria = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    if (username) {
+        if (emailRegex.test(username)) {
+            searchCriteria.email = username;
+        } else {
+            searchCriteria.username = username;
+        }
+    } else if (email) {
+        searchCriteria.email = email;
+    }
 
-    // }
-
-    const user = await User.findOne({
-        $or: [{ username }, { email }]
-    })
-
+    const user = await User.findOne(searchCriteria);
+    console.log(user)
     if (!user) {
         return res
         .status(404)
