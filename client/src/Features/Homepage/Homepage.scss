@@ -15,21 +15,22 @@
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+    height: 100%;
     align-items: flex-start;
-    justify-content: start;
+    justify-content: flex-start;
     // gap: 5px;
-    margin-top: 5%;
+    margin-top: 56px;
 
     .box {
         // min-width: 250px;
         // animation: appear linear;
         // animation-timeline: view();
-        max-width: 50vh;
-        min-width: 20%;
+        max-width:$video-box-max-width;
+        min-width: $video-box-min-width;
         position: relative;
         padding-bottom: 10px;
-        height: 30vw;
-        max-height: 350px;
+        height: $video-box-max-height;
+        // max-height: 350px;
         margin: 5px;
         transition-duration: 0.5s;
         border-radius: 10px;
@@ -40,55 +41,55 @@
         }
 
 
-    }
-
-    .vid {
-        object-fit: cover;
-        width: 100%;
-        display: none; // initially hidden
-        position:absolute;
-        top: 0;
-        left: 0;
-    }
-
-    .thumbnailContainer {
-        width: 100%;
-        height: 12.5vw;
-        position: relative;
-
-        // Thumbnail styles
-        .thumbnail {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            // border-radius: 12px;
-            transition: opacity 0.3s ease-in-out; // Smooth transition
-            border-radius: 10px;
-        }
-
-        // Video styles
+        
         .vid {
             object-fit: cover;
             width: 100%;
-            height: 100%;
-            position: absolute;
+            display: none; // initially hidden
+            position:absolute;
             top: 0;
             left: 0;
-            display: none; // Initially hidden
-            border-radius: 10px 10px 0 0;
-
         }
-
-        // On hover, hide thumbnail and show video
-        // &:hover {
-        //     .thumbnail {
-        //         opacity: 0; // Hide the thumbnail smoothly
-        //     }
-        //     .vid {
-        //         display: block; // Show the video
-        //     }
-        // }
-    }
+        
+        .thumbnailContainer {
+            width: 100%;
+            height: $thumbnail-height;
+            position: relative;
+            
+            // Thumbnail styles
+            .thumbnail {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                // border-radius: 12px;
+                transition: opacity 0.3s ease-in-out; // Smooth transition
+                border-radius: 10px;
+            }
+            
+            // Video styles
+            .vid {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: none; // Initially hidden
+                border-radius: 10px 10px 0 0;
+                
+            }
+            
+            // On hover, hide thumbnail and show video
+            // &:hover {
+                //     .thumbnail {
+                    //         opacity: 0; // Hide the thumbnail smoothly
+                    //     }
+                    //     .vid {
+                        //         display: block; // Show the video
+                        //     }
+                        // }
+                    }
+                }
 
     .channelContainer{
         .video-details {
@@ -173,30 +174,1076 @@
         color: white;
     }
 }
-@media (max-width:1788px){  
+
+@media(max-width:1280px){
+    // .HomePageContainer {
+    //     width: 100%;
+    //     background-color: $background-color;
+    //     padding-left: 5px;
+    // }
+    
+    // .HomePageContainer1 {
+    //     background-color: $background-color;
+    //     margin-left: 5%;
+    // }
+    
     .Navopen, .main-box {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // width: 100%;
+        // height: 100%;
+        // align-items: flex-start;
+        // justify-content: space-around;
+        // // gap: 5px;
+        // margin-top: 56px;
+    
         .box {
+            // min-width: 250px;
+            // animation: appear linear;
+            // animation-timeline: view();
+            max-width:31%;
+            min-width: 30%;
+            // position: relative;
+            // padding-bottom: 10px;
+            height: 28vw;
+            // max-height: 350px;
+            // margin: 5px;
+            // transition-duration: 0.5s;
+            // border-radius: 10px;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $secondary-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            // }
+    
+    
             
-        }
-        .thumbnailContainer{
-        }
+            // .vid {
+            //     object-fit: cover;
+            //     width: 100%;
+            //     display: none; // initially hidden
+            //     position:absolute;
+            //     top: 0;
+            //     left: 0;
+            // }
+            
+            .thumbnailContainer {
+                // width: 100%;
+                height: 16vw;
+                // position: relative;
+                
+                // Thumbnail styles
+                // .thumbnail {
+                //     width: 100%;
+                //     height: 100%;
+                //     object-fit: cover;
+                //     // border-radius: 12px;
+                //     transition: opacity 0.3s ease-in-out; // Smooth transition
+                //     border-radius: 10px;
+                // }
+                
+                // // Video styles
+                // .vid {
+                //     object-fit: cover;
+                //     width: 100%;
+                //     height: 100%;
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     display: none; // Initially hidden
+                //     border-radius: 10px 10px 0 0;
+                    
+                // }
+                
+                // On hover, hide thumbnail and show video
+                // &:hover {
+                    //     .thumbnail {
+                        //         opacity: 0; // Hide the thumbnail smoothly
+                        //     }
+                        //     .vid {
+                            //         display: block; // Show the video
+                            //     }
+                            // }
+                        }
+                    }
+    
+        // .channelContainer{
+        //     .video-details {
+        //         display: flex;
+        //         margin-top: 10px;
+        //         margin-left: 10px;
+        //     }
+        
+        //     .channelContainer1 {
+        //         width: 36px;
+        //         height: 36px;
+        //         border-radius: 50%;
+        //         margin-right: 10px;
+        //     }
+        //     .channelContainer2{
+        //         display: flex;
+        //         flex-direction: column;
+            
+        //         .description {
+        //             font-size: 1rem;
+        //             font-weight: 600;
+        //         }
+            
+        //         .userChannel {
+        //             color: gray;
+        //             font-size: 0.9rem;
+            
+        //             &:hover {
+        //                 color: white;
+        //                 // transition: color 0.3s ease-in-out;
+        //             }
+        //         }
+            
+        //         .views-time {
+        //             display: flex;
+        //             align-items: center;
+        //         }
+            
+        //         .views, .time {
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+            
+        //         .dot {
+        //             margin: 0 4px;
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+        //     }
+    
+        // }
     }
+    
+    // .headball {
+    //     display: flex;
+    //     padding: 10px;
+    //     gap: 15px;
+    //     overflow-x: auto;
+    //     background-color: $background-color;
+    //     position: fixed;
+    //     width: 100%;
+    //     z-index: 50;
+    
+    //     .live-recommend-btn, .recommend-btn {
+    //         padding: 10px 15px;
+    //         border-radius: 8px;
+    //         font-size: 12px;
+    //         font-weight: bold;
+    //         cursor: pointer;
+    //         background-color: $background-color;
+    
+    //     }
+    
+    //     .live-recommend-btn {
+    //         background-color: $secondary-color;
+    //         color: $text-color;
+    //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+    //     }
+    
+    //     .recommend-btn {
+    //         background-color: #131313;
+    //         color: white;
+    //     }
+    // }
 }
-@media (max-width:1692px){  
-    .Navopen, .main-box {
-        .box {
 
-        }
-        .thumbnailContainer{
-        }
+@media(max-width:1024px){
+
+    // .HomePageContainer {
+    //     width: 100%;
+    //     background-color: $background-color;
+    //     padding-left: 5px;
+    // }
+    
+    // .HomePageContainer1 {
+    //     background-color: $background-color;
+    //     margin-left: 5%;
+    // }
+    
+    .Navopen, .main-box {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // width: 100%;
+        // height: 100%;
+        // align-items: flex-start;
+        // justify-content: space-around;
+        // // gap: 5px;
+        // margin-top: 56px;
+    
+        .box {
+            // min-width: 250px;
+            // animation: appear linear;
+            // animation-timeline: view();
+            max-width:30%;
+            min-width: 28%;
+            // position: relative;
+            // padding-bottom: 10px;
+            height: 33vw;
+            // max-height: 350px;
+            // margin: 5px;
+            // transition-duration: 0.5s;
+            // border-radius: 10px;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $secondary-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            // }
+    
+    
+            
+            // .vid {
+            //     object-fit: cover;
+            //     width: 100%;
+            //     display: none; // initially hidden
+            //     position:absolute;
+            //     top: 0;
+            //     left: 0;
+            // }
+            
+            .thumbnailContainer {
+                // width: 100%;
+                height: 16vw;
+                // position: relative;
+                
+                // Thumbnail styles
+                // .thumbnail {
+                //     width: 100%;
+                //     height: 100%;
+                //     object-fit: cover;
+                //     // border-radius: 12px;
+                //     transition: opacity 0.3s ease-in-out; // Smooth transition
+                //     border-radius: 10px;
+                // }
+                
+                // // Video styles
+                // .vid {
+                //     object-fit: cover;
+                //     width: 100%;
+                //     height: 100%;
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     display: none; // Initially hidden
+                //     border-radius: 10px 10px 0 0;
+                    
+                // }
+                
+                // On hover, hide thumbnail and show video
+                // &:hover {
+                    //     .thumbnail {
+                        //         opacity: 0; // Hide the thumbnail smoothly
+                        //     }
+                        //     .vid {
+                            //         display: block; // Show the video
+                            //     }
+                            // }
+                        }
+                    }
+    
+        // .channelContainer{
+        //     .video-details {
+        //         display: flex;
+        //         margin-top: 10px;
+        //         margin-left: 10px;
+        //     }
+        
+        //     .channelContainer1 {
+        //         width: 36px;
+        //         height: 36px;
+        //         border-radius: 50%;
+        //         margin-right: 10px;
+        //     }
+        //     .channelContainer2{
+        //         display: flex;
+        //         flex-direction: column;
+            
+        //         .description {
+        //             font-size: 1rem;
+        //             font-weight: 600;
+        //         }
+            
+        //         .userChannel {
+        //             color: gray;
+        //             font-size: 0.9rem;
+            
+        //             &:hover {
+        //                 color: white;
+        //                 // transition: color 0.3s ease-in-out;
+        //             }
+        //         }
+            
+        //         .views-time {
+        //             display: flex;
+        //             align-items: center;
+        //         }
+            
+        //         .views, .time {
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+            
+        //         .dot {
+        //             margin: 0 4px;
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+        //     }
+    
+        // }
     }
+    
+    // .headball {
+    //     display: flex;
+    //     padding: 10px;
+    //     gap: 15px;
+    //     overflow-x: auto;
+    //     background-color: $background-color;
+    //     position: fixed;
+    //     width: 100%;
+    //     z-index: 50;
+    
+    //     .live-recommend-btn, .recommend-btn {
+    //         padding: 10px 15px;
+    //         border-radius: 8px;
+    //         font-size: 12px;
+    //         font-weight: bold;
+    //         cursor: pointer;
+    //         background-color: $background-color;
+    
+    //     }
+    
+    //     .live-recommend-btn {
+    //         background-color: $secondary-color;
+    //         color: $text-color;
+    //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+    //     }
+    
+    //     .recommend-btn {
+    //         background-color: #131313;
+    //         color: white;
+    //     }
+    // }
 }
-@media (max-width:1595px){  
-    .Navopen, .main-box {
-        .box {
 
+@media(max-width:900px){
+    
+    // .HomePageContainer {
+    // //     width: 100%;
+    // //     background-color: $background-color;
+    //     padding: 0 15px;
+    // }
+    
+    // .HomePageContainer1 {
+    //     background-color: $background-color;
+    //     margin-left: 5%;
+    // }
+    
+    .Navopen, .main-box {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // width: 100%;
+        // height: 100%;
+        // align-items: flex-start;
+        justify-content: space-around;
+        // // gap: 5px;
+        // margin-top: 56px;
+    
+        .box {
+            // min-width: 250px;
+            // animation: appear linear;
+            // animation-timeline: view();
+            max-width:45%;
+            min-width: 35%;
+            // position: relative;
+            // padding-bottom: 10px;
+            height: 40vw;
+            // max-height: 350px;
+            // margin: 5px;
+            // transition-duration: 0.5s;
+            // border-radius: 10px;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $secondary-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            // }
+    
+    
+            
+            // .vid {
+            //     object-fit: cover;
+            //     width: 100%;
+            //     display: none; // initially hidden
+            //     position:absolute;
+            //     top: 0;
+            //     left: 0;
+            // }
+            
+            .thumbnailContainer {
+                // width: 100%;
+                height: 22vw;
+                // position: relative;
+                
+                // Thumbnail styles
+                // .thumbnail {
+                //     width: 100%;
+                //     height: 100%;
+                //     object-fit: cover;
+                //     // border-radius: 12px;
+                //     transition: opacity 0.3s ease-in-out; // Smooth transition
+                //     border-radius: 10px;
+                // }
+                
+                // // Video styles
+                // .vid {
+                //     object-fit: cover;
+                //     width: 100%;
+                //     height: 100%;
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     display: none; // Initially hidden
+                //     border-radius: 10px 10px 0 0;
+                    
+                // }
+                
+                // On hover, hide thumbnail and show video
+                // &:hover {
+                    //     .thumbnail {
+                        //         opacity: 0; // Hide the thumbnail smoothly
+                        //     }
+                        //     .vid {
+                            //         display: block; // Show the video
+                            //     }
+                            // }
+                        }
+                    }
+    
+        // .channelContainer{
+        //     .video-details {
+        //         display: flex;
+        //         margin-top: 10px;
+        //         margin-left: 10px;
+        //     }
+        
+        //     .channelContainer1 {
+        //         width: 36px;
+        //         height: 36px;
+        //         border-radius: 50%;
+        //         margin-right: 10px;
+        //     }
+        //     .channelContainer2{
+        //         display: flex;
+        //         flex-direction: column;
+            
+        //         .description {
+        //             font-size: 1rem;
+        //             font-weight: 600;
+        //         }
+            
+        //         .userChannel {
+        //             color: gray;
+        //             font-size: 0.9rem;
+            
+        //             &:hover {
+        //                 color: white;
+        //                 // transition: color 0.3s ease-in-out;
+        //             }
+        //         }
+            
+        //         .views-time {
+        //             display: flex;
+        //             align-items: center;
+        //         }
+            
+        //         .views, .time {
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+            
+        //         .dot {
+        //             margin: 0 4px;
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+        //     }
+    
+        // }
+    }
+    
+    // .headball {
+    //     display: flex;
+    //     padding: 10px;
+    //     gap: 15px;
+    //     overflow-x: auto;
+    //     background-color: $background-color;
+    //     position: fixed;
+    //     width: 100%;
+    //     z-index: 25;
+    
+    //     .live-recommend-btn, .recommend-btn {
+    //         padding: 10px 15px;
+    //         border-radius: 8px;
+    //         font-size: 12px;
+    //         font-weight: bold;
+    //         cursor: pointer;
+    //         background-color: $background-color;
+    
+    //     }
+    
+    //     .live-recommend-btn {
+    //         background-color: $secondary-color;
+    //         color: $text-color;
+    //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+    //     }
+    
+    //     .recommend-btn {
+    //         background-color: #131313;
+    //         color: white;
+    //     }
+    // }
+}
+
+@media(max-width:766px){
+    
+    // .HomePageContainer {
+    // //     width: 100%;
+    // //     background-color: $background-color;
+    //     padding: 0 15px;
+    // }
+    
+    // .HomePageContainer1 {
+    //     background-color: $background-color;
+    //     margin-left: 5%;
+    // }
+    
+    .Navopen, .main-box {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // width: 100%;
+        // height: 100%;
+        // align-items: flex-start;
+        justify-content: space-around;
+        // // gap: 5px;
+        // margin-top: 56px;
+    
+        .box {
+            // min-width: 250px;
+            // animation: appear linear;
+            // animation-timeline: view();
+            max-width:45%;
+            min-width: 35%;
+            // position: relative;
+            // padding-bottom: 10px;
+            height: 50vw;
+            // max-height: 350px;
+            // margin: 5px;
+            // transition-duration: 0.5s;
+            // border-radius: 10px;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $secondary-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            // }
+    
+    
+            
+            // .vid {
+            //     object-fit: cover;
+            //     width: 100%;
+            //     display: none; // initially hidden
+            //     position:absolute;
+            //     top: 0;
+            //     left: 0;
+            // }
+            
+            .thumbnailContainer {
+                // width: 100%;
+                height: 25vw;
+                // position: relative;
+                
+                // Thumbnail styles
+                // .thumbnail {
+                //     width: 100%;
+                //     height: 100%;
+                //     object-fit: cover;
+                //     // border-radius: 12px;
+                //     transition: opacity 0.3s ease-in-out; // Smooth transition
+                //     border-radius: 10px;
+                // }
+                
+                // // Video styles
+                // .vid {
+                //     object-fit: cover;
+                //     width: 100%;
+                //     height: 100%;
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     display: none; // Initially hidden
+                //     border-radius: 10px 10px 0 0;
+                    
+                // }
+                
+                // On hover, hide thumbnail and show video
+                // &:hover {
+                    //     .thumbnail {
+                        //         opacity: 0; // Hide the thumbnail smoothly
+                        //     }
+                        //     .vid {
+                            //         display: block; // Show the video
+                            //     }
+                            // }
+                        }
+                    }
+    
+        // .channelContainer{
+        //     .video-details {
+        //         display: flex;
+        //         margin-top: 10px;
+        //         margin-left: 10px;
+        //     }
+        
+        //     .channelContainer1 {
+        //         width: 36px;
+        //         height: 36px;
+        //         border-radius: 50%;
+        //         margin-right: 10px;
+        //     }
+        //     .channelContainer2{
+        //         display: flex;
+        //         flex-direction: column;
+            
+        //         .description {
+        //             font-size: 1rem;
+        //             font-weight: 600;
+        //         }
+            
+        //         .userChannel {
+        //             color: gray;
+        //             font-size: 0.9rem;
+            
+        //             &:hover {
+        //                 color: white;
+        //                 // transition: color 0.3s ease-in-out;
+        //             }
+        //         }
+            
+        //         .views-time {
+        //             display: flex;
+        //             align-items: center;
+        //         }
+            
+        //         .views, .time {
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+            
+        //         .dot {
+        //             margin: 0 4px;
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+        //     }
+    
+        // }
+    }
+    
+    // .headball {
+    //     display: flex;
+    //     padding: 10px;
+    //     gap: 15px;
+    //     overflow-x: auto;
+    //     background-color: $background-color;
+    //     position: fixed;
+    //     width: 100%;
+    //     z-index: 25;
+    
+    //     .live-recommend-btn, .recommend-btn {
+    //         padding: 10px 15px;
+    //         border-radius: 8px;
+    //         font-size: 12px;
+    //         font-weight: bold;
+    //         cursor: pointer;
+    //         background-color: $background-color;
+    
+    //     }
+    
+    //     .live-recommend-btn {
+    //         background-color: $secondary-color;
+    //         color: $text-color;
+    //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+    //     }
+    
+    //     .recommend-btn {
+    //         background-color: #131313;
+    //         color: white;
+    //     }
+    // }
+}
+
+@media(max-width:600px){
+    
+    // .HomePageContainer {
+    // //     width: 100%;
+    // //     background-color: $background-color;
+    //     padding: 0 15px;
+    // }
+    
+    // .HomePageContainer1 {
+    //     background-color: $background-color;
+    //     margin-left: 5%;
+    // }
+    
+    .Navopen, .main-box {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // width: 100%;
+        // height: 100%;
+        // align-items: flex-start;
+        justify-content: space-around;
+        // // gap: 5px;
+        // margin-top: 56px;
+    
+        .box {
+            // min-width: 250px;
+            // animation: appear linear;
+            // animation-timeline: view();
+            max-width:85%;
+            min-width: 75%;
+            // position: relative;
+            // padding-bottom: 10px;
+            height: 80vw;
+            // max-height: 350px;
+            // margin: 5px;
+            // transition-duration: 0.5s;
+            // border-radius: 10px;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $secondary-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            // }
+    
+    
+            
+            // .vid {
+            //     object-fit: cover;
+            //     width: 100%;
+            //     display: none; // initially hidden
+            //     position:absolute;
+            //     top: 0;
+            //     left: 0;
+            // }
+            
+            .thumbnailContainer {
+                // width: 100%;
+                height: 50vw;
+                // position: relative;
+                
+                // Thumbnail styles
+                // .thumbnail {
+                //     width: 100%;
+                //     height: 100%;
+                //     object-fit: cover;
+                //     // border-radius: 12px;
+                //     transition: opacity 0.3s ease-in-out; // Smooth transition
+                //     border-radius: 10px;
+                // }
+                
+                // // Video styles
+                // .vid {
+                //     object-fit: cover;
+                //     width: 100%;
+                //     height: 100%;
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     display: none; // Initially hidden
+                //     border-radius: 10px 10px 0 0;
+                    
+                // }
+                
+                // On hover, hide thumbnail and show video
+                // &:hover {
+                    //     .thumbnail {
+                        //         opacity: 0; // Hide the thumbnail smoothly
+                        //     }
+                        //     .vid {
+                            //         display: block; // Show the video
+                            //     }
+                            // }
+                        }
+                    }
+    
+        // .channelContainer{
+        //     .video-details {
+        //         display: flex;
+        //         margin-top: 10px;
+        //         margin-left: 10px;
+        //     }
+        
+        //     .channelContainer1 {
+        //         width: 36px;
+        //         height: 36px;
+        //         border-radius: 50%;
+        //         margin-right: 10px;
+        //     }
+        //     .channelContainer2{
+        //         display: flex;
+        //         flex-direction: column;
+            
+        //         .description {
+        //             font-size: 1rem;
+        //             font-weight: 600;
+        //         }
+            
+        //         .userChannel {
+        //             color: gray;
+        //             font-size: 0.9rem;
+            
+        //             &:hover {
+        //                 color: white;
+        //                 // transition: color 0.3s ease-in-out;
+        //             }
+        //         }
+            
+        //         .views-time {
+        //             display: flex;
+        //             align-items: center;
+        //         }
+            
+        //         .views, .time {
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+            
+        //         .dot {
+        //             margin: 0 4px;
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+        //     }
+    
+        // }
+    }
+    
+    // .headball {
+    //     display: flex;
+    //     padding: 10px;
+    //     gap: 15px;
+    //     overflow-x: auto;
+    //     background-color: $background-color;
+    //     position: fixed;
+    //     width: 100%;
+    //     z-index: 25;
+    
+    //     .live-recommend-btn, .recommend-btn {
+    //         padding: 10px 15px;
+    //         border-radius: 8px;
+    //         font-size: 12px;
+    //         font-weight: bold;
+    //         cursor: pointer;
+    //         background-color: $background-color;
+    
+    //     }
+    
+    //     .live-recommend-btn {
+    //         background-color: $secondary-color;
+    //         color: $text-color;
+    //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+    //     }
+    
+    //     .recommend-btn {
+    //         background-color: #131313;
+    //         color: white;
+    //     }
+    // }
+}
+
+@media(max-width:360px){
+    
+    // .HomePageContainer {
+    // //     width: 100%;
+    // //     background-color: $background-color;
+    //     padding: 0 15px;
+    // }
+    
+    // .HomePageContainer1 {
+    //     background-color: $background-color;
+    //     margin-left: 5%;
+    // }
+    
+    .Navopen, .main-box {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        // width: 100%;
+        // height: 100%;
+        // align-items: flex-start;
+        justify-content: space-around;
+        // // gap: 5px;
+        // margin-top: 56px;
+    
+        .box {
+            // min-width: 250px;
+            // animation: appear linear;
+            // animation-timeline: view();
+            max-width:90%;
+            min-width: 75%;
+            // position: relative;
+            // padding-bottom: 10px;
+            height: 87vw;
+            // max-height: 350px;
+            // margin: 5px;
+            // transition-duration: 0.5s;
+            // border-radius: 10px;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $secondary-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            // }
+    
+    
+            
+            // .vid {
+            //     object-fit: cover;
+            //     width: 100%;
+            //     display: none; // initially hidden
+            //     position:absolute;
+            //     top: 0;
+            //     left: 0;
+            // }
+            
+            .thumbnailContainer {
+                // width: 100%;
+                height: 50vw;
+                // position: relative;
+                
+                // Thumbnail styles
+                // .thumbnail {
+                //     width: 100%;
+                //     height: 100%;
+                //     object-fit: cover;
+                //     // border-radius: 12px;
+                //     transition: opacity 0.3s ease-in-out; // Smooth transition
+                //     border-radius: 10px;
+                // }
+                
+                // // Video styles
+                // .vid {
+                //     object-fit: cover;
+                //     width: 100%;
+                //     height: 100%;
+                //     position: absolute;
+                //     top: 0;
+                //     left: 0;
+                //     display: none; // Initially hidden
+                //     border-radius: 10px 10px 0 0;
+                    
+                // }
+                
+                // On hover, hide thumbnail and show video
+                // &:hover {
+                    //     .thumbnail {
+                        //         opacity: 0; // Hide the thumbnail smoothly
+                        //     }
+                        //     .vid {
+                            //         display: block; // Show the video
+                            //     }
+                            // }
+                        }
+                    }
+    
+        // .channelContainer{
+        //     .video-details {
+        //         display: flex;
+        //         margin-top: 10px;
+        //         margin-left: 10px;
+        //     }
+        
+        //     .channelContainer1 {
+        //         width: 36px;
+        //         height: 36px;
+        //         border-radius: 50%;
+        //         margin-right: 10px;
+        //     }
+        //     .channelContainer2{
+        //         display: flex;
+        //         flex-direction: column;
+            
+        //         .description {
+        //             font-size: 1rem;
+        //             font-weight: 600;
+        //         }
+            
+        //         .userChannel {
+        //             color: gray;
+        //             font-size: 0.9rem;
+            
+        //             &:hover {
+        //                 color: white;
+        //                 // transition: color 0.3s ease-in-out;
+        //             }
+        //         }
+            
+        //         .views-time {
+        //             display: flex;
+        //             align-items: center;
+        //         }
+            
+        //         .views, .time {
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+            
+        //         .dot {
+        //             margin: 0 4px;
+        //             font-size: 0.9rem;
+        //             color: gray;
+        //         }
+        //     }
+    
+        // }
+    }
+    
+    .headball {
+        // display: flex;
+        // padding: 10px;
+        // gap: 15px;
+        // overflow-x: auto;
+        // background-color: $background-color;
+        // position: fixed;
+        // width: 100%;
+        // z-index: 25;
+    
+        .live-recommend-btn, .recommend-btn {
+            // padding: 10px 15px;
+            // border-radius: 8px;
+            font-size: 10px;
+            // font-weight: bold;
+            // cursor: pointer;
+            // background-color: $background-color;
+    
         }
-        .thumbnailContainer{
-        }
+    
+        // .live-recommend-btn {
+        //     background-color: $secondary-color;
+        //     color: $text-color;
+        //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        // }
+    
+        // .recommend-btn {
+        //     background-color: #131313;
+        //     color: white;
+        // }
     }
 }

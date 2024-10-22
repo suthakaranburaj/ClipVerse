@@ -77,7 +77,7 @@ function HomePage() {
                 <button className="recommend-btn">Startup Company</button>
                 {/* Other buttons */}
             </div>
-            <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-3 mt-16' : 'main-box flex text-white flex-wrap gap-6 mt-16'}`}>
+            <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-1 mt-16' : 'main-box flex text-white flex-wrap gap-2 custom600:gap-1 mt-16'}`}>
                 {Array.isArray(videos) && videos
                 .filter(video => video?.isPublished)
                 .map((video, index) => (
