@@ -12,15 +12,15 @@ function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); 
     const { user, isAuthenticated, logout } = useStore();
 
-    const [ setDropdownVisible] = useState(false); 
+    // const [ setDropdownVisible] = useState(false); 
 
     const submitHandler = () => {
         logout();
     };
 
-    const toggleDropdown = () => {
-        setDropdownVisible(prev => !prev);
-    };
+    // const toggleDropdown = () => {
+    //     setDropdownVisible(prev => !prev);
+    // };
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -79,7 +79,6 @@ function SearchBar() {
                             <img
                                 src={isAuthenticated && user?.avatar ? user.avatar : image1}
                                 className="profile-image"
-                                onClick={toggleDropdown} 
                                 alt=''
                             />
                             {/* {isDropdownVisible && (

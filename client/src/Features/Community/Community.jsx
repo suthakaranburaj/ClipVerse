@@ -13,6 +13,7 @@ import useStore from '../../store/userStore';
 import userStatsStore from '../../store/userStatsStore';
 import Loader from '../../components/Loader/Loader';
 import useSubscriptionStore from '../../store/useSubscriptionStore'
+import defaultImage from '../../assets/profile_pic.webp'
 
 function Community() {
 
@@ -123,7 +124,7 @@ function Community() {
         <div className='communityContianer'>
         <div className='channelProfileContainer'>
                     <div className='channelProfileContainer1'>
-                        <img src={channel?.avatar} className='channelProfileContainer11' alt="" />
+                        <img src={channel?.avatar ? channel.avatar : defaultImage } className='channelProfileContainer11' alt="" />
                     </div>
                     <div className='channelProfileContainer2'>
                         <Link to={`/${channel?.username}/${channel?._id}`}>
@@ -141,7 +142,7 @@ function Community() {
                                 <div className='communityPostContainer111'>
                                     <img 
                                         className='communityPostContainer1111' 
-                                        src={channel?.avatar}
+                                        src={channel?.avatar ? channel.avatar : defaultImage}
                                         alt="" 
                                     />
                                 </div>
@@ -213,7 +214,7 @@ function Community() {
                     <div className='tweetContainer'>
                         <div className='firstRow'>
                             <div className='firstRow1'>
-                                <img src={subscribedChannel?.avatar} alt="" className='firstRow11'/>
+                                <img src={subscribedChannel?.avatar ? subscribedChannel.avatar : defaultImage} alt="" className='firstRow11'/>
                                 <p className='firstRow12'>{subscribedChannel?.username}</p>
                             </div>
                             <div className='firstRow2'>
