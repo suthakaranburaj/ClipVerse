@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch, faMicrophone } from '@fortawesome/free-solid-svg-icons'; // Import the cross icon
 import devStore from '../../../../store/devStore';
@@ -12,11 +12,9 @@ import useStore from '../../../../store/userStore';
 import './SearchBar.scss'; // Ensure this file contains the necessary styling
 import image1 from '../../../../assets/profile_pic.webp';
 import { useForm } from 'react-hook-form';
-import { ClipLoader } from 'react-spinners';
 import useVideoStore from '../../../../store/useVideosStore'
 import logo from '../../../../assets/ClipVerse_logo.png'
-// import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); // Get isNavOpen state from the store
     const { user, isAuthenticated } = useStore();
@@ -55,6 +53,8 @@ function SearchBar() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { publishAVideo, isLoading } = useVideoStore();
 
+    const navigate = useNavigate();
+
     const onSubmit = async (data) => {
         const formData = new FormData();
         formData.append('title', data.title);
@@ -63,13 +63,17 @@ function SearchBar() {
         formData.append('videoFile', data.videoFile[0]);
         formData.append('isPublished', data.isPublished);
 
+
         try {
             await publishAVideo(formData);
             handleCloseModal();
+            // alert("Video Uploaded successfully!")
+            navigate(`/${user?.username}/${user?._id}`);
         } catch (error) {
             console.error("Error during uploading video !!", error);
         }
     }
+
     return (
         <div className="cont text-white p-4 flex justify-between">
             <div className='mx-4 cont1'>
@@ -345,12 +349,12 @@ function SearchBar() {
 
 
                         </form>
-                        {isLoading && (
+                        {/* {isLoading && (
                             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                                 <ClipLoader size={50} color="#ffffff" />
                                 <p>Uploading your Video...</p>
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
             )}

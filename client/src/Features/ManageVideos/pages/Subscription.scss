@@ -70,4 +70,18 @@
         //     border-bottom: none;
         // }
     }
+
+    .NoSubscribersContainer{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        margin-top: 30vh;
+        margin-left: 30vw;
+        .NoSubscribers{
+            font-size: 30px;
+            display: flex;
+            
+        }
+    }
 }

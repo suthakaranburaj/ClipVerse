@@ -68,6 +68,11 @@ function LikedVideos() {
                     )
                 ))}
             </div>
+            {likedVideos.length === 0 &&(
+                <div className='NoLikedVideosContainer'>
+                    <p className='NoLikedVideos'>No Liked Videos Found</p>
+                </div>
+            )}
         </div>
     )
 }

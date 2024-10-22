@@ -4,7 +4,7 @@ import useStore from '../../../store/userStore.js';
 import './Subscription.scss'
 import Loader from '../../../components/Loader/Loader.jsx';
 import { Link } from 'react-router-dom';
-import defaultImage from '../../assets/profile_pic.webp'
+import defaultImage from '../../../assets/profile_pic.webp'
 
 
 export default function Subscription() {
@@ -52,7 +52,7 @@ export default function Subscription() {
                     ))}
                 </ul>
             ) : (
-                !channelSubscribersLoadingStore && <p>No subscribers found.</p>
+                !channelSubscribersLoadingStore && <div className='NoSubscribersContainer'><p className='NoSubscribers'>No subscribers found.</p></div>
             )}
         </div>
     );

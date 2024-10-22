@@ -62,6 +62,7 @@ function Subscriptions() {
 
     if (subscriptionStoreLoading || minLoading) return <div><Loader /></div>;  
     return (
+        <>
         <div className='SubscriptionContainer'>
             <div className='SubscribedChannel'>
                 {subscribedChannels?.map((subscribedChannel)=>(
@@ -80,7 +81,14 @@ function Subscriptions() {
                 ))}
                 
             </div>
+            {subscribedChannels.length === 0 &&(
+            <div className='NoSubscriptionContainer'>
+                <p className='NoSubscription'>Not Subscribed any channel</p>
+            </div>
+        )}
         </div>
+        
+        </>
     )
 }
 
