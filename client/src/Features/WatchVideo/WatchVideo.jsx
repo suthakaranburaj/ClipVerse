@@ -85,6 +85,7 @@ function WatchVideo() {
 
     const queryParams = new URLSearchParams(location.search);
     const videoId = queryParams.get('videoId');
+    // console.log(videoId)
     // const channelId = video?.owner?._id;
     useEffect(() => {
         const fetchData =async()=>{
@@ -105,7 +106,7 @@ function WatchVideo() {
                 await Promise.all([
                     getVideoById(videoId),
                     incrementVideoViews(videoId),
-                    getVideoComments(videoId),
+                    // getVideoComments(videoId),
                     getAllVideos(),
                     getVideoLikes(videoId),
                     getUserChannelSubscribers(channelId)
@@ -118,12 +119,6 @@ function WatchVideo() {
                     // console.log(channelSubscribers);
                 }
 
-                // Fetch likes for each comment
-                if (commentsOfVideo && commentsOfVideo.length > 0) {
-                    for (const comment of commentsOfVideo) {
-                        await getLikesOfComment(comment._id);
-                    }
-                }
             }
 
             setTimeout(() => {
@@ -147,7 +142,7 @@ function WatchVideo() {
                 (subscriber) => subscriber._id === user._id
             );
             setIsSubscribed(isUserSubscribed);
-            // console.log(isSubscribed);
+            console.log(isSubscribed);
         }
 
         if (likesOfVideoNumber >= 0 && user) {
@@ -168,6 +163,23 @@ function WatchVideo() {
         isSubscribed,
         getVideoLikes,
     ]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // console.log(videoId)
+            if (videoId) {
+                await getVideoComments(videoId);  // Re-fetch comments when the videoId or commentsUpdated changes
+                // console.log("hellow",commentsOfVideo)
+                // console.log(videoId)
+                if (commentsOfVideo && commentsOfVideo.length >= 0) {
+                    const fetchLikesPromises = commentsOfVideo.map(comment => getLikesOfComment(comment._id));
+                    await Promise.all(fetchLikesPromises);  // Fetch likes for all comments in parallel
+                }
+            }
+        };
+        fetchData();
+    }, [videoId, toggleCommentLike,commentsOfVideo]); // Ensure commentsUpdated triggers refetching of comments and their likes
+    
 
     // useEffect(()=>{
     //     const fetchData = async()=>{
@@ -240,7 +252,7 @@ function WatchVideo() {
         setCurrentUserId, 
         toggleCommentLike,
         getLikesOfComment,
-        // commentsOfVideo,
+        commentsOfVideo,
     ]);
     
     const handleCommentLike = async (commentId) => {
@@ -251,6 +263,8 @@ function WatchVideo() {
             // setIsVideoLiked((prev) => !prev);
         }
     };
+
+    
 
     const toggleDropdown = (commentId) => {
         setIsDropdownOpen((prev) => (prev === commentId ? null : commentId));
@@ -469,19 +483,20 @@ function WatchVideo() {
                                                         }`}
                                                         onClick={() => {
                                                             // Toggle the like status locally
-                                                            commentLikeData.likedByUser = !commentLikeData.likedByUser;
-                                                            if (commentLikeData.likedByUser) {
-                                                                commentLikeData.likes += 1; // Increment the like count
-                                                            } else {
-                                                                commentLikeData.likes -= 1; // Decrement the like count
-                                                            }
+                                                            handleCommentLike(comment?._id);
+                                                            // commentLikeData.likedByUser = !commentLikeData.likedByUser;
+                                                            // if (commentLikeData.likedByUser) {
+                                                            //     commentLikeData.likes += 1; // Increment the like count
+                                                            // } else {
+                                                            //     commentLikeData.likes -= 1; // Decrement the like count
+                                                            // }
                                             
                                                             // Call the like API
-                                                            handleCommentLike(comment?._id);
+                                                            
                                                         }}
                                                     />
                                                 </div>
-                                                <p>{commentLikeData.likes }</p>
+                                                <p>{commentLikeData.likes}</p>
                                             </div>
                                         </div>
                                     </div>
