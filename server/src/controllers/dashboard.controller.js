@@ -37,9 +37,6 @@ const getChannelStats = asyncHandler(async (req, res) => {
     const totalSubscribers = await Subscription.find({ channel: userId });
     const totalSubscribersCount = totalSubscribers.length;
 
-    console.log(userVideos);
-
-
     const videoIds = userVideos.map(video => video._id);
     const totalLikesCount = await Like.countDocuments({ video: { $in: videoIds } });
 
