@@ -8,6 +8,7 @@ import './UserChannel.scss';
 import useStore from '../../../store/userStore';
 import userStatsStore from '../../../store/userStatsStore';
 import Loader from '../../../components/Loader/Loader';
+import useSubscriptionStore from '../../../store/useSubscriptionStore';
 
 function UserChannel() {
     const { isAuthenticated, user,isLoading:userLoading } = useStore();
@@ -15,6 +16,14 @@ function UserChannel() {
     const {channelId} = useParams();
     const {username} = useParams();
     const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+    const [isSubscribed, setIsSubscribed] = useState(false);
+
+    const {
+        getUserChannelSubscribers, 
+        channelSubscribers,
+        toggleSubscription, 
+        // error:subscriptionError
+    } = useSubscriptionStore();
 
 
     useEffect(()=>{
@@ -27,6 +36,41 @@ function UserChannel() {
         }, 1000);
 
     },[channelId])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (user && channelId) {
+                // Fetch the channel subscribers
+                await getUserChannelSubscribers(channelId);
+                
+                // Only check if user is subscribed once channelSubscribers is updated
+                if (channelSubscribers.length > 0) {
+                    const isUserSubscribed = channelSubscribers.some(
+                        (subscriber) => subscriber._id === user._id
+                    );
+                    
+                    // Update the state only if necessary to prevent unnecessary re-renders
+                    setIsSubscribed((prevIsSubscribed) => {
+                        if (prevIsSubscribed !== isUserSubscribed) {
+                            return isUserSubscribed;
+                        }
+                        return prevIsSubscribed;
+                    });
+                }
+            }
+        };
+    
+        // Use a small delay to debounce state updates, preventing multiple re-renders
+        const debounceTimeout = setTimeout(() => {
+            fetchData();
+        }, 200);
+    
+        return () => clearTimeout(debounceTimeout);
+    }, [channelSubscribers, channelId, user]); 
+
+    const handleSubscription = async(channelId) =>{
+        await toggleSubscription(channelId);
+    }
 
 
 
@@ -66,6 +110,16 @@ function UserChannel() {
                                 <button  onClick={() => window.open('/channel', '_blank')}>Customise channel</button>
                                 
                                 <button>Update profile</button>
+                                </>
+                            )}
+                            {user?._id !== channelId &&(
+                                <>
+                                    <button
+                                        className='subscribeButton'
+                                        onClick={()=>handleSubscription(channelId)}
+                                    >
+                                        {isSubscribed ? 'Subscribed': 'Subscribe'}
+                                    </button>
                                 </>
                             )}
                         </div>
