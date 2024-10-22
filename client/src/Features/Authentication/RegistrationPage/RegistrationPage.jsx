@@ -113,7 +113,7 @@ function RegistrationPage() {
                     </div>
 
                     <button
-                        className="bg-blue-500 text-white py-3 px-6 rounded-md mt-6 hover:bg-blue-600 transition-colors"
+                        className="bg-red-600 text-white py-3 px-6 rounded-md mt-6 hover:bg-red-500 transition-colors"
                         type="submit"
                     >
                         Submit
