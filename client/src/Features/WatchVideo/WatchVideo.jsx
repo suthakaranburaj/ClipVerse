@@ -186,7 +186,7 @@ function WatchVideo() {
             }
         };
         fetchData();
-    }, [videoId, toggleCommentLike,channelId]); 
+    }, [videoId, toggleCommentLike,channelId,commentsOfVideo]); 
     
 
     // useEffect(()=>{
