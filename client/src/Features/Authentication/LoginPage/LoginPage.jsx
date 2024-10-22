@@ -41,7 +41,7 @@ function LoginPage() {
     return (
         <div className='flex justify-center items-center h-screen bg-black'>
             <div className='card-content  bg-[#171717] w-[40vw] rounded-3xl flex-col flex items-center p-8 shadow-lg'>
-                <h1 className='font-bold text-3xl text-white mb-8'>Login to Youtube</h1>
+                <h1 className='font-bold text-3xl text-white mb-8'>Login to Clip Verse</h1>
                 <form className='input-container flex flex-col gap-4 w-full px-10' onSubmit={handleSubmit(onSubmit)}>
                     <input
                         type="text"

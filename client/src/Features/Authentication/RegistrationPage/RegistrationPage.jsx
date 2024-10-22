@@ -5,6 +5,7 @@ import useStore from '../../../store/userStore';
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from 'react-spinners';
 import { useEffect,useState } from 'react';
+import Loader from '../../../components/Loader'
 
 function RegistrationPage() {
     const { register, handleSubmit, formState: { errors } } = useForm(); // Initialize useForm
@@ -83,7 +84,7 @@ function RegistrationPage() {
                         accept="image/*"
                         {...register('avatar')}
                     />
-                    {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>} {/* Avatar error */}
+                    {/* {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>} Avatar error */}
 
                     <label className="text-gray-400">Upload Cover Image</label>
                     <input
@@ -121,10 +122,11 @@ function RegistrationPage() {
                 </form>
 
                 {isLoading && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                        <ClipLoader size={50} color="#ffffff" />
-                        <p>Registering your account...</p>
-                    </div>
+                    // <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    //     <ClipLoader size={50} color="#ffffff" />
+                    //     <p>Registering your account...</p>
+                    // </div>
+                    <Loader/>
                 )}
 
                 {registrationError && <p className="text-red-500">{registrationError}</p>}
