@@ -57,6 +57,7 @@ function WatchVideo() {
         addCommentOnVideo,
         deleteCommentOnVideo,
         updateCommentOnVideo,
+        isLoading:commentsLoadingStore,
     } = useCommentsStore();
 
     const {
@@ -75,6 +76,7 @@ function WatchVideo() {
         toggleCommentLike, 
         getLikesOfComment,
         setCurrentUserId,
+        isLoading:likesLoadingStore,
     } = useLikesStore();
 
     // useEffect(()=>{
@@ -176,6 +178,8 @@ function WatchVideo() {
         const fetchData = async () => {
             // console.log(videoId)
             if (videoId) {
+
+                // clearCommentsOfVideo();
                 await getVideoComments(videoId);  // Re-fetch comments when the videoId or commentsUpdated changes
                 // console.log("hellow",commentsOfVideo)
                 // console.log(videoId)
@@ -186,7 +190,7 @@ function WatchVideo() {
             }
         };
         fetchData();
-    }, [videoId, toggleCommentLike,channelId,commentsOfVideo]); 
+    }, [videoId, toggleCommentLike,channelId,user,getLikesOfComment,commentsOfVideo]); 
     
 
     // useEffect(()=>{
@@ -323,7 +327,7 @@ function WatchVideo() {
         }
     };
 
-    if (videoLoadingStore || minLoading) return <Loader/>
+    if (videoLoadingStore || minLoading  ) return <Loader/>
     if (error) return <p>Error: {error}</p>;
 
     dayjs.extend(relativeTime);
