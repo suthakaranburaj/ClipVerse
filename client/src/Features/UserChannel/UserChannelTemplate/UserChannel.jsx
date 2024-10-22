@@ -115,7 +115,7 @@ function UserChannel() {
                             {user?._id !== channelId &&(
                                 <>
                                     <button
-                                        className='subscribeButton'
+                                        className={`subscribeButton ${isSubscribed ? 'subscribed' : ''}`}
                                         onClick={()=>handleSubscription(channelId)}
                                     >
                                         {isSubscribed ? 'Subscribed': 'Subscribe'}
