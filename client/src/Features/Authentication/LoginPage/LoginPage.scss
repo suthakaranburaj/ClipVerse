@@ -1,41 +1,41 @@
 @import '../../../index.scss';
 
-.custom-underline {
-    text-decoration: underline;
-    text-underline-offset: 4px; /* Adjust this value for the gap */
-}
-
-// body {
-//     background-color: black;
+// .custom-underline {
+//     text-decoration: underline;
+//     text-underline-offset: 4px; /* Adjust this value for the gap */
 // }
 
-.card {
+// // body {
+// //     background-color: black;
+// // }
 
-    margin: 10% auto;
-    padding: 2rem 0;
-    font-size: 1.5rem;
+// .card {
 
-    color: white;
-    border-radius: 2rem;
+//     margin: 10% auto;
+//     padding: 2rem 0;
+//     font-size: 1.5rem;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+//     color: white;
+//     border-radius: 2rem;
 
-    .input-container {
-        color: black;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
 
-        display: flex;
-        flex-direction: column;
+//     .input-container {
+//         color: black;
 
-        input {
-            padding: 0.5rem;
-        }
+//         display: flex;
+//         flex-direction: column;
 
-        ::placeholder{
-            color:rgb(101, 101, 101);
-            font-weight: 600;
-        }
-    }
-}
+//         input {
+//             padding: 0.5rem;
+//         }
+
+//         ::placeholder{
+//             color:rgb(101, 101, 101);
+//             font-weight: 600;
+//         }
+//     }
+// }

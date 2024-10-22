@@ -40,13 +40,13 @@ function LoginPage() {
 
     return (
         <div className='flex justify-center items-center h-screen bg-black'>
-            <div className='card-content  bg-[#171717] w-[40vw] rounded-3xl flex-col flex items-center p-8 shadow-lg'>
-                <h1 className='font-bold text-3xl text-white mb-8'>Login to Clip Verse</h1>
-                <form className='input-container flex flex-col gap-4 w-full px-10' onSubmit={handleSubmit(onSubmit)}>
+            <div className='card-content  bg-[#171717] w-[40vw] custom766:w-[80vw] custom1024:w-[60vw] rounded-3xl flex-col flex items-center p-8 custom480:p-4 shadow-lg'>
+                <h1 className='font-bold text-3xl text-white mb-8 custom480:mb-4 custom360:text-xl '>Login to Clip Verse</h1>
+                <form className='input-container flex flex-col gap-4 w-full px-10 custom480:px-4 custom360:px-2' onSubmit={handleSubmit(onSubmit)}>
                     <input
                         type="text"
                         placeholder='Enter your username or email'
-                        className={`p-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.username ? 'border-red-500' : ''}`}
+                        className={`p-3 custom360:p-2 custom360:text-sm rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${errors.username ? 'border-red-500' : ''}`}
                         {...register('username', { required: 'Username is required' })}
                     />
                     {errors.username && <p className="text-red-500">{errors.username.message}</p>}
@@ -69,7 +69,7 @@ function LoginPage() {
                         <input
                             type={showPassword ? "password" : "text"}
                             placeholder='Enter your password'
-                            className={`w-[95%] p-3 rounded-l-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none  ${errors.password ? 'border-red-500' : ''}`}
+                            className={`w-[95%] custom360:p-2 p-3 custom360:text-sm rounded-l-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none  ${errors.password ? 'border-red-500' : ''}`}
                             {...register('password', { required: 'Password is required' })}
                         />
                         {errors.password && <p className="text-red-500">{errors.password.message}</p>}  {/* Error message for password */}
@@ -85,13 +85,13 @@ function LoginPage() {
 
                     <button
                         type="submit"
-                        className="bg-red-600 text-white py-3 px-6 rounded-md mt-6 hover:bg-red-500 transition-colors"
+                        className="bg-red-600 text-white py-3 px-6 rounded-md mt-6 custom360:mt-2 custom360:py-2 hover:bg-red-500 transition-colors"
                     >
                         Login
                     </button>
 
                     <Link to='/register'>
-                        <p className='text-white text-center custom-underline cursor-pointer'>
+                        <p className='custom360:text-sm text-white text-center custom-underline cursor-pointer'>
                             Don't have an Account?
                         </p>
                     </Link>
