@@ -30,7 +30,11 @@ $secondary-text:(#B3B3B3);
 $hover-bg-color: (#131313);
 $background-color:(#000000);
 $button-color:(#FF0000);
-
+$video-box-max-height:23vw;
+$video-box-min-height:20%;
+$video-box-max-width:23%;
+$video-box-min-width:20%;
+$thumbnail-height:12vw;
 
 * {
     font-family: $font-family-primary;
@@ -48,4 +52,18 @@ body {
     img{
         width: 100%;
     }
+}
+
+@media (min-width:1080px) and (max-width:1280px){  
+    $video-box-max-height:24vw;
+    $video-box-min-height:20%;
+    $video-box-max-width:30%;
+    $video-box-min-width:20%;
+    $thumbnail-height:12vw;
+}
+@media (max-width:1692px){  
+
+}
+@media (max-width:1595px){  
+
 }
