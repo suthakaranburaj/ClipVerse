@@ -103,7 +103,6 @@ function RegistrationPage() {
                             {...register('password', { required: 'Password is required' })}
 
                         />
-                        {errors.password && <p className="text-red-500">{errors.password.message}</p>} {/* Password error */}
                         <button
                             type="button"
                             onClick={togglePasswordVisibility}

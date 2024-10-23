@@ -4,6 +4,7 @@ import useStore from '../../../store/userStore';
 import './LoginPage.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import Loader from '../../../components/Loader/Loader';
 
 function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm(); // Initialize useForm
@@ -99,8 +100,7 @@ function LoginPage() {
 
                 {isLoading && (
                     <div className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-50">
-                        <ClipLoader size={50} color="#ffffff" />
-                        <p>Logging in...</p>
+                        <Loader/>
                     </div>
                 )}
 
