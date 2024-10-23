@@ -6,11 +6,11 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'custom600': {'max': '766px'}, // Custom media query
+        'custom600': {'max': '600px'}, // Custom media query
         'custom500': {'max':'500px'},
         'custom1024':{'max':'1024px'},
-        'custom766':{'max':'766px'},
-        'custom360':{'max':'360px'},
+        'custom766':{'max':'767px'},
+        'custom480':{'max':'480px'},
       },
     },
   },
