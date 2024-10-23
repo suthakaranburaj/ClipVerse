@@ -64,13 +64,13 @@ const registerUser = asyncHandler(async (req, res) => {
     if(req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0){
         avatarLocalPath = req.files.avatar[0].path;
     }
-    const avatar = avatarLocalPath ? await uploadOnCloudinary(avatarLocalPath) : null;
+    const avatar = avatarLocalPath ? await uploadOnCloudinary(avatarLocalPath,{ secure: true }) : null;
     
     let coverImageLocalPath;
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
         coverImageLocalPath = req.files.coverImage[0].path;
     }
-    const coverImage = coverImageLocalPath ? await uploadOnCloudinary(coverImageLocalPath) : null;
+    const coverImage = coverImageLocalPath ? await uploadOnCloudinary(coverImageLocalPath,{ secure: true }) : null;
     
 
     // if (!avatar) {
@@ -82,8 +82,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
     const user = await User.create({
         fullName,
-        avatar: avatar?.url || "",
-        coverImage: coverImage?.url || "",
+        avatar: avatar?.secure_url || "",
+        coverImage: coverImage?.secure_url || "",
         email,
         password,
         username: username.toLowerCase()
@@ -344,9 +344,9 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         await deleteOnCloudinary(publicIdOfOldAvatar);
     }
 
-    const avatar = await uploadOnCloudinary(avatarLocalPath);
+    const avatar = await uploadOnCloudinary(avatarLocalPath,{ secure: true });
 
-    if (!avatar.url) {
+    if (!avatar.secure_url) {
         return res
         .status(400)
         .json( new ApiError(400, "Error while uploading avatar"));
@@ -356,7 +356,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         req.user?._id,
         {
             $set: {
-                avatar: avatar.url
+                avatar: avatar.secure_url
             }
         },
         { new: true }
@@ -395,9 +395,9 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         await deleteOnCloudinary(publicIdOfOldCoverImage);
     }
 
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath,{ secure: true });
 
-    if (!coverImage.url) {
+    if (!coverImage.secure_url) {
         return res
         .status(400)
         .json( new ApiError(400, "Error while uploading on avatar"));
@@ -407,7 +407,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         req.user?._id,
         {
             $set: {
-                coverImage: coverImage.url
+                coverImage: coverImage.secure_url
             }
         },
         { new: true }

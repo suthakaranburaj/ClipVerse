@@ -141,7 +141,7 @@ function WatchVideo() {
             }
         };
         fetchData();
-    }, [channelId, videoId,isVideoLiked,likesOfVideo]); // Ensure dependencies include necessary data only
+    }, [channelId, videoId,isVideoLiked]); // Ensure dependencies include necessary data only
     
 
     useEffect(() => {
