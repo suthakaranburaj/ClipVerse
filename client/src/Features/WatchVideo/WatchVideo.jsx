@@ -35,6 +35,10 @@ function WatchVideo() {
     const [isEditComment,setIsEditComment] = useState(false);
     const [currentComment, setCurrentComment] = useState();
     const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+    const [showComments, setShowComments] = useState(false);
+
+    // Function to toggle comment visibility
+    
 
     
     const { register, handleSubmit, reset } = useForm();
@@ -134,7 +138,7 @@ function WatchVideo() {
             }
         };
         fetchData();
-    }, [channelId, videoId,isVideoLiked,likesOfVideo]); // Ensure dependencies include necessary data only
+    }, [channelId, videoId,isVideoLiked]); // Ensure dependencies include necessary data only
     
 
     useEffect(() => {
@@ -312,13 +316,19 @@ function WatchVideo() {
         }
     };
 
+    const toggleComments = () => {
+        setShowComments((prevShowComments) => !prevShowComments);
+    };
+
     if (videoLoadingStore || minLoading  ) return <Loader/>
     if (error) return <p>Error: {error}</p>;
 
+    
+
     dayjs.extend(relativeTime);
 
-    console.log(video)
-    console.log(video?.videoFile)
+    // console.log(video)
+    // console.log(video?.videoFile)
 
     return (
         <>
@@ -421,76 +431,83 @@ function WatchVideo() {
                             </div>
                         </div>
                     </div>
-                    <div className='channelComments'>
-                        {
-                            commentsOfVideo && commentsOfVideo.length > 0 ?
-                            commentsOfVideo.map((comment)=>{
-                                const commentLikeData =
-                                // console.log(likesOfComments)
-                                    likesOfComments[comment._id] ||{
-                                        likes:0,
-                                        likedbyUser:false,
-                                    };
-                                return(
-                                    <div key={comment?._id} className='channelCommentsSection'>
-                                        <div className='channelCommentsSection1'>
-                                            <img src={comment?.owner?.avatar ? comment.owner.avatar : defaultImage} alt="" />
-                                        </div>
-                                        <div className='channelCommentsSection2'>
-                                            <div className='channelCommentsSection21'>
-                                                <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
-                                                <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
-                                                <FontAwesomeIcon 
-                                                    icon={faEllipsisVertical} 
-                                                    className='channelCommentsSection213' 
-                                                    onClick={()=>toggleDropdown(comment._id)}
-                                                />
-                                                {isDropdownOpen === comment._id && (comment?.owner?._id === user?._id || channelId === user?._id)  &&( // Conditionally render dropdown
-                                                    <div className='commentDropdown'>
-                                                        <button onClick={() => handleCommentEdit(comment)}>Edit</button>
-                                                        <button onClick={()=>handleCommentDelete(comment?._id)}>Delete</button>
-                                                    </div>
-                                                )}
+                    <div>
+                        <button onClick={toggleComments}>
+                            {showComments ? 'Hide Comments' : 'Read Comments'}
+                        </button>
+                        {showComments &&(
+                            <div className='channelComments'>
+                            {
+                                commentsOfVideo && commentsOfVideo.length > 0 ?
+                                commentsOfVideo.map((comment)=>{
+                                    const commentLikeData =
+                                    // console.log(likesOfComments)
+                                        likesOfComments[comment._id] ||{
+                                            likes:0,
+                                            likedbyUser:false,
+                                        };
+                                    return(
+                                        <div key={comment?._id} className='channelCommentsSection'>
+                                            <div className='channelCommentsSection1'>
+                                                <img src={comment?.owner?.avatar ? comment.owner.avatar : defaultImage} alt="" />
                                             </div>
-                                            <div className='channelCommentsSecton22'>
-                                                <p className='channelCommentsSection221'>{comment?.content}</p>
-                                            </div>
-                                            <div className='channelCommensSection23'>
-                                                <div className='channelCommensSection231'>
-                                                    <FontAwesomeIcon
-                                                        icon={faThumbsUp} 
-                                                        className={`${
-                                                            commentLikeData.likedByUser
-                                                                ? 'likeIcon'
-                                                                : 'unLikeIcon'
-                                                        }`}
-                                                        onClick={() => {
-                                                            // Toggle the like status locally
-                                                            handleCommentLike(comment?._id);
-                                                            // commentLikeData.likedByUser = !commentLikeData.likedByUser;
-                                                            // if (commentLikeData.likedByUser) {
-                                                            //     commentLikeData.likes += 1; // Increment the like count
-                                                            // } else {
-                                                            //     commentLikeData.likes -= 1; // Decrement the like count
-                                                            // }
-                                            
-                                                            // Call the like API
-                                                            
-                                                        }}
+                                            <div className='channelCommentsSection2'>
+                                                <div className='channelCommentsSection21'>
+                                                    <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
+                                                    <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
+                                                    <FontAwesomeIcon 
+                                                        icon={faEllipsisVertical} 
+                                                        className='channelCommentsSection213' 
+                                                        onClick={()=>toggleDropdown(comment._id)}
                                                     />
+                                                    {isDropdownOpen === comment._id && (comment?.owner?._id === user?._id || channelId === user?._id)  &&( // Conditionally render dropdown
+                                                        <div className='commentDropdown'>
+                                                            <button onClick={() => handleCommentEdit(comment)}>Edit</button>
+                                                            <button onClick={()=>handleCommentDelete(comment?._id)}>Delete</button>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                <p>{commentLikeData.likes}</p>
+                                                <div className='channelCommentsSecton22'>
+                                                    <p className='channelCommentsSection221'>{comment?.content}</p>
+                                                </div>
+                                                <div className='channelCommensSection23'>
+                                                    <div className='channelCommensSection231'>
+                                                        <FontAwesomeIcon
+                                                            icon={faThumbsUp} 
+                                                            className={`${
+                                                                commentLikeData.likedByUser
+                                                                    ? 'likeIcon'
+                                                                    : 'unLikeIcon'
+                                                            }`}
+                                                            onClick={() => {
+                                                                // Toggle the like status locally
+                                                                handleCommentLike(comment?._id);
+                                                                // commentLikeData.likedByUser = !commentLikeData.likedByUser;
+                                                                // if (commentLikeData.likedByUser) {
+                                                                //     commentLikeData.likes += 1; // Increment the like count
+                                                                // } else {
+                                                                //     commentLikeData.likes -= 1; // Decrement the like count
+                                                                // }
+                                                
+                                                                // Call the like API
+                                                                
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <p>{commentLikeData.likes}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    );
-                                }) 
-                                :
-                            <p>No Comments</p>
-                        }
+                                        
+                                        );
+                                    }) 
+                                    :
+                                <p>No Comments</p>
+                            }
+                            </div>
+                        )}
+                        
                     </div>
-                    
                 </div>
 
                 <div className='watchVideo-right-side'>
