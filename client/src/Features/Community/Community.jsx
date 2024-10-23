@@ -178,7 +178,7 @@ function Community() {
                         )}
                         </div>
                         <div className='communityPostContainer2'>
-                            <p>{tweet?.content}</p>
+                            <p className='communityPostContainer21'>{tweet?.content}</p>
                         </div>
                         <div className='communityPostContainer3'>
                             <FontAwesomeIcon

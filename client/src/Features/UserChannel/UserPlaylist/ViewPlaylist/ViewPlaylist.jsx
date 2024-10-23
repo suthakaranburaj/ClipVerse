@@ -79,7 +79,7 @@ function ViewPlaylist() {
                                                                 className='deleteContainer1'
                                                                 onClick={()=>handleDelete(video?._id,playlist?._id)}
                                                             >
-                                                                Delete
+                                                                Remove
                                                             </button>
                                                         </div>
                                                     )}
