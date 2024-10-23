@@ -19,8 +19,8 @@ gap: 15px;
 
 
 .video-item{
-    width: 40vh;
-    height: 40vh;
+    width: $video-box-max-width;
+    height: $video-box-max-height;
     border-radius: 10px;
     transition: background-color 0.3s ease;
     cursor: pointer;
@@ -114,4 +114,712 @@ color: $secondary-text;
     }
 }
 
+}
+
+@media(max-width:1280px){
+    .ViewPlaylist {
+        // background-color: $background-color;
+        
+        
+        
+        // .ViewPlaylist1 {
+        // font-size: 20px;
+        // margin-bottom: 10px;
+        // }
+        
+        .ViewPlaylist21 {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        gap: 5px;
+        
+        
+        
+        .video-item{
+            width: 22vw;
+            height: 23vw;
+            // border-radius: 10px;
+            // transition: background-color 0.3s ease;
+            // cursor: pointer;
+            // transition: 0.4s;
+            // display: flex;
+            // flex-direction: column;
+            // margin: 15px 0;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $hover-bg-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        
+            //     // background-color: $secondary-color;
+            // }
+        
+            // &1 {
+            //     width: 100%;
+            //     height: 160px;
+            //     &1 {
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 5px;
+            //         &1{
+            //             border-radius: 5px;
+            //             height: 100%;
+            //         }
+            //     }
+            // }
+        
+            // &2{
+            //     display: flex;
+            //     justify-content: space-between;
+            //     padding: 5px;
+            //     &1{
+            //         display: flex;
+            //         flex-direction: column;
+            //         width: 100%;
+            //         &1{
+            //             font-size: 16px;
+            //             color: white;
+            //             font-weight: 700;
+            //         }
+            //         &2{
+            //             display: flex;
+            //             width: 60%;
+            //             justify-content: space-between;
+            //             p{
+            //                 font-size: 12px;
+            //                 font-weight: 400;
+            //                 // width: 30%;
+            //             }
+            //             .views{
+            //                 width:90%;
+            //             }
+            //             .dot{
+            //                 margin: 0 5px;
+            //                 width: 5%;
+            //             }
+            //             .time{
+            //                 // width: 10%;
+            //             }
+        
+            //         }
+            //     }
+        
+            //     .deleteContainer{
+            //         position: absolute;
+            //         margin-right: 100px;
+            //         background-color: rgb(70, 68, 68);
+            //     }
+            // }
+        }
+        
+        // p {
+        // color: $secondary-text;
+        // }
+        
+        // // Button styles if needed for future elements
+        // .button {
+        //     background-color: $button-color;
+        //     color: $text-color;
+        //     padding: 10px 20px;
+        //     border: none;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     transition: background-color 0.3s ease;
+        
+        //         &:hover {
+        //             background-color: lighten($button-color, 10%);
+        //         }
+        //     }
+        }
+        
+        }
+}
+
+@media(max-width:1024px){
+    .ViewPlaylist {
+        // background-color: $background-color;
+        
+        
+        
+        // .ViewPlaylist1 {
+        // font-size: 20px;
+        // margin-bottom: 10px;
+        // }
+        
+        .ViewPlaylist21 {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        gap: 5px;
+        
+        
+        
+        .video-item{
+            width: 24vw;
+            height: 25vw;
+            // border-radius: 10px;
+            // transition: background-color 0.3s ease;
+            // cursor: pointer;
+            // transition: 0.4s;
+            // display: flex;
+            // flex-direction: column;
+            // margin: 15px 0;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     background-color: $hover-bg-color;
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        
+            //     // background-color: $secondary-color;
+            // }
+        
+            // &1 {
+            //     width: 100%;
+            //     height: 160px;
+            //     &1 {
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 5px;
+            //         &1{
+            //             border-radius: 5px;
+            //             height: 100%;
+            //         }
+            //     }
+            // }
+        
+            // &2{
+            //     display: flex;
+            //     justify-content: space-between;
+            //     padding: 5px;
+            //     &1{
+            //         display: flex;
+            //         flex-direction: column;
+            //         width: 100%;
+            //         &1{
+            //             font-size: 16px;
+            //             color: white;
+            //             font-weight: 700;
+            //         }
+            //         &2{
+            //             display: flex;
+            //             width: 60%;
+            //             justify-content: space-between;
+            //             p{
+            //                 font-size: 12px;
+            //                 font-weight: 400;
+            //                 // width: 30%;
+            //             }
+            //             .views{
+            //                 width:90%;
+            //             }
+            //             .dot{
+            //                 margin: 0 5px;
+            //                 width: 5%;
+            //             }
+            //             .time{
+            //                 // width: 10%;
+            //             }
+        
+            //         }
+            //     }
+        
+            //     .deleteContainer{
+            //         position: absolute;
+            //         margin-right: 100px;
+            //         background-color: rgb(70, 68, 68);
+            //     }
+            // }
+        }
+        
+        // p {
+        // color: $secondary-text;
+        // }
+        
+        // // Button styles if needed for future elements
+        // .button {
+        //     background-color: $button-color;
+        //     color: $text-color;
+        //     padding: 10px 20px;
+        //     border: none;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     transition: background-color 0.3s ease;
+        
+        //         &:hover {
+        //             background-color: lighten($button-color, 10%);
+        //         }
+        //     }
+        }
+        
+        }
+}
+
+@media(max-width:767px){
+    .ViewPlaylist {
+        // background-color: $background-color;
+        
+        
+        
+        // .ViewPlaylist1 {
+        // font-size: 20px;
+        // margin-bottom: 10px;
+        // }
+        
+        .ViewPlaylist21 {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        gap: 5px;
+        
+        
+        
+        .video-item{
+            width: 33vw;
+            height: 38vw;
+            // border-radius: 10px;
+            // transition: background-color 0.3s ease;
+            // cursor: pointer;
+            // transition: 0.4s;
+            // display: flex;
+            // flex-direction: column;
+            background-color: $hover-bg-color;
+            // margin: 15px 0;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        
+            //     // background-color: $secondary-color;
+            // }
+        
+            // &1 {
+            //     width: 100%;
+            //     height: 160px;
+            //     &1 {
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 5px;
+            //         &1{
+            //             border-radius: 5px;
+            //             height: 100%;
+            //         }
+            //     }
+            // }
+        
+            // &2{
+            //     display: flex;
+            //     justify-content: space-between;
+            //     padding: 5px;
+            //     &1{
+            //         display: flex;
+            //         flex-direction: column;
+            //         width: 100%;
+            //         &1{
+            //             font-size: 16px;
+            //             color: white;
+            //             font-weight: 700;
+            //         }
+            //         &2{
+            //             display: flex;
+            //             width: 60%;
+            //             justify-content: space-between;
+            //             p{
+            //                 font-size: 12px;
+            //                 font-weight: 400;
+            //                 // width: 30%;
+            //             }
+            //             .views{
+            //                 width:90%;
+            //             }
+            //             .dot{
+            //                 margin: 0 5px;
+            //                 width: 5%;
+            //             }
+            //             .time{
+            //                 // width: 10%;
+            //             }
+        
+            //         }
+            //     }
+        
+            //     .deleteContainer{
+            //         position: absolute;
+            //         margin-right: 100px;
+            //         background-color: rgb(70, 68, 68);
+            //     }
+            // }
+        }
+        
+        // p {
+        // color: $secondary-text;
+        // }
+        
+        // // Button styles if needed for future elements
+        // .button {
+        //     background-color: $button-color;
+        //     color: $text-color;
+        //     padding: 10px 20px;
+        //     border: none;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     transition: background-color 0.3s ease;
+        
+        //         &:hover {
+        //             background-color: lighten($button-color, 10%);
+        //         }
+        //     }
+        }
+        
+        }
+}
+
+@media(max-width:600px){
+    .ViewPlaylist {
+        // background-color: $background-color;
+        
+        
+        
+        // .ViewPlaylist1 {
+        // font-size: 20px;
+        // margin-bottom: 10px;
+        // }
+        
+        .ViewPlaylist21 {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        gap: 5px;
+        
+        
+        
+        .video-item{
+            width: 48vw;
+            height: 48vw;
+            // border-radius: 10px;
+            // transition: background-color 0.3s ease;
+            // cursor: pointer;
+            // transition: 0.4s;
+            // display: flex;
+            // flex-direction: column;
+            background-color: $hover-bg-color;
+            // margin: 15px 0;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        
+            //     // background-color: $secondary-color;
+            // }
+        
+            // &1 {
+            //     width: 100%;
+            //     height: 160px;
+            //     &1 {
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 5px;
+            //         &1{
+            //             border-radius: 5px;
+            //             height: 100%;
+            //         }
+            //     }
+            // }
+        
+            // &2{
+            //     display: flex;
+            //     justify-content: space-between;
+            //     padding: 5px;
+            //     &1{
+            //         display: flex;
+            //         flex-direction: column;
+            //         width: 100%;
+            //         &1{
+            //             font-size: 16px;
+            //             color: white;
+            //             font-weight: 700;
+            //         }
+            //         &2{
+            //             display: flex;
+            //             width: 60%;
+            //             justify-content: space-between;
+            //             p{
+            //                 font-size: 12px;
+            //                 font-weight: 400;
+            //                 // width: 30%;
+            //             }
+            //             .views{
+            //                 width:90%;
+            //             }
+            //             .dot{
+            //                 margin: 0 5px;
+            //                 width: 5%;
+            //             }
+            //             .time{
+            //                 // width: 10%;
+            //             }
+        
+            //         }
+            //     }
+        
+            //     .deleteContainer{
+            //         position: absolute;
+            //         margin-right: 100px;
+            //         background-color: rgb(70, 68, 68);
+            //     }
+            // }
+        }
+        
+        // p {
+        // color: $secondary-text;
+        // }
+        
+        // // Button styles if needed for future elements
+        // .button {
+        //     background-color: $button-color;
+        //     color: $text-color;
+        //     padding: 10px 20px;
+        //     border: none;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     transition: background-color 0.3s ease;
+        
+        //         &:hover {
+        //             background-color: lighten($button-color, 10%);
+        //         }
+        //     }
+        }
+        
+        }
+}
+
+@media(max-width:500px){
+    .ViewPlaylist {
+        // background-color: $background-color;
+        
+        
+        
+        // .ViewPlaylist1 {
+        // font-size: 20px;
+        // margin-bottom: 10px;
+        // }
+        
+        .ViewPlaylist21 {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        gap: 5px;
+        
+        
+        
+        .video-item{
+            width: 98vw;
+            height: 69vw;
+            // border-radius: 10px;
+            // transition: background-color 0.3s ease;
+            // cursor: pointer;
+            // transition: 0.4s;
+            // display: flex;
+            // flex-direction: column;
+            background-color: $hover-bg-color;
+            // margin: 15px 0;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        
+            //     // background-color: $secondary-color;
+            // }
+        
+            &1 {
+                width: 100%;
+                height: 45vw;
+                &1 {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 5px;
+                    &1{
+                        border-radius: 5px;
+                        height: 100%;
+                    }
+                }
+            }
+        
+            // &2{
+            //     display: flex;
+            //     justify-content: space-between;
+            //     padding: 5px;
+            //     &1{
+            //         display: flex;
+            //         flex-direction: column;
+            //         width: 100%;
+            //         &1{
+            //             font-size: 16px;
+            //             color: white;
+            //             font-weight: 700;
+            //         }
+            //         &2{
+            //             display: flex;
+            //             width: 60%;
+            //             justify-content: space-between;
+            //             p{
+            //                 font-size: 12px;
+            //                 font-weight: 400;
+            //                 // width: 30%;
+            //             }
+            //             .views{
+            //                 width:90%;
+            //             }
+            //             .dot{
+            //                 margin: 0 5px;
+            //                 width: 5%;
+            //             }
+            //             .time{
+            //                 // width: 10%;
+            //             }
+        
+            //         }
+            //     }
+        
+            //     .deleteContainer{
+            //         position: absolute;
+            //         margin-right: 100px;
+            //         background-color: rgb(70, 68, 68);
+            //     }
+            // }
+        }
+        
+        // p {
+        // color: $secondary-text;
+        // }
+        
+        // // Button styles if needed for future elements
+        // .button {
+        //     background-color: $button-color;
+        //     color: $text-color;
+        //     padding: 10px 20px;
+        //     border: none;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     transition: background-color 0.3s ease;
+        
+        //         &:hover {
+        //             background-color: lighten($button-color, 10%);
+        //         }
+        //     }
+        }
+        
+        }
+}
+
+@media(max-width:360px){
+    .ViewPlaylist {
+        // background-color: $background-color;
+        
+        
+        
+        // .ViewPlaylist1 {
+        // font-size: 20px;
+        // margin-bottom: 10px;
+        // }
+        
+        .ViewPlaylist21 {
+        // display: flex;
+        // flex-direction: row;
+        // flex-wrap: wrap;
+        gap: 5px;
+        
+        
+        
+        .video-item{
+            width: 98vw;
+            height: 69vw;
+            // border-radius: 10px;
+            // transition: background-color 0.3s ease;
+            // cursor: pointer;
+            // transition: 0.4s;
+            // display: flex;
+            // flex-direction: column;
+            background-color: $hover-bg-color;
+            // margin: 15px 0;
+            // &:hover{
+            //     transform: scale(0.98);
+            //     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        
+            //     // background-color: $secondary-color;
+            // }
+        
+            &1 {
+                width: 100%;
+                height: 45vw;
+                &1 {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 5px;
+                    &1{
+                        border-radius: 5px;
+                        height: 100%;
+                    }
+                }
+            }
+        
+            // &2{
+            //     display: flex;
+            //     justify-content: space-between;
+            //     padding: 5px;
+            //     &1{
+            //         display: flex;
+            //         flex-direction: column;
+            //         width: 100%;
+            //         &1{
+            //             font-size: 16px;
+            //             color: white;
+            //             font-weight: 700;
+            //         }
+            //         &2{
+            //             display: flex;
+            //             width: 60%;
+            //             justify-content: space-between;
+            //             p{
+            //                 font-size: 12px;
+            //                 font-weight: 400;
+            //                 // width: 30%;
+            //             }
+            //             .views{
+            //                 width:90%;
+            //             }
+            //             .dot{
+            //                 margin: 0 5px;
+            //                 width: 5%;
+            //             }
+            //             .time{
+            //                 // width: 10%;
+            //             }
+        
+            //         }
+            //     }
+        
+            //     .deleteContainer{
+            //         position: absolute;
+            //         margin-right: 100px;
+            //         background-color: rgb(70, 68, 68);
+            //     }
+            // }
+        }
+        
+        // p {
+        // color: $secondary-text;
+        // }
+        
+        // // Button styles if needed for future elements
+        // .button {
+        //     background-color: $button-color;
+        //     color: $text-color;
+        //     padding: 10px 20px;
+        //     border: none;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     transition: background-color 0.3s ease;
+        
+        //         &:hover {
+        //             background-color: lighten($button-color, 10%);
+        //         }
+        //     }
+        }
+        
+        }
 }

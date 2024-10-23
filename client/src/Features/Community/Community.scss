@@ -10,7 +10,7 @@
     height: auto;
     .channelProfileContainer{
         position: fixed;
-        height: 10vh;
+        height: 5vw;
         width: 42%;
         background-color: $hover-bg-color;
         padding: 10px;
@@ -121,6 +121,12 @@
                             border-radius: 5px;
                         }
                     }
+                }
+            }
+
+            .communityPostContainer2{
+                &1{
+                    overflow-wrap: break-word;
                 }
             }
             .communityPostContainer3{
@@ -264,4 +270,1378 @@
             }
         }
     }
+}
+
+@media(max-width:1280px){
+    .communityContianer{
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: center;
+        
+        // // overflow-y: scroll;
+        // width: 100%;
+        // height: auto;
+        .channelProfileContainer{
+            // position: fixed;
+            height: 7vw;
+            width: 50%;
+            // background-color: $hover-bg-color;
+            // padding: 10px;
+            // display: flex;
+            // align-items: center;
+            // border-radius: 20px;
+            // margin-bottom: 40px;
+            // border-bottom: 3px solid white;
+            // &1{
+            //     width: 45px;
+            //     height: 45px;
+            //     &1{
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 50%;
+            //     }
+            // }
+            // &2{
+            //     margin: 0 20px;
+            //     &1{
+            //         font-size: 20px;
+            //         font-weight: 700;
+            //     }
+            //     &2{
+            //         font-size: 14px;
+            //         color: $secondary-text;
+            //     }
+            // }
+        }
+        
+        // .mainContainer{
+        //     width: 50%;
+        //     min-height: 100vh;
+        //     max-height: auto;
+        //     background-color: $background-color;
+        //     border-left: 2px solid $hover-bg-color;
+        //     border-right: 2px solid $hover-bg-color;
+        //     display: flex;
+        //     flex-direction: column;
+        //     align-items: center;
+        //     padding-top: 85px;
+    
+        //     .communityPostContainer{
+        //         width: 95%;
+        //         height: auto;
+        //         background-color: $hover-bg-color;
+        //         border-radius: 10px;
+        //         padding: 10px;
+        //         margin: 10px 0;
+        //         transition: 0.5s;
+        //         &:hover{
+        //             transform: scale(0.98);
+        //             background-color: $secondary-color;
+        //             box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+        //         }
+                
+        //         .communityPostContainer1{
+        //             width: 100%;
+        //             display: flex;
+        //             flex-direction: row;
+        //             align-items: center;
+        //             justify-content: space-between;
+        //             margin-bottom: 10px;
+    
+        //             .communityPostContainer11{
+        //                 display: flex;
+        //                 flex-direction: row;
+        //                 align-items: center;
+        //                 width: 40%;
+    
+        //                 .communityPostContainer111{
+        //                     width: 45px;
+        //                     height: 45px;
+        //                     display: flex;
+        //                     flex-direction: row;
+        //                     align-items: center;
+        
+        //                     .communityPostContainer1111{
+        //                         // width: 100%;
+        //                         height: 100%;
+        //                         border-radius: 50%;
+        //                     }
+                            
+        //                 }
+        //                 .communityPostContainer112{
+        //                     padding-left: 10px;
+        //                 }
+        //             }
+                    
+        //             .communityPostContainer12{
+        //                 margin-left: 10px;
+        //                 padding:5px;
+        //                 .communityPostContainer122{
+        //                     display: flex;
+        //                     flex-direction: column;
+        //                     position:absolute;
+        //                     .communityPostContainer1221{
+                                
+        //                         background-color: red;
+        //                         margin-left: 10px;
+        //                         padding: 5px 10px;
+        //                         border-radius: 5px;
+        //                     }
+        //                     .communityPostContainer1222{
+        //                         background-color: red;
+        //                         margin-left: 10px;
+        //                         padding: 5px 10px;
+        //                         border-radius: 5px;
+        //                     }
+        //                 }
+        //             }
+        //         }
+    
+        //         .communityPostContainer2{
+        //             &1{
+        //                 overflow-wrap: break-word;
+        //             }
+        //         }
+        //         .communityPostContainer3{
+        //             display: flex;
+        //             align-items: center;
+    
+        //             .communityPostContainer31{
+    
+        //             }
+        //             .communityPostContainer32{
+        //                 margin-left: 4px;
+        //             }
+        //         }
+        //     }
+    
+        //     .noTweets{
+        //         position: fixed;
+        //         margin-top: 30vh;
+        //         font-size: 30px;
+        //         color: $secondary-text;
+        //     }
+        // }
+        // .mainContainer1{
+        //     position: fixed;
+        //     background-color: red;
+        //     bottom: 20px;
+        //     right: 50px;
+        //     // padding: 15px;
+        //     border-radius: 50%;
+        //     width: 60px;
+        //     height: 60px;
+    
+        //     .mainContainer11{
+        //         font-size: 30px;
+        //         color: black;
+        //     }
+        // }
+    }
+    
+    // .commnityPost{
+    //     width: 100%;
+    //     height: 100%;
+    //     background-color: rgba(0, 0, 0, 0.66);
+    //     position:fixed;
+    //     z-index: 10;
+    //     top: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     .userCommunityContainer{
+    //         padding: 1%;
+        
+    //         .tweetContainer{
+    //             border: 1px solid red;
+    //             height: 30vh;
+    //             width: 700px;
+    //             border-radius: 20px;
+    //             display: flex;
+    //             flex-direction: column;
+    //             justify-content: space-between;
+    //             padding: 1%;
+    //             background-color: black;
+        
+    //             .firstRow{
+    //                 display: flex;
+    //                 justify-content: space-between;
+    //                 .firstRow1{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow11{
+    //                         width: 2rem;
+    //                         height: 2rem;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                     }
+    //                     .firstRow12{
+    //                         color:gray;
+    //                     }
+                        
+    //                 }
+    //                 .firstRow2{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow21{
+    //                         display: flex;
+    //                         align-items: center;
+    //                         width: 60px;
+    //                         height: 30px;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                         color:gray;
+    //                     }
+    //                     .firstRow22{
+                            
+    //                     }
+    //                 }
+    //             }
+    //             .secondRow11 {
+    //                 border: none; /* Remove the border */
+    //                 outline: none; /* Remove the focus outline */
+    //                 width: 100%; /* Full width */
+    //                 height: auto; /* Adjust height dynamically based on content */
+    //                 font-weight: bold; /* Bold text */
+    //                 white-space: pre-wrap; /* Preserve whitespace and allow text wrapping */
+    //                 word-wrap: break-word; /* Break words if they are too long */
+    //                 padding: 0.5rem; /* Add padding for better spacing */
+    //                 resize: none; /* Disable manual resizing */
+    //                 // overflow: hidden; /* Hide the scrollbar */
+    //                 overflow-wrap: break-word; /* Ensure long words wrap properly */
+    //                 background-color: transparent; /* Make the background transparent (optional) */
+    //             }
+                
+                
+    //             .secondRow2{
+    //                 display: flex;
+    //                 justify-content: end;
+    
+    //                 .secondRow21{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    //                     margin-right: 10px;
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //                 .secondRow22{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+@media(max-width:1024px){
+    .communityContianer{
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: center;
+        
+        // // overflow-y: scroll;
+        // width: 100%;
+        // height: auto;
+        .channelProfileContainer{
+            // position: fixed;
+            height: 8vw;
+            width: 60%;
+            // background-color: $hover-bg-color;
+            // padding: 10px;
+            // display: flex;
+            // align-items: center;
+            // border-radius: 20px;
+            // margin-bottom: 40px;
+            // border-bottom: 3px solid white;
+            // &1{
+            //     width: 45px;
+            //     height: 45px;
+            //     &1{
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 50%;
+            //     }
+            // }
+            // &2{
+            //     margin: 0 20px;
+            //     &1{
+            //         font-size: 20px;
+            //         font-weight: 700;
+            //     }
+            //     &2{
+            //         font-size: 14px;
+            //         color: $secondary-text;
+            //     }
+            // }
+        }
+        
+        .mainContainer{
+            width: 70%;
+            // min-height: 100vh;
+            // max-height: auto;
+            // background-color: $background-color;
+            // border-left: 2px solid $hover-bg-color;
+            // border-right: 2px solid $hover-bg-color;
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            // padding-top: 85px;
+    
+            // .communityPostContainer{
+            //     width: 95%;
+            //     height: auto;
+            //     background-color: $hover-bg-color;
+            //     border-radius: 10px;
+            //     padding: 10px;
+            //     margin: 10px 0;
+            //     transition: 0.5s;
+            //     &:hover{
+            //         transform: scale(0.98);
+            //         background-color: $secondary-color;
+            //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            //     }
+                
+            //     .communityPostContainer1{
+            //         width: 100%;
+            //         display: flex;
+            //         flex-direction: row;
+            //         align-items: center;
+            //         justify-content: space-between;
+            //         margin-bottom: 10px;
+    
+            //         .communityPostContainer11{
+            //             display: flex;
+            //             flex-direction: row;
+            //             align-items: center;
+            //             width: 40%;
+    
+            //             .communityPostContainer111{
+            //                 width: 45px;
+            //                 height: 45px;
+            //                 display: flex;
+            //                 flex-direction: row;
+            //                 align-items: center;
+        
+            //                 .communityPostContainer1111{
+            //                     // width: 100%;
+            //                     height: 100%;
+            //                     border-radius: 50%;
+            //                 }
+                            
+            //             }
+            //             .communityPostContainer112{
+            //                 padding-left: 10px;
+            //             }
+            //         }
+                    
+            //         .communityPostContainer12{
+            //             margin-left: 10px;
+            //             padding:5px;
+            //             .communityPostContainer122{
+            //                 display: flex;
+            //                 flex-direction: column;
+            //                 position:absolute;
+            //                 .communityPostContainer1221{
+                                
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //                 .communityPostContainer1222{
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //             }
+            //         }
+            //     }
+    
+            //     .communityPostContainer2{
+            //         &1{
+            //             overflow-wrap: break-word;
+            //         }
+            //     }
+            //     .communityPostContainer3{
+            //         display: flex;
+            //         align-items: center;
+    
+            //         .communityPostContainer31{
+    
+            //         }
+            //         .communityPostContainer32{
+            //             margin-left: 4px;
+            //         }
+            //     }
+            // }
+    
+            // .noTweets{
+            //     position: fixed;
+            //     margin-top: 30vh;
+            //     font-size: 30px;
+            //     color: $secondary-text;
+            // }
+        }
+        // .mainContainer1{
+        //     position: fixed;
+        //     background-color: red;
+        //     bottom: 20px;
+        //     right: 50px;
+        //     // padding: 15px;
+        //     border-radius: 50%;
+        //     width: 60px;
+        //     height: 60px;
+    
+        //     .mainContainer11{
+        //         font-size: 30px;
+        //         color: black;
+        //     }
+        // }
+    }
+    
+    // .commnityPost{
+    //     width: 100%;
+    //     height: 100%;
+    //     background-color: rgba(0, 0, 0, 0.66);
+    //     position:fixed;
+    //     z-index: 10;
+    //     top: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     .userCommunityContainer{
+    //         padding: 1%;
+        
+    //         .tweetContainer{
+    //             border: 1px solid red;
+    //             height: 30vh;
+    //             width: 700px;
+    //             border-radius: 20px;
+    //             display: flex;
+    //             flex-direction: column;
+    //             justify-content: space-between;
+    //             padding: 1%;
+    //             background-color: black;
+        
+    //             .firstRow{
+    //                 display: flex;
+    //                 justify-content: space-between;
+    //                 .firstRow1{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow11{
+    //                         width: 2rem;
+    //                         height: 2rem;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                     }
+    //                     .firstRow12{
+    //                         color:gray;
+    //                     }
+                        
+    //                 }
+    //                 .firstRow2{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow21{
+    //                         display: flex;
+    //                         align-items: center;
+    //                         width: 60px;
+    //                         height: 30px;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                         color:gray;
+    //                     }
+    //                     .firstRow22{
+                            
+    //                     }
+    //                 }
+    //             }
+    //             .secondRow11 {
+    //                 border: none; /* Remove the border */
+    //                 outline: none; /* Remove the focus outline */
+    //                 width: 100%; /* Full width */
+    //                 height: auto; /* Adjust height dynamically based on content */
+    //                 font-weight: bold; /* Bold text */
+    //                 white-space: pre-wrap; /* Preserve whitespace and allow text wrapping */
+    //                 word-wrap: break-word; /* Break words if they are too long */
+    //                 padding: 0.5rem; /* Add padding for better spacing */
+    //                 resize: none; /* Disable manual resizing */
+    //                 // overflow: hidden; /* Hide the scrollbar */
+    //                 overflow-wrap: break-word; /* Ensure long words wrap properly */
+    //                 background-color: transparent; /* Make the background transparent (optional) */
+    //             }
+                
+                
+    //             .secondRow2{
+    //                 display: flex;
+    //                 justify-content: end;
+    
+    //                 .secondRow21{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    //                     margin-right: 10px;
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //                 .secondRow22{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+@media(max-width:767px){
+    .communityContianer{
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: center;
+        
+        // // overflow-y: scroll;
+        width: 100%;
+        // height: auto;
+        .channelProfileContainer{
+            // position: fixed;
+            height: 9vw;
+            width: 70%;
+            // background-color: $hover-bg-color;
+            // padding: 10px;
+            // display: flex;
+            // align-items: center;
+            // border-radius: 20px;
+            // margin-bottom: 40px;
+            // border-bottom: 3px solid white;
+            // &1{
+            //     width: 45px;
+            //     height: 45px;
+            //     &1{
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 50%;
+            //     }
+            // }
+            // &2{
+            //     margin: 0 20px;
+            //     &1{
+            //         font-size: 20px;
+            //         font-weight: 700;
+            //     }
+            //     &2{
+            //         font-size: 14px;
+            //         color: $secondary-text;
+            //     }
+            // }
+        }
+        
+        .mainContainer{
+            width: 80%;
+            // min-height: 100vh;
+            // max-height: auto;
+            // background-color: $background-color;
+            // border-left: 2px solid $hover-bg-color;
+            // border-right: 2px solid $hover-bg-color;
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            // padding-top: 85px;
+    
+            // .communityPostContainer{
+            //     width: 95%;
+            //     height: auto;
+            //     background-color: $hover-bg-color;
+            //     border-radius: 10px;
+            //     padding: 10px;
+            //     margin: 10px 0;
+            //     transition: 0.5s;
+            //     &:hover{
+            //         transform: scale(0.98);
+            //         background-color: $secondary-color;
+            //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            //     }
+                
+            //     .communityPostContainer1{
+            //         width: 100%;
+            //         display: flex;
+            //         flex-direction: row;
+            //         align-items: center;
+            //         justify-content: space-between;
+            //         margin-bottom: 10px;
+    
+            //         .communityPostContainer11{
+            //             display: flex;
+            //             flex-direction: row;
+            //             align-items: center;
+            //             width: 40%;
+    
+            //             .communityPostContainer111{
+            //                 width: 45px;
+            //                 height: 45px;
+            //                 display: flex;
+            //                 flex-direction: row;
+            //                 align-items: center;
+        
+            //                 .communityPostContainer1111{
+            //                     // width: 100%;
+            //                     height: 100%;
+            //                     border-radius: 50%;
+            //                 }
+                            
+            //             }
+            //             .communityPostContainer112{
+            //                 padding-left: 10px;
+            //             }
+            //         }
+                    
+            //         .communityPostContainer12{
+            //             margin-left: 10px;
+            //             padding:5px;
+            //             .communityPostContainer122{
+            //                 display: flex;
+            //                 flex-direction: column;
+            //                 position:absolute;
+            //                 .communityPostContainer1221{
+                                
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //                 .communityPostContainer1222{
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //             }
+            //         }
+            //     }
+    
+            //     .communityPostContainer2{
+            //         &1{
+            //             overflow-wrap: break-word;
+            //         }
+            //     }
+            //     .communityPostContainer3{
+            //         display: flex;
+            //         align-items: center;
+    
+            //         .communityPostContainer31{
+    
+            //         }
+            //         .communityPostContainer32{
+            //             margin-left: 4px;
+            //         }
+            //     }
+            // }
+    
+            // .noTweets{
+            //     position: fixed;
+            //     margin-top: 30vh;
+            //     font-size: 30px;
+            //     color: $secondary-text;
+            // }
+        }
+        .mainContainer1{
+            position: fixed;
+            background-color: red;
+            bottom: 30px;
+            right: 40px;
+            // padding: 15px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+    
+            .mainContainer11{
+                font-size: 30px;
+                color: black;
+            }
+        }
+    }
+    
+    // .commnityPost{
+    //     width: 100%;
+    //     height: 100%;
+    //     background-color: rgba(0, 0, 0, 0.66);
+    //     position:fixed;
+    //     z-index: 10;
+    //     top: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     .userCommunityContainer{
+    //         padding: 1%;
+        
+    //         .tweetContainer{
+    //             border: 1px solid red;
+    //             height: 30vh;
+    //             width: 700px;
+    //             border-radius: 20px;
+    //             display: flex;
+    //             flex-direction: column;
+    //             justify-content: space-between;
+    //             padding: 1%;
+    //             background-color: black;
+        
+    //             .firstRow{
+    //                 display: flex;
+    //                 justify-content: space-between;
+    //                 .firstRow1{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow11{
+    //                         width: 2rem;
+    //                         height: 2rem;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                     }
+    //                     .firstRow12{
+    //                         color:gray;
+    //                     }
+                        
+    //                 }
+    //                 .firstRow2{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow21{
+    //                         display: flex;
+    //                         align-items: center;
+    //                         width: 60px;
+    //                         height: 30px;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                         color:gray;
+    //                     }
+    //                     .firstRow22{
+                            
+    //                     }
+    //                 }
+    //             }
+    //             .secondRow11 {
+    //                 border: none; /* Remove the border */
+    //                 outline: none; /* Remove the focus outline */
+    //                 width: 100%; /* Full width */
+    //                 height: auto; /* Adjust height dynamically based on content */
+    //                 font-weight: bold; /* Bold text */
+    //                 white-space: pre-wrap; /* Preserve whitespace and allow text wrapping */
+    //                 word-wrap: break-word; /* Break words if they are too long */
+    //                 padding: 0.5rem; /* Add padding for better spacing */
+    //                 resize: none; /* Disable manual resizing */
+    //                 // overflow: hidden; /* Hide the scrollbar */
+    //                 overflow-wrap: break-word; /* Ensure long words wrap properly */
+    //                 background-color: transparent; /* Make the background transparent (optional) */
+    //             }
+                
+                
+    //             .secondRow2{
+    //                 display: flex;
+    //                 justify-content: end;
+    
+    //                 .secondRow21{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    //                     margin-right: 10px;
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //                 .secondRow22{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+@media(max-width:600px){
+    .communityContianer{
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: center;
+        
+        // // overflow-y: scroll;
+        width: 100%;
+        // height: auto;
+        .channelProfileContainer{
+            // position: fixed;
+            height: 12vw;
+            width: 90%;
+            // background-color: $hover-bg-color;
+            // padding: 10px;
+            // display: flex;
+            // align-items: center;
+            // border-radius: 20px;
+            // margin-bottom: 40px;
+            // border-bottom: 3px solid white;
+            // &1{
+            //     width: 45px;
+            //     height: 45px;
+            //     &1{
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 50%;
+            //     }
+            // }
+            // &2{
+            //     margin: 0 20px;
+            //     &1{
+            //         font-size: 20px;
+            //         font-weight: 700;
+            //     }
+            //     &2{
+            //         font-size: 14px;
+            //         color: $secondary-text;
+            //     }
+            // }
+        }
+        
+        .mainContainer{
+            width: 80%;
+            // min-height: 100vh;
+            // max-height: auto;
+            // background-color: $background-color;
+            // border-left: 2px solid $hover-bg-color;
+            // border-right: 2px solid $hover-bg-color;
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            // padding-top: 85px;
+    
+            // .communityPostContainer{
+            //     width: 95%;
+            //     height: auto;
+            //     background-color: $hover-bg-color;
+            //     border-radius: 10px;
+            //     padding: 10px;
+            //     margin: 10px 0;
+            //     transition: 0.5s;
+            //     &:hover{
+            //         transform: scale(0.98);
+            //         background-color: $secondary-color;
+            //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            //     }
+                
+            //     .communityPostContainer1{
+            //         width: 100%;
+            //         display: flex;
+            //         flex-direction: row;
+            //         align-items: center;
+            //         justify-content: space-between;
+            //         margin-bottom: 10px;
+    
+            //         .communityPostContainer11{
+            //             display: flex;
+            //             flex-direction: row;
+            //             align-items: center;
+            //             width: 40%;
+    
+            //             .communityPostContainer111{
+            //                 width: 45px;
+            //                 height: 45px;
+            //                 display: flex;
+            //                 flex-direction: row;
+            //                 align-items: center;
+        
+            //                 .communityPostContainer1111{
+            //                     // width: 100%;
+            //                     height: 100%;
+            //                     border-radius: 50%;
+            //                 }
+                            
+            //             }
+            //             .communityPostContainer112{
+            //                 padding-left: 10px;
+            //             }
+            //         }
+                    
+            //         .communityPostContainer12{
+            //             margin-left: 10px;
+            //             padding:5px;
+            //             .communityPostContainer122{
+            //                 display: flex;
+            //                 flex-direction: column;
+            //                 position:absolute;
+            //                 .communityPostContainer1221{
+                                
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //                 .communityPostContainer1222{
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //             }
+            //         }
+            //     }
+    
+            //     .communityPostContainer2{
+            //         &1{
+            //             overflow-wrap: break-word;
+            //         }
+            //     }
+            //     .communityPostContainer3{
+            //         display: flex;
+            //         align-items: center;
+    
+            //         .communityPostContainer31{
+    
+            //         }
+            //         .communityPostContainer32{
+            //             margin-left: 4px;
+            //         }
+            //     }
+            // }
+    
+            // .noTweets{
+            //     position: fixed;
+            //     margin-top: 30vh;
+            //     font-size: 30px;
+            //     color: $secondary-text;
+            // }
+        }
+        .mainContainer1{
+            position: fixed;
+            background-color: red;
+            bottom: 30px;
+            right: 40px;
+            // padding: 15px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+    
+            .mainContainer11{
+                font-size: 30px;
+                color: black;
+            }
+        }
+    }
+    
+    // .commnityPost{
+    //     width: 100%;
+    //     height: 100%;
+    //     background-color: rgba(0, 0, 0, 0.66);
+    //     position:fixed;
+    //     z-index: 10;
+    //     top: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     .userCommunityContainer{
+    //         padding: 1%;
+        
+    //         .tweetContainer{
+    //             border: 1px solid red;
+    //             height: 30vh;
+    //             width: 700px;
+    //             border-radius: 20px;
+    //             display: flex;
+    //             flex-direction: column;
+    //             justify-content: space-between;
+    //             padding: 1%;
+    //             background-color: black;
+        
+    //             .firstRow{
+    //                 display: flex;
+    //                 justify-content: space-between;
+    //                 .firstRow1{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow11{
+    //                         width: 2rem;
+    //                         height: 2rem;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                     }
+    //                     .firstRow12{
+    //                         color:gray;
+    //                     }
+                        
+    //                 }
+    //                 .firstRow2{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow21{
+    //                         display: flex;
+    //                         align-items: center;
+    //                         width: 60px;
+    //                         height: 30px;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                         color:gray;
+    //                     }
+    //                     .firstRow22{
+                            
+    //                     }
+    //                 }
+    //             }
+    //             .secondRow11 {
+    //                 border: none; /* Remove the border */
+    //                 outline: none; /* Remove the focus outline */
+    //                 width: 100%; /* Full width */
+    //                 height: auto; /* Adjust height dynamically based on content */
+    //                 font-weight: bold; /* Bold text */
+    //                 white-space: pre-wrap; /* Preserve whitespace and allow text wrapping */
+    //                 word-wrap: break-word; /* Break words if they are too long */
+    //                 padding: 0.5rem; /* Add padding for better spacing */
+    //                 resize: none; /* Disable manual resizing */
+    //                 // overflow: hidden; /* Hide the scrollbar */
+    //                 overflow-wrap: break-word; /* Ensure long words wrap properly */
+    //                 background-color: transparent; /* Make the background transparent (optional) */
+    //             }
+                
+                
+    //             .secondRow2{
+    //                 display: flex;
+    //                 justify-content: end;
+    
+    //                 .secondRow21{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    //                     margin-right: 10px;
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //                 .secondRow22{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+@media(max-width:500px){
+    .communityContianer{
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: center;
+        
+        // // overflow-y: scroll;
+        width: 100%;
+        // height: auto;
+        .channelProfileContainer{
+            // position: fixed;
+            height: 12vw;
+            width: 98%;
+            // background-color: $hover-bg-color;
+            // padding: 10px;
+            // display: flex;
+            // align-items: center;
+            // border-radius: 20px;
+            // margin-bottom: 40px;
+            // border-bottom: 3px solid white;
+            // &1{
+            //     width: 45px;
+            //     height: 45px;
+            //     &1{
+            //         width: 100%;
+            //         height: 100%;
+            //         border-radius: 50%;
+            //     }
+            // }
+            // &2{
+            //     margin: 0 20px;
+            //     &1{
+            //         font-size: 20px;
+            //         font-weight: 700;
+            //     }
+            //     &2{
+            //         font-size: 14px;
+            //         color: $secondary-text;
+            //     }
+            // }
+        }
+        
+        .mainContainer{
+            width: 94%;
+            // min-height: 100vh;
+            // max-height: auto;
+            // background-color: $background-color;
+            // border-left: 2px solid $hover-bg-color;
+            // border-right: 2px solid $hover-bg-color;
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            // padding-top: 85px;
+    
+            // .communityPostContainer{
+            //     width: 95%;
+            //     height: auto;
+            //     background-color: $hover-bg-color;
+            //     border-radius: 10px;
+            //     padding: 10px;
+            //     margin: 10px 0;
+            //     transition: 0.5s;
+            //     &:hover{
+            //         transform: scale(0.98);
+            //         background-color: $secondary-color;
+            //         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+            //     }
+                
+            //     .communityPostContainer1{
+            //         width: 100%;
+            //         display: flex;
+            //         flex-direction: row;
+            //         align-items: center;
+            //         justify-content: space-between;
+            //         margin-bottom: 10px;
+    
+            //         .communityPostContainer11{
+            //             display: flex;
+            //             flex-direction: row;
+            //             align-items: center;
+            //             width: 40%;
+    
+            //             .communityPostContainer111{
+            //                 width: 45px;
+            //                 height: 45px;
+            //                 display: flex;
+            //                 flex-direction: row;
+            //                 align-items: center;
+        
+            //                 .communityPostContainer1111{
+            //                     // width: 100%;
+            //                     height: 100%;
+            //                     border-radius: 50%;
+            //                 }
+                            
+            //             }
+            //             .communityPostContainer112{
+            //                 padding-left: 10px;
+            //             }
+            //         }
+                    
+            //         .communityPostContainer12{
+            //             margin-left: 10px;
+            //             padding:5px;
+            //             .communityPostContainer122{
+            //                 display: flex;
+            //                 flex-direction: column;
+            //                 position:absolute;
+            //                 .communityPostContainer1221{
+                                
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //                 .communityPostContainer1222{
+            //                     background-color: red;
+            //                     margin-left: 10px;
+            //                     padding: 5px 10px;
+            //                     border-radius: 5px;
+            //                 }
+            //             }
+            //         }
+            //     }
+    
+            //     .communityPostContainer2{
+            //         &1{
+            //             overflow-wrap: break-word;
+            //         }
+            //     }
+            //     .communityPostContainer3{
+            //         display: flex;
+            //         align-items: center;
+    
+            //         .communityPostContainer31{
+    
+            //         }
+            //         .communityPostContainer32{
+            //             margin-left: 4px;
+            //         }
+            //     }
+            // }
+    
+            // .noTweets{
+            //     position: fixed;
+            //     margin-top: 30vh;
+            //     font-size: 30px;
+            //     color: $secondary-text;
+            // }
+        }
+        .mainContainer1{
+            position: fixed;
+            background-color: red;
+            bottom: 30px;
+            right: 40px;
+            // padding: 15px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+    
+            .mainContainer11{
+                font-size: 30px;
+                color: black;
+            }
+        }
+    }
+    
+    // .commnityPost{
+    //     width: 100%;
+    //     height: 100%;
+    //     background-color: rgba(0, 0, 0, 0.66);
+    //     position:fixed;
+    //     z-index: 10;
+    //     top: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     .userCommunityContainer{
+    //         padding: 1%;
+        
+    //         .tweetContainer{
+    //             border: 1px solid red;
+    //             height: 30vh;
+    //             width: 700px;
+    //             border-radius: 20px;
+    //             display: flex;
+    //             flex-direction: column;
+    //             justify-content: space-between;
+    //             padding: 1%;
+    //             background-color: black;
+        
+    //             .firstRow{
+    //                 display: flex;
+    //                 justify-content: space-between;
+    //                 .firstRow1{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow11{
+    //                         width: 2rem;
+    //                         height: 2rem;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                     }
+    //                     .firstRow12{
+    //                         color:gray;
+    //                     }
+                        
+    //                 }
+    //                 .firstRow2{
+    //                     display: flex;
+    //                     align-items: center;
+    //                     .firstRow21{
+    //                         display: flex;
+    //                         align-items: center;
+    //                         width: 60px;
+    //                         height: 30px;
+    //                         border-radius: 100%;
+    //                         margin-right: 10px;
+    //                         color:gray;
+    //                     }
+    //                     .firstRow22{
+                            
+    //                     }
+    //                 }
+    //             }
+    //             .secondRow11 {
+    //                 border: none; /* Remove the border */
+    //                 outline: none; /* Remove the focus outline */
+    //                 width: 100%; /* Full width */
+    //                 height: auto; /* Adjust height dynamically based on content */
+    //                 font-weight: bold; /* Bold text */
+    //                 white-space: pre-wrap; /* Preserve whitespace and allow text wrapping */
+    //                 word-wrap: break-word; /* Break words if they are too long */
+    //                 padding: 0.5rem; /* Add padding for better spacing */
+    //                 resize: none; /* Disable manual resizing */
+    //                 // overflow: hidden; /* Hide the scrollbar */
+    //                 overflow-wrap: break-word; /* Ensure long words wrap properly */
+    //                 background-color: transparent; /* Make the background transparent (optional) */
+    //             }
+                
+                
+    //             .secondRow2{
+    //                 display: flex;
+    //                 justify-content: end;
+    
+    //                 .secondRow21{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    //                     margin-right: 10px;
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //                 .secondRow22{
+    //                     color:white;
+    //                     background-color: $hover-bg-color;
+    //                     padding: 4px 15px;
+    //                     border-radius: 25px;
+    
+    //                     &:hover{
+    //                         background-color: red;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+@media(max-width:360px){
+    
 }
