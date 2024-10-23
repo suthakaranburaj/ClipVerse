@@ -83,8 +83,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
     }
 
 
-    const video = await uploadOnCloudinary(videoPath);
-    const thumbnail = await uploadOnCloudinary(thumbnailPath);
+    const video = await uploadOnCloudinary(videoPath,{ secure: true });
+    const thumbnail = await uploadOnCloudinary(thumbnailPath,{ secure: true });
 
 
     if (!video) {
@@ -103,8 +103,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     
     const newVideo = await Video.create({
-        videoFile: video.url, 
-        thumbnail: thumbnail.url, 
+        videoFile: video.secure_url, 
+        thumbnail: thumbnail.secure_url, 
         title,
         description,
         // categories,
@@ -138,6 +138,8 @@ const getVideoById = asyncHandler(async (req, res) => {
         .status(400)
         .json( new ApiError(400, "Video not found !!"));
     }
+
+    console.log(video)
 
     res
     .status(200)
@@ -186,7 +188,7 @@ const updateVideo = asyncHandler(async (req, res) => {
             await deleteOnCloudinary(video.thumbnail);
         }
 
-        const uploadedThumbnail = await uploadOnCloudinary(thumbnail);
+        const uploadedThumbnail = await uploadOnCloudinary(thumbnail,{ secure: true });
 
         video.thumbnail = uploadedThumbnail.secure_url;
     }
