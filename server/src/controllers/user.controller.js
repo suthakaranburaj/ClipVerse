@@ -119,9 +119,9 @@ const loginUser = asyncHandler(async (req, res) => {
     //password check
     //access and referesh token
     //send cookie
-    console.log("hello")
+    // console.log("hello")
     const {username, password } = req.body
-    console.log(username);
+    // console.log(username);
 
     if (!username && !email) {
         return res
@@ -142,7 +142,7 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
     const user = await User.findOne(searchCriteria);
-    console.log(user)
+    // console.log(user)
     if (!user) {
         return res
         .status(404)
@@ -263,7 +263,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 })
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-    console.log(req)
+    // console.log(req)
     const { oldPassword, newPassword } = req.body
 
     const user = await User.findById(req.user?._id)
@@ -568,8 +568,8 @@ const getAllComments= asyncHandler(async (req, res)=>{
         .populate("video", "title") // Populate video details (e.g., video's title)
         .sort({ createdAt: -1 }); // Sort comments by latest first
 
-    console.log("Total Comments Found:", totalComments); // Debugging: See if any comments were found
-    console.log("Comments:", comments);
+    // console.log("Total Comments Found:", totalComments); // Debugging: See if any comments were found
+    // console.log("Comments:", comments);
     return res
     .status(200)
     .json(new ApiResponse(200,totalComments,comments,"Total Comments found for user's channel"))

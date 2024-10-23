@@ -45,7 +45,7 @@ const usePlaylistStore = create((set)=>({
         // }
             const response = await createPlaylistServices({name, description,videos});
             const playlist = response.data.data;
-            console.log(response);
+            // console.log(response);
             set((state) =>({
                 userPlaylists:[playlist,...state.userPlaylists],
                 playlist:playlist,

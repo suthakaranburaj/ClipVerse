@@ -12,7 +12,7 @@ const uploadOnCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null
         //upload the file on cloudinary
-        console.log(localFilePath);
+        // console.log(localFilePath);
         const response = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto"
         })
@@ -35,7 +35,7 @@ const deleteOnCloudinary = async (publicId , resourceType = 'image') => {
     try {
         // Handle deletion of both videos and images
         const response = await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
-        console.log("Cloudinary Deletion Response: ", response);
+        // console.log("Cloudinary Deletion Response: ", response);
 
         if (response.result !== "ok") {
             throw new ApiError(400, `Error while deleting the ${resourceType} on Cloudinary: ${response.result}`);

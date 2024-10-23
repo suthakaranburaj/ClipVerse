@@ -79,7 +79,7 @@ const useCommentsStore = create((set)=>({
         try {
             const response = await addCommentOnVideoServices(videoId,content);
             const VideoComment = response.data
-            console.log(VideoComment)
+            // console.log(VideoComment)
             set((state) =>({
                 commentsOfVideo:[VideoComment,...state.commentsOfVideo],
                 allComments:[VideoComment,...state.allComments],
@@ -118,8 +118,8 @@ const useCommentsStore = create((set)=>({
         try {
             const response = await updateCommentOnVideoServices(commentId, content);
             const updatedComment = response.data.data;
-            console.log(content)
-            console.log(updatedComment)
+            // console.log(content)
+            // console.log(updatedComment)
             set((state) => ({
                 commentsOfVideo: state.commentsOfVideo.map((comment) =>
                     comment._id === updatedComment._id ? updatedComment : comment

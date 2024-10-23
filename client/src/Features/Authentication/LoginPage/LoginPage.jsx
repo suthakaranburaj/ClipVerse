@@ -26,9 +26,9 @@ function LoginPage() {
         } catch (err) {
             // Check if the error is an Axios error and has a response
             if (err.response && err.response.data) {
-                console.log(err.response.data.message);
+                // console.log(err.response.data.message);
             } else {
-                console.log("Something went wrong", err);
+                // console.log("Something went wrong", err);
             }
         }
     };
