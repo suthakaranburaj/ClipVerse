@@ -88,9 +88,9 @@ function UserVideos() {
     const onSubmit = async (data) => {
         try {
             const videos = selectedVideos;
-            console.log(videos)
+            // console.log(videos)
             if(isEditMode){
-                console.log(videos)
+                // console.log(videos)
                 await addVideosToPlaylist(currentPlaylist?._id,{videoIds:videos});
                 alert("Playlist updated successfully!");
             }

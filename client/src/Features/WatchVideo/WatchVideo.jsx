@@ -81,15 +81,8 @@ function WatchVideo() {
         isLoading:likesLoadingStore,
     } = useLikesStore();
 
-    // useEffect(()=>{
-    //     if(user && user?._id){
-    //         setCurrentUserId(user._id);
-    //     }
-    // })
-
     const queryParams = new URLSearchParams(location.search);
     const videoId = queryParams.get('videoId');
-    // console.log(videoId)
     useEffect(() => {
         if (video?.owner?._id) {
             setChannelId(video.owner._id);
@@ -132,7 +125,7 @@ function WatchVideo() {
     useEffect(() => {
         const fetchData = async () => {
             await getVideoLikes(videoId); // Fetch the latest likes
-            console.log(videoId)
+            // console.log(videoId)
             if (user && likesOfVideo) { // Ensure both user and likesOfVideo are defined
                 const isVideoLike = likesOfVideo.some((u) => u?.likedBy === user?._id);
                 setIsVideoLiked(isVideoLike);
@@ -141,7 +134,7 @@ function WatchVideo() {
             }
         };
         fetchData();
-    }, [channelId, videoId,isVideoLiked]); // Ensure dependencies include necessary data only
+    }, [channelId, videoId,isVideoLiked,likesOfVideo]); // Ensure dependencies include necessary data only
     
 
     useEffect(() => {
@@ -194,16 +187,6 @@ function WatchVideo() {
         fetchData();
     }, [videoId, toggleCommentLike,channelId,user,getLikesOfComment,commentsOfVideo]); 
     
-
-    // useEffect(()=>{
-    //     const fetchData = async()=>{
-    //         await Promise.all([
-                
-    //         ])
-    //     }
-    //     fetchData();
-    // },[isVideoLiked])
-
     const handleAddComment = async()=>{
         if(videoId && commentContent){
             await Promise.all([
@@ -227,7 +210,7 @@ function WatchVideo() {
 
     const handleSubscription = async (channelId) => {
         if (channelId) {
-            console.log(channelId)
+            // console.log(channelId)
             await Promise.all([
                 toggleSubscription(channelId),
                 getUserChannelSubscribers(channelId),
@@ -334,6 +317,9 @@ function WatchVideo() {
 
     dayjs.extend(relativeTime);
 
+    console.log(video)
+    console.log(video?.videoFile)
+
     return (
         <>
         <div className='box'>
@@ -351,9 +337,6 @@ function WatchVideo() {
                         ) : (
                             <p>No video found.</p>
                         )}
-                        {/* <button onClick={togglePlayPause}>
-                            {isPlaying ? 'Pause' : 'Play'}
-                        </button> */}
                     </div>
                     <div>
                         <p className='video-title'>{video ? video?.title : 'Video Title Here'}</p>
@@ -391,17 +374,10 @@ function WatchVideo() {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className='section2'>
-                            <button>
-
-                            </button>
-
-                        </div> */}
                     </div>
                     <div className='description'>
                         <div className='section21'>
                             <p className='views'>{video?.views} views</p>
-                            {/* <p className='dot'>•</p> */}
                             <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
                         </div>
                         <div className='section22'>
@@ -444,8 +420,6 @@ function WatchVideo() {
 
                             </div>
                         </div>
-                        {/* <div className='comments2'>
-                        </div> */}
                     </div>
                     <div className='channelComments'>
                         {
@@ -457,15 +431,6 @@ function WatchVideo() {
                                         likes:0,
                                         likedbyUser:false,
                                     };
-                                    // console.log(commentLikeData);
-                                    // console.log(commentLikeData)
-                                    // console.log(commentLikeData.likedByUser)
-                                    // console.log(comment?.owner)
-                                    // console.log(video?.owner?._id)
-                                    // console.log(channelId)
-                                    // console.log(user?._id)
-                                    // console.log(user?._id)
-                                    // console.log(currentComment)
                                 return(
                                     <div key={comment?._id} className='channelCommentsSection'>
                                         <div className='channelCommentsSection1'>

@@ -153,7 +153,7 @@ const useVideosStore = create(
                 
                 const response = await userWatchHistoryService(videoId);
                 const watchHistory = response.data.user.watchHistory;
-                console.log(watchHistory)
+                // console.log(watchHistory)
                 set((state) =>({
                     watchHistorys: [watchHistory,...state.watchHistorys],
                     isLoading:false,
