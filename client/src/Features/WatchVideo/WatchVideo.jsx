@@ -36,6 +36,7 @@ function WatchVideo() {
     const [currentComment, setCurrentComment] = useState();
     const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
     const [showComments, setShowComments] = useState(false);
+    // const [videoLikes,setIsVideoLikes]=useState(0);
 
     // Function to toggle comment visibility
     
@@ -109,6 +110,20 @@ function WatchVideo() {
                     getUserChannelSubscribers(channelId)
 
                 ]);
+                if (likesOfVideo && likesOfVideo.length >= 0)
+                    {
+                    const isVideoLiked = likesOfVideo?.some(
+                        (like) => like.likedBy === user._id
+                    );
+                    
+                    // Update the state only if necessary to prevent unnecessary re-renders
+                    setIsVideoLiked((prevIsVideoLiked) => {
+                        if (prevIsVideoLiked !== isVideoLiked) {
+                            return isVideoLiked;
+                        }
+                        return prevIsVideoLiked;
+                    });
+                }
             }
 
             setTimeout(() => {
@@ -128,17 +143,22 @@ function WatchVideo() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await getVideoLikes(videoId); // Fetch the latest likes
-            // console.log(videoId)
-            if (user && likesOfVideo) { // Ensure both user and likesOfVideo are defined
-                const isVideoLike = likesOfVideo.some((u) => u?.likedBy === user?._id);
-                setIsVideoLiked(isVideoLike);
-                // console.log(isVideoLike)
-                // console.log(likesOfVideo)
+            if (user && videoId) {
+                // Fetch the video likes
+                await getVideoLikes(videoId);
+    
+                // Only check if user liked the video once likesOfVideo is updated
             }
         };
-        fetchData();
-    }, [channelId, videoId,isVideoLiked]); // Ensure dependencies include necessary data only
+    
+        // Use a small delay to debounce state updates, preventing multiple re-renders
+        const debounceTimeout = setTimeout(() => {
+            fetchData();
+        }, 200);
+    
+        return () => clearTimeout(debounceTimeout);
+    }, [likesOfVideo, videoId, user,isVideoLiked]);
+    
     
 
     useEffect(() => {
@@ -148,7 +168,7 @@ function WatchVideo() {
                 await getUserChannelSubscribers(channelId);
                 
                 // Only check if user is subscribed once channelSubscribers is updated
-                if (channelSubscribers.length > 0) {
+                if (channelSubscribers.length >= 0) {
                     const isUserSubscribed = channelSubscribers.some(
                         (subscriber) => subscriber._id === user._id
                     );
@@ -209,7 +229,7 @@ function WatchVideo() {
             }
         }
         fetchData();
-    }, [videoId, commentsUpdated,channelId]);
+    }, [videoId, commentsUpdated,channelId ]);
     
 
     const handleSubscription = async (channelId) => {
@@ -220,29 +240,29 @@ function WatchVideo() {
                 getUserChannelSubscribers(channelId),
             ]);
     
-            if (isSubscribed) {
-                channelSubscribers.length -= 1;
-            } else {
-                channelSubscribers.length += 1;
-            }
+            // if (isSubscribed) {
+            //     channelSubscribers.length -= 1;
+            // } else {
+            //     channelSubscribers.length += 1;
+            // }
             setIsSubscribed((prev)=>prev)
         }
     };
 
-    const handleVideoLike = async()=>{
+    const handleVideoLike = async(videoId)=>{
         if(videoId){
             // setIsVideoLiked((prevIsVideoLiked) => !prevIsVideoLiked); 
             await Promise.all([
                 toggleVideoLike(videoId),
                 getVideoLikes(videoId),
             ])
-            // if(isVideoLiked){
-            //     likesOfVideoCount -= 1;
+            // if(isVideoLiked ){
+            //     likesOfVideo.length-= 1;
             // }
             // else{
-            //     likesOfVideoCount += 1;
+            //     likesOfVideo.length += 1;
             // }
-            // setIsVideoLiked((prev)=>!prev);
+            setIsVideoLiked((prev)=>!prev);
         }
     };
 
@@ -320,7 +340,7 @@ function WatchVideo() {
         setShowComments((prevShowComments) => !prevShowComments);
     };
 
-    if (videoLoadingStore || minLoading  ) return <Loader/>
+    if (videoLoadingStore || minLoading ) return <Loader/>
     if (error) return <p>Error: {error}</p>;
 
     
@@ -377,7 +397,7 @@ function WatchVideo() {
                                 <div className='likeButton'>
                                     <FontAwesomeIcon 
                                         icon={faThumbsUp} 
-                                        onClick={handleVideoLike}
+                                        onClick={()=>handleVideoLike(videoId)}
                                         className={`${isVideoLiked ? 'likeIcon' : 'unLikeIcon'}`}
                                     />
                                     <p>{likesOfVideoNumber}</p>
