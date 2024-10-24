@@ -101,7 +101,7 @@ function Content() {
                     <div className='head'>
                         <div>Channel content</div>
                     </div>
-                    <div className='bttns'>
+                    {/* <div className='bttns'>
                         <div className='pressables'><button>Videos</button></div>
                         <div className='pressables'><button>Shorts</button></div>
                         <div className='pressables'><button>Live</button></div>
@@ -109,7 +109,7 @@ function Content() {
                         <div className='pressables'><button>Playlists</button></div>
                         <div className='pressables'><button>Podcasts</button></div>
                         <div className='pressables'><button>Promotions</button></div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="divider"></div>
 
@@ -123,17 +123,17 @@ function Content() {
                 <div className='level-3'>
                     <div className='part-1'>
                         {/* <div className='box'></div> */}
-                        <div className='label'>videos</div>
+                        <div className='label custom767:text-xs custom600:text-[10px]'>videos</div>
                     </div>
                     <div className='part-2'>
-                        <div>Visibility</div>
-                        <div>Duration</div>
-                        <div>Date ↓</div>
+                        <div className='custom767:text-xs custom600:text-[10px]'>Visibility</div>
+                        <div className='custom767:text-xs custom600:text-[10px] custom500:hidden'>Duration</div>
+                        <div className='custom767:text-xs custom600:text-[10px]'>Date ↓</div>
                     </div>
                     <div className='part-3'>
-                        <div>Views</div>
-                        <div>Comments</div>
-                        <div>Likes</div>
+                        <div className='custom767:text-xs custom600:text-[10px]'>Views</div>
+                        <div className='custom767:text-xs custom600:text-[10px] custom500:hidden'>Comments</div>
+                        <div className='custom767:text-xs custom600:text-[10px] custom500:hidden'>Likes</div>
                         
                     </div>
                 </div>
@@ -148,37 +148,37 @@ function Content() {
                                         <img src={video?.thumbnail ? video?.thumbnail : image1} alt="Thumbnail" />
                                     </div>
                                     <div className='videoTitleDescriptionContainer'>
-                                        <p>{video?.title ? video?.title : 'Title here'}</p>
-                                        <p>{video?.description ? video?.description : 'Description here'}</p>
+                                        <p className='font-bold custom1024:text-[12px] custom500:text-[10px]'>{video?.title ? video?.title : 'Title here'}</p>
+                                        <p className='text-gray-500 custom1024:text-sm custom600:hidden'>{video?.description ? video?.description : 'Description here'}</p>
                                     </div>
                                     <div className='videoStatsContainer'>
                                         <div className='statsPart1'>
                                         <div>
                                             {video?.isPublished ? (
-                                                <p>Published</p>
-                                            ) : (<p>Not Published</p>)}
+                                                <p className='custom1024:text-[8px] custom600:text-[8px]'>Published</p>
+                                            ) : (<p className='custom1024:text-[8px] custom600:text-[8px]'>Not Published</p>)}
                                         </div>
-                                            <p>{Math.floor(video?.duration / 60)}m {Math.floor(video?.duration % 60)}s</p>
+                                            <p className='custom1024:text-[8px] custom500:hidden'>{Math.floor(video?.duration / 60)}m {Math.floor(video?.duration % 60)}s</p>
                                             <div>
-                                                <p>{new Date(video?.createdAt).toLocaleDateString()}</p>
+                                                <p className='custom1024:text-[8px]'>{new Date(video?.createdAt).toLocaleDateString()}</p>
                                                 {/* <p>{video?.isPublished ? "Published" : "Unpublished"}</p> */}
                                             </div>
                                         </div>
                                         <div className='statsPart2'>
-                                            <p>{video?.views}</p>
+                                            <p className='custom1024:text-[8px] '>{video?.views}</p>
                                             {/* Display the comments count for the matching video */}
-                                            <p>{getCommentsCountForVideo(video?._id)}</p>
-                                            <p>{getLikesCountForVideo(video?._id)}</p>
+                                            <p className='custom1024:text-[8px] custom500:hidden'>{getCommentsCountForVideo(video?._id)}</p>
+                                            <p className='custom1024:text-[8px] custom500:hidden'>{getLikesCountForVideo(video?._id)}</p>
                                             
                                         </div>
                                     </div>
                                     <FontAwesomeIcon
                                         icon={faPen}
-                                        className='text-green-600 mr-3'
+                                        className='text-green-600 mr-3 custom1024:text-[13px]'
                                         onClick={() => handleEdit(video)}
                                     />
                                     <FontAwesomeIcon 
-                                        icon={faTrash} className='text-red-600 mr-5'
+                                        icon={faTrash} className='text-red-600 mr-5 custom1024:text-[13px]'
                                         onClick={()=>handleDelete(video._id)}
                                     />
 
