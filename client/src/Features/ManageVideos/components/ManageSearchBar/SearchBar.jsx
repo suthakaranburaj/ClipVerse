@@ -75,8 +75,8 @@ function SearchBar() {
     }
 
     return (
-        <div className="cont text-white p-4 flex justify-between">
-            <div className='mx-4 cont1'>
+        <div className="cont text-white p-2 flex justify-between">
+            <div className='mx-4 custom500:mx-1 cont1'>
                 <FontAwesomeIcon
                     className='text-white icon-large'
                     icon={isNavOpen ? faTimes : faBars} // Conditional rendering of icons
@@ -86,7 +86,7 @@ function SearchBar() {
                     <img src={logo} alt="" />
                 </Link>
             </div>
-            <div className='mx-10 w-[80%]'>
+            <div className='mx-10 custom456:mx-2 w-[80%]'>
                 <div className="flex justify-between">
                     <div className="nav-center">
                         <div className="search-bar">
@@ -101,12 +101,11 @@ function SearchBar() {
                         </div>
                         <FontAwesomeIcon icon={faMicrophone} className="mic-icon" />
                     </div>
-                    <div className='flex items-center relative'>
+                    <div className='flex items-center relative w-40'>
 
-                        <div className="relative">
-                            <button className='bttn rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
+                        <div className="relative w-20">
+                            <button className='bttn rounded-full pl-2 mr-2 h-10' onClick={toggleDropdown1}>
                                 <MdVideoCall className="dropdown-icon" size={22} />
-                                Create
                             </button>
 
                             {/* Dropdown Menu */}

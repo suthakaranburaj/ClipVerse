@@ -31,8 +31,8 @@
             background-color: $hover-bg-color;
             transition: 0.4s;
             border-radius: 10px;
-            width: 30vh;
-            height: 40vh;
+            width: 10vw;
+            height: 15vw;
 
             &:hover{
                 transform: scale(0.98);
@@ -47,8 +47,8 @@
                 justify-content: center;
 
                 div{
-                    width: 150px;
-                    height: 150px;
+                    width: 100px;
+                    height: 100px;
                     margin-bottom: 5px;
                     .subscriber-avatar {
                         width: 100%;
@@ -84,4 +84,366 @@
             
         }
     }
+}
+
+@media(max-width:1280px){
+
+}
+
+@media(max-width:1024px){
+    .subscription-container {
+        padding: 10px;
+        border-radius: 8px;
+        // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        color:white;
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+    
+        .error-message {
+            color: #ff4d4f;
+            font-weight: bold;
+        }
+    
+        .subscriber-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            // justify-content: center;
+            
+            .subscriber-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                margin: 5px;
+                background-color: $hover-bg-color;
+                transition: 0.4s;
+                border-radius: 10px;
+                width: 15vw;
+                height: 20vw;
+    
+                &:hover{
+                    transform: scale(0.98);
+                    background-color: $secondary-color;
+                    box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+                }
+    
+                .subscriber-details {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    justify-content: center;
+    
+                    div{
+                        width: 100px;
+                        height: 100px;
+                        margin-bottom: 5px;
+                        .subscriber-avatar {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            // margin-right: 10px;
+                        }
+                    }
+    
+                    .subscriber-name {
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: white;
+                    }
+                }
+            }
+    
+            // .subscriber-item:last-child {
+            //     border-bottom: none;
+            // }
+        }
+    
+        .NoSubscribersContainer{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            margin-top: 30vh;
+            margin-left: 30vw;
+            .NoSubscribers{
+                font-size: 30px;
+                display: flex;
+                
+            }
+        }
+    }
+    
+}
+
+@media(max-width:767px){
+    .subscription-container {
+        padding: 10px;
+        border-radius: 8px;
+        // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        color:white;
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+    
+        .error-message {
+            color: #ff4d4f;
+            font-weight: bold;
+        }
+    
+        .subscriber-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            // justify-content: center;
+            
+            .subscriber-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                margin: 5px;
+                background-color: $hover-bg-color;
+                transition: 0.4s;
+                border-radius: 10px;
+                width: 20vw;
+                height: 25vw;
+    
+                &:hover{
+                    transform: scale(0.98);
+                    background-color: $secondary-color;
+                    box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+                }
+    
+                .subscriber-details {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    justify-content: center;
+    
+                    div{
+                        width: 100px;
+                        height: 100px;
+                        margin-bottom: 5px;
+                        .subscriber-avatar {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            // margin-right: 10px;
+                        }
+                    }
+    
+                    .subscriber-name {
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: white;
+                    }
+                }
+            }
+    
+            // .subscriber-item:last-child {
+            //     border-bottom: none;
+            // }
+        }
+    
+        .NoSubscribersContainer{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            margin-top: 30vh;
+            margin-left: 30vw;
+            .NoSubscribers{
+                font-size: 30px;
+                display: flex;
+                
+            }
+        }
+    }
+    
+}
+
+@media(max-width:600px){
+    .subscription-container {
+        padding: 10px;
+        border-radius: 8px;
+        // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        color:white;
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+    
+        .error-message {
+            color: #ff4d4f;
+            font-weight: bold;
+        }
+    
+        .subscriber-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            // justify-content: center;
+            
+            .subscriber-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                margin: 5px;
+                background-color: $hover-bg-color;
+                transition: 0.4s;
+                border-radius: 10px;
+                width: 35vw;
+                height: 45vw;
+    
+                &:hover{
+                    transform: scale(0.98);
+                    background-color: $secondary-color;
+                    box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+                }
+    
+                .subscriber-details {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    justify-content: center;
+    
+                    div{
+                        width: 90px;
+                        height: 90px;
+                        margin-bottom: 5px;
+                        .subscriber-avatar {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            // margin-right: 10px;
+                        }
+                    }
+    
+                    .subscriber-name {
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: white;
+                    }
+                }
+            }
+    
+            // .subscriber-item:last-child {
+            //     border-bottom: none;
+            // }
+        }
+    
+        .NoSubscribersContainer{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            margin-top: 30vh;
+            margin-left: 30vw;
+            .NoSubscribers{
+                font-size: 30px;
+                display: flex;
+                
+            }
+        }
+    }
+}
+
+@media(max-width:500px){
+    .subscription-container {
+        padding: 10px;
+        border-radius: 8px;
+        // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        color:white;
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+    
+        .error-message {
+            color: #ff4d4f;
+            font-weight: bold;
+        }
+    
+        .subscriber-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            // justify-content: center;
+            
+            .subscriber-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                margin: 5px;
+                background-color: $hover-bg-color;
+                transition: 0.4s;
+                border-radius: 10px;
+                width: 30vw;
+                height: 45vw;
+    
+                &:hover{
+                    transform: scale(0.98);
+                    background-color: $secondary-color;
+                    box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
+                }
+    
+                .subscriber-details {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    justify-content: center;
+    
+                    div{
+                        width: 90px;
+                        height: 90px;
+                        margin-bottom: 5px;
+                        .subscriber-avatar {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            // margin-right: 10px;
+                        }
+                    }
+    
+                    .subscriber-name {
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: white;
+                    }
+                }
+            }
+    
+            // .subscriber-item:last-child {
+            //     border-bottom: none;
+            // }
+        }
+    
+        .NoSubscribersContainer{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            margin-top: 30vh;
+            margin-left: 30vw;
+            .NoSubscribers{
+                font-size: 30px;
+                display: flex;
+                
+            }
+        }
+    }
+}
+
+@media(max-width:456px){
+    
 }
