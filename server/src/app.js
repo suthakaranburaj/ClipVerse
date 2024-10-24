@@ -8,11 +8,7 @@ app.use(cors({
     origin: 
         [
             'http://localhost:3000', 
-            'https://clip-verse.vercel.app',
-            'https://clipverse.vercel.app',
-            'https://clip-verse-suthakar-anburajs-projects.vercel.app',
-            'https://clipverse-pink.vercel.app',
-            'https://youtube-clone-beige-phi.vercel.app',
+            'https://clipverse.onrender.com',
         ],
     credentials: true
 }))
