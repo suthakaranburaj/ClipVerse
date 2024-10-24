@@ -259,7 +259,7 @@ function WatchVideo() {
     const handleVideoLike = async(videoId)=>{
         if(videoId){
             // setIsVideoLiked((prevIsVideoLiked) => !prevIsVideoLiked); 
-            console.log("hellow")
+            // console.log("hellow")
             await Promise.all([
                 toggleVideoLike(videoId),
                 getVideoLikes(videoId),

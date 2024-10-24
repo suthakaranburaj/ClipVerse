@@ -8,7 +8,7 @@ import defaultImage from '../../assets/profile_pic.webp'
 
 function WatchHistory() {
 const { watchHistorys,getuserWatchHistory, isLoading:videoStoreLoading, error } = useVideosStore();
-console.log(watchHistorys)
+// console.log(watchHistorys)
 useEffect(() => {
     const fetchWatchHistory = async () => {
         await getuserWatchHistory();

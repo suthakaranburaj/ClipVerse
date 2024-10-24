@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = 'https://clip-verse-backend.onrender.com/api/v1/users';
+const BACKEND_URL = 'http://localhost:8000/api/v1/users';
 
 const loginUser = async ({ username, email, password }) => {
     try {
