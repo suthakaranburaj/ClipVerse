@@ -128,9 +128,10 @@ function UserVideos() {
         <div className='userVideosContainer'>
             <div className='container'>
                 <p className='container1'>Videos</p>
-                {user?._id === channelId &&(
-                    <p className='container2' onClick={handleCreatePlaylist}>
+                {user?._id === channelId && channelVideos?.length>0 &&(
+                    <p className='container2 flex' onClick={handleCreatePlaylist}>
                     {isCreatePlaylistActive ? 'Cancel Playlist' : 'Create Playlist'}
+                    {isCreatePlaylistActive &&(<p className='text-red-500 ml-5'>Select Videos</p>)}
                 </p>
                 )}
                 <div className='container3'>
@@ -178,7 +179,7 @@ function UserVideos() {
                 })}
 
                 </div>
-                {isCreatePlaylistActive && !isEditMode && (
+                {isCreatePlaylistActive && !isEditMode   && (
                     
                     <button
                         onClick={handleCreateChange}
@@ -243,6 +244,9 @@ function UserVideos() {
                     Update Videos
                 </button>
             </div>
+        )}
+        {channelVideos?.length === 0 &&(
+            <div className='noVideosHeader'><p className='text-2xl text-gray-500'>No Videos found</p></div>
         )}
         </>
     );

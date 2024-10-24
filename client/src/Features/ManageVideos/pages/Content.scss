@@ -134,7 +134,7 @@
             transition: 0.4s;
             align-items: center;
             &:hover{
-                transform: scale(0.98);
+                transform: scale(1);
                 background-color: $secondary-color;
                 box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
             }
@@ -204,7 +204,7 @@
     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
     transition: 0.4s;
     &:hover{
-        transform: scale(0.98);
+        transform: scale(1);
         // background-color: $secondary-color;
     }
 
@@ -401,7 +401,7 @@
                 transition: 0.4s;
                 align-items: center;
                 &:hover{
-                    transform: scale(0.98);
+                    transform: scale(1);
                     background-color: $secondary-color;
                     box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
                 }
@@ -471,7 +471,7 @@
         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
         transition: 0.4s;
         &:hover{
-            transform: scale(0.98);
+            transform: scale(1);
             // background-color: $secondary-color;
         }
     
@@ -741,7 +741,7 @@
         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
         transition: 0.4s;
         &:hover{
-            transform: scale(0.98);
+            transform: scale(1);
             // background-color: $secondary-color;
         }
     
@@ -1013,7 +1013,7 @@
         box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
         transition: 0.4s;
         &:hover{
-            transform: scale(0.98);
+            transform: scale(1);
             // background-color: $secondary-color;
         }
     
@@ -1287,7 +1287,7 @@
         transition: 0.4s;
         z-index: 1000;
         &:hover{
-            transform: scale(0.98);
+            transform: scale(1);
             // background-color: $secondary-color;
         }
     
@@ -1561,7 +1561,7 @@
         transition: 0.4s;
         z-index: 10;
         &:hover{
-            transform: scale(0.98);
+            transform: scale(1);
             // background-color: $secondary-color;
         }
     

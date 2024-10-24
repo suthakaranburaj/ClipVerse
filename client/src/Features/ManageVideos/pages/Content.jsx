@@ -57,12 +57,19 @@ function Content() {
         return matchedVideo ? matchedVideo.likesCount : 0;
     };
     const handleDelete = async (videoId) => {
-        try {
-            await deleteVideo(videoId);
-            await getChannelVideos();
-            await getAllVideos();
-        } catch (error) {
-            console.error("Error deleting video:", error);
+
+        const confirmed = window.confirm("Are you sure you want to delete this video?")
+        if(confirmed)
+        {
+            try {
+                await deleteVideo(videoId);
+                await getChannelVideos();
+                await getAllVideos();
+
+                alert("Video Deleted successfully!")
+            } catch (error) {
+                console.error("Error deleting video:", error);
+            }
         }
     };
     
@@ -83,6 +90,7 @@ function Content() {
             await getChannelVideos();
             setIsFormOpen(false);
             reset();
+            alert("Video Updated successfully!")
         } catch (error) {
             console.error("Error updating videos:",error);
         }

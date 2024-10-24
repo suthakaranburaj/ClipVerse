@@ -107,11 +107,37 @@
 // }
 
 @media(max-width:767px){
-
+    .NoCommentsContainer{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        margin-top: 30vh;
+        margin-left: 20vw;
+        .NoComments{
+            font-size: 30px;
+            display: flex;
+            color: #333;
+            
+        }
+    }
 }
 
 @media(max-width:600px){
-
+    .NoCommentsContainer{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        margin-top: 30vh;
+        margin-left: 10vw;
+        .NoComments{
+            font-size: 30px;
+            display: flex;
+            color: #333;
+            
+        }
+    }
 }
 
 @media(max-width:500px){
@@ -121,7 +147,7 @@
         height: 100%;
         display: flex;
         margin-top: 30vh;
-        margin-left: 30vw;
+        margin-left: 3vw;
         .NoComments{
             font-size: 30px;
             display: flex;

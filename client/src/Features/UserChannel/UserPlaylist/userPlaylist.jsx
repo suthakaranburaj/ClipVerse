@@ -76,11 +76,13 @@ function UserPlaylist() {
             reset();
             setIsEdit(false);
             setIsDropdownOpen(null);
+            alert("Playlist Updated Successfully!")
         } catch (error) {
             console.error("Error while updating playlist !!")
         }
     }
     return (
+        <>
         <div className="userPlaylistContainer">
             {!isViewingPlaylist && (
                 <>
@@ -168,7 +170,12 @@ function UserPlaylist() {
                     </form>
                 </div>
             )}
+            
         </div>
+        {userPlaylists?.length === 0 &&(
+            <div className='noPlaylistHeader'><p className='headerFont'>No Playlist found</p></div>
+        )}
+        </>
     );
 }
 

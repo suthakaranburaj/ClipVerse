@@ -88,6 +88,7 @@ function Community() {
                 setIsCreateTweet(false); // Optionally close the post form after submission
                 setCurrentTweet(null);
                 setIsEditTweet(false);
+                alert("Tweet updated successfully!")
             }
         }
         else{
@@ -95,6 +96,7 @@ function Community() {
                 await createTweet({content:newTweetContent}); // Pass the content to createTweet
                 setNewTweetContent(''); // Clear the textarea after posting
                 setIsCreateTweet(false); // Optionally close the post form after submission
+                alert("Tweet created and posted successfully!")
             }
         }
     }
@@ -103,6 +105,7 @@ function Community() {
         setIsEditTweet(true);
         setCurrentTweet(tweet)
         setNewTweetContent(tweet.content); // Populate the textarea with the current tweet content
+
     }
 
     const handleDeleteTweet = async()=>{
