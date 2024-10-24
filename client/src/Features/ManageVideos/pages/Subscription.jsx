@@ -45,7 +45,7 @@ export default function Subscription() {
                                         />
                                     </div>
                                     <p className="subscriber-name">{subscriber.username}</p>
-                                    <p className='subscriber-name'>{subscriber.fullName}</p>
+                                    <p className='subscriber-name text-gray-500'>{subscriber.fullName}</p>
                                 </div>
                             </li>
                         </Link>

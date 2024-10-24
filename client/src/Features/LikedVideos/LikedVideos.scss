@@ -100,7 +100,7 @@
 
 .NoLikedVideosContainer{
     position: fixed;
-    width: 80vw;
+    width: 100vw;
     height: 60vh;
     display: flex;
     justify-content: center;
@@ -108,7 +108,7 @@
 
     .NoLikedVideos{
         font-size: 26px;
-        color: #131313;
+        color: #545252;    
     }
 }
 }

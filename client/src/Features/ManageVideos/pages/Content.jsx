@@ -57,12 +57,19 @@ function Content() {
         return matchedVideo ? matchedVideo.likesCount : 0;
     };
     const handleDelete = async (videoId) => {
-        try {
-            await deleteVideo(videoId);
-            await getChannelVideos();
-            await getAllVideos();
-        } catch (error) {
-            console.error("Error deleting video:", error);
+
+        const confirmed = window.confirm("Are you sure you want to delete this video?")
+        if(confirmed)
+        {
+            try {
+                await deleteVideo(videoId);
+                await getChannelVideos();
+                await getAllVideos();
+
+                alert("Video Deleted successfully!")
+            } catch (error) {
+                console.error("Error deleting video:", error);
+            }
         }
     };
     
@@ -83,6 +90,7 @@ function Content() {
             await getChannelVideos();
             setIsFormOpen(false);
             reset();
+            alert("Video Updated successfully!")
         } catch (error) {
             console.error("Error updating videos:",error);
         }
@@ -92,6 +100,18 @@ function Content() {
         setIsFormOpen(false);
         reset(); // Reset the form fields
     };
+
+    const formatViews =(views)=> {
+        if (views >= 1_000_000_000) {
+          return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+        } else if (views >= 1_000_000) {
+          return (views / 1_000_000).toFixed(1) + 'M';  // Million
+        } else if (views >= 1_000) {
+          return (views / 1_000).toFixed(1) + 'K';  // Thousand
+        } else {
+          return views;  // Less than 1000
+        }
+    }
 
     if(videoLoadingStore || minLoading) return <div><Loader/></div>
     return (
@@ -165,7 +185,7 @@ function Content() {
                                             </div>
                                         </div>
                                         <div className='statsPart2'>
-                                            <p className='custom1024:text-[8px] '>{video?.views}</p>
+                                            <p className='custom1024:text-[8px] '>{video? formatViews(video.views) : '0'}</p>
                                             {/* Display the comments count for the matching video */}
                                             <p className='custom1024:text-[8px] custom500:hidden'>{getCommentsCountForVideo(video?._id)}</p>
                                             <p className='custom1024:text-[8px] custom500:hidden'>{getLikesCountForVideo(video?._id)}</p>

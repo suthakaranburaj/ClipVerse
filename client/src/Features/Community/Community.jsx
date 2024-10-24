@@ -14,6 +14,8 @@ import userStatsStore from '../../store/userStatsStore';
 import Loader from '../../components/Loader/Loader';
 import useSubscriptionStore from '../../store/useSubscriptionStore'
 import defaultImage from '../../assets/profile_pic.webp'
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 function Community() {
 
@@ -88,6 +90,7 @@ function Community() {
                 setIsCreateTweet(false); // Optionally close the post form after submission
                 setCurrentTweet(null);
                 setIsEditTweet(false);
+                alert("Tweet updated successfully!")
             }
         }
         else{
@@ -95,6 +98,7 @@ function Community() {
                 await createTweet({content:newTweetContent}); // Pass the content to createTweet
                 setNewTweetContent(''); // Clear the textarea after posting
                 setIsCreateTweet(false); // Optionally close the post form after submission
+                alert("Tweet created and posted successfully!")
             }
         }
     }
@@ -103,6 +107,7 @@ function Community() {
         setIsEditTweet(true);
         setCurrentTweet(tweet)
         setNewTweetContent(tweet.content); // Populate the textarea with the current tweet content
+
     }
 
     const handleDeleteTweet = async()=>{
@@ -116,6 +121,9 @@ function Community() {
         setCurrentTweet(null);
         setIsEditTweet(false);
     }
+
+    dayjs.extend(relativeTime);
+
 
     if (subscriberLoadingStore||userLoadingStore||tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
 
@@ -181,10 +189,11 @@ function Community() {
                             <p className='communityPostContainer21'>{tweet?.content}</p>
                         </div>
                         <div className='communityPostContainer3'>
-                            <FontAwesomeIcon
+                            {/* <FontAwesomeIcon
                                 icon={faThumbsUp} 
                                 className='communityPostContainer31'
-                            />
+                            /> */}
+                            <p className='time text-gray-500'>{dayjs(tweet?.createdAt).fromNow()}</p>
                             {/* <p
                                 className='communityPostContainer32'
                             >

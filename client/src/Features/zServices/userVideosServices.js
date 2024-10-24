@@ -1,6 +1,6 @@
 import axios from "axios";
-const BACKEND_URL = 'https://clip-verse-backend.onrender.com/api/v1/videos';
-const BACKEND_URL2 ='https://clip-verse-backend.onrender.com/api/v1/users/history';
+const BACKEND_URL = 'http://localhost:8000/api/v1/videos';
+const BACKEND_URL2 ='http://localhost:8000/api/v1/users/history';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -42,7 +42,7 @@ const getAllVideosService = async ({ page = 1, limit = 10, query = '', sortBy = 
         });
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         throw error;
     }
 };

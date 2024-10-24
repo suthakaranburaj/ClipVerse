@@ -46,6 +46,18 @@ function Dashboard() {
         // Further processing can be done with the file, like uploading it to a server
     };
 
+    const formatViews =(views)=> {
+        if (views >= 1_000_000_000) {
+          return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+        } else if (views >= 1_000_000) {
+          return (views / 1_000_000).toFixed(1) + 'M';  // Million
+        } else if (views >= 1_000) {
+          return (views / 1_000).toFixed(1) + 'K';  // Thousand
+        } else {
+          return views;  // Less than 1000
+        }
+    }
+
     if(minLoading || statsLoadingStore) return <div><Loader/></div>
     return (
         <>
@@ -65,7 +77,7 @@ function Dashboard() {
                         <div className="dropdown-divider"></div>
                         <div className='container-details'>
                             <div className='label'>Total Views</div>
-                            <div className='count'>{views}</div>
+                            <div className='count'>{formatViews(views)}</div>
                             
                         </div>
                         <div className="dropdown-divider"></div>
