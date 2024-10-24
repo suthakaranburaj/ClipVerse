@@ -86,10 +86,10 @@ function SearchBar() {
                     onClick={() => toggleNav()}
                 />
                 <Link to='/'>
-                    <img src={logo} alt="" />
+                    <img src={logo} className='' alt="" />
                 </Link>
             </div>
-            <div className='mx-10 custom456:mx-2 w-[80%]'>
+            <div className='mx-10 custom500:mx-4 custom456:mx-2 w-[80%]'>
                 <div className="flex justify-between">
                     <div className="nav-center">
                         <div className="search-bar">

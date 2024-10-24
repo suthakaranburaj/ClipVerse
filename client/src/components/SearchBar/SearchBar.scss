@@ -234,39 +234,39 @@ transform: translate(2px ,2px);
 }
 
 @media(max-width:900px){
-    .containerSearchBar {
-        // height: 56px;
-        // display: flex;
-        // justify-content: space-between;
-        // padding-left: 1rem;
-        // padding-right: 1.25rem;
-        // align-items: center;
-        // color: white;
-        // background-color: $background-color;
-        // width: 100%;
-        &1{
-            // width: 200px;
-            // display: flex;
-            // align-items: center;
-            // justify-content: space-between;
-            img{
-                // width: 65px;
-                // height: 40px;
-            }
-        }
-    }
+    // .containerSearchBar {
+    //     // height: 56px;
+    //     // display: flex;
+    //     // justify-content: space-between;
+    //     // padding-left: 1rem;
+    //     // padding-right: 1.25rem;
+    //     // align-items: center;
+    //     // color: white;
+    //     // background-color: $background-color;
+    //     // width: 100%;
+    //     // &1{
+    //     //     // width: 200px;
+    //     //     // display: flex;
+    //     //     // align-items: center;
+    //     //     // justify-content: space-between;
+    //     //     // img{
+    //     //     //     // width: 65px;
+    //     //     //     // height: 40px;
+    //     //     // }
+    //     // }
+    // }
     
-    .icon-large {
-        // font-size: 1.3rem;
-        // cursor: pointer;
-    }
+    // .icon-large {
+    //     // font-size: 1.3rem;
+    //     // cursor: pointer;
+    // }
     
-    .search-bar-wrapper {
-        // display: flex;
-        // width: 80%;
-        // justify-content: space-between;
-        // align-items: center;
-    }
+    // .search-bar-wrapper {
+    //     // display: flex;
+    //     // width: 80%;
+    //     // justify-content: space-between;
+    //     // align-items: center;
+    // }
     
     .nav-center {
         // display: flex;
@@ -287,34 +287,34 @@ transform: translate(2px ,2px);
             // box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
         }
     
-        .search-input {
-            // background: none;
-            // border: none;
-            // padding: 10px;
-            // width: 100%;
-            // color: white;
-            // border-radius: 40px;
-            // outline: none;
+        // .search-input {
+        //     // background: none;
+        //     // border: none;
+        //     // padding: 10px;
+        //     // width: 100%;
+        //     // color: white;
+        //     // border-radius: 40px;
+        //     // outline: none;
             
-        }
+        // }
     
-        .search-button {
-            // padding: 10px;
-            // height: 40px;
-            // border-bottom-right-radius: 40%;
-            // border-top-right-radius: 40%;
-            // border: none;
-            // cursor: pointer;
-            // color: white;
-        }
+        // .search-button {
+        //     // padding: 10px;
+        //     // height: 40px;
+        //     // border-bottom-right-radius: 40%;
+        //     // border-top-right-radius: 40%;
+        //     // border: none;
+        //     // cursor: pointer;
+        //     // color: white;
+        // }
     
-        .mic-icon {
-            // font-size: 20px;
-            // padding: 10px;
-            // margin-left: 10px;
-            // cursor: pointer;
-            // background-color: $background-color;
-        }
+        // .mic-icon {
+        //     // font-size: 20px;
+        //     // padding: 10px;
+        //     // margin-left: 10px;
+        //     // cursor: pointer;
+        //     // background-color: $background-color;
+        // }
     }
     
     .profile-section {
@@ -324,69 +324,69 @@ transform: translate(2px ,2px);
         width: 25%;
     }
     
-    .login-button{
-        // background-color:$button-color ;
-        // border-radius: 20px;
-        // padding: 0 1rem;
-        // margin-right: 1.25rem;
-        // height: 40px;
-        // color: white;
-        // cursor: pointer;
-        // border: none;
-    }
+    // .login-button{
+    //     // background-color:$button-color ;
+    //     // border-radius: 20px;
+    //     // padding: 0 1rem;
+    //     // margin-right: 1.25rem;
+    //     // height: 40px;
+    //     // color: white;
+    //     // cursor: pointer;
+    //     // border: none;
+    // }
     
-    /* From Uiverse.io by vinodjangid07 */ 
-    .logout-button {
-        // display: flex;
-        // align-items: center;
-        // justify-content: flex-start;
-        // width: 45px;
-        // height: 45px;
-        // border: none;
-        // border-radius: 50%;
-        // cursor: pointer;
-        // position: relative;
-        // overflow: hidden;
-        // transition-duration: .3s;
-        // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-        // background-color: rgb(255, 0, 0);
-    }
+    // /* From Uiverse.io by vinodjangid07 */ 
+    // .logout-button {
+    //     // display: flex;
+    //     // align-items: center;
+    //     // justify-content: flex-start;
+    //     // width: 45px;
+    //     // height: 45px;
+    //     // border: none;
+    //     // border-radius: 50%;
+    //     // cursor: pointer;
+    //     // position: relative;
+    //     // overflow: hidden;
+    //     // transition-duration: .3s;
+    //     // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    //     // background-color: rgb(255, 0, 0);
+    // }
     
-    /* plus sign */
-    .sign {
-    // width: 100%;
-    // transition-duration: .3s;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    }
+    // /* plus sign */
+    // .sign {
+    // // width: 100%;
+    // // transition-duration: .3s;
+    // // display: flex;
+    // // align-items: center;
+    // // justify-content: center;
+    // }
     
-    .sign svg {
-    // width: 17px;
-    }
+    // .sign svg {
+    // // width: 17px;
+    // }
     
-    .sign svg path {
-    // fill: white;
-    }
-    /* text */
-    .text {
-    // position: absolute;
-    // right: 0%;
-    // width: 0%;
-    // opacity: 0;
-    // color: white;
-    // font-size: 1.2em;
-    // // font-weight: 600;
-    // transition-duration: .3s;
-    }
+    // .sign svg path {
+    // // fill: white;
+    // }
+    // /* text */
+    // .text {
+    // // position: absolute;
+    // // right: 0%;
+    // // width: 0%;
+    // // opacity: 0;
+    // // color: white;
+    // // font-size: 1.2em;
+    // // // font-weight: 600;
+    // // transition-duration: .3s;
+    // }
 
     
-    .profile-image {
-        // width: 40px;
-        // height: 40px;
-        // border-radius: 50%;
-        // cursor: pointer;
-    }
+    // .profile-image {
+    //     // width: 40px;
+    //     // height: 40px;
+    //     // border-radius: 50%;
+    //     // cursor: pointer;
+    // }
 }
 @media (max-width:766px){
     .containerSearchBar {
@@ -404,25 +404,25 @@ transform: translate(2px ,2px);
             // display: flex;
             // align-items: center;
             // justify-content: space-between;
-            img{
-                // left: -20px;
-                // width: 65px;
-                // height: 40px;
-            }
+            // img{
+            //     // left: -20px;
+            //     // width: 65px;
+            //     // height: 40px;
+            // }
         }
     }
     
-    .icon-large {
-        // font-size: 1.3rem;
-        // cursor: pointer;
-    }
+    // .icon-large {
+    //     // font-size: 1.3rem;
+    //     // cursor: pointer;
+    // }
     
-    .search-bar-wrapper {
-        // display: flex;
-        // width: 80%;
-        // justify-content: space-between;
-        // align-items: center;
-    }
+    // .search-bar-wrapper {
+    //     // display: flex;
+    //     // width: 80%;
+    //     // justify-content: space-between;
+    //     // align-items: center;
+    // }
     
     .nav-center {
         // display: flex;
@@ -443,34 +443,34 @@ transform: translate(2px ,2px);
             // box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
         }
     
-        .search-input {
-            // background: none;
-            // border: none;
-            // padding: 10px;
-            // width: 100%;
-            // color: white;
-            // border-radius: 40px;
-            // outline: none;
+        // .search-input {
+        //     // background: none;
+        //     // border: none;
+        //     // padding: 10px;
+        //     // width: 100%;
+        //     // color: white;
+        //     // border-radius: 40px;
+        //     // outline: none;
             
-        }
+        // }
     
-        .search-button {
-            // padding: 10px;
-            // height: 40px;
-            // border-bottom-right-radius: 40%;
-            // border-top-right-radius: 40%;
-            // border: none;
-            // cursor: pointer;
-            // color: white;
-        }
+        // .search-button {
+        //     // padding: 10px;
+        //     // height: 40px;
+        //     // border-bottom-right-radius: 40%;
+        //     // border-top-right-radius: 40%;
+        //     // border: none;
+        //     // cursor: pointer;
+        //     // color: white;
+        // }
     
-        .mic-icon {
-            // font-size: 20px;
-            // padding: 10px;
-            // margin-left: 10px;
-            // cursor: pointer;
-            // background-color: $background-color;
-        }
+        // .mic-icon {
+        //     // font-size: 20px;
+        //     // padding: 10px;
+        //     // margin-left: 10px;
+        //     // cursor: pointer;
+        //     // background-color: $background-color;
+        // }
     }
     
     .profile-section {
@@ -480,69 +480,69 @@ transform: translate(2px ,2px);
         width: 25%;
     }
     
-    .login-button{
-        // background-color:$button-color ;
-        // border-radius: 20px;
-        // padding: 0 1rem;
-        // margin-right: 1.25rem;
-        // height: 40px;
-        // color: white;
-        // cursor: pointer;
-        // border: none;
-    }
+    // .login-button{
+    //     // background-color:$button-color ;
+    //     // border-radius: 20px;
+    //     // padding: 0 1rem;
+    //     // margin-right: 1.25rem;
+    //     // height: 40px;
+    //     // color: white;
+    //     // cursor: pointer;
+    //     // border: none;
+    // }
     
-    /* From Uiverse.io by vinodjangid07 */ 
-    .logout-button {
-        // display: flex;
-        // align-items: center;
-        // justify-content: flex-start;
-        // width: 45px;
-        // height: 45px;
-        // border: none;
-        // border-radius: 50%;
-        // cursor: pointer;
-        // position: relative;
-        // overflow: hidden;
-        // transition-duration: .3s;
-        // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-        // background-color: rgb(255, 0, 0);
-    }
+    // /* From Uiverse.io by vinodjangid07 */ 
+    // .logout-button {
+    //     // display: flex;
+    //     // align-items: center;
+    //     // justify-content: flex-start;
+    //     // width: 45px;
+    //     // height: 45px;
+    //     // border: none;
+    //     // border-radius: 50%;
+    //     // cursor: pointer;
+    //     // position: relative;
+    //     // overflow: hidden;
+    //     // transition-duration: .3s;
+    //     // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    //     // background-color: rgb(255, 0, 0);
+    // }
     
-    /* plus sign */
-    .sign {
-    // width: 100%;
-    // transition-duration: .3s;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    }
+    // /* plus sign */
+    // .sign {
+    // // width: 100%;
+    // // transition-duration: .3s;
+    // // display: flex;
+    // // align-items: center;
+    // // justify-content: center;
+    // }
     
-    .sign svg {
-    // width: 17px;
-    }
+    // .sign svg {
+    // // width: 17px;
+    // }
     
-    .sign svg path {
-    // fill: white;
-    }
-    /* text */
-    .text {
-    // position: absolute;
-    // right: 0%;
-    // width: 0%;
-    // opacity: 0;
-    // color: white;
-    // font-size: 1.2em;
-    // // font-weight: 600;
-    // transition-duration: .3s;
-    }
+    // .sign svg path {
+    // // fill: white;
+    // }
+    // /* text */
+    // .text {
+    // // position: absolute;
+    // // right: 0%;
+    // // width: 0%;
+    // // opacity: 0;
+    // // color: white;
+    // // font-size: 1.2em;
+    // // // font-weight: 600;
+    // // transition-duration: .3s;
+    // }
 
     
-    .profile-image {
-        // width: 40px;
-        // height: 40px;
-        // border-radius: 50%;
-        // cursor: pointer;
-    }
+    // .profile-image {
+    //     // width: 40px;
+    //     // height: 40px;
+    //     // border-radius: 50%;
+    //     // cursor: pointer;
+    // }
 }
 
 @media (max-width:600px){
@@ -561,25 +561,25 @@ transform: translate(2px ,2px);
             // display: flex;
             // align-items: center;
             // justify-content: space-between;
-            img{
-                // left: -20px;
-                // width: 65px;
-                // height: 40px;
-            }
+            // img{
+            //     // left: -20px;
+            //     // width: 65px;
+            //     // height: 40px;
+            // }
         }
     }
     
-    .icon-large {
-        // font-size: 1.3rem;
-        // cursor: pointer;
-    }
+    // .icon-large {
+    //     // font-size: 1.3rem;
+    //     // cursor: pointer;
+    // }
     
-    .search-bar-wrapper {
-        // display: flex;
-        // width: 80%;
-        // justify-content: space-between;
-        // align-items: center;
-    }
+    // .search-bar-wrapper {
+    //     // display: flex;
+    //     // width: 80%;
+    //     // justify-content: space-between;
+    //     // align-items: center;
+    // }
     
     .nav-center {
         // display: flex;
@@ -600,34 +600,34 @@ transform: translate(2px ,2px);
             // box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
         }
     
-        .search-input {
-            // background: none;
-            // border: none;
-            // padding: 10px;
-            // width: 100%;
-            // color: white;
-            // border-radius: 40px;
-            // outline: none;
+        // .search-input {
+        //     // background: none;
+        //     // border: none;
+        //     // padding: 10px;
+        //     // width: 100%;
+        //     // color: white;
+        //     // border-radius: 40px;
+        //     // outline: none;
             
-        }
+        // }
     
-        .search-button {
-            // padding: 10px;
-            // height: 40px;
-            // border-bottom-right-radius: 40%;
-            // border-top-right-radius: 40%;
-            // border: none;
-            // cursor: pointer;
-            // color: white;
-        }
+        // .search-button {
+        //     // padding: 10px;
+        //     // height: 40px;
+        //     // border-bottom-right-radius: 40%;
+        //     // border-top-right-radius: 40%;
+        //     // border: none;
+        //     // cursor: pointer;
+        //     // color: white;
+        // }
     
-        .mic-icon {
-            // font-size: 20px;
-            // padding: 10px;
-            // margin-left: 10px;
-            // cursor: pointer;
-            // background-color: $background-color;
-        }
+        // .mic-icon {
+        //     // font-size: 20px;
+        //     // padding: 10px;
+        //     // margin-left: 10px;
+        //     // cursor: pointer;
+        //     // background-color: $background-color;
+        // }
     }
     
     .profile-section {
@@ -637,34 +637,34 @@ transform: translate(2px ,2px);
         width: 25%;
     }
     
-    .login-button{
-        // background-color:$button-color ;
-        // border-radius: 20px;
-        // padding: 0 1rem;
-        // margin-right: 1.25rem;
-        // height: 40px;
-        // color: white;
-        // cursor: pointer;
-        // border: none;
-    }
+    // .login-button{
+    //     // background-color:$button-color ;
+    //     // border-radius: 20px;
+    //     // padding: 0 1rem;
+    //     // margin-right: 1.25rem;
+    //     // height: 40px;
+    //     // color: white;
+    //     // cursor: pointer;
+    //     // border: none;
+    // }
     
     /* From Uiverse.io by vinodjangid07 */ 
-    .logout-button {
-        // display: flex;
-        // align-items: center;
-        // justify-content: flex-start;
-        // width: 45px;
-        // height: 45px;
-        // border: none;
-        // border-radius: 50%;
-        // cursor: pointer;
-        // position: relative;
-        // overflow: hidden;
-        // transition-duration: .3s;
-        // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-        // background-color: rgb(255, 0, 0);
+    // .logout-button {
+    //     // display: flex;
+    //     // align-items: center;
+    //     // justify-content: flex-start;
+    //     // width: 45px;
+    //     // height: 45px;
+    //     // border: none;
+    //     // border-radius: 50%;
+    //     // cursor: pointer;
+    //     // position: relative;
+    //     // overflow: hidden;
+    //     // transition-duration: .3s;
+    //     // box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    //     // background-color: rgb(255, 0, 0);
         
-    }
+    // }
     .logout-button:hover {
         width: 45px; /* Disable hover effect by maintaining original size */
         border-radius: 50%; /* Keep the button circular */
@@ -685,40 +685,40 @@ transform: translate(2px ,2px);
     }
     
     /* plus sign */
-    .sign {
-    // width: 100%;
-    // transition-duration: .3s;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    }
+    // .sign {
+    // // width: 100%;
+    // // transition-duration: .3s;
+    // // display: flex;
+    // // align-items: center;
+    // // justify-content: center;
+    // }
     
-    .sign svg {
-    // width: 17px;
-    }
+    // .sign svg {
+    // // width: 17px;
+    // }
     
-    .sign svg path {
-    // fill: white;
-    }
-    /* text */
-    .text {
-    // position: absolute;
-    // right: 0%;
-    // width: 0%;
-    // opacity: 0;
-    // color: white;
-    // font-size: 1.2em;
-    // // font-weight: 600;
-    // transition-duration: .3s;
-    }
+    // .sign svg path {
+    // // fill: white;
+    // }
+    // /* text */
+    // .text {
+    // // position: absolute;
+    // // right: 0%;
+    // // width: 0%;
+    // // opacity: 0;
+    // // color: white;
+    // // font-size: 1.2em;
+    // // // font-weight: 600;
+    // // transition-duration: .3s;
+    // }
 
     
-    .profile-image {
-        // width: 40px;
-        // height: 40px;
-        // border-radius: 50%;
-        // cursor: pointer;
-    }
+    // .profile-image {
+    //     // width: 40px;
+    //     // height: 40px;
+    //     // border-radius: 50%;
+    //     // cursor: pointer;
+    // }
 }
 
 @media (max-width:360px){
@@ -745,17 +745,17 @@ transform: translate(2px ,2px);
         }
     }
     
-    .icon-large {
-        // font-size: 1.3rem;
-        // cursor: pointer;
-    }
+    // .icon-large {
+    //     // font-size: 1.3rem;
+    //     // cursor: pointer;
+    // }
     
-    .search-bar-wrapper {
-        // display: flex;
-        // width: 80%;
-        // justify-content: space-between;
-        // align-items: center;
-    }
+    // .search-bar-wrapper {
+    //     // display: flex;
+    //     // width: 80%;
+    //     // justify-content: space-between;
+    //     // align-items: center;
+    // }
     
     .nav-center {
         // display: flex;
@@ -777,27 +777,27 @@ transform: translate(2px ,2px);
             // box-shadow: 0px 0px 10px 0.5px rgba(255, 0, 0, 1);
         }
     
-        .search-input {
-            // background: none;
-            // border: none;
-            // display: none;
-            // padding: 10px;
-            // width: 0%;
-            // color: white;
-            // border-radius: 40px;
-            // outline: none;
+        // .search-input {
+        //     // background: none;
+        //     // border: none;
+        //     // display: none;
+        //     // padding: 10px;
+        //     // width: 0%;
+        //     // color: white;
+        //     // border-radius: 40px;
+        //     // outline: none;
             
-        }
+        // }
     
-        .search-button {
-            // padding: 10px;
-            // height: 40px;
-            // border-bottom-right-radius: 40%;
-            // border-top-right-radius: 40%;
-            // border: none;
-            // cursor: pointer;
-            // color: white;
-        }
+        // .search-button {
+        //     // padding: 10px;
+        //     // height: 40px;
+        //     // border-bottom-right-radius: 40%;
+        //     // border-top-right-radius: 40%;
+        //     // border: none;
+        //     // cursor: pointer;
+        //     // color: white;
+        // }
     
         .mic-icon {
             // font-size: 20px;
@@ -816,16 +816,16 @@ transform: translate(2px ,2px);
     
     }
     
-    .login-button{
-        // background-color:$button-color ;
-        // border-radius: 20px;
-        // padding: 0 1rem;
-        // margin-right: 1.25rem;
-        // height: 40px;
-        // color: white;
-        // cursor: pointer;
-        // border: none;
-    }
+    // .login-button{
+    //     // background-color:$button-color ;
+    //     // border-radius: 20px;
+    //     // padding: 0 1rem;
+    //     // margin-right: 1.25rem;
+    //     // height: 40px;
+    //     // color: white;
+    //     // cursor: pointer;
+    //     // border: none;
+    // }
     
     /* From Uiverse.io by vinodjangid07 */ 
     .logout-button {
@@ -865,38 +865,38 @@ transform: translate(2px ,2px);
     }
     
     /* plus sign */
-    .sign {
-    // width: 100%;
-    // transition-duration: .3s;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
-    }
+    // .sign {
+    // // width: 100%;
+    // // transition-duration: .3s;
+    // // display: flex;
+    // // align-items: center;
+    // // justify-content: center;
+    // }
     
-    .sign svg {
-    // width: 17px;
-    }
+    // .sign svg {
+    // // width: 17px;
+    // }
     
-    .sign svg path {
-    // fill: white;
-    }
+    // .sign svg path {
+    // // fill: white;
+    // }
     /* text */
-    .text {
-    // position: absolute;
-    // right: 0%;
-    // width: 0%;
-    // opacity: 0;
-    // color: white;
-    // font-size: 1.2em;
-    // // font-weight: 600;
-    // transition-duration: .3s;
-    }
+    // .text {
+    // // position: absolute;
+    // // right: 0%;
+    // // width: 0%;
+    // // opacity: 0;
+    // // color: white;
+    // // font-size: 1.2em;
+    // // // font-weight: 600;
+    // // transition-duration: .3s;
+    // }
 
     
-    .profile-image {
-        // width: 40px;
-        // height: 40px;
-        // border-radius: 50%;
-        // cursor: pointer;
-    }
+    // .profile-image {
+    //     // width: 40px;
+    //     // height: 40px;
+    //     // border-radius: 50%;
+    //     // cursor: pointer;
+    // }
 }
