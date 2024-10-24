@@ -57,7 +57,8 @@ const useLikesStore = create((set)=>({
                 likesOfVideoNumber:response.data.data.videoLikesCount,
                 likesOfVideo:response.data.data.likes,
             })
-            // console.log(response);
+            console.log(response);
+            console.log(response.data.data.likes)
             return response;
         } catch (error) {
             set({

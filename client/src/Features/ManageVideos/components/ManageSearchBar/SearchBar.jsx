@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import useVideoStore from '../../../../store/useVideosStore'
 import logo from '../../../../assets/ClipVerse_logo.png'
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../../../components/Loader/Loader'
 function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); // Get isNavOpen state from the store
     const { user, isAuthenticated } = useStore();
@@ -51,7 +52,7 @@ function SearchBar() {
     //     // Further processing can be done with the file, like uploading it to a server
     // };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { publishAVideo, isLoading } = useVideoStore();
+    const { publishAVideo, isLoading:videoLoadingStore } = useVideoStore();
 
     const navigate = useNavigate();
 
@@ -73,6 +74,8 @@ function SearchBar() {
             console.error("Error during uploading video !!", error);
         }
     }
+
+    if(videoLoadingStore) return <div><Loader/></div>
 
     return (
         <div className="cont text-white p-2 flex justify-between">
