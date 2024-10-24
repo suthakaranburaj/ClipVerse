@@ -123,6 +123,18 @@ function UserVideos() {
 
     dayjs.extend(relativeTime);
 
+    const formatViews =(views)=> {
+        if (views >= 1_000_000_000) {
+          return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+        } else if (views >= 1_000_000) {
+          return (views / 1_000_000).toFixed(1) + 'M';  // Million
+        } else if (views >= 1_000) {
+          return (views / 1_000).toFixed(1) + 'K';  // Thousand
+        } else {
+          return views;  // Less than 1000
+        }
+    }
+
     return (
         <>
         <div className='userVideosContainer'>
@@ -152,7 +164,7 @@ function UserVideos() {
                                 <div>
                                     <p className='container3121'>{video?.title}</p>
                                     <div className='container3122'>
-                                        <p className=''>{video?.views} views</p>
+                                        <p className=''>{video ? formatViews(video?.views) : '0'} views</p>
                                         <p className='dot'> • </p>
                                         <p className='time'> {dayjs(video?.createdAt).fromNow()}</p>
                                     </div>

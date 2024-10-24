@@ -309,14 +309,14 @@ function SearchBar() {
                                 className={`${errors.title ? 'border-red-500' : ''} `}
                                 {...register('title', { required: 'Title is required' })}
                             />
-
+                            {errors.title && <p className="text-red-500">{errors.title.message}</p>}
                             <input
                                 type="text"
                                 placeholder='Enter the description of the video'
                                 className={`${errors.description ? 'border-red-500' : ''}`}
                                 {...register('description', { required: 'Description is required' })}
                             />
-
+                            {errors.description && <p className="text-red-500">{errors.description.message}</p>}
                             <label className=''>Upload the thumbnail</label>
                             <input
                                 type="file"
@@ -324,7 +324,7 @@ function SearchBar() {
                                 accept="image/*"
                                 {...register('thumbnail', { required: 'Thumbnail is required' })}
                             />
-
+                            {errors.thumbnail && <p className="text-red-500">{errors.thumbnail.message}</p>}
                             <label className=''>Upload the video file</label>
                             <input
                                 type="file"
@@ -333,6 +333,7 @@ function SearchBar() {
                                 // onChange={handleFileChange} 
                                 {...register('videoFile', { required: 'Video File is required' })}
                             />
+                            {errors.videoFile && <p className="text-red-500">{errors.videoFile.message}</p>}
                             <div className='checker'>
                                 <label className=''>Publish</label>
                                 <input className='square'

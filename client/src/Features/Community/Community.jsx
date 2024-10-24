@@ -14,6 +14,8 @@ import userStatsStore from '../../store/userStatsStore';
 import Loader from '../../components/Loader/Loader';
 import useSubscriptionStore from '../../store/useSubscriptionStore'
 import defaultImage from '../../assets/profile_pic.webp'
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 function Community() {
 
@@ -120,6 +122,9 @@ function Community() {
         setIsEditTweet(false);
     }
 
+    dayjs.extend(relativeTime);
+
+
     if (subscriberLoadingStore||userLoadingStore||tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
 
     return (
@@ -184,10 +189,11 @@ function Community() {
                             <p className='communityPostContainer21'>{tweet?.content}</p>
                         </div>
                         <div className='communityPostContainer3'>
-                            <FontAwesomeIcon
+                            {/* <FontAwesomeIcon
                                 icon={faThumbsUp} 
                                 className='communityPostContainer31'
-                            />
+                            /> */}
+                            <p className='time text-gray-500'>{dayjs(tweet?.createdAt).fromNow()}</p>
                             {/* <p
                                 className='communityPostContainer32'
                             >
