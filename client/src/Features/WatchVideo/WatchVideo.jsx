@@ -110,20 +110,7 @@ function WatchVideo() {
                     getUserChannelSubscribers(channelId)
 
                 ]);
-                if (likesOfVideo && likesOfVideo.length >= 0)
-                    {
-                    const isVideoLiked = likesOfVideo?.some(
-                        (like) => like.likedBy === user._id
-                    );
-                    
-                    // Update the state only if necessary to prevent unnecessary re-renders
-                    setIsVideoLiked((prevIsVideoLiked) => {
-                        if (prevIsVideoLiked !== isVideoLiked) {
-                            return isVideoLiked;
-                        }
-                        return prevIsVideoLiked;
-                    });
-                }
+
             }
 
             setTimeout(() => {
@@ -144,10 +131,29 @@ function WatchVideo() {
     useEffect(() => {
         const fetchData = async () => {
             if (user && videoId) {
-                // Fetch the video likes
-                await getVideoLikes(videoId);
+                try {
+                    // Fetch the video likes
+                    await getVideoLikes(videoId);
+                    if (likesOfVideo === undefined) {
+                        // Handle undefined case, set a default value instead of toggling
+                        setIsVideoLiked(false); // or true, depending on your requirements
+                    }
+                    if (likesOfVideo && likesOfVideo.length > 0) {
+                        const isVideoLiked = likesOfVideo.some(
+                            (like) => like.likedBy === user._id
+                        );
     
-                // Only check if user liked the video once likesOfVideo is updated
+                        // Update the state only if necessary
+                        setIsVideoLiked((prevIsVideoLiked) => {
+                            if (prevIsVideoLiked !== isVideoLiked) {
+                                return isVideoLiked;
+                            }
+                            return prevIsVideoLiked;
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error fetching video likes:", error);
+                }
             }
         };
     
@@ -157,7 +163,8 @@ function WatchVideo() {
         }, 200);
     
         return () => clearTimeout(debounceTimeout);
-    }, [likesOfVideo, videoId, user,isVideoLiked]);
+    }, [videoId, user, likesOfVideo ,channelId,isVideoLiked,]); // removed unnecessary `isVideoLiked` and `channelId` dependencies
+    
     
     
 
@@ -209,7 +216,7 @@ function WatchVideo() {
             }
         };
         fetchData();
-    }, [videoId, toggleCommentLike,channelId,user,getLikesOfComment,commentsOfVideo]); 
+    }, [videoId, toggleCommentLike,channelId,user,getLikesOfComment]); 
     
     const handleAddComment = async()=>{
         if(videoId && commentContent){
@@ -252,6 +259,7 @@ function WatchVideo() {
     const handleVideoLike = async(videoId)=>{
         if(videoId){
             // setIsVideoLiked((prevIsVideoLiked) => !prevIsVideoLiked); 
+            console.log("hellow")
             await Promise.all([
                 toggleVideoLike(videoId),
                 getVideoLikes(videoId),
@@ -262,7 +270,9 @@ function WatchVideo() {
             // else{
             //     likesOfVideo.length += 1;
             // }
-            setIsVideoLiked((prev)=>!prev);
+            // console.log(isVideoLiked)
+            setIsVideoLiked(prev=>!prev);
+            // console.log(isVideoLiked);
         }
     };
 
