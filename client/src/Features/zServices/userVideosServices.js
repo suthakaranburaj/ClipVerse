@@ -1,6 +1,6 @@
 import axios from "axios";
-const BACKEND_URL = 'https://clipverse.onrender.com/api/v1/videos';
-const BACKEND_URL2 ='https://clipverse.onrender.com/api/v1/users/history';
+const BACKEND_URL = 'https://clipverse-backend.onrender.com/api/v1/videos';
+const BACKEND_URL2 ='https://clipverse-backend.onrender.com/api/v1/users/history';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
