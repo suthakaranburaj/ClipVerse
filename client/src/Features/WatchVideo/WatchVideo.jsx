@@ -220,11 +220,12 @@ function WatchVideo() {
     
     const handleAddComment = async()=>{
         if(videoId && commentContent){
+            setCommentContent('');
             await Promise.all([
                 addCommentOnVideo(videoId,commentContent),
                 getVideoComments(videoId), // Fetch updated comments after adding the comment
             ])
-            setCommentContent('');
+            
             setCommentsUpdated((prev) => !prev);
         }
     }

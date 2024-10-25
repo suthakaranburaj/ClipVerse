@@ -20,6 +20,18 @@ useEffect(() => {
 if (videoStoreLoading) return <div><Loader/></div>;
 if (error) return <div>Error: {error}</div>;
 
+const formatViews =(views)=> {
+    if (views >= 1_000_000_000) {
+      return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+    } else if (views >= 1_000_000) {
+      return (views / 1_000_000).toFixed(1) + 'M';  // Million
+    } else if (views >= 1_000) {
+      return (views / 1_000).toFixed(1) + 'K';  // Thousand
+    } else {
+      return views;  // Less than 1000
+    }
+}
+
 return (
 <div className="watchHistoryContainer">
     <h2 className='watchHistoryContainer1'>Your Watch History</h2>
@@ -49,7 +61,7 @@ return (
                             </Link>
                         </div>
                         <div className='watchHistoryContainer31222'>
-                            <p className='views'>{video?.views} views</p>
+                            <p className='views'>{video ? formatViews(video.views) : '0'} views</p>
                             <p className='dot'>•</p>
                             <p className='time'>Watched on: {new Date(video.createdAt).toLocaleDateString()}</p>
                         </div>
