@@ -90,7 +90,7 @@ function Content() {
             await getChannelVideos();
             setIsFormOpen(false);
             reset();
-            alert("Video Updated successfully!")
+            // alert("Video Updated successfully!")
         } catch (error) {
             console.error("Error updating videos:",error);
         }

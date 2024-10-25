@@ -27,15 +27,22 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
-const deleteOnCloudinary = async (publicId , resourceType = 'image') => {
-    if (!publicId) {
+const deleteOnCloudinary = async (fileUrl , resourceType = 'image') => {
+    if (!fileUrl) {
         throw new ApiError(400, "Public ID is missing for deletion");
     }
 
     try {
         // Handle deletion of both videos and images
+        const publicIdMatch = fileUrl.match(/\/([^/]+)\.[a-z]+$/);
+        if (!publicIdMatch || publicIdMatch.length < 2) {
+            throw new ApiError(400, "Invalid Cloudinary file URL");
+        }
+        const publicId = publicIdMatch[1];  // Extracted publicId
+        // console.log(publicId,"hiee");
+        // console.log();
         const response = await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
-        // console.log("Cloudinary Deletion Response: ", response);
+        console.log("Cloudinary Deletion Response: ", response);
 
         if (response.result !== "ok") {
             throw new ApiError(400, `Error while deleting the ${resourceType} on Cloudinary: ${response.result}`);
