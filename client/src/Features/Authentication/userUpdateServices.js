@@ -2,11 +2,6 @@ import axios from "axios";
 
 const BACKEND_URL = 'http://localhost:8000/api/v1/users';
 
-const getToken = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    return accessToken;
-};
-
 const loginUser = async ({ username, email, password }) => {
     try {
         const response = await axios.post(`${BACKEND_URL}/login`, { username, email, password });
@@ -16,25 +11,25 @@ const loginUser = async ({ username, email, password }) => {
     }
 };
 
-const registerUser = async (formData) => {
-    try {
+const registerUser = async(formData) => { 
+    try{
         const response = await axios.post(`${BACKEND_URL}/register`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
             withCredentials: true,
-        });
+        });        
         return response;
     } catch (error) {
         throw error;
     }
 };
 
-const updateCoverImage = async (formData) => {
+const updateCoverImage = async(formData) =>{
     try {
-        const response = await axios.post(`${BACKEND_URL}/cover-image`, formData, {
+        const response = await axios.post(`${BACKEND_URL}/cover-image`,formData ,{
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type':'multipart/form-data'
             },
 
         });
@@ -45,28 +40,21 @@ const updateCoverImage = async (formData) => {
     }
 }
 
-const updateAccountDetails = async (fullName, email) => {
-
+const updateAccountDetails = async({username , email}) =>{
     try {
-        const response = await axios.patch(`${BACKEND_URL}/update-account`, { fullName, email }, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            },
-        });
-
+        const response = await axios.post(`${BACKEND_URL}/update-account`,{username,email});
         return response;
     } catch (error) {
         throw error;
     }
 }
 
-const updateUserAvatar = async (formData) => {
+const updateUserAvatar = async(formData) => {
     try {
 
-        const response = await axios.patch(`${BACKEND_URL}/avatar`, formData, {
+        const response = await axios.post(`${BACKEND_URL}/avatar`, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${getToken()}`
+                'Content-Type': 'multipart/form-data'
             },
         });
         return response;
