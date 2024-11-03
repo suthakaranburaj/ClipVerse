@@ -18,7 +18,6 @@ function UserChannel() {
     const { username } = useParams();
     const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
     const [isSubscribed, setIsSubscribed] = useState(false);
-
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     // Function to toggle popup visibility
@@ -28,9 +27,7 @@ function UserChannel() {
         getUserChannelSubscribers,
         channelSubscribers,
         toggleSubscription,
-        // error:subscriptionError  
     } = useSubscriptionStore();
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,22 +37,16 @@ function UserChannel() {
         setTimeout(() => {
             setMinLoading(false);
         }, 1000);
-
-    }, [channelId])
+    }, [channelId]);
 
     useEffect(() => {
         const fetchData = async () => {
             if (user && channelId) {
-                // Fetch the channel subscribers
                 await getUserChannelSubscribers(channelId);
-
-                // Only check if user is subscribed once channelSubscribers is updated
                 if (channelSubscribers.length > 0) {
                     const isUserSubscribed = channelSubscribers.some(
                         (subscriber) => subscriber._id === user._id
                     );
-
-                    // Update the state only if necessary to prevent unnecessary re-renders
                     setIsSubscribed((prevIsSubscribed) => {
                         if (prevIsSubscribed !== isUserSubscribed) {
                             return isUserSubscribed;
@@ -66,7 +57,6 @@ function UserChannel() {
             }
         };
 
-        // Use a small delay to debounce state updates, preventing multiple re-renders
         const debounceTimeout = setTimeout(() => {
             fetchData();
         }, 200);
@@ -79,36 +69,20 @@ function UserChannel() {
     }
 
     const handleUpdate = async (data) => {
-
-        console.log(data);
-
         const formData = new FormData();
         formData.append('fullName', data.fullName);
         formData.append('email', data.email);
         formData.append('password', data.password);
 
-        if (data.avatar instanceof File) {
-            formData.append('avatar', data.avatar);
-        }
-
-        if (data.coverImage instanceof File) {
-            formData.append('coverImage', data.coverImage);
-        }
-
-        if (data.avatar && data.avatar !== user.avatar) {
-            console.log("aaya re");
+        console.log(data.avatar)
+        console.log("hell")
+        console.log(data.avatar[0])
+        if (data.avatar[0]) {
             await updateAvatar(data.avatar[0]);
         }
 
         if (data.coverImage && data.coverImage !== user.coverImage) {
             await updateCoverImage(data.coverImage[0]);
-        }
-
-        if (data.password) {
-            console.log("aaya re");
-        }
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
         }
 
         try {
@@ -119,6 +93,7 @@ function UserChannel() {
     };
 
     if (statsLoading || minLoading || userLoading) return <div><Loader /></div>;
+
     return (
         <div className='UserChannel-Container'>
             <div className='UserProfileContainer'>
@@ -127,9 +102,6 @@ function UserChannel() {
                         src={isAuthenticated && channel?.coverImage ? channel?.coverImage : userCoverImage}
                         alt="Cover"
                     />
-                    {/* <span className="edit-icon">
-                        <FontAwesomeIcon icon={faPen} />
-                    </span> */}
                 </div>
 
                 <div className='profile-container'>
@@ -138,33 +110,26 @@ function UserChannel() {
                             src={isAuthenticated && channel?.avatar ? channel?.avatar : image2}
                             alt="Avatar"
                         />
-                        {/* <span className="edit-icon">
-                            <FontAwesomeIcon icon={faPen} />
-                        </span> */}
                     </div>
                     <div className='profile-info'>
                         <p className='name'>
                             {isAuthenticated && channel?.fullName ? channel?.fullName : "Name"}
                         </p>
                         <p>{isAuthenticated && channel?.username ? channel?.username : "Username"}</p>
-                        {/* <p>More about this channel <span className='more-info'>...more</span></p> */}
                         <div className='buttons'>
                             {user?._id === channelId && (
                                 <>
                                     <button onClick={() => window.open('/channel', '_blank')}>Customise channel</button>
-
                                     <button onClick={togglePopup}>Update profile</button>
                                 </>
                             )}
                             {user?._id !== channelId && (
-                                <>
-                                    <button
-                                        className={`subscribeButton ${isSubscribed ? 'subscribed' : ''}`}
-                                        onClick={() => handleSubscription(channelId)}
-                                    >
-                                        {isSubscribed ? 'Subscribed' : 'Subscribe'}
-                                    </button>
-                                </>
+                                <button
+                                    className={`subscribeButton ${isSubscribed ? 'subscribed' : ''}`}
+                                    onClick={() => handleSubscription(channelId)}
+                                >
+                                    {isSubscribed ? 'Subscribed' : 'Subscribe'}
+                                </button>
                             )}
                         </div>
                         <ProfileUpdateForm
@@ -178,7 +143,6 @@ function UserChannel() {
             </div>
             <div className='nav-links'>
                 <NavLink to='videos' >Videos</NavLink>
-                {/* <NavLink to='live' >Live</NavLink> */}
                 <NavLink to='playlist' >Playlists</NavLink>
                 <NavLink to={`/community/${username}/${channelId}`} >Community</NavLink>
             </div>

@@ -104,8 +104,8 @@ const useStore = create((set, get) => ({
     // },
 
     updateDetails: async (fullname, email) => {
-        console.log("aaya re");
-        console.log(fullname, email);
+        // console.log("aaya re");
+        // console.log(fullname, email);
 
         set({ isLoading: true, error: null });
 

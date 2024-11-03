@@ -1,17 +1,30 @@
-// ProfileUpdateForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfileUpdateForm.scss';
 
 function ProfileUpdateForm({ isOpen, onClose, onUpdate, user }) {
     const [formData, setFormData] = useState({
         fullName: user?.fullName || "",
         email: user?.email || "",
-        password: user?.password || "",
-        avatar: user?.avatar || "",
-        coverImage: user?.coverImage || ""
+        password: "",
+        avatar: user?.avatar || null,
+        coverImage: user?.coverImage || null
     });
+
     const [previewAvatar, setPreviewAvatar] = useState(user?.avatar || "");
     const [previewCoverImage, setPreviewCoverImage] = useState(user?.coverImage || "");
+
+    // Update formData when user data changes
+    useEffect(() => {
+        setFormData({
+            fullName: user?.fullName || "",
+            email: user?.email || "",
+            password: "",
+            avatar: user?.avatar || null,
+            coverImage: user?.coverImage || null
+        });
+        setPreviewAvatar(user?.avatar || "");
+        setPreviewCoverImage(user?.coverImage || "");
+    }, [user]);
 
     if (!isOpen) return null;
 
@@ -58,21 +71,21 @@ function ProfileUpdateForm({ isOpen, onClose, onUpdate, user }) {
                     <label>
                         Email:
                         <input
-                            type="text"
-                            name="username"
+                            type="email"
+                            name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="Enter username"
+                            placeholder="Enter email"
                         />
                     </label>
                     <label>
                         Password:
                         <input
-                            type="text"
+                            type="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            placeholder="Enter password"
+                            placeholder="Enter new password"
                         />
                     </label>
                     <label>

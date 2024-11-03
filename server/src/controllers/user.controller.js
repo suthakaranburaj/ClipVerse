@@ -326,9 +326,10 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     console.log(req.avatar);
     console.log(req.file);
     console.log(req.file.path);
+
     
     const avatarLocalPath = req.file?.path;
-
+    console.log(avatarLocalPath)
     if (!avatarLocalPath) {
         return res
             .status(400)
