@@ -5,10 +5,15 @@ import './LoginPage.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import Loader from '../../../components/Loader/Loader';
+import { FcGoogle } from "react-icons/fc";
+import { Button } from '../../../shdcnComponent/ui/button.tsx'
+import { useGoogleLogin } from '@react-oauth/google';
+import { googleLogout } from '@react-oauth/google'
+import axios from 'axios';
 
 function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm(); // Initialize useForm
-    const { login, isLoading, error, isAuthenticated } = useStore();
+    const { register: registerUser , login, isLoading, error, isAuthenticated } = useStore();
     const navigate = useNavigate();
     const [showPassword,setShowPassword]=useState(false);
 
@@ -38,6 +43,56 @@ function LoginPage() {
         setShowPassword(prev => !prev);
     }
 
+    const loginGoogleAuth = useGoogleLogin({
+        onSuccess:(codeResp) => GetUserProfile(codeResp),
+        onError: (error) => console.log(error)
+    })
+
+    
+
+    const GetUserProfile=(tokenInfo)=>{
+        axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,{
+            headers:{
+                Authorization:`Bearer ${tokenInfo?.access_token}`,
+                Accept:'Application/json'
+            }
+        }).then(async(res)=>{
+            function generateRandom10DigitNumber() {
+                // Generate a random number between 1000000000 (inclusive) and 9999999999 (inclusive)
+                const min = 1000000000;
+                const max = 9999999999;
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            
+            // Example usage:
+            const randomNumber = generateRandom10DigitNumber();
+            const formData = new FormData();
+            console.log(randomNumber);
+            console.log(res.data.name);
+            console.log(res.data.email);
+            // console.log();
+            // console.log();
+            // console.log();
+            console.log(res.data.picture);
+            formData.append('username', randomNumber);
+            formData.append('fullName', res.data.name);
+            formData.append('email', res.data.email);
+            formData.append('password', '12345678');
+            formData.append('avatar', res.data.picture); // Append avatar file
+            // formData.append('coverImage', res.data.coverImage[0]); // Append coverImage file
+            try {
+                await registerUser(formData); // Pass FormData to register function
+            } catch (err) {
+                console.error("Error during registration", err);
+            }
+            // console.log(resp);
+            // localStorage.setItem('user',JSON.stringify(res.data));
+            // OnGenerateTrip();
+            window.location.reload();
+
+        })
+        
+    }
 
     return (
         <div className='flex justify-center items-center h-screen bg-black'>
@@ -90,6 +145,13 @@ function LoginPage() {
                     >
                         Login
                     </button>
+                    <Button 
+                    className='w-full mt-6 flex gap-2 items-center bg-black hover:bg-gray-900'
+                    onClick={loginGoogleAuth}
+                    >
+                        <FcGoogle style={{ width: "1.5rem", height: "1.5rem" }} />
+                        Sign In with Google 
+                    </Button>
 
                     <Link to='/register'>
                         <p className='custom360:text-sm text-white text-center custom-underline cursor-pointer'>
