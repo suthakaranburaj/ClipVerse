@@ -10,6 +10,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { useState } from 'react';
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 function HomePage() {
     const videoRefs = useRef([]);
@@ -65,6 +67,18 @@ function HomePage() {
             videoElement.play().catch((videoStoreError) => console.error('Video play failed:', videoStoreError));
         }
     };
+
+    const formatViews =(views)=> {
+        if (views >= 1_000_000_000) {
+          return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+        } else if (views >= 1_000_000) {
+          return (views / 1_000_000).toFixed(1) + 'M';  // Million
+        } else if (views >= 1_000) {
+          return (views / 1_000).toFixed(1) + 'K';  // Thousand
+        } else {
+          return views;  // Less than 1000
+        }
+    }
     if (videoStoreError) return <div>Error loading videos</div>;
 
     return (
@@ -75,7 +89,7 @@ function HomePage() {
                 <button className="recommend-btn">Startup Company</button>
                 {/* Other buttons */}
             </div>
-            <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-3 mt-16' : 'main-box flex text-white flex-wrap gap-6 mt-16'}`}>
+            <div className={`${isNavOpen ? 'Navopen flex text-white flex-wrap gap-1 mt-16' : 'main-box flex text-white flex-wrap gap-2 custom600:gap-1 mt-16'}`}>
                 {Array.isArray(videos) && videos
                 .filter(video => video?.isPublished)
                 .map((video, index) => (
@@ -103,7 +117,7 @@ function HomePage() {
                             <div className='channelContainer flex my-3'>
                                 <img
                                     className='channelContainer1 w-[36px] h-[36px] rounded-full mx-2'
-                                    src={video?.owner?.avatar || ''}
+                                    src={video?.owner?.avatar ? video.owner.avatar : defaultImage}
                                 />
                                 <div className='channelContainer2'>
                                     <p className='description'>{video?.title}</p>
@@ -113,7 +127,7 @@ function HomePage() {
                                         </p>
                                     </Link>
                                     <div className='flex'>
-                                        <p className='views'>{video?.views} views</p>
+                                        <p className='views'>{video ? formatViews(video.views) : '0'} views</p>
                                         <p className='dot'>•</p>
                                         <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
                                     </div>

@@ -41,6 +41,8 @@ const getChannelStats = asyncHandler(async (req, res) => {
     const videoIds = userVideos.map(video => video._id);
     const totalLikesCount = await Like.countDocuments({ video: { $in: videoIds } });
 
+    const totalLikesCount = await Like.countDocuments({ video: { $in: videoIds } });
+
     const totalComments = await Comment.countDocuments({ video: { $in: videoIds } });
     const comments = await Comment.find({ video: { $in: videoIds } })
         .populate("owner", "name") // Populate owner details (e.g., user's name)

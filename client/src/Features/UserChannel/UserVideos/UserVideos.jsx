@@ -88,9 +88,9 @@ function UserVideos() {
     const onSubmit = async (data) => {
         try {
             const videos = selectedVideos;
-            console.log(videos)
+            // console.log(videos)
             if(isEditMode){
-                console.log(videos)
+                // console.log(videos)
                 await addVideosToPlaylist(currentPlaylist?._id,{videoIds:videos});
                 alert("Playlist updated successfully!");
             }
@@ -123,14 +123,27 @@ function UserVideos() {
 
     dayjs.extend(relativeTime);
 
+    const formatViews =(views)=> {
+        if (views >= 1_000_000_000) {
+          return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+        } else if (views >= 1_000_000) {
+          return (views / 1_000_000).toFixed(1) + 'M';  // Million
+        } else if (views >= 1_000) {
+          return (views / 1_000).toFixed(1) + 'K';  // Thousand
+        } else {
+          return views;  // Less than 1000
+        }
+    }
+
     return (
         <>
         <div className='userVideosContainer'>
             <div className='container'>
                 <p className='container1'>Videos</p>
-                {user?._id === channelId &&(
-                    <p className='container2' onClick={handleCreatePlaylist}>
+                {user?._id === channelId && channelVideos?.length>0 &&(
+                    <p className='container2 flex' onClick={handleCreatePlaylist}>
                     {isCreatePlaylistActive ? 'Cancel Playlist' : 'Create Playlist'}
+                    {isCreatePlaylistActive &&(<p className='text-red-500 ml-5'>Select Videos</p>)}
                 </p>
                 )}
                 <div className='container3'>
@@ -151,7 +164,7 @@ function UserVideos() {
                                 <div>
                                     <p className='container3121'>{video?.title}</p>
                                     <div className='container3122'>
-                                        <p className=''>{video?.views} views</p>
+                                        <p className=''>{video ? formatViews(video?.views) : '0'} views</p>
                                         <p className='dot'> • </p>
                                         <p className='time'> {dayjs(video?.createdAt).fromNow()}</p>
                                     </div>
@@ -178,7 +191,7 @@ function UserVideos() {
                 })}
 
                 </div>
-                {isCreatePlaylistActive && !isEditMode && (
+                {isCreatePlaylistActive && !isEditMode   && (
                     
                     <button
                         onClick={handleCreateChange}
@@ -243,6 +256,9 @@ function UserVideos() {
                     Update Videos
                 </button>
             </div>
+        )}
+        {channelVideos?.length === 0 &&(
+            <div className='noVideosHeader'><p className='text-2xl text-gray-500'>No Videos found</p></div>
         )}
         </>
     );

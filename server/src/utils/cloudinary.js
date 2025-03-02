@@ -3,16 +3,16 @@ import fs from "fs"
 import { ApiError } from "./ApiError.js";
 
 cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-  api_key: process.env.CLOUDINARY_API_KEY, 
-  api_secret: process.env.CLOUDINARY_API_SECRET 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET 
 });
 
 const uploadOnCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null
         //upload the file on cloudinary
-        console.log(localFilePath);
+        // console.log(localFilePath);
         const response = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto"
         })
@@ -27,13 +27,20 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
-const deleteOnCloudinary = async (publicId , resourceType = 'image') => {
-    if (!publicId) {
+const deleteOnCloudinary = async (fileUrl , resourceType = 'image') => {
+    if (!fileUrl) {
         throw new ApiError(400, "Public ID is missing for deletion");
     }
 
     try {
         // Handle deletion of both videos and images
+        const publicIdMatch = fileUrl.match(/\/([^/]+)\.[a-z]+$/);
+        if (!publicIdMatch || publicIdMatch.length < 2) {
+            throw new ApiError(400, "Invalid Cloudinary file URL");
+        }
+        const publicId = publicIdMatch[1];  // Extracted publicId
+        // console.log(publicId,"hiee");
+        // console.log();
         const response = await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
         console.log("Cloudinary Deletion Response: ", response);
 

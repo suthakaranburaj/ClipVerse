@@ -65,9 +65,9 @@ const useStore = create((set) => ({
                 isAuthenticated: true,
                 error: null,
             });
-            console.log(response.data)
-            console.log(response.data.data);
-            console.log(accessToken)
+            // console.log(response.data)
+            // console.log(response.data.data);
+            // console.log(accessToken)
             localStorage.setItem("user", JSON.stringify(response.data.data.user));
             localStorage.setItem("accessToken",accessToken);
 

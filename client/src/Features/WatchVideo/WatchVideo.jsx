@@ -14,6 +14,8 @@ import useSubscriptionStore from '../../store/useSubscriptionStore';
 import useLikesStore from '../../store/useLikesStore';
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/Loader/Loader';
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 
 
@@ -33,6 +35,11 @@ function WatchVideo() {
     const [isEditComment,setIsEditComment] = useState(false);
     const [currentComment, setCurrentComment] = useState();
     const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
+    const [showComments, setShowComments] = useState(false);
+    // const [videoLikes,setIsVideoLikes]=useState(0);
+
+    // Function to toggle comment visibility
+    
 
     
     const { register, handleSubmit, reset } = useForm();
@@ -45,7 +52,8 @@ function WatchVideo() {
         userWatchHistory, 
         incrementVideoViews,
         getAllVideos,
-        videos 
+        videos,
+        watchHistorys
     } = useVideosStore(); // Fetch the video from the store
 
     const {user} = useStore();
@@ -56,6 +64,7 @@ function WatchVideo() {
         addCommentOnVideo,
         deleteCommentOnVideo,
         updateCommentOnVideo,
+        isLoading:commentsLoadingStore,
     } = useCommentsStore();
 
     const {
@@ -74,41 +83,34 @@ function WatchVideo() {
         toggleCommentLike, 
         getLikesOfComment,
         setCurrentUserId,
+        isLoading:likesLoadingStore,
     } = useLikesStore();
-
-    // useEffect(()=>{
-    //     if(user && user?._id){
-    //         setCurrentUserId(user._id);
-    //     }
-    // })
 
     const queryParams = new URLSearchParams(location.search);
     const videoId = queryParams.get('videoId');
-    // const channelId = video?.owner?._id;
+    useEffect(() => {
+        if (video?.owner?._id) {
+            setChannelId(video.owner._id);
+        }
+    }, [video]);
     useEffect(() => {
         const fetchData =async()=>{
-            if (videoId) {
+            if (videoId && channelId) {
+                const isVideoInHistory = watchHistorys.some(history => history._id === videoId);
+                if (!isVideoInHistory) {
+                    await userWatchHistory(videoId);
+                }
                 await Promise.all([
-                    userWatchHistory(videoId),
                     getVideoById(videoId),
                     incrementVideoViews(videoId),
                     getVideoComments(videoId),
                     getAllVideos(),
                     getVideoLikes(videoId),
+                    getUserChannelSubscribers(channelId),
+                    getUserChannelSubscribers(channelId)
+
                 ]);
 
-                
-                if(video?.owner?._id){
-                    setChannelId(video.owner._id);
-                    await getUserChannelSubscribers(channelId);
-                }
-
-                // Fetch likes for each comment
-                if (commentsOfVideo && commentsOfVideo.length > 0) {
-                    for (const comment of commentsOfVideo) {
-                        await getLikesOfComment(comment._id);
-                    }
-                }
             }
 
             setTimeout(() => {
@@ -121,55 +123,157 @@ function WatchVideo() {
         channelId,
         userWatchHistory,
         getLikesOfComment,
+        user,
+        // likesOfVideo,
+        // commentsOfVideo
     ]);
 
     useEffect(() => {
-        if (channelSubscribers.length > 0 && user) {
-            const isUserSubscribed = channelSubscribers.some(
-                (subscriber) => subscriber._id === user._id
-            );
-            setIsSubscribed(isUserSubscribed);
-        }
+        const fetchData = async () => {
+            if (user && videoId) {
+                try {
+                    // Fetch the video likes
+                    await getVideoLikes(videoId);
+                    if (likesOfVideo === undefined) {
+                        // Handle undefined case, set a default value instead of toggling
+                        setIsVideoLiked(false); // or true, depending on your requirements
+                    }
+                    if (likesOfVideo && likesOfVideo.length > 0) {
+                        const isVideoLiked = likesOfVideo.some(
+                            (like) => like.likedBy === user._id
+                        );
+    
+                        // Update the state only if necessary
+                        setIsVideoLiked((prevIsVideoLiked) => {
+                            if (prevIsVideoLiked !== isVideoLiked) {
+                                return isVideoLiked;
+                            }
+                            return prevIsVideoLiked;
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error fetching video likes:", error);
+                }
+            }
+        };
+    
+        // Use a small delay to debounce state updates, preventing multiple re-renders
+        const debounceTimeout = setTimeout(() => {
+            fetchData();
+        }, 200);
+    
+        return () => clearTimeout(debounceTimeout);
+    }, [videoId, user, likesOfVideo ,channelId,isVideoLiked,]); // removed unnecessary `isVideoLiked` and `channelId` dependencies
+    
+    
+    
 
-        if (likesOfVideoNumber > 0 && user) {
-            const isVideoLiked = likesOfVideo.some(
-                (u) => u.likedBy === user._id
-            );
-            setIsVideoLiked(isVideoLiked);
-        }
-    }, [channelSubscribers, user, likesOfVideoNumber, likesOfVideo,videoId]);
+    useEffect(() => {
+        const fetchData = async () => {
+            if (user && channelId) {
+                // Fetch the channel subscribers
+                await getUserChannelSubscribers(channelId);
+                
+                // Only check if user is subscribed once channelSubscribers is updated
+                if (channelSubscribers.length >= 0) {
+                    const isUserSubscribed = channelSubscribers.some(
+                        (subscriber) => subscriber._id === user._id
+                    );
+                    
+                    // Update the state only if necessary to prevent unnecessary re-renders
+                    setIsSubscribed((prevIsSubscribed) => {
+                        if (prevIsSubscribed !== isUserSubscribed) {
+                            return isUserSubscribed;
+                        }
+                        return prevIsSubscribed;
+                    });
+                }
+            }
+        };
+    
+        // Use a small delay to debounce state updates, preventing multiple re-renders
+        const debounceTimeout = setTimeout(() => {
+            fetchData();
+        }, 200);
+    
+        return () => clearTimeout(debounceTimeout);
+    }, [channelSubscribers, channelId, user,videoId]); 
+    
 
+    useEffect(() => {
+        const fetchData = async () => {
+            // console.log(videoId)
+            if (videoId) {
+
+                // clearCommentsOfVideo();
+                await getVideoComments(videoId);  // Re-fetch comments when the videoId or commentsUpdated changes
+                // console.log("hellow",commentsOfVideo)
+                // console.log(videoId)
+                if (commentsOfVideo && commentsOfVideo.length >= 0) {
+                    const fetchLikesPromises = commentsOfVideo.map(comment => getLikesOfComment(comment._id));
+                    await Promise.all(fetchLikesPromises);  // Fetch likes for all comments in parallel
+                }
+            }
+        };
+        fetchData();
+    }, [videoId, toggleCommentLike,channelId,commentsOfVideo,getLikesOfComment]); 
+    
     const handleAddComment = async()=>{
         if(videoId && commentContent){
-            await addCommentOnVideo(videoId,commentContent);
             setCommentContent('');
+            await Promise.all([
+                addCommentOnVideo(videoId,commentContent),
+                getVideoComments(videoId), // Fetch updated comments after adding the comment
+            ])
+            
             setCommentsUpdated((prev) => !prev);
         }
     }
 
-    const handleSubscription = async () => {
-        if (channelId) {
-            await toggleSubscription(channelId);
-            if(isSubscribed){
-                channelSubscribers.length -= 1;
-            }else{
-                channelSubscribers.length += 1;
+    useEffect(() => {
+        const fetchData = async()=>{
+            if (videoId) {
+                await getVideoComments(videoId);  // Re-fetch comments when the videoId or commentsUpdated changes
             }
-            setIsSubscribed((prev) => !prev);
+        }
+        fetchData();
+    }, [videoId, commentsUpdated,channelId ]);
+    
+
+    const handleSubscription = async (channelId) => {
+        if (channelId) {
+            // console.log(channelId)
+            await Promise.all([
+                toggleSubscription(channelId),
+                getUserChannelSubscribers(channelId),
+            ]);
+    
+            // if (isSubscribed) {
+            //     channelSubscribers.length -= 1;
+            // } else {
+            //     channelSubscribers.length += 1;
+            // }
+            setIsSubscribed((prev)=>prev)
         }
     };
 
-    const handleVideoLike = async()=>{
+    const handleVideoLike = async(videoId)=>{
         if(videoId){
-            await toggleVideoLike(videoId);
-            await getVideoLikes(videoId);
-            // if(isVideoLiked){
-            //     likesOfVideoCount -= 1;
+            // setIsVideoLiked((prevIsVideoLiked) => !prevIsVideoLiked); 
+            // console.log("hellow")
+            await Promise.all([
+                toggleVideoLike(videoId),
+                getVideoLikes(videoId),
+            ])
+            // if(isVideoLiked ){
+            //     likesOfVideo.length-= 1;
             // }
             // else{
-            //     likesOfVideoCount += 1;
+            //     likesOfVideo.length += 1;
             // }
-            setIsVideoLiked((prev)=> !prev);
+            // console.log(isVideoLiked)
+            setIsVideoLiked(prev=>!prev);
+            // console.log(isVideoLiked);
         }
     };
 
@@ -177,11 +281,12 @@ function WatchVideo() {
         if (user && user._id) {
             setCurrentUserId(user._id);
         }
-    }, [user, 
+    }, [
+        user, 
         setCurrentUserId, 
         toggleCommentLike,
         getLikesOfComment,
-        // commentsOfVideo,
+        commentsOfVideo,
     ]);
     
     const handleCommentLike = async (commentId) => {
@@ -192,6 +297,8 @@ function WatchVideo() {
             // setIsVideoLiked((prev) => !prev);
         }
     };
+
+    
 
     const toggleDropdown = (commentId) => {
         setIsDropdownOpen((prev) => (prev === commentId ? null : commentId));
@@ -240,10 +347,30 @@ function WatchVideo() {
         }
     };
 
-    if (videoLoadingStore || minLoading) return <Loader/>
+    const toggleComments = () => {
+        setShowComments((prevShowComments) => !prevShowComments);
+    };
+
+    if (videoLoadingStore || minLoading ) return <Loader/>
     if (error) return <p>Error: {error}</p>;
 
+    
+
     dayjs.extend(relativeTime);
+
+    // console.log(video)
+    // console.log(video?.videoFile)
+    const formatViews =(views)=> {
+        if (views >= 1_000_000_000) {
+          return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+        } else if (views >= 1_000_000) {
+          return (views / 1_000_000).toFixed(1) + 'M';  // Million
+        } else if (views >= 1_000) {
+          return (views / 1_000).toFixed(1) + 'K';  // Thousand
+        } else {
+          return views;  // Less than 1000
+        }
+    }
 
     return (
         <>
@@ -262,9 +389,6 @@ function WatchVideo() {
                         ) : (
                             <p>No video found.</p>
                         )}
-                        {/* <button onClick={togglePlayPause}>
-                            {isPlaying ? 'Pause' : 'Play'}
-                        </button> */}
                     </div>
                     <div>
                         <p className='video-title'>{video ? video?.title : 'Video Title Here'}</p>
@@ -274,7 +398,7 @@ function WatchVideo() {
                             <Link to={`/${video?.owner?.username}/${video?.owner?._id}`}>
                                 <div className='section11'>
                                     <div className='section111'>
-                                        <img src={video?.owner?.avatar} alt="" />
+                                        <img src={video?.owner?.avatar ? video.owner.avatar : defaultImage} alt="" />
                                     </div>
                                     <div className='section112'>
                                         <p className='ownerName'>{video?.owner?.fullName}</p>
@@ -285,7 +409,9 @@ function WatchVideo() {
                             <div className='section12'>
                                 <button 
                                     className='subscribeButton'
-                                    onClick={handleSubscription}
+                                    onClick={ ()=> 
+                                        handleSubscription(channelId)
+                                    }
                                 >
                                     {isSubscribed ? 'Subscribed' : 'Subscribe'}
                                 </button>
@@ -293,24 +419,17 @@ function WatchVideo() {
                                 <div className='likeButton'>
                                     <FontAwesomeIcon 
                                         icon={faThumbsUp} 
-                                        onClick={handleVideoLike}
+                                        onClick={()=>handleVideoLike(videoId)}
                                         className={`${isVideoLiked ? 'likeIcon' : 'unLikeIcon'}`}
                                     />
                                     <p>{likesOfVideoNumber}</p>
                                 </div>
                             </div>
                         </div>
-                        {/* <div className='section2'>
-                            <button>
-
-                            </button>
-
-                        </div> */}
                     </div>
                     <div className='description'>
                         <div className='section21'>
-                            <p className='views'>{video?.views} views</p>
-                            {/* <p className='dot'>•</p> */}
+                            <p className='views'>{video ? formatViews(video?.views) : '0'} views</p>
                             <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
                         </div>
                         <div className='section22'>
@@ -330,7 +449,7 @@ function WatchVideo() {
                     <div className='comments'>
                         <div className='comments1'>
                             <div className='comments11'>
-                                <img src={user?.avatar} alt="" />
+                                <img src={user?.avatar ? user.avatar : defaultImage} alt="" />
                                 <input 
                                     type="text"
                                     placeholder='Add a Comment'
@@ -353,81 +472,84 @@ function WatchVideo() {
 
                             </div>
                         </div>
-                        {/* <div className='comments2'>
-                        </div> */}
                     </div>
-                    <div className='channelComments'>
-                        {
-                            commentsOfVideo && commentsOfVideo.length > 0 ?
-                            commentsOfVideo.map((comment)=>{
-                                const commentLikeData =
-                                // console.log(likesOfComments)
-                                    likesOfComments[comment._id] ||{
-                                        likes:0,
-                                        likedbyUser:false,
-                                    };
-                                    // console.log(commentLikeData);
-                                    // console.log(commentLikeData)
-                                    // console.log(commentLikeData.likedByUser)
-                                    // console.log(comment?.owner)
-                                    // console.log(video?.owner?._id)
-                                    // console.log(channelId)
-                                    // console.log(user?._id)
-                                    // console.log(user?._id)
-                                    // console.log(currentComment)
-                                return(
-                                    <div key={comment?._id} className='channelCommentsSection'>
-                                        <div className='channelCommentsSection1'>
-                                            <img src={comment?.owner?.avatar} alt="" />
-                                        </div>
-                                        <div className='channelCommentsSection2'>
-                                            <div className='channelCommentsSection21'>
-                                                <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
-                                                <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
-                                                <FontAwesomeIcon 
-                                                    icon={faEllipsisVertical} 
-                                                    className='channelCommentsSection213' 
-                                                    onClick={()=>toggleDropdown(comment._id)}
-                                                />
-                                                {isDropdownOpen === comment._id && (comment?.owner?._id === user?._id || channelId === user?._id)  &&( // Conditionally render dropdown
-                                                    <div className='commentDropdown'>
-                                                        <button onClick={() => handleCommentEdit(comment)}>Edit</button>
-                                                        <button onClick={()=>handleCommentDelete(comment?._id)}>Delete</button>
-                                                    </div>
-                                                )}
+                    <div>
+                        <button onClick={toggleComments}>
+                            {showComments ? 'Hide Comments' : 'Read Comments'}
+                        </button>
+                        {showComments &&(
+                            <div className='channelComments'>
+                            {
+                                commentsOfVideo && commentsOfVideo.length > 0 ?
+                                commentsOfVideo.map((comment)=>{
+                                    const commentLikeData =
+                                    // console.log(likesOfComments)
+                                        likesOfComments[comment._id] ||{
+                                            likes:0,
+                                            likedbyUser:false,
+                                        };
+                                    return(
+                                        <div key={comment?._id} className='channelCommentsSection'>
+                                            <div className='channelCommentsSection1'>
+                                                <img src={comment?.owner?.avatar ? comment.owner.avatar : defaultImage} alt="" />
                                             </div>
-                                            <div className='channelCommentsSecton22'>
-                                                <p className='channelCommentsSection212'>{comment?.content}</p>
-                                            </div>
-                                            <div className='channelCommensSection23'>
-                                                <div className='channelCommensSection231'>
-                                                    <FontAwesomeIcon
-                                                        icon={faThumbsUp} 
-                                                        className={`${
-                                                            commentLikeData.likedByUser
-                                                                ? 'likeIcon'
-                                                                : 'unLikeIcon'
-                                                        }`}
-                                                        onClick={()=>{
-                                                            handleCommentLike(
-                                                                comment?._id
-                                                            )
-                                                            commentLikeData.likedByUser = !commentLikeData.likedByUser; // Toggle the like status
-                                                        }}
+                                            <div className='channelCommentsSection2'>
+                                                <div className='channelCommentsSection21'>
+                                                    <p className='channelCommentsSection211'>{comment?.owner?.username}</p>
+                                                    <p className='channelCommentsSection212'>{dayjs(comment?.createdAt).fromNow()}</p>
+                                                    <FontAwesomeIcon 
+                                                        icon={faEllipsisVertical} 
+                                                        className='channelCommentsSection213' 
+                                                        onClick={()=>toggleDropdown(comment._id)}
                                                     />
+                                                    {isDropdownOpen === comment._id && (comment?.owner?._id === user?._id || channelId === user?._id)  &&( // Conditionally render dropdown
+                                                        <div className='commentDropdown'>
+                                                            <button onClick={() => handleCommentEdit(comment)}>Edit</button>
+                                                            <button onClick={()=>handleCommentDelete(comment?._id)}>Delete</button>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                <p>{commentLikeData.likes }</p>
+                                                <div className='channelCommentsSecton22'>
+                                                    <p className='channelCommentsSection221'>{comment?.content}</p>
+                                                </div>
+                                                <div className='channelCommensSection23'>
+                                                    <div className='channelCommensSection231'>
+                                                        <FontAwesomeIcon
+                                                            icon={faThumbsUp} 
+                                                            className={`${
+                                                                commentLikeData.likedByUser
+                                                                    ? 'likeIcon'
+                                                                    : 'unLikeIcon'
+                                                            }`}
+                                                            onClick={() => {
+                                                                // Toggle the like status locally
+                                                                handleCommentLike(comment?._id);
+                                                                // commentLikeData.likedByUser = !commentLikeData.likedByUser;
+                                                                // if (commentLikeData.likedByUser) {
+                                                                //     commentLikeData.likes += 1; // Increment the like count
+                                                                // } else {
+                                                                //     commentLikeData.likes -= 1; // Decrement the like count
+                                                                // }
+                                                
+                                                                // Call the like API
+                                                                
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <p>{commentLikeData.likes}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    );
-                                }) 
-                                :
-                            <p>No Comments</p>
-                        }
+                                        
+                                        );
+                                    }) 
+                                    :
+                                <p>No Comments</p>
+                            }
+                            </div>
+                        )}
+                        
                     </div>
-                    
                 </div>
 
                 <div className='watchVideo-right-side'>
@@ -446,7 +568,7 @@ function WatchVideo() {
                                             <p className='watchVideoSection221'>{video?.owner?.username}</p>
                                         </div>
                                         <div className='watchVideoSection23'>
-                                                <p className='views'>{video?.views} views</p>
+                                                <p className='views'>{video ? formatViews(video.views) : '0'} views</p>
                                                 <p className='dot'>•</p>
                                                 <p className='time'>{dayjs(video?.createdAt).fromNow()}</p>
                                         </div>
@@ -474,8 +596,8 @@ function WatchVideo() {
                         />
                     </div>
                     <div className="formButtons">
-                                <button type="submit">Submit</button>
-                                <button type="button" onClick={handleCloseEdit}>Close</button>
+                                <button className='formButtons1' type="submit">Submit</button>
+                                <button className='formButtons2' type="button" onClick={handleCloseEdit}>Close</button>
                     </div>
                 </form>
             </div>

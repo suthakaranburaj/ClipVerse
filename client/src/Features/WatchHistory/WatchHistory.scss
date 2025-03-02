@@ -4,7 +4,7 @@
     padding: 10px;
     width: 100%;
     height: 100%;
-
+    margin-top: 20px;
     &1{
         font-weight: 700;
         font-size: 26px;
@@ -13,8 +13,8 @@
         position: fixed;
         margin-top: 30vh;
         font-size: 26px;
-        color: $hover-bg-color;
-        margin-left: 28vw;
+        color: #545252;        
+        margin-left: 38vw;
         // display: flex;
         // align-items: center;
         // justify-content: center;
@@ -26,11 +26,11 @@
         align-items: flex-start;
         justify-content: start;
         &1{
-            width: 50vh;
-            min-width: 30vh;
+            width: 25vw;
+            // min-width: 30vh;
             position: relative;
             padding-bottom: 10px;
-            height: 60vh;
+            height: 24vw;
             max-height: 350px;
             margin: 5px;
             transition-duration: 0.5s;
@@ -42,7 +42,7 @@
             }
             &1{
                 width: 100%;
-                height: 30vh;
+                height: 13vw;
                 // height: 100%;
                 position: relative;
                 &1{

@@ -1,13 +1,23 @@
 @use '../../../index.scss' as *;
 
-.NoComments{
-
-    font-size: 30px;
-    font-weight: 700;
-    color: $hover-bg-color;
+.NoCommentsContainer{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-top: 30vh;
+    margin-left: 30vw;
+    .NoComments{
+        font-size: 30px;
+        display: flex;
+        color: #333;
+        
+    }
 }
 .mainDiv{
     background-color: $background-color;
+    width: 100%;
+    height: 100%;
 }
 .commentsContainer{
     width: 80%;

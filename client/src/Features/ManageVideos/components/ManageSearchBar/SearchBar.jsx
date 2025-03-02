@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSearch, faMicrophone } from '@fortawesome/free-solid-svg-icons'; // Import the cross icon
 import devStore from '../../../../store/devStore';
@@ -12,11 +12,10 @@ import useStore from '../../../../store/userStore';
 import './SearchBar.scss'; // Ensure this file contains the necessary styling
 import image1 from '../../../../assets/profile_pic.webp';
 import { useForm } from 'react-hook-form';
-import { ClipLoader } from 'react-spinners';
 import useVideoStore from '../../../../store/useVideosStore'
 import logo from '../../../../assets/ClipVerse_logo.png'
-// import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import Loader from '../../../../components/Loader/Loader'
 function SearchBar() {
     const { isNavOpen, toggleNav } = devStore(); // Get isNavOpen state from the store
     const { user, isAuthenticated } = useStore();
@@ -53,7 +52,9 @@ function SearchBar() {
     //     // Further processing can be done with the file, like uploading it to a server
     // };
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { publishAVideo, isLoading } = useVideoStore();
+    const { publishAVideo, isLoading:videoLoadingStore } = useVideoStore();
+
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         const formData = new FormData();
@@ -63,26 +64,32 @@ function SearchBar() {
         formData.append('videoFile', data.videoFile[0]);
         formData.append('isPublished', data.isPublished);
 
+
         try {
             await publishAVideo(formData);
             handleCloseModal();
+            // alert("Video Uploaded successfully!")
+            navigate(`/${user?.username}/${user?._id}`);
         } catch (error) {
             console.error("Error during uploading video !!", error);
         }
     }
+
+    if(videoLoadingStore) return <div><Loader/></div>
+
     return (
-        <div className="cont text-white p-4 flex justify-between">
-            <div className='mx-4 cont1'>
+        <div className="cont text-white p-2 flex justify-between">
+            <div className='mx-4 custom500:mx-1 cont1'>
                 <FontAwesomeIcon
                     className='text-white icon-large'
                     icon={isNavOpen ? faTimes : faBars} // Conditional rendering of icons
                     onClick={() => toggleNav()}
                 />
                 <Link to='/'>
-                    <img src={logo} alt="" />
+                    <img src={logo} className='' alt="" />
                 </Link>
             </div>
-            <div className='mx-10 w-[80%]'>
+            <div className='mx-10 custom500:mx-4 custom456:mx-2 w-[80%]'>
                 <div className="flex justify-between">
                     <div className="nav-center">
                         <div className="search-bar">
@@ -97,12 +104,11 @@ function SearchBar() {
                         </div>
                         <FontAwesomeIcon icon={faMicrophone} className="mic-icon" />
                     </div>
-                    <div className='flex items-center relative'>
+                    <div className='flex items-center relative w-40'>
 
-                        <div className="relative">
-                            <button className='bttn rounded-2xl px-8 mr-5 h-10' onClick={toggleDropdown1}>
+                        <div className="relative w-20">
+                            <button className='bttn rounded-full pl-2 mr-2 h-10' onClick={toggleDropdown1}>
                                 <MdVideoCall className="dropdown-icon" size={22} />
-                                Create
                             </button>
 
                             {/* Dropdown Menu */}
@@ -303,14 +309,14 @@ function SearchBar() {
                                 className={`${errors.title ? 'border-red-500' : ''} `}
                                 {...register('title', { required: 'Title is required' })}
                             />
-
+                            {errors.title && <p className="text-red-500">{errors.title.message}</p>}
                             <input
                                 type="text"
                                 placeholder='Enter the description of the video'
                                 className={`${errors.description ? 'border-red-500' : ''}`}
                                 {...register('description', { required: 'Description is required' })}
                             />
-
+                            {errors.description && <p className="text-red-500">{errors.description.message}</p>}
                             <label className=''>Upload the thumbnail</label>
                             <input
                                 type="file"
@@ -318,7 +324,7 @@ function SearchBar() {
                                 accept="image/*"
                                 {...register('thumbnail', { required: 'Thumbnail is required' })}
                             />
-
+                            {errors.thumbnail && <p className="text-red-500">{errors.thumbnail.message}</p>}
                             <label className=''>Upload the video file</label>
                             <input
                                 type="file"
@@ -327,8 +333,9 @@ function SearchBar() {
                                 // onChange={handleFileChange} 
                                 {...register('videoFile', { required: 'Video File is required' })}
                             />
+                            {errors.videoFile && <p className="text-red-500">{errors.videoFile.message}</p>}
                             <div className='checker'>
-                                <label className=''>submit</label>
+                                <label className=''>Publish</label>
                                 <input className='square'
                                     type="checkbox"
                                     {...register('isPublished')}
@@ -345,12 +352,12 @@ function SearchBar() {
 
 
                         </form>
-                        {isLoading && (
+                        {/* {isLoading && (
                             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                                 <ClipLoader size={50} color="#ffffff" />
                                 <p>Uploading your Video...</p>
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
             )}

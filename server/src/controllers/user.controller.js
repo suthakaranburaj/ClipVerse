@@ -60,33 +60,30 @@ const registerUser = asyncHandler(async (req, res) => {
         .json( new ApiError(409, "User with email or username already exists"));
     }
     //console.log(req.files);
-    const avatarLocalPath = req.files?.avatar[0]?.path;
-    //const coverImageLocalPath = req.files?.coverImage[0]?.path;
-
+    let avatarLocalPath;
+    if(req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0){
+        avatarLocalPath = req.files.avatar[0].path;
+    }
+    const avatar = avatarLocalPath ? await uploadOnCloudinary(avatarLocalPath,{ secure: true }) : null;
+    
     let coverImageLocalPath;
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
-        coverImageLocalPath = req.files.coverImage[0].path
+        coverImageLocalPath = req.files.coverImage[0].path;
     }
+    const coverImage = coverImageLocalPath ? await uploadOnCloudinary(coverImageLocalPath,{ secure: true }) : null;
+    
 
-
-    if (!avatarLocalPath) {
-        
-    }
-
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-
-    if (!avatar) {
-        return res
-        .status(400)
-        .json( new ApiError(400, "Avatar file is required"));
-    }
+    // if (!avatar) {
+    //     return res
+    //     .status(400)
+    //     .json( new ApiError(400, "Avatar file is required"));
+    // }
 
 
     const user = await User.create({
         fullName,
-        avatar: avatar.url,
-        coverImage: coverImage?.url || "",
+        avatar: avatar?.secure_url || "",
+        coverImage: coverImage?.secure_url || "",
         email,
         password,
         username: username.toLowerCase()
@@ -122,9 +119,9 @@ const loginUser = asyncHandler(async (req, res) => {
     //password check
     //access and referesh token
     //send cookie
-
-    const { email, username, password } = req.body
-    console.log(email);
+    // console.log("hello")
+    const {username, password } = req.body
+    // console.log(username);
 
     if (!username && !email) {
         return res
@@ -132,16 +129,20 @@ const loginUser = asyncHandler(async (req, res) => {
         .json( new ApiError(400, "username or email is required"));
     }
 
-    // Here is an alternative of above code based on logic discussed in video:
-    // if (!(username || email)) {
-    //     throw new ApiError(400, "username or email is required")
+    let searchCriteria = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    if (username) {
+        if (emailRegex.test(username)) {
+            searchCriteria.email = username;
+        } else {
+            searchCriteria.username = username;
+        }
+    } else if (email) {
+        searchCriteria.email = email;
+    }
 
-    // }
-
-    const user = await User.findOne({
-        $or: [{ username }, { email }]
-    })
-
+    const user = await User.findOne(searchCriteria);
+    // console.log(user)
     if (!user) {
         return res
         .status(404)
@@ -262,7 +263,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 })
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-    console.log(req)
+    // console.log(req)
     const { oldPassword, newPassword } = req.body
 
     const user = await User.findById(req.user?._id)
@@ -343,9 +344,9 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         await deleteOnCloudinary(publicIdOfOldAvatar);
     }
 
-    const avatar = await uploadOnCloudinary(avatarLocalPath);
+    const avatar = await uploadOnCloudinary(avatarLocalPath,{ secure: true });
 
-    if (!avatar.url) {
+    if (!avatar.secure_url) {
         return res
         .status(400)
         .json( new ApiError(400, "Error while uploading avatar"));
@@ -355,7 +356,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         req.user?._id,
         {
             $set: {
-                avatar: avatar.url
+                avatar: avatar.secure_url
             }
         },
         { new: true }
@@ -394,9 +395,9 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         await deleteOnCloudinary(publicIdOfOldCoverImage);
     }
 
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath,{ secure: true });
 
-    if (!coverImage.url) {
+    if (!coverImage.secure_url) {
         return res
         .status(400)
         .json( new ApiError(400, "Error while uploading on avatar"));
@@ -406,7 +407,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         req.user?._id,
         {
             $set: {
-                coverImage: coverImage.url
+                coverImage: coverImage.secure_url
             }
         },
         { new: true }
@@ -567,8 +568,8 @@ const getAllComments= asyncHandler(async (req, res)=>{
         .populate("video", "title") // Populate video details (e.g., video's title)
         .sort({ createdAt: -1 }); // Sort comments by latest first
 
-    console.log("Total Comments Found:", totalComments); // Debugging: See if any comments were found
-    console.log("Comments:", comments);
+    // console.log("Total Comments Found:", totalComments); // Debugging: See if any comments were found
+    // console.log("Comments:", comments);
     return res
     .status(200)
     .json(new ApiResponse(200,totalComments,comments,"Total Comments found for user's channel"))

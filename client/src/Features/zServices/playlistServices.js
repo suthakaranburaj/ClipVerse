@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = 'https://clip-verse-backend.onrender.com/api/v1/playlist';
+const BACKEND_URL = 'https://clipverse.onrender.com/api/v1/playlist';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -10,7 +10,7 @@ const getToken = () => {
 
 const createPlaylistServices = async({name, description,videos})=>{
     try {
-        console.log(getToken())
+        // console.log(getToken())
         const response = await axios.post(`${BACKEND_URL}`,{name, description,videos},{
             headers: {
                 Authorization: `Bearer ${getToken()}`,

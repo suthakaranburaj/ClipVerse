@@ -3,10 +3,12 @@ import useVideosStore from '../../store/useVideosStore';
 import './WatchHistory.scss'
 import Loader from '../../components/Loader/Loader';
 import { Link } from 'react-router-dom';
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 function WatchHistory() {
 const { watchHistorys,getuserWatchHistory, isLoading:videoStoreLoading, error } = useVideosStore();
-console.log(watchHistorys)
+// console.log(watchHistorys)
 useEffect(() => {
     const fetchWatchHistory = async () => {
         await getuserWatchHistory();
@@ -17,6 +19,18 @@ useEffect(() => {
 
 if (videoStoreLoading) return <div><Loader/></div>;
 if (error) return <div>Error: {error}</div>;
+
+const formatViews =(views)=> {
+    if (views >= 1_000_000_000) {
+      return (views / 1_000_000_000).toFixed(1) + 'B';  // Billion
+    } else if (views >= 1_000_000) {
+      return (views / 1_000_000).toFixed(1) + 'M';  // Million
+    } else if (views >= 1_000) {
+      return (views / 1_000).toFixed(1) + 'K';  // Thousand
+    } else {
+      return views;  // Less than 1000
+    }
+}
 
 return (
 <div className="watchHistoryContainer">
@@ -37,7 +51,7 @@ return (
                 </div>
                 <div className='watchHistoryContainer312'>
                     <div className='watchHistoryContainer3121'>
-                        <img src={video?.owner?.avatar} alt="" />
+                        <img src={video?.owner?.avatar ? video.owner.avatar : defaultImage} alt="" />
                     </div>
                     <div className="watchHistoryContainer3122">
                         <div className='watchHistoryContainer31221'>
@@ -47,7 +61,7 @@ return (
                             </Link>
                         </div>
                         <div className='watchHistoryContainer31222'>
-                            <p className='views'>{video?.views} views</p>
+                            <p className='views'>{video ? formatViews(video.views) : '0'} views</p>
                             <p className='dot'>•</p>
                             <p className='time'>Watched on: {new Date(video.createdAt).toLocaleDateString()}</p>
                         </div>

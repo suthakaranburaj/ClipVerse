@@ -83,8 +83,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
     }
 
 
-    const video = await uploadOnCloudinary(videoPath);
-    const thumbnail = await uploadOnCloudinary(thumbnailPath);
+    const video = await uploadOnCloudinary(videoPath,{ secure: true });
+    const thumbnail = await uploadOnCloudinary(thumbnailPath,{ secure: true });
 
 
     if (!video) {
@@ -103,8 +103,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
 
     
     const newVideo = await Video.create({
-        videoFile: video.url, 
-        thumbnail: thumbnail.url, 
+        videoFile: video.secure_url, 
+        thumbnail: thumbnail.secure_url, 
         title,
         description,
         // categories,
@@ -139,6 +139,8 @@ const getVideoById = asyncHandler(async (req, res) => {
         .json( new ApiError(400, "Video not found !!"));
     }
 
+    // console.log(video)
+
     res
     .status(200)
     .json({
@@ -150,7 +152,8 @@ const getVideoById = asyncHandler(async (req, res) => {
 
 const updateVideo = asyncHandler(async (req, res) => {
     const { title, description,isPublished } = req.body;  // Change 'categorizes' to 'categories'
-    const thumbnail = req.files?.thumbnail?.[0]?.path;
+    // console.log(req.file.path)
+    const thumbnail = req?.file?.path;
 
     const { videoId } = req.params;
     if (!videoId) {
@@ -180,17 +183,21 @@ const updateVideo = asyncHandler(async (req, res) => {
         .json( new ApiError(403, "Unauthorized to update this video"));
     }
 
+    // console.log(thumbnail)
     // Handle thumbnail update
     if (thumbnail) {
-        if (video.thumbnail) {
+        // console.log(thumbnail)
+        if (video?.thumbnail) {
+            console.log(video?.thumbnail)
             await deleteOnCloudinary(video.thumbnail);
         }
 
-        const uploadedThumbnail = await uploadOnCloudinary(thumbnail);
-
+        const uploadedThumbnail = await uploadOnCloudinary(thumbnail,{ secure: true });
+        console.log(thumbnail)
         video.thumbnail = uploadedThumbnail.secure_url;
     }
 
+    console.log(isPublished)
     if(isPublished) video.isPublished = isPublished;
     // Update title if provided
     if (title) video.title = title;

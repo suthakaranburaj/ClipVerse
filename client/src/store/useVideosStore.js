@@ -150,9 +150,10 @@ const useVideosStore = create(
         userWatchHistory: async (videoId) =>{
             set({isLoading:true,error:null});
             try {
+                
                 const response = await userWatchHistoryService(videoId);
                 const watchHistory = response.data.user.watchHistory;
-                // console.log(watchHistory);
+                // console.log(watchHistory)
                 set((state) =>({
                     watchHistorys: [watchHistory,...state.watchHistorys],
                     isLoading:false,

@@ -13,11 +13,14 @@ import useStore from '../../store/userStore';
 import userStatsStore from '../../store/userStatsStore';
 import Loader from '../../components/Loader/Loader';
 import useSubscriptionStore from '../../store/useSubscriptionStore'
+import defaultImage from '../../assets/profile_pic.webp'
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 function Community() {
 
     const location = useLocation();
-    const {user} = useStore();
+    const {user, isLoading:userLoadingStore} = useStore();
     const subscribedChannel = location.state?.subscribedChannel || user;
     // console.log(user)
     // console.log(location)
@@ -33,7 +36,8 @@ function Community() {
     } = useTweetStore();
     const {
         getUserChannelSubscribers,
-        channelSubscribers
+        channelSubscribers,
+        isLoading:subscriberLoadingStore,
     } = useSubscriptionStore();
 
     const [isCreateTweet, setIsCreateTweet] = useState(false);
@@ -45,26 +49,31 @@ function Community() {
     const {username}=useParams();
     const [minLoading,setminLoading]=useState(true);
 
-    useEffect(()=>{
-        
-        const fetchData = async()=>{
+    useEffect(() => {
+        const fetchData = async () => {
+            setminLoading(true);  // Start loading
+    
             let userId = user?._id;
-            if(channelId !== userId){
+            if (channelId !== userId) {
                 userId = channelId;
             }
-            // console.log(userId)
-            await getUserTweets(userId);
-            // console.log(userId)
-            await getUserChannelSubscribers(userId);
-            await fetchChannelProfile(username);
-            // console.log(channel);
-            
-            setTimeout(()=>{
-                setminLoading(false);
-            },1000);
-        }
+    
+            try {
+                await Promise.all([
+                    getUserTweets(userId),
+                    getUserChannelSubscribers(userId),
+                    fetchChannelProfile(username),
+                ]);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // Handle any errors here if necessary
+            } finally {
+                setminLoading(false);  // End loading after all data is fetched
+            }
+        };
+    
         fetchData();
-    },[channelId,isEditTweet])
+    }, [channelId, isEditTweet]);
     // console.log(userTweets)
 
     const handleCreatePost = ()=>{
@@ -81,6 +90,7 @@ function Community() {
                 setIsCreateTweet(false); // Optionally close the post form after submission
                 setCurrentTweet(null);
                 setIsEditTweet(false);
+                alert("Tweet updated successfully!")
             }
         }
         else{
@@ -88,6 +98,7 @@ function Community() {
                 await createTweet({content:newTweetContent}); // Pass the content to createTweet
                 setNewTweetContent(''); // Clear the textarea after posting
                 setIsCreateTweet(false); // Optionally close the post form after submission
+                alert("Tweet created and posted successfully!")
             }
         }
     }
@@ -96,6 +107,7 @@ function Community() {
         setIsEditTweet(true);
         setCurrentTweet(tweet)
         setNewTweetContent(tweet.content); // Populate the textarea with the current tweet content
+
     }
 
     const handleDeleteTweet = async()=>{
@@ -110,14 +122,17 @@ function Community() {
         setIsEditTweet(false);
     }
 
-    if (tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
+    dayjs.extend(relativeTime);
+
+
+    if (subscriberLoadingStore||userLoadingStore||tweetsLoadingStore || minLoading) return <div><Loader /></div>;  
 
     return (
         <>
         <div className='communityContianer'>
         <div className='channelProfileContainer'>
                     <div className='channelProfileContainer1'>
-                        <img src={channel?.avatar} className='channelProfileContainer11' alt="" />
+                        <img src={channel?.avatar ? channel.avatar : defaultImage } className='channelProfileContainer11' alt="" />
                     </div>
                     <div className='channelProfileContainer2'>
                         <Link to={`/${channel?.username}/${channel?._id}`}>
@@ -135,7 +150,7 @@ function Community() {
                                 <div className='communityPostContainer111'>
                                     <img 
                                         className='communityPostContainer1111' 
-                                        src={channel?.avatar}
+                                        src={channel?.avatar ? channel.avatar : defaultImage}
                                         alt="" 
                                     />
                                 </div>
@@ -171,13 +186,14 @@ function Community() {
                         )}
                         </div>
                         <div className='communityPostContainer2'>
-                            <p>{tweet?.content}</p>
+                            <p className='communityPostContainer21'>{tweet?.content}</p>
                         </div>
                         <div className='communityPostContainer3'>
-                            <FontAwesomeIcon
+                            {/* <FontAwesomeIcon
                                 icon={faThumbsUp} 
                                 className='communityPostContainer31'
-                            />
+                            /> */}
+                            <p className='time text-gray-500'>{dayjs(tweet?.createdAt).fromNow()}</p>
                             {/* <p
                                 className='communityPostContainer32'
                             >
@@ -207,7 +223,7 @@ function Community() {
                     <div className='tweetContainer'>
                         <div className='firstRow'>
                             <div className='firstRow1'>
-                                <img src={subscribedChannel?.avatar} alt="" className='firstRow11'/>
+                                <img src={subscribedChannel?.avatar ? subscribedChannel.avatar : defaultImage} alt="" className='firstRow11'/>
                                 <p className='firstRow12'>{subscribedChannel?.username}</p>
                             </div>
                             <div className='firstRow2'>

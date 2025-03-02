@@ -58,6 +58,7 @@ const useLikesStore = create((set)=>({
                 likesOfVideo:response.data.data.likes,
             })
             // console.log(response);
+            // console.log(response.data.data.likes)
             return response;
         } catch (error) {
             set({
@@ -76,7 +77,7 @@ const useLikesStore = create((set)=>({
                 error:null,
                 likedVideos:response.data.data,
             })
-            console.log(response.data.data);
+            // console.log(response.data.data);
             return response;
         } catch (error) {
             set({
@@ -90,7 +91,7 @@ const useLikesStore = create((set)=>({
         set({isLoading:true,error:null});
         try {
             const response = await toggleCommentLikeServices(commentId);
-            console.log(response.data)
+            // console.log(response.data)
             set({
                 isLoading:false,
                 error:null,

@@ -30,7 +30,11 @@ $secondary-text:(#B3B3B3);
 $hover-bg-color: (#131313);
 $background-color:(#000000);
 $button-color:(#FF0000);
-
+$video-box-max-height:21vw;
+$video-box-min-height:18%;
+$video-box-max-width:23%;
+$video-box-min-width:20%;
+$thumbnail-height:12vw;
 
 * {
     font-family: $font-family-primary;
@@ -49,3 +53,4 @@ body {
         width: 100%;
     }
 }
+

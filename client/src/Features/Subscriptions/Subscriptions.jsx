@@ -4,6 +4,8 @@ import './Subscriptions.scss'
 import useSubscriptionStore from '../../store/useSubscriptionStore'
 import userStore from '../../store/userStore'
 import Loader from '../../components/Loader/Loader'
+import defaultImage from '../../assets/profile_pic.webp'
+
 
 function Subscriptions() {
 
@@ -20,56 +22,73 @@ function Subscriptions() {
     const [minLoading, setMinLoading] = useState(true); // State for minimum loading time
     const [subscribersMap, setSubscribersMap] = useState({}); // State to store subscribers for each channel
 
+    // useEffect(() => {
+    //     if (video?.owner?._id) {
+    //         setChannelId(video.owner._id);
+    //     }
+    // }, [video]);
 
-
-    useEffect(()=>{
-        const fetchData = async()=>{
-            if(subscriberId){
+    useEffect(() => {
+        const fetchSubscribedChannels = async () => {
+            if (subscriberId) {
                 await getSubscribedChannels(subscriberId);
-                // await getUserChannelSubscribers(subscriberId);
+                setMinLoading(false);
+            }
+        };
+        fetchSubscribedChannels();
+    }, [subscriberId, getSubscribedChannels]); // Remove subscribedChannels from dependencies
 
-                const fetchSubscribers = subscribedChannels?.map(async(channel)=>{
-                    if(channel?._id){
-                        const subscribers = await getUserChannelSubscribers(channel._id); // Fetch subscribers for each channel
-            
-                        // Update subscribersMap with channelId as the key and subscriber count as the value
+
+    useEffect(() => {
+        const fetchSubscribersForChannels = async () => {
+            if (subscribedChannels && subscribedChannels.length > 0) {
+                const fetchSubscribers = subscribedChannels.map(async (channel) => {
+                    if (channel?._id) {
+                        const subscribers = await getUserChannelSubscribers(channel._id);
                         setSubscribersMap((prevMap) => ({
                             ...prevMap,
-                            [channel._id]: subscribers.length, // Assuming you get an array of subscribers
+                            [channel._id]: subscribers.length,
                         }));
                     }
                 });
                 await Promise.all(fetchSubscribers);
             }
+        };
 
-            setTimeout(() => {
-                setMinLoading(false);
-            }, 700);
+        if (subscribedChannels.length > 0) {
+            fetchSubscribersForChannels();
         }
-        fetchData();
-    },[subscriberId])
+    }, [subscribedChannels, getUserChannelSubscribers]); // Only fetch subscribers when subscribedChannels is updated
 
     if (subscriptionStoreLoading || minLoading) return <div><Loader /></div>;  
     return (
+        <>
         <div className='SubscriptionContainer'>
             <div className='SubscribedChannel'>
                 {subscribedChannels?.map((subscribedChannel)=>(
                     <Link key={subscribedChannel?._id} to={`/${subscribedChannel?.username}/${subscribedChannel?._id}`}>
                         <div  className='subscribedChannelContainer'>
                             <div className='subscribedChannelContainer1'>
-                                <img src={subscribedChannel?.avatar} alt="" />
+                                <img src={subscribedChannel?.avatar ? subscribedChannel.avatar : defaultImage} alt="" />
                             </div>
                             <div className='subscribedChannelContainer2'>
                                 <p>{subscribedChannel?.username}</p>
                                 <p>{subscribedChannel?.fullName}</p>
-                                <p>{subscribersMap[subscribedChannel?._id] || 0} subscribers</p>
+                                <p>{subscribersMap[subscribedChannel?._id] !== undefined ? subscribersMap[subscribedChannel._id] : '-'} subscribers</p>
                             </div>
                         </div>
                     </Link>
                 ))}
                 
             </div>
+            {subscribedChannels.length === 0 &&(
+            <div className='NoSubscriptionContainer'>
+                <p className='NoSubscription'>Not Subscribed any channel</p>
+            </div>
+        )}
         </div>
+        
+        </>
     )
 }
 

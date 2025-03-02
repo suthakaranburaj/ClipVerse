@@ -1,5 +1,5 @@
 import axios from "axios";
-const BACKEND_URL = 'https://clip-verse-backend.onrender.com/api/v1/comments';
+const BACKEND_URL = 'https://clipverse.onrender.com/api/v1/comments';
 
 const getToken = () => {
     const accessToken = localStorage.getItem("accessToken");
